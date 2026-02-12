@@ -26,7 +26,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 const allowedOrigins = [
-  "http://localhost:5173",
+  "https://ca-project-client.vercel.app",
 
 ];
 
