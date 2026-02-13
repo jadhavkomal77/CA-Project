@@ -2,8 +2,6 @@ import mongoose from "mongoose";
 
 const navbarSchema = new mongoose.Schema(
   {
-    logoText: String,
-    logoImage: String,
     phone: String,
     menu: [
       {
@@ -14,5 +12,6 @@ const navbarSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
 
 export default mongoose.model("Navbar", navbarSchema);

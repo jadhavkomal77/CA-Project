@@ -1,22 +1,23 @@
 import express from "express";
 import {
-  createPricing,
   getPublicPricing,
   getAdminPricing,
+  createPricing,
   updatePricing,
   deletePricing,
   reorderPricing,
 } from "../controllers/pricingController.js";
-import adminAuth from "../middlewares/adminAuth.js";
 
 const router = express.Router();
 
+/* 🌍 PUBLIC */
 router.get("/public", getPublicPricing);
 
-router.get("/", adminAuth, getAdminPricing);
-router.post("/", adminAuth, createPricing);
-router.put("/:id", adminAuth, updatePricing);
-router.delete("/:id", adminAuth, deletePricing);
-router.put("/reorder/all", adminAuth, reorderPricing);
+/* 🔐 ADMIN */
+router.get("/", getAdminPricing);
+router.post("/", createPricing);
+router.put("/:id", updatePricing);
+router.delete("/:id", deletePricing);
+router.put("/reorder/all", reorderPricing);
 
 export default router;

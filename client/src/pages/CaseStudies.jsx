@@ -77,7 +77,7 @@ export default function CaseStudies() {
                 </p>
 
                 <button
-                  onClick={() => navigate(`/projects/${project.slug}`)}
+                 onClick={() => navigate(`/casestudies/${project.slug}`)}
                   className="text-blue-600 font-semibold inline-flex items-center gap-2 hover:gap-3 transition-all"
                 >
                   Read Case Study →

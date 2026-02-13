@@ -24,14 +24,15 @@ export const navbarApi = createApi({
     }),
 
     /* 💾 Save / Update Navbar */
-    saveNavbar: builder.mutation({
-      query: (formData) => ({
-        url: "/",
-        method: "PUT",
-        body: formData, // ⚠️ FormData only
-      }),
-      invalidatesTags: ["Navbar"],
-    }),
+saveNavbar: builder.mutation({
+  query: (data) => ({
+    url: "/",
+    method: "PUT",
+    body: data, 
+  }),
+  invalidatesTags: ["Navbar"],
+}),
+
   }),
 });
 

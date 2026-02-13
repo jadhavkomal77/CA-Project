@@ -21,9 +21,7 @@ import Services from "./pages/Services";
 import ServiceDetails from "./pages/ServiceDetails";
 import Contact from "./pages/Contact";
 import AddAdminProject from "./admin/AddAdminProject";
-import Booking from "./pages/Booking";
 import AdminPricing from "./admin/AdminPricing";
-import AdminBookings from "./admin/AdminBookings";
 import AdminContacts from "./admin/AdminContacts";
 import AdminFooter from "./admin/AdminFooter";
 import AdminServicesList from "./admin/AdminServicesList";
@@ -51,7 +49,8 @@ function App() {
               <Route path="services" element={<Services />} />
               <Route path="services/:slug" element={<ServiceDetails />} />
               <Route path="casestudies" element={<CaseStudies />} />
-              <Route path="CaseStudyDetails" element={<CaseStudyDetails />} />
+              {/* <Route path="CaseStudyDetails" element={<CaseStudyDetails />} /> */}
+              <Route path="casestudies/:slug" element={<CaseStudyDetails />} />
 
               <Route path="testimonials" element={<Testimonials />} />
               <Route path="industries" element={<Industries />} />
@@ -80,7 +79,6 @@ function App() {
           <Route path="addservices" element={<AdminServices />} />
           <Route path="serviceslist" element={<AdminServicesList />} />
           <Route path="services/edit/:id" element={<AdminServiceEdit />} />
-          <Route path="booking/:id" element={<Booking />} />
           {/* PROJECTS */}
           <Route path="projects" element={<AdminProjects />} />
           <Route path="projects/new" element={<AddAdminProject />} />  
@@ -88,7 +86,6 @@ function App() {
 
         
           <Route path="pricing" element={<AdminPricing />} /> 
-          <Route path="bookings" element={<AdminBookings />} />
           <Route path="contacts" element={<AdminContacts />} />
           <Route path="whatsappsettings" element={<WhatsappSettings />} />
           <Route path="footer" element={<AdminFooter />} />

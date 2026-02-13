@@ -6,7 +6,6 @@ import { aboutApi } from "./apis/aboutApi";
 import { serviceApi } from "./apis/serviceApi";
 import { navbarApi } from "./apis/navbarApi";
 import { projectApi } from "./apis/projectApi";
-import { bookingApi } from "./apis/bookingApi";
 import { pricingApi } from "./apis/pricingApi";
 import { contactApi } from "./apis/contactApi";
 import { footerApi } from "./apis/footerApi";
@@ -21,7 +20,6 @@ const reduxStore = configureStore({
     [serviceApi.reducerPath]: serviceApi.reducer,
     [navbarApi.reducerPath]: navbarApi.reducer,
     [projectApi.reducerPath]: projectApi.reducer,
-    [bookingApi.reducerPath]: bookingApi.reducer,
     [pricingApi.reducerPath]: pricingApi.reducer,
      [contactApi.reducerPath]: contactApi.reducer,
       [footerApi.reducerPath]: footerApi.reducer,
@@ -37,7 +35,6 @@ const reduxStore = configureStore({
       aboutApi.middleware,
       serviceApi.middleware,
       projectApi.middleware,
-      bookingApi.middleware,
       pricingApi.middleware,
       contactApi.middleware,
       footerApi.middleware,

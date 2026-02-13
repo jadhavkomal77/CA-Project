@@ -1,6 +1,5 @@
 import express from "express";
 import { createOrUpdateNavbar, getAdminNavbar, getPublicNavbar } from "../controllers/navbarController.js";
-import upload from "../utils/upload.js";
 import adminAuth from "../middlewares/adminAuth.js";
 
 
@@ -11,6 +10,7 @@ router.get("/public", getPublicNavbar);
 
 /* 🔐 Admin */
 router.get("/", adminAuth, getAdminNavbar);
-router.put("/", adminAuth, upload.single("logo"), createOrUpdateNavbar);
+router.put("/", adminAuth, createOrUpdateNavbar);
+
 
 export default router;

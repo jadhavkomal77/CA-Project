@@ -13,7 +13,6 @@ import navbarRoutes from "./routes/navbarRoutes.js";
 import aboutRoutes from "./routes/aboutRoutes.js";
 import projectRoutes from "./routes/projectRoutes.js";
 import pricingRoutes from "./routes/pricingRoutes.js";
-import bookingRoutes from "./routes/bookingRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import footerRoutes from "./routes/footerRoutes.js";
 import settingRoutes from "./routes/admin/settingRoutes.js";
@@ -26,6 +25,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 const allowedOrigins = [
+  "http://localhost:5173",
   "https://ca-project-client.vercel.app",
 
 ];
@@ -56,7 +56,6 @@ app.use("/api/adminnavbar", navbarRoutes);
 app.use("/api/adminabout", aboutRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/pricing", pricingRoutes);
-app.use("/api/booking", bookingRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/footer", footerRoutes);
 app.use("/api/settings", settingRoutes);

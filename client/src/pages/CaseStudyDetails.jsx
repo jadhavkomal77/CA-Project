@@ -51,7 +51,7 @@ export default function CaseStudyDetails() {
 
         {/* BACK BUTTON */}
         <button
-          onClick={() => navigate("/#projects")}
+          onClick={() => navigate("/casestudies")}
           className="mb-8 text-blue-600 hover:underline font-medium"
         >
           ← Back to Case Studies
@@ -129,7 +129,8 @@ export default function CaseStudyDetails() {
           {prevProject ? (
             <button
               onClick={() =>
-                navigate(`/projects/${prevProject.slug}`)
+                navigate(`/casestudies/${prevProject.slug}`)
+
               }
               className="text-blue-600 hover:underline font-medium"
             >
@@ -140,7 +141,8 @@ export default function CaseStudyDetails() {
           {nextProject && (
             <button
               onClick={() =>
-                navigate(`/#projects/${nextProject.slug}`)
+               navigate(`/casestudies/${nextProject.slug}`)
+
               }
               className="text-blue-600 hover:underline font-medium"
             >

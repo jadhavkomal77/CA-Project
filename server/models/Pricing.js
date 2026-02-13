@@ -2,15 +2,39 @@ import mongoose from "mongoose";
 
 const pricingSchema = new mongoose.Schema(
   {
-    title: String,
-    subtitle: String,
-    price: String,      // "499"
-    currency: { type: String, default: "₹" }, // ₹ or $
-    unit: String,       // /visit
-    features: [String],
-    isPopular: { type: Boolean, default: false },
-    status: { type: String, default: "active" },
-    order: { type: Number, default: 0 },
+    title: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+    duration: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    features: [
+      {
+        type: String,
+        trim: true,
+      },
+    ],
+    isPopular: {
+      type: Boolean,
+      default: false,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+    order: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
