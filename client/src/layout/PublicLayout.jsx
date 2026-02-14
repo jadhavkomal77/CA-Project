@@ -53,7 +53,6 @@ export default function PublicLayout() {
     <>
       <PublicNavbar />
 
-      {/* 👇 this enables /#about /#contact scrolling */}
       <ScrollToHash />
 
       <Outlet />

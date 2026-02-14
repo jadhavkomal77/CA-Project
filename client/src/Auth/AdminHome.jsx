@@ -1,95 +1,148 @@
-
-
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import { motion } from "framer-motion";
+import {
+  Users,
+  FileText,
+  ClipboardList,
+  IndianRupee,
+  Sparkles,
+} from "lucide-react";
 
 import { useGetAllContactsQuery } from "../redux/apis/contactApi";
-import {
-  useGetAdminProjectsQuery,
-  useGetPublicProjectsQuery,
-} from "../redux/apis/projectApi";
+import { useGetPublicProjectsQuery } from "../redux/apis/projectApi";
+import { useGetAdminProjectsQuery } from "../redux/apis/projectApi";
 
 export default function AdminHome() {
   const navigate = useNavigate();
 
-  const { data: products = [] } = useGetPublicProjectsQuery();
-  const { data: contacts = [] } = useGetAllContactsQuery();
-  const { data: projects = [] } = useGetAdminProjectsQuery();
+  const { data: clients = [] } = useGetPublicProjectsQuery();
+  const { data: enquiries = [] } = useGetAllContactsQuery();
+  const { data: filings = [] } = useGetAdminProjectsQuery();
 
   const stats = [
-    {
-      title: "Total Products",
-      value: products.length,
-      gradient: "from-indigo-500 to-indigo-700",
-      desc: "All active products",
-    },
-    {
-      title: "Total Projects",
-      value: projects.length,
-      gradient: "from-green-500 to-green-700",
-      desc: "All completed projects",
-    },
-    {
-      title: "Pending Enquiries",
-      value: contacts.length,
-      gradient: "from-yellow-500 to-yellow-600",
-      desc: "Customer contact requests",
-    },
+    { title: "Clients", value: clients.length, icon: Users },
+    { title: "Returns", value: filings.length, icon: FileText },
+    { title: "Enquiries", value: enquiries.length, icon: ClipboardList },
+    { title: "Revenue", value: "₹ 0", icon: IndianRupee },
   ];
 
   return (
-    <div className="bg-gradient-to-br from-gray-50 to-gray-200 p-4 md:p-6 space-y-10 min-h-screen">
+    <div className="min-h-screen px-8 py-12 space-y-12 bg-gradient-to-br from-slate-50 via-white to-indigo-50">
+
       {/* HEADER */}
-      <div>
-        <h1 className="text-2xl md:text-4xl font-extrabold text-gray-900">
-          Admin Dashboard
-        </h1>
-        <p className="text-gray-600 mt-1">
-          Manage Products • Projects • Enquiries
-        </p>
-      </div>
+      <motion.div
+        initial={{opacity:0,y:-20}}
+        animate={{opacity:1,y:0}}
+        className="
+        bg-white rounded-3xl border border-gray-200
+        p-8 shadow-sm flex justify-between items-center
+        "
+      >
+        <div>
+          <div className="flex items-center gap-2 mb-2">
+            <Sparkles size={18} className="text-indigo-600"/>
+            <span className="text-xs font-semibold tracking-wider text-indigo-600">
+              ADMIN DASHBOARD
+            </span>
+          </div>
+
+          <h1 className="text-3xl font-bold text-gray-800">
+            Welcome Back 👋
+          </h1>
+
+          <p className="text-gray-500 text-sm mt-1">
+            Here’s what’s happening with your business today.
+          </p>
+        </div>
+
+        <div className="hidden md:block text-right">
+          <p className="text-xs text-gray-400">System Status</p>
+          <p className="text-green-600 font-semibold text-sm">
+            ● Running Smoothly
+          </p>
+        </div>
+      </motion.div>
+
 
       {/* STATS */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {stats.map((item, index) => (
-          <motion.div
-            key={index}
-            whileHover={{ y: -6, scale: 1.03 }}
-            transition={{ duration: 0.25 }}
-            className={`p-6 rounded-2xl shadow-xl text-white bg-gradient-to-r ${item.gradient}`}
-          >
-            <p className="text-sm">{item.title}</p>
-            <h2 className="text-4xl font-bold mt-2">{item.value}</h2>
-            <p className="mt-2 text-sm opacity-90">{item.desc}</p>
-          </motion.div>
-        ))}
+      <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
+        {stats.map((item,i)=>{
+          const Icon=item.icon;
+          return(
+            <motion.div
+              key={i}
+              whileHover={{y:-8,scale:1.02}}
+              transition={{duration:0.25}}
+              className="
+              relative bg-white border border-gray-200
+              rounded-2xl p-6 shadow-sm
+              hover:shadow-xl transition
+              "
+            >
+
+              {/* glow line */}
+              <div className="absolute top-0 left-0 w-full h-1 rounded-t-2xl bg-gradient-to-r from-indigo-500 to-purple-500"/>
+
+              <div className="flex justify-between mb-5 mt-2">
+                <p className="text-sm font-medium text-gray-500">
+                  {item.title}
+                </p>
+
+                <div className="p-2 rounded-lg bg-indigo-50">
+                  <Icon size={18} className="text-indigo-600"/>
+                </div>
+              </div>
+
+              <h2 className="text-3xl font-bold text-gray-900 tracking-tight">
+                {item.value}
+              </h2>
+            </motion.div>
+          )
+        })}
       </div>
+
 
       {/* QUICK ACTIONS */}
-      <div className="bg-white rounded-2xl shadow p-6">
-        <h3 className="text-2xl font-bold mb-4">Quick Actions</h3>
+      <div>
+        <h3 className="text-xl font-semibold text-gray-700 mb-6">
+          Quick Actions
+        </h3>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-          <ActionBtn label="All Services" onClick={() => navigate("/admin/serviceslist")} />
-          <ActionBtn label="Manage Projects" onClick={() => navigate("/admin/projects")} />
-          <ActionBtn label="View Enquiries" onClick={() => navigate("/admin/contacts")} />
-          <ActionBtn label="Profile Settings" onClick={() => navigate("/admin/profile")} />
+        <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
+
+          <ActionCard
+            title="View Enquiries"
+            desc="Check customer messages"
+            onClick={()=>navigate("/admin/contacts")}
+          />
+
+          <ActionCard
+            title="Profile Settings"
+            desc="Update account details"
+            onClick={()=>navigate("/admin/profile")}
+          />
+
         </div>
       </div>
+
     </div>
   );
 }
 
-/* ================= ACTION BUTTON ================= */
-const ActionBtn = ({ label, onClick }) => (
-  <button
+
+/* ACTION CARD */
+const ActionCard = ({title,desc,onClick}) => (
+  <motion.div
+    whileHover={{scale:1.05}}
+    whileTap={{scale:0.97}}
     onClick={onClick}
     className="
-      bg-gray-100 hover:bg-indigo-600 hover:text-white
-      transition rounded-xl py-3 px-4 text-sm font-semibold shadow
+      cursor-pointer bg-white border border-gray-200 rounded-xl
+      p-6 shadow-sm hover:shadow-xl transition
     "
   >
-    {label}
-  </button>
+    <p className="font-semibold text-gray-800">{title}</p>
+    <p className="text-sm text-gray-500 mt-1">{desc}</p>
+  </motion.div>
 );

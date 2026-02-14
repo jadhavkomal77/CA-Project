@@ -168,3 +168,209 @@ export default function ServiceDetails() {
     </>
   );
 }
+
+
+
+
+
+// import React from "react";
+// import { useParams, useNavigate } from "react-router-dom";
+// import { useGetPublicServiceBySlugQuery } from "../redux/apis/serviceApi";
+// import { motion } from "framer-motion";
+// import * as Icons from "lucide-react";
+
+// export default function ServiceDetails() {
+//   const { slug } = useParams();
+//   const navigate = useNavigate();
+
+//   const { data: service, isLoading, isError } =
+//     useGetPublicServiceBySlugQuery(slug);
+
+//   if (isLoading)
+//     return (
+//       <div className="h-[60vh] flex items-center justify-center text-lg font-medium text-gray-600">
+//         Loading service...
+//       </div>
+//     );
+
+//   if (isError || !service)
+//     return (
+//       <div className="h-[60vh] flex items-center justify-center text-red-500 font-medium">
+//         Service not found
+//       </div>
+//     );
+
+//   const Icon = Icons[service.icon] || Icons.FileText;
+
+//   return (
+//     <div className="bg-gradient-to-br from-slate-50 via-white to-blue-50 min-h-screen">
+
+//       {/* ================= HERO ================= */}
+//       <section className="pt-16 pb-14 px-6 text-center">
+//         <motion.div
+//           initial={{ opacity: 0, y: 25 }}
+//           animate={{ opacity: 1, y: 0 }}
+//           transition={{ duration: 0.35 }}
+//           className="max-w-4xl mx-auto"
+//         >
+//           <div className="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center mb-6 shadow">
+//             <Icon size={34} className="text-blue-700"/>
+//           </div>
+
+//           <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-5">
+//             {service.title}
+//           </h1>
+
+//           <p className="text-gray-600 text-base md:text-lg leading-relaxed">
+//             {service.longDesc || service.shortDesc}
+//           </p>
+//         </motion.div>
+//       </section>
+
+
+//       {/* ================= WHY CHOOSE ================= */}
+//       {service.whyChoose?.length > 0 && (
+//         <section className="py-16">
+//           <div className="max-w-6xl mx-auto px-6">
+
+//             <h2 className="text-3xl font-bold text-center mb-12">
+//               Why Choose This Service
+//             </h2>
+
+//             <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
+
+//               {service.whyChoose.map((item, i) => {
+//                 const I = Icons[item.icon] || Icons.CheckCircle;
+
+//                 return(
+//                   <motion.div
+//                     key={i}
+//                     initial={{ opacity: 0, y: 25 }}
+//                     whileInView={{ opacity: 1, y: 0 }}
+//                     transition={{ duration: 0.3, delay: i * 0.05 }}
+//                     viewport={{ once: true }}
+//                     className="
+//                     bg-white
+//                     rounded-2xl
+//                     p-6
+//                     shadow-md
+//                     hover:shadow-xl
+//                     transition
+//                     "
+//                   >
+//                     <I className="text-blue-600 mb-3" size={26}/>
+//                     <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
+//                     <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
+//                   </motion.div>
+//                 )
+//               })}
+
+//             </div>
+//           </div>
+//         </section>
+//       )}
+
+
+//       {/* ================= PROCESS ================= */}
+//       {service.process?.length > 0 && (
+//         <section className="py-16 bg-white/60 backdrop-blur">
+//           <div className="max-w-6xl mx-auto px-6">
+
+//             <h2 className="text-3xl font-bold text-center mb-12">
+//               Our Process
+//             </h2>
+
+//             <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8">
+
+//               {service.process.map((step, i)=>(
+//                 <motion.div
+//                   key={i}
+//                   initial={{ opacity: 0, scale: 0.95 }}
+//                   whileInView={{ opacity: 1, scale: 1 }}
+//                   transition={{ duration: 0.25, delay: i * 0.05 }}
+//                   viewport={{ once: true }}
+//                   className="bg-white rounded-2xl p-6 shadow"
+//                 >
+//                   <div className="w-11 h-11 rounded-full bg-blue-600 text-white flex items-center justify-center mb-4 font-semibold">
+//                     {step.step}
+//                   </div>
+
+//                   <h3 className="font-semibold mb-2">{step.title}</h3>
+//                   <p className="text-gray-600 text-sm">{step.desc}</p>
+//                 </motion.div>
+//               ))}
+
+//             </div>
+//           </div>
+//         </section>
+//       )}
+
+
+//       {/* ================= TAGS ================= */}
+//       {service.technologies?.length > 0 && (
+//         <section className="py-16">
+//           <div className="max-w-5xl mx-auto px-6 text-center">
+
+//             <h2 className="text-3xl font-bold mb-8">
+//               Tools & Platforms
+//             </h2>
+
+//             <div className="flex flex-wrap justify-center gap-3">
+//               {service.technologies.map((tech,i)=>(
+//                 <span
+//                   key={i}
+//                   className="
+//                   px-5 py-2
+//                   rounded-full
+//                   bg-white
+//                   shadow
+//                   text-gray-700
+//                   text-sm font-medium
+//                   hover:shadow-md
+//                   transition
+//                   "
+//                 >
+//                   {tech}
+//                 </span>
+//               ))}
+//             </div>
+
+//           </div>
+//         </section>
+//       )}
+
+
+//       {/* ================= CTA ================= */}
+//       <section className="py-20 text-center">
+//         <div className="max-w-3xl mx-auto px-6">
+
+//           <h2 className="text-3xl font-bold mb-4">
+//             Need help with this service?
+//           </h2>
+
+//           <p className="text-gray-600 mb-8">
+//             Our experts are ready to guide you with reliable financial solutions.
+//           </p>
+
+//           <button
+//             onClick={()=>navigate("/contact")}
+//             className="
+//             bg-gradient-to-r from-blue-600 to-indigo-600
+//             text-white
+//             px-10 py-4
+//             rounded-xl
+//             font-semibold
+//             shadow-lg
+//             hover:scale-105
+//             transition
+//             "
+//           >
+//             Get Consultation
+//           </button>
+
+//         </div>
+//       </section>
+
+//     </div>
+//   );
+// }
