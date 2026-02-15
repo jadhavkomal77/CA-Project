@@ -43,6 +43,7 @@ const menu = [
   { name: "Add Services", path: "/admin/addservices", icon: <FaCogs />,},
   {name: "Services List",path: "/admin/serviceslist",icon: <FaTools />,},
   {name: "Projects",path: "/admin/projects",icon: <FaProjectDiagram />,},
+  {name: "calculater",path: "/admin/calculater",icon: <FaProjectDiagram />,},
 
   {name: "Contacts",path: "/admin/contacts",icon: <FaAddressBook />,},
   {name: "WhatsApp", path: "/admin/whatsappsettings",icon: <FaWhatsapp />,},

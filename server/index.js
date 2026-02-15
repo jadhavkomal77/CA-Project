@@ -16,6 +16,7 @@ import pricingRoutes from "./routes/pricingRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import footerRoutes from "./routes/footerRoutes.js";
 import settingRoutes from "./routes/admin/settingRoutes.js";
+import calculatorRoutes from "./routes/calculatorRoutes.js";
 
 
 const app = express();
@@ -60,6 +61,7 @@ app.use("/api/pricing", pricingRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/footer", footerRoutes);
 app.use("/api/settings", settingRoutes);
+app.use("/api/calculators", calculatorRoutes);
 
 app.get("/", (req, res) => {
   res.json("Server is Running! 🚀");

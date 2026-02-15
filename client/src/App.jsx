@@ -34,6 +34,8 @@ import FAQ from "./pages/FAQ";
 import CaseStudies from "./pages/CaseStudies";
 import CaseStudyDetails from "./pages/CaseStudyDetails";
 import AboutDetails from "./pages/AboutDetails";
+import PublicCalculator from "./pages/PublicCalculator";
+import AdminCalculators from "./admin/AdminCalculators";
 
 
 
@@ -50,9 +52,9 @@ function App() {
               <Route path="services" element={<Services />} />
               <Route path="services/:slug" element={<ServiceDetails />} />
               <Route path="casestudies" element={<CaseStudies />} />
-              {/* <Route path="CaseStudyDetails" element={<CaseStudyDetails />} /> */}
               <Route path="casestudies/:slug" element={<CaseStudyDetails />} />
               <Route path="about-details" element={<AboutDetails />} />
+              <Route path="publiccalculator" element={<PublicCalculator />} />
 
               <Route path="testimonials" element={<Testimonials />} />
               <Route path="industries" element={<Industries />} />
@@ -76,6 +78,9 @@ function App() {
           <Route index element={<AdminHome />} />
           <Route path="profile" element={<AdminProfile />} />
           <Route path="navbar" element={<AdminNavbar />} />
+
+          <Route path="calculater" element={<AdminCalculators />} />
+
           <Route path="hero" element={<AdminHero />} />
           <Route path="about" element={<AdminAbout />} />
           <Route path="addservices" element={<AdminServices />} />

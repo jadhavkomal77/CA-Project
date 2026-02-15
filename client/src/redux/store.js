@@ -10,6 +10,7 @@ import { pricingApi } from "./apis/pricingApi";
 import { contactApi } from "./apis/contactApi";
 import { footerApi } from "./apis/footerApi";
 import { settingApi } from "./apis/settingApi";
+import { calculatorApi } from "./apis/calculatorApi";
 
 const reduxStore = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ const reduxStore = configureStore({
      [contactApi.reducerPath]: contactApi.reducer,
       [footerApi.reducerPath]: footerApi.reducer,
       [settingApi.reducerPath]: settingApi.reducer,
+       [calculatorApi.reducerPath]: calculatorApi.reducer,
 
     admin: adminReducer,
   },
@@ -39,6 +41,7 @@ const reduxStore = configureStore({
       contactApi.middleware,
       footerApi.middleware,
       settingApi.middleware,
+      calculatorApi.middleware,
     ),
 
 });

@@ -5,6 +5,7 @@ import Hero from "../pages/Hero";
 import Industries from "../pages/Industries";
 import Projects from "../pages/CaseStudies";
 import Services from "../pages/Services";
+import PublicCalculator from "../pages/PublicCalculator";
 // import FAQ from "../pages/FAQ";
 // import Testimonials from "../pages/Testimonials";
 
@@ -16,7 +17,7 @@ const Home = () => {
       <section id="services"><Services /></section>
       <section id="casestudies"><Projects /></section>
       <section id="industries"><Industries /></section>
-      {/* <section id="testimonials"><Testimonials /></section> */}
+      <section id="publiccalculator"><PublicCalculator /></section>
       {/* <section id="faq"><FAQ /></section> */}
       <section id="contact"><Contact /></section>
     </>

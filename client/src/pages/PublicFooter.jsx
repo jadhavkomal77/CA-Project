@@ -23,7 +23,7 @@ export default function PublicFooter() {
     Home: "/",
     About: "/about",
     Services: "/services",
-    Projects: "/projects",
+    Projects: "/casestudies",
     Pricing: "/pricing",
     Contact: "/contact",
     "Privacy Policy": "/privacy",
