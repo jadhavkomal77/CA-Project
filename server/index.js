@@ -18,7 +18,6 @@ import footerRoutes from "./routes/footerRoutes.js";
 import settingRoutes from "./routes/admin/settingRoutes.js";
 import calculatorRoutes from "./routes/calculatorRoutes.js";
 
-
 const app = express();
 const __dirname = path.resolve();
 

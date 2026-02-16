@@ -36,6 +36,14 @@ import CaseStudyDetails from "./pages/CaseStudyDetails";
 import AboutDetails from "./pages/AboutDetails";
 import PublicCalculator from "./pages/PublicCalculator";
 import AdminCalculators from "./admin/AdminCalculators";
+// import AdminPolicies from "./admin/AdminPolicies";
+
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsConditions from "./pages/TermsConditions";
+import Disclaimer from "./pages/Disclaimer";
+import RefundPolicy from "./pages/RefundPolicy";
+
+
 
 
 
@@ -54,12 +62,19 @@ function App() {
               <Route path="casestudies" element={<CaseStudies />} />
               <Route path="casestudies/:slug" element={<CaseStudyDetails />} />
               <Route path="about-details" element={<AboutDetails />} />
-              <Route path="publiccalculator" element={<PublicCalculator />} />
+              <Route path="calculators" element={<PublicCalculator />} />
 
               <Route path="testimonials" element={<Testimonials />} />
               <Route path="industries" element={<Industries />} />
               <Route path="faq" element={<FAQ />} />
-            
+
+               <Route path="privacy" element={<PrivacyPolicy />} />
+               <Route path="terms" element={<TermsConditions />} />
+               <Route path="disclaimer" element={<Disclaimer />} />
+               <Route path="refund-policy" element={<RefundPolicy />} />
+
+
+              
               <Route path="contact" element={<Contact />} />
             
               <Route path="*" element={<NotFound />} />
@@ -91,6 +106,8 @@ function App() {
           <Route path="projects/new" element={<AddAdminProject />} />  
           <Route path="projects/edit/:id" element={<AddAdminProject />} /> 
 
+         {/* <Route path="policyadmin" element={<AdminPolicies/>}/> */}
+         {/* <Route path="/:slug" element={<PublicPolicy/>}/> */}
         
           <Route path="pricing" element={<AdminPricing />} /> 
           <Route path="contacts" element={<AdminContacts />} />
