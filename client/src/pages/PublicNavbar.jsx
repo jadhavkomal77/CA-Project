@@ -241,7 +241,6 @@ export default function PublicNavbar() {
 
   if (isLoading || servicesLoading) return null;
 
-  /* ---------- FALLBACK MENU ---------- */
   const defaultMenu = [
     { label: "About", link: "/about" },
     { label: "Services", link: "#" },
@@ -251,8 +250,6 @@ export default function PublicNavbar() {
   ];
 
   const menu = data?.menu?.length ? data.menu : defaultMenu;
-
-  /* ---------- HELPERS ---------- */
 
   const openMenu = (setter) => {
     clearTimeout(timeoutRef.current);
@@ -270,69 +267,93 @@ export default function PublicNavbar() {
     setOpenResources(false);
   };
 
-  /* ---------- RESOURCES LINKS ---------- */
-
   const resourcesLinks = [
     { label: "FAQ", link: "/faq" },
     { label: "Calculators", link: "/calculators" },
   ];
 
-  /* ================================================= */
-
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-gray-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
-        <div className="flex items-center justify-between h-[90px] md:h-[85px]">
+        <div className="flex items-center justify-between h-[72px] md:h-[85px]">
 
-          {/* LOGO */}
+          {/* LOGO (UNCHANGED) */}
           <div
-            className="flex flex-col items-center md:items-start cursor-pointer"
+            className="flex flex-col items-center md:items-start cursor-pointer select-none"
             onClick={() => navigate("/")}
           >
-            <div className="flex">
-              {["C","A","D","M","A"].map((l,i)=>{
-                const white = i<2;
-                return(
+            <div
+              className="flex items-center"
+              style={{
+                filter:
+                  "drop-shadow(0 3px 8px rgba(0,0,0,0.12)) drop-shadow(0 6px 18px rgba(0,0,0,0.06))",
+              }}
+            >
+              {["C", "A", "D", "M", "A"].map((l, i) => {
+                const whiteBlock = i < 2;
+
+                return (
                   <div
                     key={i}
                     className="relative"
-                    style={{width:"52px",height:"52px",marginLeft:i?"-1px":"0"}}
+                    style={{
+                      width: "52px",
+                      height: "52px",
+                      marginLeft: i > 0 ? "-1px" : "0",
+                    }}
                   >
                     <div
                       className="absolute inset-0"
                       style={{
-                        background:white
-                          ?"linear-gradient(160deg,#fff,#ececec)"
-                          :"linear-gradient(160deg,#1e3a8a,#2563eb,#1e3a8a)",
-                        border:white
-                          ?"1px solid rgba(0,0,0,0.06)"
-                          :"1px solid rgba(0,0,0,0.25)",
+                        background: whiteBlock
+                          ? "linear-gradient(160deg, #ffffff 0%, #f7f7f7 40%, #ececec 100%)"
+                          : "linear-gradient(160deg, #1e3a8a 0%, #1e40af 45%, #2563eb 70%, #1e3a8a 100%)",
+                        border: whiteBlock
+                          ? "1px solid rgba(0,0,0,0.06)"
+                          : "1px solid rgba(0,0,0,0.25)",
                         borderRadius:
-                          i===0?"8px 0 0 8px":
-                          i===4?"0 8px 8px 0":"0"
+                          i === 0
+                            ? "8px 0 0 8px"
+                            : i === 4
+                            ? "0 8px 8px 0"
+                            : "0",
+                        boxShadow: `
+                          inset 0 2px 4px rgba(255,255,255,0.7),
+                          inset 0 -3px 6px rgba(0,0,0,0.15),
+                          0 4px 8px rgba(0,0,0,0.08)
+                        `,
                       }}
                     />
-                    <div className="absolute inset-0 flex items-center justify-center font-black text-[26px]"
-                      style={{color:white?"#1e40af":"#fff"}}
+
+                    <div
+                      className="absolute inset-0 flex items-center justify-center"
+                      style={{
+                        fontSize: "26px",
+                        fontWeight: "900",
+                        letterSpacing: "-1px",
+                        fontFamily: "Inter, system-ui, sans-serif",
+                        color: whiteBlock ? "#1e40af" : "#ffffff",
+                      }}
                     >
                       {l}
                     </div>
                   </div>
-                )
+                );
               })}
             </div>
 
-            <p className="text-blue-700 text-[11px] md:text-[13px] font-semibold mt-2">
-              PROFESSIONAL | TRUSTED | RELIABLE
-            </p>
+            <div className="mt-1 w-full flex justify-center md:justify-start">
+              <p className="text-blue-700 text-[10px] md:text-[13px] font-semibold tracking-[1px] leading-tight">
+                PROFESSIONAL | TRUSTED | RELIABLE
+              </p>
+            </div>
           </div>
 
           {/* DESKTOP MENU */}
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-700">
+          <nav className="hidden lg:flex items-center gap-5 xl:gap-8 text-sm font-medium text-gray-700">
 
             {menu.map((item,index)=>{
 
-              /* ---------- SERVICES ---------- */
               if(item.label==="Services"){
                 return(
                   <div
@@ -362,7 +383,6 @@ export default function PublicNavbar() {
                 )
               }
 
-              /* ---------- RESOURCES ---------- */
               if(item.label==="Resources"){
                 return(
                   <div
@@ -392,7 +412,6 @@ export default function PublicNavbar() {
                 )
               }
 
-              /* ---------- NORMAL LINK ---------- */
               return(
                 <button
                   key={index}
@@ -402,13 +421,11 @@ export default function PublicNavbar() {
                   {item.label}
                 </button>
               )
-
             })}
-
           </nav>
 
           {/* RIGHT SIDE */}
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden xl:flex items-center gap-6">
             <div className="flex items-center gap-2 text-gray-700 text-sm">
               <div className="bg-blue-100 p-2 rounded-full">
                 <Phone size={16} className="text-blue-700"/>
@@ -425,7 +442,7 @@ export default function PublicNavbar() {
           </div>
 
           {/* MOBILE BUTTON */}
-          <button className="md:hidden" onClick={()=>setMobileOpen(!mobileOpen)}>
+          <button className="lg:hidden" onClick={()=>setMobileOpen(!mobileOpen)}>
             {mobileOpen?<X size={26}/>:<Menu size={26}/>}
           </button>
         </div>
@@ -433,7 +450,7 @@ export default function PublicNavbar() {
 
       {/* MOBILE MENU */}
       {mobileOpen && (
-        <div className="md:hidden bg-white px-6 py-5 space-y-3 shadow-md">
+        <div className="lg:hidden bg-white px-6 py-5 space-y-3 shadow-md animate-[fadeIn_.25s_ease]">
 
           {menu.map((item,index)=>(
             <button
@@ -466,3 +483,4 @@ export default function PublicNavbar() {
     </header>
   );
 }
+
