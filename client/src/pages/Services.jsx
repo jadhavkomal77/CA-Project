@@ -308,7 +308,7 @@ export default function Services() {
 
                   {/* CTA */}
                   <span className="font-semibold text-blue-600 group-hover:text-blue-800 transition">
-                    Learn More →
+                    Read More →
                   </span>
 
                 </div>

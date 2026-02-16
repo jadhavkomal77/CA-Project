@@ -55,7 +55,7 @@ export default function About() {
             onClick={()=>navigate("/about-details")}
             className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold shadow-md transition"
           >
-            Learn More
+            Read More
           </button>
 
         </div>
