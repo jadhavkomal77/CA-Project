@@ -42,6 +42,8 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions";
 import Disclaimer from "./pages/Disclaimer";
 import RefundPolicy from "./pages/RefundPolicy";
+import ApplyService from "./pages/ApplyService";
+import AdminApplications from "./admin/AdminApplications";
 
 
 
@@ -67,6 +69,8 @@ function App() {
               <Route path="testimonials" element={<Testimonials />} />
               <Route path="industries" element={<Industries />} />
               <Route path="faq" element={<FAQ />} />
+
+              <Route path="apply/:slug" element={<ApplyService />} />
 
                <Route path="privacy" element={<PrivacyPolicy />} />
                <Route path="terms" element={<TermsConditions />} />
@@ -95,6 +99,7 @@ function App() {
           <Route path="navbar" element={<AdminNavbar />} />
 
           <Route path="calculater" element={<AdminCalculators />} />
+          <Route path="adminApplications" element={<AdminApplications />} />
 
           <Route path="hero" element={<AdminHero />} />
           <Route path="about" element={<AdminAbout />} />
@@ -106,7 +111,6 @@ function App() {
           <Route path="projects/new" element={<AddAdminProject />} />  
           <Route path="projects/edit/:id" element={<AddAdminProject />} /> 
 
-         {/* <Route path="policyadmin" element={<AdminPolicies/>}/> */}
          {/* <Route path="/:slug" element={<PublicPolicy/>}/> */}
         
           <Route path="pricing" element={<AdminPricing />} /> 

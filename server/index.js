@@ -17,6 +17,7 @@ import contactRoutes from "./routes/contactRoutes.js";
 import footerRoutes from "./routes/footerRoutes.js";
 import settingRoutes from "./routes/admin/settingRoutes.js";
 import calculatorRoutes from "./routes/calculatorRoutes.js";
+import applicationRoutes from "./routes/applicationRoutes.js";
 
 const app = express();
 const __dirname = path.resolve();
@@ -61,6 +62,8 @@ app.use("/api/contact", contactRoutes);
 app.use("/api/footer", footerRoutes);
 app.use("/api/settings", settingRoutes);
 app.use("/api/calculators", calculatorRoutes);
+app.use("/api/applications", applicationRoutes);
+
 
 app.get("/", (req, res) => {
   res.json("Server is Running! 🚀");
@@ -93,7 +96,7 @@ mongoose
 
 if (process.env.NODE_ENV !== "production") {
   app.listen(PORT, () => {
-    console.log(`🚀 Server running locally on port ${PORT}`);
+    console.log(`🚀 Server running locally 🏃‍♀️ on port ${PORT}`);
   });
 }
 

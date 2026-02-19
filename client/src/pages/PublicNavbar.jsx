@@ -269,7 +269,7 @@ export default function PublicNavbar() {
 
   const resourcesLinks = [
     { label: "FAQ", link: "/faq" },
-    { label: "Calculators", link: "/calculators" },
+    { label: "Industries", link: "/industries" },
   ];
 
   return (
@@ -426,7 +426,7 @@ export default function PublicNavbar() {
 
           {/* RIGHT SIDE */}
           <div className="hidden xl:flex items-center gap-6">
-            <div className="flex items-center gap-2 text-gray-700 text-sm">
+            <div className="flex items-center gap-2 text-black text-lg">
               <div className="bg-blue-100 p-2 rounded-full">
                 <Phone size={16} className="text-blue-700"/>
               </div>

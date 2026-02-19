@@ -227,8 +227,7 @@ export default function Services() {
         </h1>
 
         <p className="text-gray-600 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
-          Professional financial, taxation and advisory solutions tailored for
-          individuals and businesses.
+          Expert financial and compliance solutions tailored to your business needs.
         </p>
       </motion.section>
 

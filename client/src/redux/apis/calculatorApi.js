@@ -37,6 +37,14 @@ export const calculatorApi = createApi({
         body: data,
       }),
     }),
+    calculateAdvanceTax: builder.mutation({
+  query: (data) => ({
+    url: "/advance-tax",
+    method: "POST",
+    body: data,
+  }),
+}),
+
   }),
 });
 
@@ -44,5 +52,6 @@ export const {
   useCalculateIncomeTaxMutation,
   useCalculateGSTMutation,
   useCalculateEMIMutation,
+  useCalculateAdvanceTaxMutation,
   useCalculateSIPMutation,
 } = calculatorApi;
