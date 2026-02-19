@@ -4,9 +4,9 @@ export const contactApi = createApi({
   reducerPath: "contactApi",
 
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_BACKEND_URL
+        baseUrl: import.meta.env.VITE_BACKEND_URL
       ? import.meta.env.VITE_BACKEND_URL + "/api/contact"
-      : "http://localhost:5000/api/contact",
+      : "/api/contact",
     credentials: "include",
   }),
 

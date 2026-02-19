@@ -4,9 +4,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const footerApi = createApi({
   reducerPath: "footerApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_BACKEND_URL
+        baseUrl: import.meta.env.VITE_BACKEND_URL
       ? import.meta.env.VITE_BACKEND_URL + "/api/footer"
-      : "http://localhost:5000/api/footer",
+      : "/api/footer",
     credentials: "include",
   }),
   tagTypes: ["Footer"],
