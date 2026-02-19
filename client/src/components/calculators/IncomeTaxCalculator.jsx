@@ -1,201 +1,201 @@
-import { useState } from "react";
-import { Calculator, AlertCircle, CheckCircle, Info } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { useCalculateIncomeTaxMutation } from "../../redux/apis/calculatorApi";
-import FormattedNumberInput from "./FormattedNumberInput";
+// import { useState } from "react";
+// import { Calculator, AlertCircle, CheckCircle, Info } from "lucide-react";
+// import { useNavigate } from "react-router-dom";
+// import { useCalculateIncomeTaxMutation } from "../../redux/apis/calculatorApi";
+// import FormattedNumberInput from "./FormattedNumberInput";
 
-export default function IncomeTaxCalculator() {
-  const navigate = useNavigate();
-  const [calculateIncomeTax, { isLoading }] = useCalculateIncomeTaxMutation();
+// export default function IncomeTaxCalculator() {
+//   const navigate = useNavigate();
+//   const [calculateIncomeTax, { isLoading }] = useCalculateIncomeTaxMutation();
 
-  const [formData, setFormData] = useState({
-    annualIncome: "",
-    age: "",
-    regime: "old",
-    deduction80C: "",
-    deduction80D: "",
-    otherDeductions: "",
-  });
+//   const [formData, setFormData] = useState({
+//     annualIncome: "",
+//     age: "",
+//     regime: "old",
+//     deduction80C: "",
+//     deduction80D: "",
+//     otherDeductions: "",
+//   });
 
-  const [result, setResult] = useState(null);
-  const [error, setError] = useState("");
+//   const [result, setResult] = useState(null);
+//   const [error, setError] = useState("");
 
-  const handleChange = (e) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
-    setError("");
-    setResult(null);
-  };
+//   const handleChange = (e) => {
+//     setFormData(prev => ({
+//       ...prev,
+//       [e.target.name]: e.target.value
+//     }));
+//     setError("");
+//     setResult(null);
+//   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
 
-    try {
-      const response = await calculateIncomeTax({
-        annualIncome: Number(formData.annualIncome),
-        age: Number(formData.age),
-        regime: formData.regime,
-        deduction80C: Number(formData.deduction80C) || 0,
-        deduction80D: Number(formData.deduction80D) || 0,
-        otherDeductions: Number(formData.otherDeductions) || 0,
-      }).unwrap();
+//     try {
+//       const response = await calculateIncomeTax({
+//         annualIncome: Number(formData.annualIncome),
+//         age: Number(formData.age),
+//         regime: formData.regime,
+//         deduction80C: Number(formData.deduction80C) || 0,
+//         deduction80D: Number(formData.deduction80D) || 0,
+//         otherDeductions: Number(formData.otherDeductions) || 0,
+//       }).unwrap();
 
-      setResult(response.data);
-    } catch (err) {
-      setError(err?.data?.message || "Calculation failed");
-    }
-  };
+//       setResult(response.data);
+//     } catch (err) {
+//       setError(err?.data?.message || "Calculation failed");
+//     }
+//   };
 
-  return (
-    <div className="max-w-6xl mx-auto">
+//   return (
+//     <div className="max-w-6xl mx-auto">
 
-      {/* HEADER */}
-      <div className="flex items-center gap-3 mb-8">
-        <div className="p-3 bg-blue-100 rounded-xl">
-          <Calculator className="text-blue-700" size={26} />
-        </div>
-        <h2 className="text-3xl font-bold text-gray-900">
-          Income Tax Calculator
-        </h2>
-      </div>
+//       {/* HEADER */}
+//       <div className="flex items-center gap-3 mb-8">
+//         <div className="p-3 bg-blue-100 rounded-xl">
+//           <Calculator className="text-blue-700" size={26} />
+//         </div>
+//         <h2 className="text-3xl font-bold text-gray-900">
+//           Income Tax Calculator
+//         </h2>
+//       </div>
 
-      <div className="grid md:grid-cols-2 gap-8">
+//       <div className="grid md:grid-cols-2 gap-8">
 
-        {/* FORM */}
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white p-6 rounded-2xl shadow-lg space-y-5"
-        >
+//         {/* FORM */}
+//         <form
+//           onSubmit={handleSubmit}
+//           className="bg-white p-6 rounded-2xl shadow-lg space-y-5"
+//         >
 
-          <FormattedNumberInput
-            label="Annual Income (₹)"
-            name="annualIncome"
-            value={formData.annualIncome}
-            onChange={handleChange}
-          />
+//           <FormattedNumberInput
+//             label="Annual Income (₹)"
+//             name="annualIncome"
+//             value={formData.annualIncome}
+//             onChange={handleChange}
+//           />
 
-          <div>
-            <label className="label">Age</label>
-            <input
-              type="number"
-              name="age"
-              value={formData.age}
-              onChange={handleChange}
-              className="input"
-              placeholder="Enter age"
-              min="1"
-            />
-          </div>
+//           <div>
+//             <label className="label">Age</label>
+//             <input
+//               type="number"
+//               name="age"
+//               value={formData.age}
+//               onChange={handleChange}
+//               className="input"
+//               placeholder="Enter age"
+//               min="1"
+//             />
+//           </div>
 
-          <div>
-            <label className="label">Tax Regime</label>
-            <select
-              name="regime"
-              value={formData.regime}
-              onChange={handleChange}
-              className="input"
-            >
-              <option value="old">Old Regime</option>
-              <option value="new">New Regime</option>
-            </select>
-          </div>
+//           <div>
+//             <label className="label">Tax Regime</label>
+//             <select
+//               name="regime"
+//               value={formData.regime}
+//               onChange={handleChange}
+//               className="input"
+//             >
+//               <option value="old">Old Regime</option>
+//               <option value="new">New Regime</option>
+//             </select>
+//           </div>
 
-          <FormattedNumberInput
-            label="80C Deduction"
-            name="deduction80C"
-            value={formData.deduction80C}
-            onChange={handleChange}
-          />
+//           <FormattedNumberInput
+//             label="80C Deduction"
+//             name="deduction80C"
+//             value={formData.deduction80C}
+//             onChange={handleChange}
+//           />
 
-          <FormattedNumberInput
-            label="80D Deduction"
-            name="deduction80D"
-            value={formData.deduction80D}
-            onChange={handleChange}
-          />
+//           <FormattedNumberInput
+//             label="80D Deduction"
+//             name="deduction80D"
+//             value={formData.deduction80D}
+//             onChange={handleChange}
+//           />
 
-          <FormattedNumberInput
-            label="Other Deductions"
-            name="otherDeductions"
-            value={formData.otherDeductions}
-            onChange={handleChange}
-          />
+//           <FormattedNumberInput
+//             label="Other Deductions"
+//             name="otherDeductions"
+//             value={formData.otherDeductions}
+//             onChange={handleChange}
+//           />
 
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-600 p-3 rounded-lg flex gap-2">
-              <AlertCircle size={18} /> {error}
-            </div>
-          )}
+//           {error && (
+//             <div className="bg-red-50 border border-red-200 text-red-600 p-3 rounded-lg flex gap-2">
+//               <AlertCircle size={18} /> {error}
+//             </div>
+//           )}
 
-          <button
-            disabled={isLoading}
-            className="w-full bg-blue-700 hover:bg-blue-800 text-white py-3 rounded-xl font-semibold transition"
-          >
-            {isLoading ? "Calculating..." : "Calculate Tax"}
-          </button>
-        </form>
+//           <button
+//             disabled={isLoading}
+//             className="w-full bg-blue-700 hover:bg-blue-800 text-white py-3 rounded-xl font-semibold transition"
+//           >
+//             {isLoading ? "Calculating..." : "Calculate Tax"}
+//           </button>
+//         </form>
 
-        {/* RESULT */}
-        <div className="bg-white p-6 rounded-2xl shadow-lg">
+//         {/* RESULT */}
+//         <div className="bg-white p-6 rounded-2xl shadow-lg">
 
-          {result ? (
-            <>
-              <div className="flex items-center gap-2 text-green-700 mb-5">
-                <CheckCircle />
-                <h3 className="text-xl font-bold">Calculation Result</h3>
-              </div>
+//           {result ? (
+//             <>
+//               <div className="flex items-center gap-2 text-green-700 mb-5">
+//                 <CheckCircle />
+//                 <h3 className="text-xl font-bold">Calculation Result</h3>
+//               </div>
 
-              <div className="space-y-4">
+//               <div className="space-y-4">
 
-                <ResultCard title="Taxable Income" value={result.taxableIncome} blue />
-                <ResultCard title="Total Tax Payable" value={result.totalTax} red />
-                <ResultCard title="Tax Amount" value={result.taxPayable} />
-                <ResultCard title="Cess (4%)" value={result.cess} />
+//                 <ResultCard title="Taxable Income" value={result.taxableIncome} blue />
+//                 <ResultCard title="Total Tax Payable" value={result.totalTax} red />
+//                 <ResultCard title="Tax Amount" value={result.taxPayable} />
+//                 <ResultCard title="Cess (4%)" value={result.cess} />
 
-              </div>
+//               </div>
 
-              <div className="mt-6 bg-yellow-50 border border-yellow-200 p-4 rounded-lg text-sm text-yellow-800 flex gap-2">
-                <Info size={16}/>
-                This is estimated value. Contact CA for exact calculation.
-              </div>
+//               <div className="mt-6 bg-yellow-50 border border-yellow-200 p-4 rounded-lg text-sm text-yellow-800 flex gap-2">
+//                 <Info size={16}/>
+//                 This is estimated value. Contact CA for exact calculation.
+//               </div>
 
-              <button
-                onClick={() => navigate("/contact")}
-                className="mt-6 w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold"
-              >
-                Book Consultation
-              </button>
-            </>
-          ) : (
-            <div className="text-center text-gray-400 py-20">
-              <Calculator size={48} className="mx-auto mb-3 opacity-50"/>
-              Enter details to calculate
-            </div>
-          )}
-        </div>
+//               <button
+//                 onClick={() => navigate("/contact")}
+//                 className="mt-6 w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold"
+//               >
+//                 Book Consultation
+//               </button>
+//             </>
+//           ) : (
+//             <div className="text-center text-gray-400 py-20">
+//               <Calculator size={48} className="mx-auto mb-3 opacity-50"/>
+//               Enter details to calculate
+//             </div>
+//           )}
+//         </div>
 
-      </div>
-    </div>
-  );
-}
+//       </div>
+//     </div>
+//   );
+// }
 
 
-/* Result Card */
-function ResultCard({ title, value, blue, red }) {
-  return (
-    <div className="p-4 rounded-xl border bg-gray-50">
-      <p className="text-sm text-gray-500">{title}</p>
-      <p className={`text-2xl font-bold mt-1
-        ${blue ? "text-blue-700" : ""}
-        ${red ? "text-red-600" : ""}
-      `}>
-        ₹ {Number(value).toLocaleString("en-IN")}
-      </p>
-    </div>
-  );
-}
+// /* Result Card */
+// function ResultCard({ title, value, blue, red }) {
+//   return (
+//     <div className="p-4 rounded-xl border bg-gray-50">
+//       <p className="text-sm text-gray-500">{title}</p>
+//       <p className={`text-2xl font-bold mt-1
+//         ${blue ? "text-blue-700" : ""}
+//         ${red ? "text-red-600" : ""}
+//       `}>
+//         ₹ {Number(value).toLocaleString("en-IN")}
+//       </p>
+//     </div>
+//   );
+// }
 
 
 
@@ -452,3 +452,188 @@ function ResultCard({ title, value, blue, red }) {
 //     </div>
 //   );
 // }
+
+
+
+
+import { useState } from "react";
+import { Calculator, AlertCircle, Info } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useCalculateIncomeTaxMutation } from "../../redux/apis/calculatorApi";
+
+export default function IncomeTaxCalculator() {
+
+  const navigate = useNavigate();
+  const [calculateIncomeTax, { isLoading }] = useCalculateIncomeTaxMutation();
+
+  const [formData, setFormData] = useState({
+    annualIncome: "",
+    age: "",
+    regime: "old",
+    deduction80C: "",
+    deduction80D: "",
+    otherDeductions: "",
+  });
+
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+    setError("");
+    setResult(null);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await calculateIncomeTax({
+        annualIncome: Number(formData.annualIncome),
+        age: Number(formData.age),
+        regime: formData.regime,
+        deduction80C: Number(formData.deduction80C) || 0,
+        deduction80D: Number(formData.deduction80D) || 0,
+        otherDeductions: Number(formData.otherDeductions) || 0,
+      }).unwrap();
+
+      setResult(response.data);
+    } catch (err) {
+      setError(err?.data?.message || "Calculation failed");
+    }
+  };
+
+  return (
+    <div className="max-w-5xl mx-auto py-10 px-4">
+
+      {/* HEADER */}
+      <h1 className="text-3xl font-bold mb-8 text-gray-800 flex items-center gap-3">
+        <Calculator className="text-green-600"/>
+        Income Tax Calculator
+      </h1>
+
+      <div className="grid md:grid-cols-2 gap-8">
+
+        {/* LEFT PANEL */}
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-6 bg-white rounded-2xl shadow-lg p-6"
+        >
+
+          <SliderInput label="Annual Income" name="annualIncome" value={formData.annualIncome} onChange={handleChange} max={5000000}/>
+          <SliderInput label="Age" name="age" value={formData.age} onChange={handleChange} min={18} max={100}/>
+
+          {/* REGIME */}
+          <div>
+            <label className="text-sm font-medium mb-1 block">Tax Regime</label>
+            <select
+              name="regime"
+              value={formData.regime}
+              onChange={handleChange}
+              className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500"
+            >
+              <option value="old">Old Regime</option>
+              <option value="new">New Regime</option>
+            </select>
+          </div>
+
+          <SliderInput label="80C Deduction" name="deduction80C" value={formData.deduction80C} onChange={handleChange} max={200000}/>
+          <SliderInput label="80D Deduction" name="deduction80D" value={formData.deduction80D} onChange={handleChange} max={200000}/>
+          <SliderInput label="Other Deductions" name="otherDeductions" value={formData.otherDeductions} onChange={handleChange} max={500000}/>
+
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-600 p-3 rounded-lg flex gap-2">
+              <AlertCircle size={18}/> {error}
+            </div>
+          )}
+
+          <button
+            disabled={isLoading}
+            className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold transition"
+          >
+            {isLoading ? "Calculating..." : "Calculate Tax"}
+          </button>
+
+        </form>
+
+        {/* RESULT PANEL */}
+        <div className="bg-white rounded-2xl shadow-lg p-6">
+
+          {result ? (
+            <>
+              <h3 className="text-xl font-bold text-gray-800 mb-6">
+                Calculation Summary
+              </h3>
+
+              <div className="space-y-4">
+                <ResultItem label="Taxable Income" value={result.taxableIncome}/>
+                <ResultItem label="Total Tax Payable" value={result.totalTax}/>
+                <ResultItem label="Tax Amount" value={result.taxPayable}/>
+                <ResultItem label="Cess (4%)" value={result.cess}/>
+              </div>
+
+              <div className="mt-6 bg-yellow-50 border border-yellow-200 p-4 rounded-lg text-sm text-yellow-800 flex gap-2">
+                <Info size={16}/>
+                This is estimated value. Contact CA for exact calculation.
+              </div>
+
+              <button
+                onClick={() => navigate("/contact")}
+                className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold"
+              >
+                Book Consultation
+              </button>
+            </>
+          ) : (
+            <div className="text-center text-gray-400 py-20">
+              <Calculator size={48} className="mx-auto mb-3 opacity-50"/>
+              Enter details to calculate
+            </div>
+          )}
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+
+/* SLIDER INPUT */
+function SliderInput({label,name,value,onChange,min=0,max=1000000}) {
+  return (
+    <div>
+      <div className="flex justify-between mb-1">
+        <label className="text-sm font-medium">{label}</label>
+        <span className="text-green-600 font-semibold">
+          ₹ {Number(value || 0).toLocaleString("en-IN")}
+        </span>
+      </div>
+
+      <input
+        type="range"
+        name={name}
+        min={min}
+        max={max}
+        value={value || 0}
+        onChange={onChange}
+        className="w-full accent-green-600"
+      />
+    </div>
+  );
+}
+
+
+/* RESULT ITEM */
+function ResultItem({label,value}) {
+  return (
+    <div className="flex justify-between border-b pb-2">
+      <p className="text-gray-600">{label}</p>
+      <p className="font-semibold text-gray-900">
+        ₹ {Number(value).toLocaleString("en-IN")}
+      </p>
+    </div>
+  );
+}
