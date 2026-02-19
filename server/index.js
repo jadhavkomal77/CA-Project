@@ -86,6 +86,7 @@ app.get("/", (req, res) => {
   res.json("Server is Running! 🚀");
 });
 
+// console.log(process.env.MONGO_URL);
 
 
 if (process.env.NODE_ENV === "production") {
