@@ -458,28 +458,12 @@
 // }
 
 
-
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useGetPublicServiceBySlugQuery } from "../redux/apis/serviceApi";
 import { useCreateApplicationMutation } from "../redux/apis/applicationApi";
 import { toast } from "react-toastify";
-import {
-  Upload,
-  FileText,
-  Image as ImageIcon,
-  User,
-  Mail,
-  Phone,
-  MapPin,
-  CheckCircle,
-  Loader2,
-  ArrowLeft,
-  FileCheck,
-  Trash2,
-  AlertCircle,
-  X,
-} from "lucide-react";
+import { Upload, Trash2, Loader2, CheckCircle, ArrowLeft } from "lucide-react";
 
 export default function ApplyService() {
   const { slug } = useParams();
@@ -500,158 +484,107 @@ export default function ApplyService() {
 
   const [files, setFiles] = useState({});
   const [errors, setErrors] = useState({});
-  const [preview, setPreview] = useState(null);
 
-  /* INPUT */
+  /* ---------------- INPUT ---------------- */
   const handleChange = (e) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-    setErrors((prev) => ({ ...prev, [e.target.name]: "" }));
+    setForm(p => ({ ...p, [e.target.name]: e.target.value }));
+    setErrors(p => ({ ...p, [e.target.name]: "" }));
   };
 
-  /* VALIDATION */
-  const validateForm = () => {
+  /* ---------------- VALIDATION ---------------- */
+  const validate = () => {
     const e = {};
 
-    if (!form.name.trim()) e.name = "Name required";
-
-    if (!form.email.trim()) e.email = "Email required";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
-      e.email = "Invalid email";
-
-    if (!form.phone.trim()) e.phone = "Phone required";
-    else if (form.phone.replace(/\D/g, "").length !== 10)
-      e.phone = "Enter 10 digit number";
+    if (!form.name.trim()) e.name = "Required";
+    if (!form.email.match(/^\S+@\S+\.\S+$/)) e.email = "Invalid email";
+    if (form.phone.replace(/\D/g, "").length !== 10) e.phone = "Invalid phone";
 
     setErrors(e);
     return Object.keys(e).length === 0;
   };
 
-  /* FILE SELECT */
+  /* ---------------- FILE SELECT ---------------- */
   const handleFile = (doc, e) => {
     const selected = Array.from(e.target.files);
 
-    const valid = selected.filter((file) => {
-      if (file.size > 10 * 1024 * 1024) {
-        toast.error(file.name + " too large (max 10MB)");
+    const valid = selected.filter(f => {
+      if (f.size > 10 * 1024 * 1024) {
+        toast.error(`${f.name} > 10MB`);
         return false;
       }
       return true;
     });
 
-    setFiles((prev) => ({
-      ...prev,
-      [doc]: [...(prev[doc] || []), ...valid],
+    setFiles(p => ({
+      ...p,
+      [doc]: [...(p[doc] || []), ...valid],
     }));
   };
 
-  /* DROP */
-  const handleDrop = (doc, e) => {
-    e.preventDefault();
-    handleFile(doc, { target: { files: e.dataTransfer.files } });
-  };
-
-  /* REMOVE */
-  const removeFile = (doc, i) => {
-    setFiles((prev) => {
-      const copy = { ...prev };
-      copy[doc].splice(i, 1);
+  /* ---------------- REMOVE FILE ---------------- */
+  const removeFile = (doc, index) => {
+    setFiles(p => {
+      const copy = { ...p };
+      copy[doc].splice(index, 1);
       if (!copy[doc].length) delete copy[doc];
       return copy;
     });
   };
 
-  /* ICON */
-  const getFileIcon = (name) => {
-    const ext = name.split(".").pop().toLowerCase();
-    if (["jpg", "png", "jpeg", "webp", "gif"].includes(ext))
-      return <ImageIcon size={16} className="text-blue-600" />;
-    if (ext === "pdf") return <FileText size={16} className="text-red-600" />;
-    return <FileCheck size={16} className="text-gray-600" />;
-  };
-
-  /* SIZE */
-  const formatFileSize = (bytes) => {
-    const k = 1024;
-    const sizes = ["Bytes", "KB", "MB"];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + " " + sizes[i];
-  };
-
-  /* SUBMIT */
+  /* ---------------- SUBMIT ---------------- */
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!validateForm()) return;
-
-    if (!service?._id) {
-      toast.error("Service missing");
-      return;
-    }
+    if (!validate()) return;
 
     try {
       const fd = new FormData();
+
       fd.append("userDetails", JSON.stringify(form));
       fd.append("serviceId", service._id);
 
-      Object.keys(files).forEach((doc) =>
-        files[doc].forEach((f) => fd.append("documents", f))
+      Object.keys(files).forEach(key =>
+        files[key].forEach(file => fd.append("documents", file))
       );
 
       await createApplication(fd).unwrap();
 
-      toast.success("Application Submitted Successfully 🎉");
+      toast.success("Application Submitted 🎉");
+      navigate("/");
 
-      setFiles({});
-      setForm({ name: "", email: "", phone: "", address: "" });
-
-      setTimeout(() => navigate("/"), 1500);
     } catch (err) {
-      console.log(err);
-      toast.error(err?.data?.message || "Submission failed");
+      toast.error(err?.data?.message || "Failed");
     }
   };
 
-  /* LOADING */
+  /* ---------------- LOADING ---------------- */
   if (isLoading)
     return (
       <div className="min-h-screen flex justify-center items-center">
-        <Loader2 className="animate-spin text-blue-700" size={40} />
+        <Loader2 className="animate-spin text-blue-700" size={40}/>
       </div>
     );
 
-  /* NOT FOUND */
-  if (!service)
-    return (
-      <div className="min-h-screen flex justify-center items-center">
-        Service not found
-      </div>
-    );
-
+  /* ---------------- PAGE ---------------- */
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-gray-50 py-6 px-4">
-      <div className="max-w-4xl mx-auto space-y-4">
+    <div className="min-h-screen bg-gray-50 py-6 px-4">
+      <div className="max-w-4xl mx-auto">
 
         {/* BACK */}
-        <button
-          onClick={() => navigate(-1)}
-          className="flex items-center gap-2 text-gray-600 hover:text-blue-700 text-sm"
-        >
-          <ArrowLeft size={18} />
-          Back
+        <button onClick={()=>navigate(-1)} className="flex items-center gap-2 text-sm mb-4">
+          <ArrowLeft size={18}/> Back
         </button>
 
         {/* HEADER */}
-        <div className="bg-gradient-to-r from-blue-700 to-blue-800 rounded-xl shadow-lg p-5 text-white">
+        <div className="bg-blue-700 text-white p-5 rounded-xl mb-5">
           <h1 className="text-2xl font-bold">
             Apply for {service.title}
           </h1>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5">
 
           {/* PERSONAL */}
-          <div className="bg-white rounded-xl shadow-md p-5 border">
-            <h2 className="text-lg font-bold mb-4">Personal Info</h2>
+          <Card title="Personal Info">
 
             <Input label="Name" name="name" value={form.name} onChange={handleChange} error={errors.name}/>
             <Input label="Email" name="email" value={form.email} onChange={handleChange} error={errors.email}/>
@@ -662,63 +595,43 @@ export default function ApplyService() {
               placeholder="Address"
               value={form.address}
               onChange={handleChange}
-              className="w-full border p-2 rounded mt-3"
+              className="input mt-2"
             />
-          </div>
 
-          {/* DOCS */}
+          </Card>
+
+          {/* DOCUMENTS */}
           {service.requiredDocuments?.length > 0 && (
-            <div className="bg-white rounded-xl shadow-md p-5 border">
-              <h2 className="font-bold mb-4">Documents</h2>
+            <Card title="Documents">
 
-              {service.requiredDocuments.map((doc, i) => (
-                <div key={i} className="mb-4 border p-3 rounded">
+              {service.requiredDocuments.map((doc,i)=>(
+                <div key={i} className="mb-4">
 
-                  <p className="font-semibold mb-2">
-                    {doc} *
-                  </p>
+                  <p className="font-semibold mb-2">{doc}</p>
 
-                  <div
-                    onDrop={(e) => handleDrop(doc, e)}
-                    onDragOver={(e) => e.preventDefault()}
-                    className="border-2 border-dashed p-5 text-center cursor-pointer hover:bg-gray-50"
-                  >
-                    <input
-                      hidden
-                      id={doc}
-                      type="file"
-                      multiple
-                      onChange={(e) => handleFile(doc, e)}
-                    />
-                    <label htmlFor={doc} className="cursor-pointer">
-                      <Upload className="mx-auto mb-2" size={20}/>
-                      Upload File
-                    </label>
-                  </div>
+                  <label className="uploadBox">
+                    <Upload size={18}/>
+                    Upload Files
+                    <input hidden type="file" multiple onChange={(e)=>handleFile(doc,e)}/>
+                  </label>
 
-                  {files[doc]?.map((f, index) => (
-                    <div key={index} className="flex justify-between text-sm mt-2">
-                      <span className="flex items-center gap-2">
-                        {getFileIcon(f.name)}
-                        {f.name} ({formatFileSize(f.size)})
-                      </span>
-
-                      <button type="button" onClick={() => removeFile(doc, index)}>
-                        <Trash2 size={14}/>
-                      </button>
+                  {files[doc]?.map((f,index)=>(
+                    <div key={index} className="fileItem">
+                      {f.name}
+                      <Trash2 size={15} onClick={()=>removeFile(doc,index)} className="cursor-pointer"/>
                     </div>
                   ))}
 
                 </div>
               ))}
-            </div>
+
+            </Card>
           )}
 
           {/* SUBMIT */}
           <button
-            type="submit"
             disabled={submitting}
-            className="w-full bg-blue-700 text-white py-3 rounded-lg font-semibold flex justify-center gap-2"
+            className="submitBtn"
           >
             {submitting ? <Loader2 className="animate-spin"/> : <CheckCircle size={18}/>}
             Submit Application
@@ -726,31 +639,28 @@ export default function ApplyService() {
 
         </form>
       </div>
-
-      {/* PREVIEW */}
-      {preview && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center">
-          <img src={preview} className="max-h-[90vh]"/>
-        </div>
-      )}
     </div>
   );
 }
 
-/* INPUT */
-function Input({ label, name, value, onChange, error }) {
-  return (
-    <div className="mb-3">
-      <label className="text-sm font-semibold">{label}</label>
-      <input
-        name={name}
-        value={value}
-        onChange={onChange}
-        className={`w-full border p-2 rounded ${
-          error ? "border-red-400" : "border-gray-300"
-        }`}
-      />
-      {error && <p className="text-red-500 text-xs">{error}</p>}
-    </div>
-  );
-}
+/* ---------------- COMPONENTS ---------------- */
+
+const Card = ({title,children})=>(
+  <div className="bg-white p-5 rounded-xl shadow">
+    <h2 className="font-bold mb-4">{title}</h2>
+    {children}
+  </div>
+);
+
+const Input = ({label,name,value,onChange,error})=>(
+  <div className="mb-3">
+    <label className="text-sm font-semibold">{label}</label>
+    <input
+      name={name}
+      value={value}
+      onChange={onChange}
+      className={`input ${error?"border-red-400":""}`}
+    />
+    {error && <p className="text-xs text-red-500">{error}</p>}
+  </div>
+);

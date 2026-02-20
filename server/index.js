@@ -1,54 +1,38 @@
-// import "dotenv/config";
-// import express from "express";
-// import mongoose from "mongoose";
-// import cors from "cors";
-// import path from "path";
-// import cookieParser from "cookie-parser";
-// import fs from "fs";
+import "dotenv/config";
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+import path from "path";
+import cookieParser from "cookie-parser";
+import fs from "fs";
+import verifyRoutes from "./routes/verifyRoutes.js";
+import adminRoutes from "./routes/admin/adminRoutes.js";
+import adminHeroRoutes from "./routes/adminHeroRoutes.js";
+import serviceRoutes from "./routes/serviceRoutes.js";
+import navbarRoutes from "./routes/navbarRoutes.js";
+import aboutRoutes from "./routes/aboutRoutes.js";
+import projectRoutes from "./routes/projectRoutes.js";
+import pricingRoutes from "./routes/pricingRoutes.js";
+import contactRoutes from "./routes/contactRoutes.js";
+import footerRoutes from "./routes/footerRoutes.js";
+import settingRoutes from "./routes/admin/settingRoutes.js";
+import calculatorRoutes from "./routes/calculatorRoutes.js";
+import applicationRoutes from "./routes/applicationRoutes.js";
 
-// import adminRoutes from "./routes/admin/adminRoutes.js";
-// import adminHeroRoutes from "./routes/adminHeroRoutes.js";
-// import serviceRoutes from "./routes/serviceRoutes.js";
-// import navbarRoutes from "./routes/navbarRoutes.js";
-// import aboutRoutes from "./routes/aboutRoutes.js";
-// import projectRoutes from "./routes/projectRoutes.js";
-// import pricingRoutes from "./routes/pricingRoutes.js";
-// import contactRoutes from "./routes/contactRoutes.js";
-// import footerRoutes from "./routes/footerRoutes.js";
-// import settingRoutes from "./routes/admin/settingRoutes.js";
-// import calculatorRoutes from "./routes/calculatorRoutes.js";
-// import applicationRoutes from "./routes/applicationRoutes.js";
+const app = express();
+const __dirname = path.resolve();
 
-// const app = express();
-// const __dirname = path.resolve();
+app.use(cookieParser());
+app.use(express.json());
 
-// app.use(cookieParser());
-// app.use(express.json());
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://ca-project-client.vercel.app",
+  "https://www.cadmaassociatespvtltd.com",
+    "https://cadmaassociatespvtltd.com"
 
-// const allowedOrigins = [
-//   "http://localhost:5173",
-//   "https://ca-project-client.vercel.app",
-//   "https://www.cadmaassociatespvtltd.com",
-//     "https://cadmaassociatespvtltd.com"
+];
 
-// ];
-
-// // app.use(
-// //   cors({
-// //     origin: function (origin, callback) {
-// //       if (!origin) return callback(null, true);
-
-// //       if (allowedOrigins.includes(origin)) {
-// //         return callback(null, true);
-// //       }
-
-// //       return callback(new Error("Not allowed by CORS"));
-// //     },
-// //     credentials: true,
-// //     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-// //     allowedHeaders: ["Content-Type", "Authorization"],
-// //   })
-// // );
 // app.use(
 //   cors({
 //     origin: function (origin, callback) {
@@ -65,129 +49,28 @@
 //     allowedHeaders: ["Content-Type", "Authorization"],
 //   })
 // );
-
-
-// /* ROUTES */
-// app.use("/api/admin", adminRoutes);
-// app.use("/api/adminservice", serviceRoutes);
-// app.use("/api/adminhero", adminHeroRoutes);
-// app.use("/api/adminnavbar", navbarRoutes);
-// app.use("/api/adminabout", aboutRoutes);
-// app.use("/api/projects", projectRoutes);
-// app.use("/api/pricing", pricingRoutes);
-// app.use("/api/contact", contactRoutes);
-// app.use("/api/footer", footerRoutes);
-// app.use("/api/settings", settingRoutes);
-// app.use("/api/calculators", calculatorRoutes);
-// app.use("/api/applications", applicationRoutes);
-
-
-// app.get("/", (req, res) => {
-//   res.json("Server is Running! 🚀");
-// });
-
-// // console.log(process.env.MONGO_URL);
-
-
-// if (process.env.NODE_ENV === "production") {
-//   const distPath = path.join(__dirname, "dist");
-//   if (fs.existsSync(distPath)) {
-//     app.use(express.static(distPath));
-//     // app.get("*", (req, res) => {
-//     //   res.sendFile(path.join(distPath, "index.html"));
-//     // });
-//   }
-// }
-
-// const PORT = process.env.PORT || 5000;
-
-
-// if (!process.env.MONGO_URL) {
-//   console.error("❌ FATAL: MONGO_URL environment variable is missing!");
-// }
-
-// mongoose
-//   .connect(process.env.MONGO_URL)
-//   .then(() => console.log("✅ MongoDB Connected"))
-//   .catch((err) => console.error("❌ MongoDB Connection Error:", err));
-
-
-// if (process.env.NODE_ENV !== "production") {
-//   app.listen(PORT, () => {
-//     console.log(`🚀 Server running locally 🏃‍♀️ on port ${PORT}`);
-//   });
-// }
-
-
-// export default app;
-
-
-
-
-
-
-import "dotenv/config";
-import express from "express";
-import mongoose from "mongoose";
-import cors from "cors";
-import path from "path";
-import cookieParser from "cookie-parser";
-import fileUpload from "express-fileupload";
-
-import heroRoutes from "./routes/adminHeroRoutes.js";
-import adminRoutes from "./routes/admin/adminRoutes.js";
-import serviceRoutes from "./routes/serviceRoutes.js";
-import navbarRoutes from "./routes/navbarRoutes.js";
-import aboutRoutes from "./routes/aboutRoutes.js";
-import projectRoutes from "./routes/projectRoutes.js";
-import pricingRoutes from "./routes/pricingRoutes.js";
-import contactRoutes from "./routes/contactRoutes.js";
-import footerRoutes from "./routes/footerRoutes.js";
-import settingRoutes from "./routes/admin/settingRoutes.js";
-import calculatorRoutes from "./routes/calculatorRoutes.js";
-import applicationRoutes from "./routes/applicationRoutes.js";
-import verifyRoutes from "./routes/verifyRoutes.js";
-
-const app = express();
-const __dirname = path.resolve();
-
-/* ---------------- MIDDLEWARE ---------------- */
-
-app.use(cookieParser());
-app.use(express.json({ limit: "50mb" }));
-
-app.use(
-  fileUpload({
-    useTempFiles: false,
-    limits: { fileSize: 10 * 1024 * 1024 }
-  })
-);
-
-/* ---------------- CORS ---------------- */
-
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://ca-project-client.vercel.app",
-  "https://www.cadmaassociatespvtltd.com",
-  "https://cadmaassociatespvtltd.com"
-];
-
 app.use(
   cors({
-    origin(origin, cb) {
-      if (!origin) return cb(null, true);
-      if (allowedOrigins.includes(origin)) return cb(null, true);
-      return cb(new Error("CORS blocked"));
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Not allowed by CORS"));
     },
-    credentials: true
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
-/* ---------------- ROUTES ---------------- */
 
+/* ROUTES */
 app.use("/api/admin", adminRoutes);
-app.use("/api/adminHero", heroRoutes);
 app.use("/api/adminservice", serviceRoutes);
+app.use("/api/adminhero", adminHeroRoutes);
 app.use("/api/adminnavbar", navbarRoutes);
 app.use("/api/adminabout", aboutRoutes);
 app.use("/api/projects", projectRoutes);
@@ -199,31 +82,42 @@ app.use("/api/calculators", calculatorRoutes);
 app.use("/api/applications", applicationRoutes);
 app.use("/api/verify", verifyRoutes);
 
+
 app.get("/", (req, res) => {
-  res.json("Server running 🚀");
+  res.json("Server is Running! 🚀");
 });
 
+// console.log(process.env.MONGO_URL);
 
-app.use((err, req, res, next) => {
-  console.error("❌ ERROR:", err.message);
-  res.status(500).json({
-    success: false,
-    message: err.message || "Server Error"
-  });
-});
 
-/* ---------------- DB ---------------- */
+if (process.env.NODE_ENV === "production") {
+  const distPath = path.join(__dirname, "dist");
+  if (fs.existsSync(distPath)) {
+    app.use(express.static(distPath));
+    // app.get("*", (req, res) => {
+    //   res.sendFile(path.join(distPath, "index.html"));
+    // });
+  }
+}
+
+const PORT = process.env.PORT || 5000;
+
+
+if (!process.env.MONGO_URL) {
+  console.error("❌ FATAL: MONGO_URL environment variable is missing!");
+}
 
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => console.log("✅ MongoDB Connected"))
-  .catch(err => console.log("❌ DB Error:", err.message));
+  .catch((err) => console.error("❌ MongoDB Connection Error:", err));
 
-/* ---------------- START ---------------- */
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () =>
-  console.log(`🚀 Server running on port ${PORT}`)
-);
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running locally 🏃‍♀️ on port ${PORT}`);
+  });
+}
+
 
 export default app;
