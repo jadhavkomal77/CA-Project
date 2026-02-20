@@ -203,7 +203,6 @@ app.get("/", (req, res) => {
   res.json("Server running 🚀");
 });
 
-/* ---------------- ERROR HANDLER ---------------- */
 
 app.use((err, req, res, next) => {
   console.error("❌ ERROR:", err.message);
