@@ -172,85 +172,126 @@
 
 
 
-
 import asyncHandler from "express-async-handler";
 import Application from "../models/Application.js";
 import Service from "../models/Service.js";
 import cloudinary from "../utils/cloudinary.js";
 import sendEmail from "../utils/sendEmail.js";
+import { uploadBuffer } from "../utils/uploadToCloudinary.js";
 
 /* =====================================================
-   📤 SUBMIT APPLICATION (ENHANCED)
+   📤 SUBMIT APPLICATION (FINAL PRODUCTION VERSION)
 ===================================================== */
 export const submitApplication = asyncHandler(async (req, res) => {
+  console.log("📥 Incoming application request");
+
   let { userDetails, serviceId } = req.body;
 
-  /* JSON parse */
+  /* ================= JSON PARSE ================= */
   if (typeof userDetails === "string") {
     try {
       userDetails = JSON.parse(userDetails);
-    } catch {
+    } catch (err) {
+      console.log("❌ JSON Parse Error:", err.message);
       return res.status(400).json({
-        success:false,
-        message:"Invalid userDetails format"
+        success: false,
+        message: "Invalid userDetails format",
       });
     }
   }
 
   const { name, email, phone } = userDetails || {};
 
-  if (!name || !email || !phone || !serviceId)
+  /* ================= VALIDATION ================= */
+  if (!name || !email || !phone || !serviceId) {
+    console.log("❌ Missing Fields");
     return res.status(400).json({
-      success:false,
-      message:"Required fields missing"
+      success: false,
+      message: "Name, email, phone and serviceId are required",
     });
+  }
 
-  /* Service check */
+  /* ================= SERVICE CHECK ================= */
   const service = await Service.findById(serviceId);
-  if (!service)
-    return res.status(404).json({
-      success:false,
-      message:"Service not found"
-    });
 
-  /* =========================================
-     FILE UPLOAD WITH REAL DOCUMENT NAMES
-  ========================================= */
+  if (!service) {
+    console.log("❌ Service not found:", serviceId);
+    return res.status(404).json({
+      success: false,
+      message: "Service not found",
+    });
+  }
+
+  /* ================= FILE UPLOAD ================= */
   const uploadedDocuments = [];
 
-  if (req.files?.length) {
-    for (let i = 0; i < req.files.length; i++) {
+  if (req.files && req.files.documents) {
+    const files = Array.isArray(req.files.documents)
+      ? req.files.documents
+      : [req.files.documents];
 
-      const file = req.files[i];
+    console.log(`📁 Uploading ${files.length} files`);
 
-      const result = await cloudinary.uploader.upload(file.path, {
-        folder:`applications/${serviceId}`,
-        resource_type:"auto"
-      });
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
 
+      /* FILE TYPE VALIDATION */
+      const allowedTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/webp",
+        "application/pdf",
+      ];
+
+      if (!allowedTypes.includes(file.mimetype)) {
+        console.log("❌ Invalid file type:", file.mimetype);
+        return res.status(400).json({
+          success: false,
+          message: "Invalid file type. Only JPG, PNG, WEBP, PDF allowed",
+        });
+      }
+
+      /* UPLOAD TO CLOUDINARY */
+      let result;
+      try {
+        result = await uploadBuffer(
+          file.data,
+          `applications/${serviceId}`
+        );
+
+        console.log("☁ Uploaded:", result.secure_url);
+      } catch (err) {
+        console.log("❌ Cloudinary Upload Error:", err.message);
+        return res.status(500).json({
+          success: false,
+          message: "File upload failed",
+        });
+      }
+
+      /* PUSH DOC */
       uploadedDocuments.push({
-        documentName:
-          service.requiredDocuments?.[i] ||
-          file.originalname,     // fallback
+        documentName: service.requiredDocuments?.[i] || file.name,
         fileURL: result.secure_url,
         publicId: result.public_id,
-        uploadDate: new Date()
+        uploadDate: new Date(),
       });
     }
   }
 
-  /* SAVE */
+  /* ================= SAVE DB ================= */
   const application = await Application.create({
     userDetails,
     serviceId,
     serviceName: service.title,
     serviceSlug: service.slug,
     uploadedDocuments,
-    status:"Pending"
+    status: "Pending",
   });
 
-  /* EMAIL RECEIPT */
-  try{
+  console.log("✅ Application Saved:", application._id);
+
+  /* ================= EMAIL ================= */
+  try {
     await sendEmail({
       to: email,
       subject: "Application Submitted Successfully",
@@ -259,131 +300,153 @@ export const submitApplication = asyncHandler(async (req, res) => {
         <p>Your application for <b>${service.title}</b> has been received.</p>
         <p>Status: <b>Pending</b></p>
         <p>Reference ID: <b>${application._id}</b></p>
-      `
+      `,
     });
-  }catch(e){
-    console.log("Mail failed:",e.message);
+
+    console.log("📧 Email sent to:", email);
+  } catch (err) {
+    console.log("⚠ Email Failed:", err.message);
   }
 
+  /* ================= RESPONSE ================= */
   res.status(201).json({
-    success:true,
-    message:"Application submitted successfully",
-    data:application
+    success: true,
+    message: "Application submitted successfully",
+    data: application,
   });
 });
-
 
 /* =====================================================
    📋 GET ALL APPLICATIONS
 ===================================================== */
-export const getAllApplications = asyncHandler(async (req,res)=>{
+export const getAllApplications = asyncHandler(async (req, res) => {
+  console.log("📄 Fetching applications");
 
-  const {serviceId,status}=req.query;
+  const { serviceId, status } = req.query;
 
-  const filter={};
-  if(serviceId) filter.serviceId=serviceId;
-  if(status) filter.status=status;
+  const filter = {};
+  if (serviceId) filter.serviceId = serviceId;
+  if (status) filter.status = status;
 
   const apps = await Application.find(filter)
-    .populate("serviceId","title slug")
-    .sort({createdAt:-1});
+    .populate("serviceId", "title slug")
+    .sort({ createdAt: -1 });
 
   res.json({
-    success:true,
-    count:apps.length,
-    data:apps
+    success: true,
+    count: apps.length,
+    data: apps,
   });
 });
-
 
 /* =====================================================
    📄 GET SINGLE APPLICATION
 ===================================================== */
-export const getApplicationById = asyncHandler(async (req,res)=>{
+export const getApplicationById = asyncHandler(async (req, res) => {
+  console.log("🔎 Fetching application:", req.params.id);
 
-  const app = await Application.findById(req.params.id)
-  .populate("serviceId","title slug requiredDocuments");
-
-  if(!app)
-    return res.status(404).json({
-      success:false,
-      message:"Application not found"
-    });
-
-  res.json({
-    success:true,
-    data:app
-  });
-});
-
-
-/* =====================================================
-   ✏ UPDATE STATUS (EMAIL ENABLED)
-===================================================== */
-export const updateApplicationStatus = asyncHandler(async (req,res)=>{
-
-  const {status,adminNotes}=req.body;
-
-  const app = await Application.findByIdAndUpdate(
-    req.params.id,
-    {status,adminNotes},
-    {new:true}
+  const app = await Application.findById(req.params.id).populate(
+    "serviceId",
+    "title slug requiredDocuments"
   );
 
-  if(!app)
-    return res.status(404).json({message:"Application not found"});
-
-  /* SEND EMAIL */
-  try{
-  await sendEmail({
-    to: app.userDetails.email,
-    subject:`Application ${status}`,
-    html:`
-      <h2>Hello ${app.userDetails.name}</h2>
-      <p>Your application for <b>${app.serviceName}</b> is now:</p>
-      <h1 style="color:${status==="Approved"?"green":"red"}">${status}</h1>
-      ${adminNotes?`<p><b>Note:</b> ${adminNotes}</p>`:""}
-    `
-  });
-  }catch(e){
-    console.log("Mail error:",e.message);
+  if (!app) {
+    console.log("❌ Application not found");
+    return res.status(404).json({
+      success: false,
+      message: "Application not found",
+    });
   }
 
   res.json({
-    success:true,
-    data:app
+    success: true,
+    data: app,
   });
 });
 
-
 /* =====================================================
-   🗑 DELETE APPLICATION + CLOUDINARY CLEANUP
+   ✏ UPDATE STATUS
 ===================================================== */
-export const deleteApplication = asyncHandler(async (req,res)=>{
+export const updateApplicationStatus = asyncHandler(async (req, res) => {
+  const { status, adminNotes } = req.body;
 
-  const app = await Application.findById(req.params.id);
+  if (!status) {
+    return res.status(400).json({
+      success: false,
+      message: "Status is required",
+    });
+  }
 
-  if(!app)
+  const app = await Application.findByIdAndUpdate(
+    req.params.id,
+    { status, adminNotes },
+    { new: true }
+  );
+
+  if (!app) {
     return res.status(404).json({
-      success:false,
-      message:"Application not found"
+      success: false,
+      message: "Application not found",
+    });
+  }
+
+  console.log("✏ Status updated:", status);
+
+  /* EMAIL */
+  try {
+    await sendEmail({
+      to: app.userDetails.email,
+      subject: `Application ${status}`,
+      html: `
+        <h2>Hello ${app.userDetails.name}</h2>
+        <p>Your application for <b>${app.serviceName}</b> is now:</p>
+        <h1 style="color:${status === "Approved" ? "green" : "red"}">${status}</h1>
+        ${adminNotes ? `<p><b>Note:</b> ${adminNotes}</p>` : ""}
+      `,
     });
 
-  /* delete cloudinary files */
-  for(const doc of app.uploadedDocuments){
-    if(doc.publicId){
-      try{
+    console.log("📧 Status email sent");
+  } catch (err) {
+    console.log("⚠ Email failed:", err.message);
+  }
+
+  res.json({
+    success: true,
+    data: app,
+  });
+});
+
+/* =====================================================
+   🗑 DELETE APPLICATION
+===================================================== */
+export const deleteApplication = asyncHandler(async (req, res) => {
+  const app = await Application.findById(req.params.id);
+
+  if (!app) {
+    return res.status(404).json({
+      success: false,
+      message: "Application not found",
+    });
+  }
+
+  /* DELETE CLOUD FILES */
+  for (const doc of app.uploadedDocuments) {
+    if (doc.publicId) {
+      try {
         await cloudinary.uploader.destroy(doc.publicId);
-      }catch(e){
-        console.log("Cloud delete failed:",e.message);
+        console.log("☁ Deleted:", doc.publicId);
+      } catch (err) {
+        console.log("⚠ Cloud delete failed:", err.message);
       }
     }
   }
 
   await Application.findByIdAndDelete(req.params.id);
 
+  console.log("🗑 Application deleted:", req.params.id);
+
   res.json({
-    success:true,
-    message:"Application deleted successfully"
+    success: true,
+    message: "Application deleted successfully",
   });
 });

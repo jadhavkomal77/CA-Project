@@ -12,6 +12,7 @@ import { footerApi } from "./apis/footerApi";
 import { settingApi } from "./apis/settingApi";
 import { calculatorApi } from "./apis/calculatorApi";
 import { applicationApi } from "./apis/applicationApi";
+import { verifyApi } from "./apis/verifyApi";
 
 const reduxStore = configureStore({
   reducer: {
@@ -28,6 +29,7 @@ const reduxStore = configureStore({
       [settingApi.reducerPath]: settingApi.reducer,
        [calculatorApi.reducerPath]: calculatorApi.reducer,
        [applicationApi.reducerPath]: applicationApi.reducer,
+       [verifyApi.reducerPath]: verifyApi.reducer,
 
     admin: adminReducer,
   },
@@ -45,6 +47,7 @@ const reduxStore = configureStore({
       settingApi.middleware,
       calculatorApi.middleware,
       applicationApi.middleware,
+      verifyApi.middleware,
     ),
 
 });

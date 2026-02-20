@@ -44,6 +44,7 @@ import Disclaimer from "./pages/Disclaimer";
 import RefundPolicy from "./pages/RefundPolicy";
 import ApplyService from "./pages/ApplyService";
 import AdminApplications from "./admin/AdminApplications";
+import VerifyPage from "./pages/VerifyPage";
 
 
 
@@ -76,7 +77,7 @@ function App() {
                <Route path="terms" element={<TermsConditions />} />
                <Route path="disclaimer" element={<Disclaimer />} />
                <Route path="refund-policy" element={<RefundPolicy />} />
-
+                <Route path="/verify/:id" element={<VerifyPage />} />
 
               
               <Route path="contact" element={<Contact />} />

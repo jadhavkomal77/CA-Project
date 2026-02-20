@@ -4,62 +4,31 @@ import {
   getAllApplications,
   getApplicationById,
   updateApplicationStatus,
-  deleteApplication,
+  deleteApplication
 } from "../controllers/applicationController.js";
+
 import adminAuth from "../middlewares/adminAuth.js";
-import multer from "multer";
-import path from "path";
-import crypto from "crypto";
 import { downloadApplicationPDF } from "../controllers/applicationPdfController.js";
 
-const router = express.Router();   // ✅ MISSING LINE — ADD THIS
-
-// Multer configuration
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/applications/");
-  },
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    const fn = crypto.randomUUID() + ext;
-    cb(null, fn);
-  },
-});
-
-const fileFilter = (req, file, cb) => {
-  const allowedTypes = /jpeg|jpg|png|pdf/;
-  const extname = allowedTypes.test(
-    path.extname(file.originalname).toLowerCase()
-  );
-  const mimetype = allowedTypes.test(file.mimetype);
-
-  if (extname && mimetype) {
-    cb(null, true);
-  } else {
-    cb(new Error("Only PDF, JPG, PNG, PDF allowed"), false);
-  }
-};
-
-const upload = multer({
-  storage,
-  fileFilter,
-  limits: { fileSize: 10 * 1024 * 1024 },
-});
+const router = express.Router();
 
 
-// PUBLIC
-router.post("/", upload.array("documents", 20), submitApplication);
+// Submit application
+router.post("/", submitApplication);
 
-
-
-// ADMIN
 router.get("/admin", adminAuth, getAllApplications);
+
+// Get single application
 router.get("/admin/:id", adminAuth, getApplicationById);
+
+// Update status
 router.put("/admin/:id/status", adminAuth, updateApplicationStatus);
+
+// Delete application
 router.delete("/admin/:id", adminAuth, deleteApplication);
 
+// Download PDF
 router.get("/admin/:id/pdf", adminAuth, downloadApplicationPDF);
-
 
 
 export default router;
