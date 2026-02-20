@@ -48,9 +48,6 @@
   }
 }
 
-/* ============================= */
-/* 🎞️ Animation utility classes */
-/* ============================= */
 
 .animate-fade-in-left {
   animation: fadeInLeft 0.9s ease-out both;
@@ -68,9 +65,6 @@
   animation: scaleIn 0.6s ease-out both;
 }
 
-/* ============================= */
-/* ♿ Reduced motion support */
-/* ============================= */
 
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-in-left,
@@ -81,9 +75,6 @@
   }
 }
 
-/* ============================= */
-/* 🧩 INPUT STYLES (ADMIN) */
-/* ============================= */
 
 .input {
   @apply w-full
@@ -100,9 +91,7 @@
     transition duration-200;
 }
 
-/* ============================= */
-/* 🌟 Extra Fade Animation */
-/* ============================= */
+
 
 @keyframes fadeIn {
   from {
@@ -119,9 +108,7 @@
   animation: fadeIn 0.8s ease-out both;
 }
 
-/* ============================= */
-/* ⏱️ Delay helpers */
-/* ============================= */
+
 
 .delay-100 {
   animation-delay: 0.1s;
@@ -139,10 +126,6 @@
   }
 }
 
-
-/* ============================= */
-/* 🔘 BUTTON STYLES (ADMIN) */
-/* ============================= */
 
 .btn-blue {
   @apply bg-blue-600

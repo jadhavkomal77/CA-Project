@@ -1,3 +1,53 @@
+// import PDFDocument from "pdfkit";
+// import axios from "axios";
+// import QRCode from "qrcode";
+// import Application from "../models/Application.js";
+
+// export const downloadApplicationPDF = async (req, res) => {
+//   const app = await Application.findById(req.params.id);
+//   if (!app) return res.status(404).json({ message: "Not found" });
+
+//   res.setHeader("Content-Type", "application/pdf");
+//   res.setHeader("Content-Disposition", "attachment; filename=application.pdf");
+
+//   const doc = new PDFDocument({ margin:50 });
+//   doc.pipe(res);
+
+//   doc.fontSize(20).text("APPLICATION REPORT",{align:"center"});
+//   doc.moveDown();
+
+//   doc.fontSize(12);
+//   doc.text("Name: " + app.userDetails.name);
+//   doc.text("Email: " + app.userDetails.email);
+//   doc.text("Phone: " + app.userDetails.phone);
+//   doc.text("Service: " + app.serviceName);
+//   doc.text("Status: " + app.status);
+
+//   doc.moveDown().text("Documents:");
+
+//   for(const file of app.uploadedDocuments){
+
+//     doc.moveDown().text(file.documentName);
+
+//     if(file.fileURL.match(/jpg|png|jpeg|webp/)){
+//       try{
+//         const img = await axios.get(file.fileURL,{responseType:"arraybuffer"});
+//         doc.image(Buffer.from(img.data),{fit:[400,300],align:"center"});
+//       }catch{}
+//     }
+//   }
+
+//   const qr = await QRCode.toDataURL(`https://yourdomain.com/verify/${app._id}`);
+//   doc.addPage();
+//   doc.image(qr,{fit:[200,200],align:"center"});
+
+//   doc.end();
+// };
+
+
+
+
+
 import PDFDocument from "pdfkit";
 import axios from "axios";
 import QRCode from "qrcode";
@@ -8,38 +58,108 @@ export const downloadApplicationPDF = async (req, res) => {
   if (!app) return res.status(404).json({ message: "Not found" });
 
   res.setHeader("Content-Type", "application/pdf");
-  res.setHeader("Content-Disposition", "attachment; filename=application.pdf");
+  res.setHeader(
+    "Content-Disposition",
+    `inline; filename=application-${app._id}.pdf`
+  );
 
-  const doc = new PDFDocument({ margin:50 });
+  const doc = new PDFDocument({ margin: 40 });
   doc.pipe(res);
 
-  doc.fontSize(20).text("APPLICATION REPORT",{align:"center"});
+  /* HEADER BAR */
+  doc.rect(0, 0, doc.page.width, 70).fill("#1e3a8a");
+
+  doc
+    .fillColor("white")
+    .fontSize(22)
+    .text("APPLICATION REPORT", 40, 25);
+
+  doc
+    .fontSize(11)
+    .text("CADMA Associates Pvt Ltd", 40, 50);
+
+  doc.moveDown(3);
+  doc.fillColor("black");
+
+  /* APPLICANT DETAILS */
+  doc.fontSize(16).text("Applicant Details", { underline: true });
+  doc.moveDown(0.7);
+
+  const info = [
+    ["Name", app.userDetails.name],
+    ["Email", app.userDetails.email],
+    ["Phone", app.userDetails.phone],
+    ["Service", app.serviceName],
+    ["Status", app.status],
+  ];
+
+  info.forEach(([k, v]) => {
+    doc.font("Helvetica-Bold").text(`${k}: `, { continued: true });
+    doc.font("Helvetica").text(v);
+  });
+
+  doc.moveDown(1.5);
+
+  /* DOCUMENTS */
+  doc.fontSize(16).text("Uploaded Documents", { underline: true });
   doc.moveDown();
 
-  doc.fontSize(12);
-  doc.text("Name: " + app.userDetails.name);
-  doc.text("Email: " + app.userDetails.email);
-  doc.text("Phone: " + app.userDetails.phone);
-  doc.text("Service: " + app.serviceName);
-  doc.text("Status: " + app.status);
+  for (const file of app.uploadedDocuments) {
+    const url = file.fileURL;
+    const name = file.documentName;
 
-  doc.moveDown().text("Documents:");
+    /* clickable link */
+    doc
+      .fontSize(12)
+      .fillColor("#2563eb")
+      .text(name, { link: url, underline: true });
 
-  for(const file of app.uploadedDocuments){
+    doc.fillColor("black");
 
-    doc.moveDown().text(file.documentName);
-
-    if(file.fileURL.match(/jpg|png|jpeg|webp/)){
-      try{
-        const img = await axios.get(file.fileURL,{responseType:"arraybuffer"});
-        doc.image(Buffer.from(img.data),{fit:[400,300],align:"center"});
-      }catch{}
+    /* IMAGE PREVIEW */
+    if (url.match(/\.(jpg|jpeg|png|webp)$/i)) {
+      try {
+        const img = await axios.get(url, { responseType: "arraybuffer" });
+        doc.moveDown(0.5);
+        doc.image(Buffer.from(img.data), {
+          fit: [420, 260],
+          align: "center",
+        });
+      } catch {}
     }
+
+    doc.moveDown(1.5);
   }
 
-  const qr = await QRCode.toDataURL(`https://yourdomain.com/verify/${app._id}`);
+  /* QR PAGE */
   doc.addPage();
-  doc.image(qr,{fit:[200,200],align:"center"});
+
+  doc.fontSize(18).text("Verify Application", { align: "center" });
+  doc.moveDown();
+
+  const verifyUrl = `https://www.cadmaassociatespvtltd.com/verify/${app._id}`;
+
+  const qr = await QRCode.toDataURL(verifyUrl);
+
+  doc.image(qr, {
+    fit: [200, 200],
+    align: "center",
+  });
+
+  doc.moveDown();
+
+  doc
+    .fillColor("#2563eb")
+    .text(verifyUrl, { align: "center", link: verifyUrl });
+
+  doc.moveDown(2);
+
+  doc
+    .fontSize(10)
+    .fillColor("gray")
+    .text("Generated by CADMA Associates Pvt Ltd System", {
+      align: "center",
+    });
 
   doc.end();
 };

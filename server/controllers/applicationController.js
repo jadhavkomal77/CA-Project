@@ -210,18 +210,25 @@ import Service from "../models/Service.js";
 import cloudinary from "../utils/cloudinary.js";
 import { uploadBuffer } from "../utils/uploadToCloudinary.js";
 
-/* ---------- SUBMIT ---------- */
+
 export const submitApplication = asyncHandler(async (req, res) => {
-  let { userDetails, serviceId } = req.body;
-  if (typeof userDetails === "string") userDetails = JSON.parse(userDetails);
+  if (!req.body)
+    return res.status(400).json({ message: "Body missing" });
+
+  let userDetails = req.body.userDetails;
+  const serviceId = req.body.serviceId;
+
+  if (!userDetails || !serviceId)
+    return res.status(400).json({ message: "Missing fields" });
+
+  if (typeof userDetails === "string")
+    userDetails = JSON.parse(userDetails);
 
   const { name, email, phone } = userDetails;
 
-  if (!name || !email || !phone || !serviceId)
-    return res.status(400).json({ message: "Missing fields" });
-
   const service = await Service.findById(serviceId);
-  if (!service) return res.status(404).json({ message: "Service not found" });
+  if (!service)
+    return res.status(404).json({ message: "Service not found" });
 
   const uploadedDocuments = [];
 
@@ -230,27 +237,26 @@ export const submitApplication = asyncHandler(async (req, res) => {
       ? req.files.documents
       : [req.files.documents];
 
-    const allowed = [
-      "image/jpeg",
-      "image/png",
-      "image/webp",
-      "application/pdf",
-    ];
-
     for (const file of files) {
-      if (!allowed.includes(file.mimetype))
-        return res.status(400).json({ message: "Invalid file type" });
-
       const result = await uploadBuffer(
-        file.data,
+        file.buffer,
         `applications/${service.slug}`
       );
 
       uploadedDocuments.push({
-        documentName: file.name,
+        documentName: file.originalname,
         fileURL: result.secure_url,
         publicId: result.public_id,
       });
+    // const isPDF = file.mimetype === "application/pdf";
+
+    //     uploadedDocuments.push({
+    //       documentName: file.originalname,
+    //       fileURL: isPDF
+    //         ? result.secure_url.replace("/image/upload/", "/raw/upload/")
+    //         : result.secure_url,
+    //       publicId: result.public_id,
+    //     });
     }
   }
 
@@ -258,12 +264,12 @@ export const submitApplication = asyncHandler(async (req, res) => {
     userDetails,
     serviceId,
     serviceName: service.title,
+    serviceSlug: service.slug,
     uploadedDocuments,
   });
 
   res.status(201).json({ success: true, data: app });
 });
-
 /* ---------- GET ALL ---------- */
 export const getAllApplications = asyncHandler(async (req, res) => {
   const { serviceId, status } = req.query;

@@ -457,13 +457,20 @@
 //   );
 // }
 
-
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useGetPublicServiceBySlugQuery } from "../redux/apis/serviceApi";
 import { useCreateApplicationMutation } from "../redux/apis/applicationApi";
 import { toast } from "react-toastify";
-import { Upload, Trash2, Loader2, CheckCircle, ArrowLeft } from "lucide-react";
+import {
+  Upload,
+  Trash2,
+  Loader2,
+  CheckCircle,
+  ArrowLeft,
+  FileText,
+  User,
+} from "lucide-react";
 
 export default function ApplyService() {
   const { slug } = useParams();
@@ -485,25 +492,23 @@ export default function ApplyService() {
   const [files, setFiles] = useState({});
   const [errors, setErrors] = useState({});
 
-  /* ---------------- INPUT ---------------- */
+  /* INPUT */
   const handleChange = (e) => {
     setForm(p => ({ ...p, [e.target.name]: e.target.value }));
     setErrors(p => ({ ...p, [e.target.name]: "" }));
   };
 
-  /* ---------------- VALIDATION ---------------- */
+  /* VALIDATE */
   const validate = () => {
     const e = {};
-
     if (!form.name.trim()) e.name = "Required";
     if (!form.email.match(/^\S+@\S+\.\S+$/)) e.email = "Invalid email";
     if (form.phone.replace(/\D/g, "").length !== 10) e.phone = "Invalid phone";
-
     setErrors(e);
     return Object.keys(e).length === 0;
   };
 
-  /* ---------------- FILE SELECT ---------------- */
+  /* FILE SELECT */
   const handleFile = (doc, e) => {
     const selected = Array.from(e.target.files);
 
@@ -521,7 +526,7 @@ export default function ApplyService() {
     }));
   };
 
-  /* ---------------- REMOVE FILE ---------------- */
+  /* REMOVE FILE */
   const removeFile = (doc, index) => {
     setFiles(p => {
       const copy = { ...p };
@@ -531,7 +536,7 @@ export default function ApplyService() {
     });
   };
 
-  /* ---------------- SUBMIT ---------------- */
+  /* SUBMIT */
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
@@ -548,92 +553,89 @@ export default function ApplyService() {
 
       await createApplication(fd).unwrap();
 
-      toast.success("Application Submitted 🎉");
-      navigate("/");
-
+      toast.success("Application Submitted Successfully 🎉");
+      navigate("/contact");
     } catch (err) {
-      toast.error(err?.data?.message || "Failed");
+      toast.error(err?.data?.message || "Submission Failed");
     }
   };
 
-  /* ---------------- LOADING ---------------- */
+  /* LOADING */
   if (isLoading)
     return (
       <div className="min-h-screen flex justify-center items-center">
-        <Loader2 className="animate-spin text-blue-700" size={40}/>
+        <Loader2 className="animate-spin text-blue-700" size={42} />
       </div>
     );
 
-  /* ---------------- PAGE ---------------- */
+  /* PAGE */
   return (
-    <div className="min-h-screen bg-gray-50 py-6 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-10 px-4">
+
       <div className="max-w-4xl mx-auto">
 
         {/* BACK */}
-        <button onClick={()=>navigate(-1)} className="flex items-center gap-2 text-sm mb-4">
+        <button
+          onClick={()=>navigate(-1)}
+          className="flex items-center gap-2 text-sm mb-5 text-gray-600 hover:text-blue-700"
+        >
           <ArrowLeft size={18}/> Back
         </button>
 
         {/* HEADER */}
-        <div className="bg-blue-700 text-white p-5 rounded-xl mb-5">
-          <h1 className="text-2xl font-bold">
-            Apply for {service.title}
-          </h1>
+        <div className="bg-gradient-to-r from-blue-700 to-indigo-700 text-white p-6 rounded-2xl shadow-lg mb-6 animate-fade-in-up">
+          <h1 className="text-2xl font-bold">Apply for {service.title}</h1>
+          <p className="text-sm opacity-90 mt-1">
+            Fill details and upload required documents
+          </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-6">
 
           {/* PERSONAL */}
-          <Card title="Personal Info">
-
-            <Input label="Name" name="name" value={form.name} onChange={handleChange} error={errors.name}/>
-            <Input label="Email" name="email" value={form.email} onChange={handleChange} error={errors.email}/>
-            <Input label="Phone" name="phone" value={form.phone} onChange={handleChange} error={errors.phone}/>
+          <Card title="Personal Information" icon={<User size={18}/>}>
+            <Input label="Full Name" name="name" value={form.name} onChange={handleChange} error={errors.name}/>
+            <Input label="Email Address" name="email" value={form.email} onChange={handleChange} error={errors.email}/>
+            <Input label="Phone Number" name="phone" value={form.phone} onChange={handleChange} error={errors.phone}/>
 
             <textarea
               name="address"
               placeholder="Address"
               value={form.address}
               onChange={handleChange}
-              className="input mt-2"
+              className="input mt-3"
             />
-
           </Card>
 
           {/* DOCUMENTS */}
           {service.requiredDocuments?.length > 0 && (
-            <Card title="Documents">
-
+            <Card title="Upload Documents" icon={<FileText size={18}/>}>
               {service.requiredDocuments.map((doc,i)=>(
-                <div key={i} className="mb-4">
+                <div key={i} className="mb-5">
 
                   <p className="font-semibold mb-2">{doc}</p>
 
                   <label className="uploadBox">
-                    <Upload size={18}/>
-                    Upload Files
+                    <Upload size={18}/> Select Files
                     <input hidden type="file" multiple onChange={(e)=>handleFile(doc,e)}/>
                   </label>
 
                   {files[doc]?.map((f,index)=>(
                     <div key={index} className="fileItem">
                       {f.name}
-                      <Trash2 size={15} onClick={()=>removeFile(doc,index)} className="cursor-pointer"/>
+                      <Trash2 size={15} onClick={()=>removeFile(doc,index)} className="cursor-pointer hover:text-red-600"/>
                     </div>
                   ))}
-
                 </div>
               ))}
-
             </Card>
           )}
 
           {/* SUBMIT */}
-          <button
-            disabled={submitting}
-            className="submitBtn"
-          >
-            {submitting ? <Loader2 className="animate-spin"/> : <CheckCircle size={18}/>}
+          <button disabled={submitting} className="submitBtn">
+            {submitting
+              ? <Loader2 className="animate-spin"/>
+              : <CheckCircle size={18}/>}
             Submit Application
           </button>
 
@@ -643,18 +645,18 @@ export default function ApplyService() {
   );
 }
 
-/* ---------------- COMPONENTS ---------------- */
+/* COMPONENTS */
 
-const Card = ({title,children})=>(
-  <div className="bg-white p-5 rounded-xl shadow">
-    <h2 className="font-bold mb-4">{title}</h2>
+const Card = ({title,icon,children})=>(
+  <div className="card-glass animate-scale-in">
+    <h2 className="card-title flex items-center gap-2">{icon}{title}</h2>
     {children}
   </div>
 );
 
 const Input = ({label,name,value,onChange,error})=>(
-  <div className="mb-3">
-    <label className="text-sm font-semibold">{label}</label>
+  <div className="mb-4">
+    <label className="label">{label}</label>
     <input
       name={name}
       value={value}
