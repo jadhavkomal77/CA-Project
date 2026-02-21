@@ -15,10 +15,10 @@ export const testimonialApi = createApi({
   endpoints: (builder) => ({
 
     /* GET */
-    getTestimonials: builder.query({
-      query: () => "/",
-      providesTags: ["Testimonials"],
-    }),
+   getTestimonials: builder.query({
+  query: () => "/public",
+  providesTags: ["Testimonials"],
+}),
 
     /* CREATE */
     addTestimonial: builder.mutation({
