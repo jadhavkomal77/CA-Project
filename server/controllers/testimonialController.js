@@ -110,17 +110,15 @@ export const getAdminTestimonials = async (req,res)=>{
 
 
 
-/* 🔐 CREATE */
 export const createTestimonial = async (req,res)=>{
  try{
-
   const { name, role, review, highlight } = req.body;
 
   if(!name || !role || !review)
    return res.status(400).json({message:"All fields required"});
 
+  const highlightBool = highlight === "true" || highlight === true;
 
-  /* IMAGE UPLOAD */
   let imageUrl;
 
   if(req.file){
@@ -128,49 +126,46 @@ export const createTestimonial = async (req,res)=>{
      req.file.path,
      { folder:"testimonials" }
    );
-
    imageUrl = uploadRes.secure_url;
-
    fs.unlinkSync(req.file.path);
   }
-
 
   const testimonial = await Testimonial.create({
    name,
    role,
    review,
-   highlight,
+   highlight: highlightBool,
    image:imageUrl
   });
 
-  res.status(201).json({
-   message:"Testimonial created",
-   testimonial
-  });
+  res.status(201).json(testimonial);
 
  }catch(err){
-  res.status(500).json({message:"Create failed"});
+  res.status(500).json({message:err.message});
  }
 };
-
 
 
 /* 🔐 UPDATE */
 export const updateTestimonial = async (req,res)=>{
  try{
-
   const { name, role, review, highlight } = req.body;
 
-  let data = { name, role, review, highlight };
+  const highlightBool = highlight === "true" || highlight === true;
+
+  let data = {
+    name,
+    role,
+    review,
+    highlight: highlightBool
+  };
 
   if(req.file){
    const uploadRes = await cloudinary.uploader.upload(
      req.file.path,
      { folder:"testimonials" }
    );
-
    data.image = uploadRes.secure_url;
-
    fs.unlinkSync(req.file.path);
   }
 
@@ -180,16 +175,12 @@ export const updateTestimonial = async (req,res)=>{
    { new:true }
   );
 
-  res.json({
-   message:"Updated successfully",
-   testimonial
-  });
+  res.json(testimonial);
 
  }catch(err){
-  res.status(500).json({message:"Update failed"});
+  res.status(500).json({message:err.message});
  }
 };
-
 
 
 /* 🔐 DELETE */
