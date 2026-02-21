@@ -1,123 +1,488 @@
-// import { useNavigate } from "react-router-dom";
+// import { useState } from "react";
 // import {
+//   useAddTestimonialMutation,
 //   useDeleteTestimonialMutation,
-//   useGetAdminTestimonialsQuery,
+//   useGetTestimonialsQuery,
+//   useUpdateTestimonialMutation,
 // } from "../redux/apis/testimonialApi";
 
 // export default function AdminTestimonials() {
-//   const navigate = useNavigate();
-//   const { data: testimonials = [], isLoading } =
-//     useGetAdminTestimonialsQuery();
+//   const { data: testimonials = [], isLoading } = useGetTestimonialsQuery();
+
+//   const [addTestimonial, { isLoading: adding }] =
+//     useAddTestimonialMutation();
+
+//   const [updateTestimonial, { isLoading: updating }] =
+//     useUpdateTestimonialMutation();
+
 //   const [deleteTestimonial] = useDeleteTestimonialMutation();
 
-//   const handleDelete = async (id) => {
-//     if (window.confirm("Are you sure you want to delete?")) {
-//       await deleteTestimonial(id);
+//   const [editingId, setEditingId] = useState(null);
+//   const [imagePreview, setImagePreview] = useState("");
+
+//   const [form, setForm] = useState({
+//     name: "",
+//     role: "",
+//     review: "",
+//     image: "",
+//     highlight: false,
+//   });
+
+//   /* IMAGE HANDLER */
+//   const handleImage = (e) => {
+//     const file = e.target.files[0];
+//     if (!file) return;
+
+//     const reader = new FileReader();
+//     reader.onloadend = () => {
+//       setForm((p) => ({ ...p, image: reader.result }));
+//       setImagePreview(reader.result);
+//     };
+//     reader.readAsDataURL(file);
+//   };
+
+//   /* RESET FORM */
+//   const resetForm = () => {
+//     setForm({
+//       name: "",
+//       role: "",
+//       review: "",
+//       image: "",
+//       highlight: false,
+//     });
+//     setImagePreview("");
+//     setEditingId(null);
+//   };
+
+//   /* SUBMIT */
+//   const handleSubmit = async () => {
+//     if (!form.name || !form.role || !form.review)
+//       return alert("Fill all fields");
+
+//     try {
+//       if (editingId) {
+//         await updateTestimonial({ id: editingId, ...form }).unwrap();
+//       } else {
+//         await addTestimonial(form).unwrap();
+//       }
+//       resetForm();
+//     } catch (err) {
+//       alert(err?.data?.message || "Error occurred");
 //     }
 //   };
 
-//   if (isLoading)
-//     return <div className="p-10 text-center">Loading...</div>;
+//   /* EDIT */
+//   const handleEdit = (t) => {
+//     setEditingId(t._id);
+//     setForm(t);
+//     setImagePreview(t.image);
+//     window.scrollTo({ top: 0, behavior: "smooth" });
+//   };
 
-//   if (!testimonials.length)
-//     return (
-//       <div className="p-10 text-center text-gray-500">
-//         No testimonials found.
-//       </div>
-//     );
+//   /* DELETE */
+//   const handleDelete = async (id) => {
+//     if (!confirm("Delete this testimonial?")) return;
+//     await deleteTestimonial(id);
+//   };
+
+//   if (isLoading)
+//     return <p className="text-center mt-20 text-lg">Loading testimonials...</p>;
 
 //   return (
-//     <div className="max-w-6xl mx-auto p-6">
+//     <div className="p-6 md:p-10 max-w-7xl mx-auto space-y-12">
 
 //       {/* HEADER */}
-//       <div className="flex justify-between items-center mb-8">
-//         <h1 className="text-2xl font-bold">Testimonials</h1>
+//       <h1 className="text-3xl font-bold text-center text-gray-800">
+//         Manage Testimonials
+//       </h1>
 
-//         <button
-//           onClick={() => navigate("/admin/testimonials/new")}
-//           className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700"
-//         >
-//           + Add Testimonial
-//         </button>
+//       {/* FORM */}
+//       <div className="bg-white p-6 md:p-8 rounded-2xl shadow-xl space-y-5 border">
+
+//         <h2 className="text-xl font-semibold text-gray-700">
+//           {editingId ? "Update Testimonial" : "Add New Testimonial"}
+//         </h2>
+
+//         {/* inputs */}
+//         <div className="grid md:grid-cols-2 gap-4">
+
+//           <input
+//             className="input"
+//             placeholder="Client Name"
+//             value={form.name}
+//             onChange={(e) =>
+//               setForm({ ...form, name: e.target.value })
+//             }
+//           />
+
+//           <input
+//             className="input"
+//             placeholder="Role / Profession"
+//             value={form.role}
+//             onChange={(e) =>
+//               setForm({ ...form, role: e.target.value })
+//             }
+//           />
+//         </div>
+
+//         <textarea
+//           className="input"
+//           placeholder="Write testimonial..."
+//           rows={4}
+//           value={form.review}
+//           onChange={(e) =>
+//             setForm({ ...form, review: e.target.value })
+//           }
+//         />
+
+//         {/* IMAGE */}
+//         <div className="space-y-2">
+//           <input type="file" onChange={handleImage} />
+
+//           {imagePreview && (
+//             <img
+//               src={imagePreview}
+//               className="w-24 h-24 rounded-full object-cover border shadow"
+//             />
+//           )}
+//         </div>
+
+//         {/* HIGHLIGHT */}
+//         <label className="flex items-center gap-2 text-gray-700">
+//           <input
+//             type="checkbox"
+//             checked={form.highlight}
+//             onChange={(e) =>
+//               setForm({ ...form, highlight: e.target.checked })
+//             }
+//           />
+//           Highlight this testimonial
+//         </label>
+
+//         {/* BUTTONS */}
+//         <div className="flex gap-3">
+//           <button
+//             disabled={adding || updating}
+//             onClick={handleSubmit}
+//             className="bg-blue-700 hover:bg-blue-800 text-white px-6 py-2 rounded-lg shadow disabled:opacity-50"
+//           >
+//             {editingId
+//               ? updating
+//                 ? "Updating..."
+//                 : "Update"
+//               : adding
+//               ? "Adding..."
+//               : "Add"}
+//           </button>
+
+//           {editingId && (
+//             <button
+//               onClick={resetForm}
+//               className="bg-gray-400 text-white px-6 py-2 rounded-lg"
+//             >
+//               Cancel
+//             </button>
+//           )}
+//         </div>
 //       </div>
 
-//       {/* TABLE */}
-//       <div className="bg-white shadow rounded-xl overflow-hidden">
-//         <table className="w-full text-sm">
+//       {/* LIST */}
+//       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-//           <thead className="bg-gray-100">
-//             <tr>
-//               <th className="p-4 text-left">Image</th>
-//               <th className="p-4 text-left">Name</th>
-//               <th className="p-4 text-left">Rating</th>
-//               <th className="p-4 text-left">Status</th>
-//               <th className="p-4 text-left">Actions</th>
-//             </tr>
-//           </thead>
+//         {testimonials.map((t) => (
+//           <div
+//             key={t._id}
+//             className="bg-white p-6 rounded-2xl shadow-lg border hover:shadow-xl transition"
+//           >
+//             {t.image && (
+//               <img
+//                 src={t.image}
+//                 className="w-16 h-16 rounded-full object-cover mb-4"
+//               />
+//             )}
 
-//           <tbody>
-//             {testimonials.map((t) => (
-//               <tr key={t._id} className="border-t hover:bg-gray-50">
-//                 <td className="p-4">
-//                   {t.image && (
-//                     <img
-//                       src={t.image}
-//                       alt={t.name}
-//                       className="w-12 h-12 rounded-full object-cover"
-//                     />
-//                   )}
-//                 </td>
+//             <h3 className="font-bold text-lg">{t.name}</h3>
+//             <p className="text-sm text-gray-500">{t.role}</p>
 
-//                 <td className="p-4 font-medium">{t.name}</td>
+//             <p className="text-gray-600 mt-3 text-sm leading-relaxed">
+//               {t.review}
+//             </p>
 
-//                 <td className="p-4">
-//                   {"⭐".repeat(t.rating)}
-//                 </td>
+//             {t.highlight && (
+//               <span className="inline-block mt-3 text-xs bg-green-600 text-white px-3 py-1 rounded-full">
+//                 Highlighted
+//               </span>
+//             )}
 
-//                 <td className="p-4">
-//                   <span
-//                     className={`px-2 py-1 rounded text-xs ${
-//                       t.isActive
-//                         ? "bg-green-100 text-green-600"
-//                         : "bg-red-100 text-red-600"
-//                     }`}
-//                   >
-//                     {t.isActive ? "Active" : "Inactive"}
-//                   </span>
-//                 </td>
+//             {/* ACTIONS */}
+//             <div className="flex gap-3 mt-5">
+//               <button
+//                 onClick={() => handleEdit(t)}
+//                 className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white py-1 rounded"
+//               >
+//                 Edit
+//               </button>
 
-//                 <td className="p-4 flex gap-4">
-//                   <button
-//                     onClick={() =>
-//                       navigate(`/admin/testimonials/edit/${t._id}`)
-//                     }
-//                     className="text-blue-600 font-medium"
-//                   >
-//                     Edit
-//                   </button>
-
-//                   <button
-//                     onClick={() => handleDelete(t._id)}
-//                     className="text-red-500 font-medium"
-//                   >
-//                     Delete
-//                   </button>
-//                 </td>
-//               </tr>
-//             ))}
-//           </tbody>
-
-//         </table>
+//               <button
+//                 onClick={() => handleDelete(t._id)}
+//                 className="flex-1 bg-red-600 hover:bg-red-700 text-white py-1 rounded"
+//               >
+//                 Delete
+//               </button>
+//             </div>
+//           </div>
+//         ))}
 //       </div>
 //     </div>
 //   );
 // }
-import React from 'react'
 
-const AdminTestimonials = () => {
+
+
+import { useState } from "react";
+import {
+  useAddTestimonialMutation,
+  useDeleteTestimonialMutation,
+  useGetTestimonialsQuery,
+  useUpdateTestimonialMutation,
+} from "../redux/apis/testimonialApi";
+
+export default function AdminTestimonials() {
+
+  const { data: testimonials = [], isLoading } = useGetTestimonialsQuery();
+
+  const [addTestimonial, { isLoading: adding }] =
+    useAddTestimonialMutation();
+
+  const [updateTestimonial, { isLoading: updating }] =
+    useUpdateTestimonialMutation();
+
+  const [deleteTestimonial] = useDeleteTestimonialMutation();
+
+  const [editingId, setEditingId] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
+  const [preview, setPreview] = useState("");
+
+  const [form, setForm] = useState({
+    name: "",
+    role: "",
+    review: "",
+    highlight: false,
+  });
+
+  /* IMAGE SELECT */
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setImageFile(file);
+    setPreview(URL.createObjectURL(file));
+  };
+
+  /* RESET */
+  const resetForm = () => {
+    setForm({
+      name: "",
+      role: "",
+      review: "",
+      highlight: false,
+    });
+    setImageFile(null);
+    setPreview("");
+    setEditingId(null);
+  };
+
+  /* SUBMIT */
+  const handleSubmit = async () => {
+    if (!form.name || !form.role || !form.review)
+      return alert("Fill all fields");
+
+    try {
+      const fd = new FormData();
+
+      fd.append("name", form.name);
+      fd.append("role", form.role);
+      fd.append("review", form.review);
+      fd.append("highlight", form.highlight);
+
+      if (imageFile) fd.append("image", imageFile);
+
+      if (editingId)
+        await updateTestimonial({ id: editingId, data: fd }).unwrap();
+      else
+        await addTestimonial(fd).unwrap();
+
+      resetForm();
+
+    } catch (err) {
+      alert(err?.data?.message || "Something went wrong");
+    }
+  };
+
+  /* EDIT */
+  const handleEdit = (t) => {
+    setEditingId(t._id);
+
+    setForm({
+      name: t.name,
+      role: t.role,
+      review: t.review,
+      highlight: t.highlight,
+    });
+
+    setPreview(t.image || "");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  /* DELETE */
+  const handleDelete = async (id) => {
+    if (!confirm("Delete testimonial?")) return;
+    await deleteTestimonial(id);
+  };
+
+  if (isLoading)
+    return <p className="text-center mt-20 text-lg">Loading testimonials...</p>;
+
   return (
-    <div>AdminTestimonials</div>
-  )
-}
+    <div className="p-6 md:p-10 max-w-7xl mx-auto space-y-12">
 
-export default AdminTestimonials
+      {/* HEADER */}
+      <h1 className="text-3xl font-bold text-center text-gray-800">
+        Manage Testimonials
+      </h1>
+
+      {/* FORM */}
+      <div className="bg-white p-8 rounded-2xl shadow-xl border space-y-5">
+
+        <h2 className="text-xl font-semibold">
+          {editingId ? "Update Testimonial" : "Add New Testimonial"}
+        </h2>
+
+        <div className="grid md:grid-cols-2 gap-4">
+
+          <input
+            className="input"
+            placeholder="Client Name"
+            value={form.name}
+            onChange={(e)=>
+              setForm({...form,name:e.target.value})
+            }
+          />
+
+          <input
+            className="input"
+            placeholder="Role"
+            value={form.role}
+            onChange={(e)=>
+              setForm({...form,role:e.target.value})
+            }
+          />
+        </div>
+
+        <textarea
+          className="input"
+          rows={4}
+          placeholder="Write testimonial..."
+          value={form.review}
+          onChange={(e)=>
+            setForm({...form,review:e.target.value})
+          }
+        />
+
+        {/* IMAGE */}
+        <div className="space-y-2">
+          <input type="file" onChange={handleImage} />
+
+          {preview && (
+            <img
+              src={preview}
+              className="w-24 h-24 rounded-full object-cover border shadow"
+            />
+          )}
+        </div>
+
+        {/* HIGHLIGHT */}
+        <label className="flex gap-2 items-center">
+          <input
+            type="checkbox"
+            checked={form.highlight}
+            onChange={(e)=>
+              setForm({...form,highlight:e.target.checked})
+            }
+          />
+          Highlight testimonial
+        </label>
+
+        {/* BUTTONS */}
+        <div className="flex gap-3">
+
+          <button
+            disabled={adding || updating}
+            onClick={handleSubmit}
+            className="bg-blue-700 text-white px-6 py-2 rounded-lg disabled:opacity-50"
+          >
+            {editingId
+              ? updating ? "Updating..." : "Update"
+              : adding ? "Adding..." : "Add"}
+          </button>
+
+          {editingId && (
+            <button
+              onClick={resetForm}
+              className="bg-gray-400 text-white px-6 py-2 rounded-lg"
+            >
+              Cancel
+            </button>
+          )}
+
+        </div>
+      </div>
+
+      {/* LIST */}
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        {testimonials.map((t) => (
+          <div key={t._id} className="bg-white p-6 rounded-xl shadow border">
+
+            {t.image && (
+              <img
+                src={t.image}
+                className="w-16 h-16 rounded-full mb-3 object-cover"
+              />
+            )}
+
+            <h3 className="font-bold text-lg">{t.name}</h3>
+            <p className="text-gray-500 text-sm">{t.role}</p>
+
+            <p className="mt-3 text-gray-600 text-sm">{t.review}</p>
+
+            {t.highlight && (
+              <span className="inline-block mt-3 text-xs bg-green-600 text-white px-3 py-1 rounded-full">
+                Highlighted
+              </span>
+            )}
+
+            <div className="flex gap-3 mt-5">
+
+              <button
+                onClick={()=>handleEdit(t)}
+                className="flex-1 bg-yellow-500 text-white py-1 rounded"
+              >
+                Edit
+              </button>
+
+              <button
+                onClick={()=>handleDelete(t._id)}
+                className="flex-1 bg-red-600 text-white py-1 rounded"
+              >
+                Delete
+              </button>
+
+            </div>
+
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

@@ -13,6 +13,7 @@ import { settingApi } from "./apis/settingApi";
 import { calculatorApi } from "./apis/calculatorApi";
 import { applicationApi } from "./apis/applicationApi";
 import { verifyApi } from "./apis/verifyApi";
+import { testimonialApi } from "./apis/testimonialApi";
 
 const reduxStore = configureStore({
   reducer: {
@@ -30,6 +31,7 @@ const reduxStore = configureStore({
        [calculatorApi.reducerPath]: calculatorApi.reducer,
        [applicationApi.reducerPath]: applicationApi.reducer,
        [verifyApi.reducerPath]: verifyApi.reducer,
+       [testimonialApi.reducerPath]: testimonialApi.reducer,
 
     admin: adminReducer,
   },
@@ -48,6 +50,7 @@ const reduxStore = configureStore({
       calculatorApi.middleware,
       applicationApi.middleware,
       verifyApi.middleware,
+      testimonialApi.middleware,
     ),
 
 });

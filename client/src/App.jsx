@@ -45,6 +45,7 @@ import RefundPolicy from "./pages/RefundPolicy";
 import ApplyService from "./pages/ApplyService";
 import AdminApplications from "./admin/AdminApplications";
 import VerifyPage from "./pages/VerifyPage";
+import AdminTestimonials from "./admin/AdminTestimonials";
 
 
 
@@ -112,7 +113,7 @@ function App() {
           <Route path="projects/new" element={<AddAdminProject />} />  
           <Route path="projects/edit/:id" element={<AddAdminProject />} /> 
 
-         {/* <Route path="/:slug" element={<PublicPolicy/>}/> */}
+         <Route path="admintestimonials" element={<AdminTestimonials/>}/>
         
           <Route path="pricing" element={<AdminPricing />} /> 
           <Route path="contacts" element={<AdminContacts />} />
