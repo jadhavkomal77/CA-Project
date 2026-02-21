@@ -46,6 +46,7 @@ import ApplyService from "./pages/ApplyService";
 import AdminApplications from "./admin/AdminApplications";
 import VerifyPage from "./pages/VerifyPage";
 import AdminTestimonials from "./admin/AdminTestimonials";
+import ScrollToTop from "./layout/ScrollToTop";
 
 
 
@@ -54,6 +55,9 @@ import AdminTestimonials from "./admin/AdminTestimonials";
 function App() {
   return (
     <BrowserRouter>
+
+     <ScrollToTop />  
+
       <Routes>
 
        {/*  PUBLIC  */}
