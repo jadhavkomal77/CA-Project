@@ -1,3 +1,4 @@
+
 import {
   Facebook,
   Instagram,
@@ -7,7 +8,6 @@ import {
   MapPin,
 } from "lucide-react";
 import { FaXTwitter } from "react-icons/fa6";
-
 import { useGetPublicNavbarQuery } from "../redux/apis/navbarApi";
 import { useGetPublicFooterQuery } from "../redux/apis/footerApi";
 import { Link } from "react-router-dom";
@@ -33,85 +33,63 @@ export default function PublicFooter() {
 
   return (
     <footer className="bg-[#0f172a] text-gray-300">
-
       {/* MAIN */}
-      <div className="
-        max-w-7xl mx-auto
-        px-5 sm:px-8 lg:px-10
-        py-12 sm:py-14
-        grid
-        grid-cols-1
-        sm:grid-cols-2
-        lg:grid-cols-4
-        gap-y-10
-        gap-x-8
-        lg:gap-x-12
-      ">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 py-4 sm:py-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
 
         {/* COMPANY */}
         <div className="space-y-5 text-center sm:text-left">
 
           {/* LOGO */}
-          <div className="flex flex-col items-center sm:items-start cursor-pointer">
+          <div className="flex flex-col items-center sm:items-start">
 
-            <div
-              className="flex items-center"
-              style={{
-                filter:
-                  "drop-shadow(0 3px 8px rgba(0,0,0,0.12)) drop-shadow(0 6px 18px rgba(0,0,0,0.06))",
-              }}
-            >
+            <div className="flex items-center">
               {["C", "A", "D", "M", "A"].map((l, i) => {
-                const whiteBlock = i < 2;
+                const white = i < 2;
 
                 return (
                   <div
                     key={i}
-                    className="relative"
+                    className="flex items-center justify-center
+                               w-[42px] h-[42px]
+                               border
+                               text-[19px] font-black
+                               tracking-tight
+                               select-none"
                     style={{
-                      width: "40px",
-                      height: "40px",
-                      marginLeft: i > 0 ? "-1px" : "0",
+                      background: white
+                        ? "linear-gradient(160deg,#fff,#ececec)"
+                        : "linear-gradient(160deg,#1e3a8a,#2563eb,#1e3a8a)",
+                      color: white ? "#1e40af" : "#fff",
+                      borderColor: white
+                        ? "rgba(0,0,0,0.08)"
+                        : "rgba(0,0,0,0.25)",
+                      borderRadius:
+                        i === 0
+                          ? "8px 0 0 8px"
+                          : i === 4
+                          ? "0 8px 8px 0"
+                          : "0",
                     }}
                   >
-                    <div
-                      className="absolute inset-0"
-                      style={{
-                        background: whiteBlock
-                          ? "linear-gradient(160deg,#fff,#ececec)"
-                          : "linear-gradient(160deg,#1e3a8a,#2563eb,#1e3a8a)",
-                        border: whiteBlock
-                          ? "1px solid rgba(0,0,0,0.06)"
-                          : "1px solid rgba(0,0,0,0.25)",
-                        borderRadius:
-                          i === 0
-                            ? "8px 0 0 8px"
-                            : i === 4
-                            ? "0 8px 8px 0"
-                            : "0",
-                      }}
-                    />
-
-                    <div
-                      className="absolute inset-0 flex items-center justify-center"
-                      style={{
-                        fontSize: "19px",
-                        fontWeight: "900",
-                        letterSpacing: "-1px",
-                        fontFamily: "Inter, system-ui",
-                        color: whiteBlock ? "#1e40af" : "#fff",
-                      }}
-                    >
-                      {l}
-                    </div>
+                    {l}
                   </div>
                 );
               })}
             </div>
 
-            <p className="text-yellow-500 text-[11px] font-semibold tracking-wide whitespace-nowrap mt-2">
-              PROFESSIONAL | TRUSTED | RELIABLE
-            </p>
+            {/* TAGLINE */}
+       <p className="
+  mt-2
+  text-yellow-500
+  text-[11px]
+  font-semibold
+  tracking-wide
+  text-center
+  w-[210px]
+  whitespace-nowrap
+">
+  PROFESSIONAL | TRUSTED | RELIABLE
+</p>
           </div>
 
           {/* DESC */}
@@ -120,7 +98,7 @@ export default function PublicFooter() {
           </p>
 
           {/* SOCIAL */}
-          <div className="flex justify-center sm:justify-start gap-3 pt-2 flex-wrap">
+          <div className="flex justify-center sm:justify-start gap-3 flex-wrap">
             {footer.facebook && <SocialIcon Icon={Facebook} link={footer.facebook} />}
             {footer.twitter && <SocialIcon Icon={FaXTwitter} link={footer.twitter} />}
             {footer.instagram && <SocialIcon Icon={Instagram} link={footer.instagram} />}
@@ -152,41 +130,43 @@ export default function PublicFooter() {
               {footer.email}
             </li>
 
-            <li className="flex items-start justify-center sm:justify-start gap-2 leading-relaxed">
+            <li className="flex items-start justify-center sm:justify-start gap-2">
               <MapPin size={17} className="text-yellow-500 shrink-0 mt-[3px]" />
-              <span className="text-left">{footer.address}</span>
+              <span>{footer.address}</span>
             </li>
 
           </ul>
         </div>
-
       </div>
 
       {/* BOTTOM */}
-      <div className="border-t border-white/10 py-6 text-center text-sm text-gray-400 px-4">
+     <div className="border-t border-white/10 py-4 text-center text-sm text-gray-400 px-4">
 
-        <p>
-          © {new Date().getFullYear()}{" "}
-          <span className="text-white font-medium">
-            {footer.companyName}
-          </span> . All Rights Reserved.
-        </p>
+  <p className="flex flex-col sm:flex-row items-center justify-center gap-1">
+    <span>
+      © {new Date().getFullYear()}{" "}
+      <span className="text-yellow-400 font-medium">
+        {footer.companyName}
+      </span>
+    </span>
 
-        <p className="mt-2 text-yellow-400">
-          Designed & Developed by MVAD Eventful Endeavors Pvt Ltd . . .
-        </p>
+    <span className="hidden sm:inline">.</span>
 
-        <button
-          onClick={() => (window.location.href = "/adminlogin")}
-          className="mt-4 text-xs text-yellow-500 hover:underline"
-        >
-          Admin Login
-        </button>
-      </div>
+    <span>
+     All Rights Reserved .
+    </span>
+  </p>
+
+  <button
+    onClick={() => (window.location.href = "/adminlogin")}
+    className="mt-3 text-xs text-yellow-500 hover:underline"
+  >
+    Admin Login
+  </button>
+</div>
     </footer>
   );
 }
-
 
 /* LINKS */
 function FooterLinks({ title, links, routeMap }) {
@@ -209,7 +189,6 @@ function FooterLinks({ title, links, routeMap }) {
     </div>
   );
 }
-
 
 /* SOCIAL ICON */
 function SocialIcon({ Icon, link }) {

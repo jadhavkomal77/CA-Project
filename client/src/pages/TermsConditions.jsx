@@ -1,80 +1,81 @@
-import React from "react";
+import { motion } from "framer-motion";
+import { FileText, ShieldCheck, Gavel } from "lucide-react";
 
 export default function TermsConditions() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-200 py-16 px-4">
-      
-      <div className="max-w-5xl mx-auto bg-white shadow-xl rounded-2xl p-8 md:p-12">
+    <div className="min-h-screen bg-gradient-to-br from-white via-slate-50 to-blue-50 py-16 px-4">
+      <div className="max-w-6xl mx-auto">
 
-        {/* TITLE */}
-        <h1 className="text-4xl font-bold text-center text-slate-800 mb-6">
-          Terms & Conditions
-        </h1>
+        {/* HEADER */}
+        <motion.div
+          initial={{ opacity: 0, y: -25 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-14"
+        >
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-blue-600 to-blue-800 text-white shadow-lg mb-6">
+            <FileText size={40}/>
+          </div>
+
+          <h1 className="text-5xl font-bold text-slate-900 mb-4">
+            Terms & Conditions
+          </h1>
+
+          <p className="text-slate-600 text-lg">
+            Please read these terms carefully before using our website
+          </p>
+        </motion.div>
 
 
-        <Section
-          title="1. Acceptance of Terms"
-          content={`By accessing and using this website, you accept and agree to be bound by these Terms and Conditions. If you do not agree with any part, please do not use our website.`}
-        />
+        {/* MAIN CARD */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: .4 }}
+          className="bg-white rounded-3xl shadow-2xl border border-slate-200 p-8 md:p-14 space-y-10"
+        >
 
-        <Section
-          title="2. Use of Website"
-          content={`You agree to use this website only for lawful purposes. You must not use it in any way that may damage the site or affect other users' experience.`}
-        />
+          <Block title="Acceptance of Terms" icon={ShieldCheck}>
+            By accessing and using the website of CADMA Associates Pvt. Ltd., you agree to comply with and be bound by these Terms and Conditions. The content provided on this website is for general information purposes only and may be updated or changed without prior notice.
+          </Block>
 
-        <Section
-          title="3. Intellectual Property"
-          content={`All content on this website including text, graphics, logos, and design is the property of our company and protected by copyright laws. Unauthorized use is prohibited.`}
-        />
+          <Block title="Intellectual Property Rights" icon={FileText}>
+            All information, logos, text, and materials on this website are the property of CADMA Associates Pvt. Ltd. and may not be copied, reproduced, or used without permission. Users agree to provide accurate information when submitting enquiries or forms through the website.
+          </Block>
 
-        <Section
-          title="4. User Responsibilities"
-          content={`Users are responsible for providing accurate information and maintaining confidentiality of their login credentials if applicable.`}
-        />
+          <Block title="Limitation of Liability" icon={Gavel}>
+            CADMA Associates Pvt. Ltd. is not responsible for any loss or damages arising from the use of this website or reliance on its content. Use of this website and any dispute arising from it shall be subject to the laws of India.
+          </Block>
 
-        <Section
-          title="5. Limitation of Liability"
-          content={`We shall not be held liable for any direct, indirect, or consequential damages arising from the use or inability to use our website or services.`}
-        />
+          {/* FOOT NOTE */}
+          <div className="border-t pt-8 text-slate-700 leading-relaxed">
+            By using this website, you acknowledge and accept these Terms and Conditions. For any queries, please contact CADMA Associates Pvt. Ltd., Chhatrapati Sambhajinagar & Pune, Maharashtra.
+          </div>
 
-        <Section
-          title="6. Third-Party Links"
-          content={`Our website may contain links to third-party websites. We are not responsible for their content, policies, or practices.`}
-        />
-
-        <Section
-          title="7. Termination"
-          content={`We reserve the right to terminate or suspend access to our website without prior notice for violations of these terms.`}
-        />
-
-        <Section
-          title="8. Changes to Terms"
-          content={`We may update these Terms & Conditions from time to time. Continued use of the website after changes means you accept the revised terms.`}
-        />
-
-        <Section
-          title="9. Governing Law"
-          content={`These terms shall be governed by and interpreted in accordance with applicable laws, and any disputes will be subject to the jurisdiction of the appropriate courts.`}
-        />
-
-        <Section
-          title="10. Contact Information"
-          content={`If you have any questions about these Terms, please contact us at:
-Email: support@yourdomain.com`}
-        />
-
+        </motion.div>
       </div>
     </div>
   );
 }
 
 
-/* REUSABLE SECTION COMPONENT */
-function Section({ title, content }) {
+
+/* BLOCK COMPONENT */
+function Block({ title, children, icon: Icon }) {
   return (
-    <div className="mb-8">
-      <h2 className="text-xl font-semibold text-slate-800 mb-2">{title}</h2>
-      <p className="text-gray-600 leading-relaxed">{content}</p>
+    <div className="group">
+      <div className="flex items-center gap-3 mb-4">
+        <div className="p-2 rounded-lg bg-blue-100 text-blue-700 group-hover:bg-blue-700 group-hover:text-white transition">
+          <Icon size={18}/>
+        </div>
+
+        <h2 className="text-2xl font-bold text-slate-900 group-hover:text-blue-700 transition">
+          {title}
+        </h2>
+      </div>
+
+      <p className="text-slate-700 leading-relaxed text-[16px]">
+        {children}
+      </p>
     </div>
   );
 }

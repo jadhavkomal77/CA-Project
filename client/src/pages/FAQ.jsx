@@ -86,7 +86,7 @@ export default function FAQ() {
           Income Tax Filing FAQs
         </h1>
         <div className="w-24 h-1 bg-blue-600 mx-auto mt-6 rounded-full"></div>
-        <p className="mt-6 text-gray-600 max-w-2xl mx-auto text-lg">
+        <p className="mt-6 text-gray-800 max-w-2xl mx-auto text-lg">
           Everything you need to know about Income Tax Returns, filing process, eligibility, documents and rules.
         </p>
       </section>
@@ -123,7 +123,7 @@ export default function FAQ() {
               </button>
 
               <div
-                className={`px-7 text-gray-600 leading-relaxed transition-all duration-300 ${
+                className={`px-7 text-gray-800 leading-relaxed transition-all duration-300 ${
                   open === i ? "max-h-[500px] pb-6" : "max-h-0 overflow-hidden"
                 }`}
               >

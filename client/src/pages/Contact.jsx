@@ -46,11 +46,11 @@ export default function Contact() {
             CONTACT OUR CA TEAM
           </p>
 
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 leading-tight mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-black leading-tight mb-6">
             Get Expert Financial <br /> Consultation Today
           </h2>
 
-          <p className="text-gray-600 max-w-xl mb-10 leading-relaxed">
+          <p className="text-gray-700 max-w-xl mb-10 leading-relaxed">
             We provide professional Chartered Accountant services including
             Income Tax Filing, GST Registration, Company Incorporation,
             Audit, Accounting, and Financial Advisory.
@@ -65,10 +65,10 @@ export default function Contact() {
                 📑
               </div>
               <div>
-                <h4 className="font-semibold text-gray-800">
+                <h4 className="font-semibold text-gray-900">
                   Income Tax & GST Experts
                 </h4>
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-700 text-sm">
                   Accurate tax filing and GST compliance support.
                 </p>
               </div>
@@ -82,7 +82,7 @@ export default function Contact() {
                 <h4 className="font-semibold text-gray-800">
                   Business Registration
                 </h4>
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-700 text-sm">
                   Company, LLP & Startup registration assistance.
                 </p>
               </div>
@@ -96,7 +96,7 @@ export default function Contact() {
                 <h4 className="font-semibold text-gray-800">
                   100% Confidential & Secure
                 </h4>
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-700 text-sm">
                   Complete privacy and professional handling of data.
                 </p>
               </div>
@@ -107,7 +107,7 @@ export default function Contact() {
 
         {/* ================= RIGHT FORM ================= */}
         <div className="bg-white shadow-xl rounded-2xl p-10">
-          <h3 className="text-2xl font-bold text-gray-900 mb-8">
+          <h3 className="text-2xl font-bold text-black mb-8">
             Book Free Consultation
           </h3>
 
@@ -121,7 +121,7 @@ export default function Contact() {
     onChange={handleChange}
     placeholder="Your Name"
     required
-    className="border border-gray-200 px-5 py-4 rounded-lg focus:outline-none focus:border-blue-600"
+    className="border border-gray-300 px-5 py-4 rounded-lg focus:outline-none focus:border-blue-600"
   />
 
   {/* EMAIL */}
@@ -132,7 +132,7 @@ export default function Contact() {
     onChange={handleChange}
     placeholder="Email Address"
     required
-    className="border border-gray-200 px-5 py-4 rounded-lg focus:outline-none focus:border-blue-600"
+    className="border border-gray-300 px-5 py-4 rounded-lg focus:outline-none focus:border-blue-600"
   />
 
   {/* PHONE */}
@@ -143,7 +143,7 @@ export default function Contact() {
     onChange={handleChange}
     placeholder="Phone Number"
     required
-    className="border border-gray-200 px-5 py-4 rounded-lg focus:outline-none focus:border-blue-600"
+    className="border border-gray-300 px-5 py-4 rounded-lg focus:outline-none focus:border-blue-600"
   />
 
   {/* SERVICE */}
@@ -151,7 +151,7 @@ export default function Contact() {
     name="service"
     value={form.service}
     onChange={handleChange}
-    className="border border-gray-200 px-5 py-4 rounded-lg focus:outline-none focus:border-blue-600"
+    className="border border-gray-300 px-5 py-4 rounded-lg focus:outline-none focus:border-blue-600"
   >
     <option value="">Select Service</option>
     <option>Income Tax Filing</option>
@@ -170,7 +170,7 @@ export default function Contact() {
     onChange={handleChange}
     placeholder="Describe your requirement"
     required
-    className="md:col-span-2 border border-gray-200 px-5 py-4 rounded-lg focus:outline-none focus:border-blue-600"
+    className="md:col-span-2 border border-gray-300 px-5 py-4 rounded-lg focus:outline-none focus:border-blue-600"
   ></textarea>
 
   {/* BUTTON (FULL WIDTH) */}

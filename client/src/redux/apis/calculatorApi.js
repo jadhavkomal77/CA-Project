@@ -43,6 +43,14 @@ export const calculatorApi = createApi({
     method: "POST",
     body: data,
   }),
+ 
+}),
+searchGST: builder.mutation({
+  query:(data)=>({
+    url:"/gst-search",
+    method:"POST",
+    body:data
+  })
 }),
 
   }),
@@ -54,4 +62,5 @@ export const {
   useCalculateEMIMutation,
   useCalculateAdvanceTaxMutation,
   useCalculateSIPMutation,
+useSearchGSTMutation,
 } = calculatorApi;

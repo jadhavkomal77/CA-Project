@@ -68,7 +68,7 @@ function App() {
               <Route path="calculators" element={<PublicCalculator />} />
 
               <Route path="testimonials" element={<Testimonials />} />
-              <Route path="industries" element={<Industries />} />
+              {/* <Route path="industries" element={<Industries />} /> */}
               <Route path="faq" element={<FAQ />} />
 
               <Route path="apply/:slug" element={<ApplyService />} />

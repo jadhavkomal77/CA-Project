@@ -24,7 +24,7 @@ export default function Hero() {
 
             {/* SUBTITLE */}
             {hero.subtitle && (
-              <p className="text-gray-600 text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
+              <p className="text-gray-800 text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
                 {hero.subtitle}
               </p>
             )}
@@ -41,7 +41,7 @@ export default function Hero() {
 
               <button
                 onClick={() => navigate("/services")}
-                className="border border-gray-300 hover:border-blue-600 hover:text-blue-600 px-7 py-3 rounded-lg text-gray-800 font-semibold transition"
+                className="border border-gray-800 hover:border-blue-600 hover:text-blue-600 px-7 py-3 rounded-lg text-gray-800 font-semibold transition"
               >
                 View Services
               </button>
@@ -49,7 +49,7 @@ export default function Hero() {
             </div>
 
             {/* STATS */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-5 pt-2 text-gray-600 text-sm sm:text-base">
+            <div className="flex flex-wrap justify-center lg:justify-start gap-5 pt-2 text-gray-800 text-sm sm:text-base">
               <span>✔ 30+ Experience</span>
               <span>✔ 5000+ Clients</span>
               <span>✔ Expert Advisory</span>

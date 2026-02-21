@@ -1,5 +1,4 @@
 
-
 // import { useState } from "react";
 // import { useParams, useNavigate } from "react-router-dom";
 // import { useGetPublicServiceBySlugQuery } from "../redux/apis/serviceApi";
@@ -7,19 +6,12 @@
 // import { toast } from "react-toastify";
 // import {
 //   Upload,
-//   FileText,
-//   Image as ImageIcon,
-//   User,
-//   Mail,
-//   Phone,
-//   MapPin,
-//   CheckCircle,
-//   Loader2,
-//   ArrowLeft,
-//   FileCheck,
 //   Trash2,
-//   AlertCircle,
-//   X,
+//   Loader2,
+//   CheckCircle,
+//   ArrowLeft,
+//   FileText,
+//   User,
 // } from "lucide-react";
 
 // export default function ApplyService() {
@@ -41,26 +33,233 @@
 
 //   const [files, setFiles] = useState({});
 //   const [errors, setErrors] = useState({});
-//   const [preview, setPreview] = useState(null);
 
+//   /* INPUT */
 //   const handleChange = (e) => {
-//     setForm({ ...form, [e.target.name]: e.target.value });
-//     setErrors({ ...errors, [e.target.name]: "" });
+//     setForm(p => ({ ...p, [e.target.name]: e.target.value }));
+//     setErrors(p => ({ ...p, [e.target.name]: "" }));
 //   };
 
-//   const validateForm = () => {
+//   /* VALIDATE */
+//   const validate = () => {
 //     const e = {};
-//     if (!form.name.trim()) e.name = "Name is required";
-//     if (!form.email.trim()) {
-//       e.email = "Email is required";
-//     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-//       e.email = "Invalid email format";
+//     if (!form.name.trim()) e.name = "Required";
+//     if (!form.email.match(/^\S+@\S+\.\S+$/)) e.email = "Invalid email";
+//     if (form.phone.replace(/\D/g, "").length !== 10) e.phone = "Invalid phone";
+//     setErrors(e);
+//     return Object.keys(e).length === 0;
+//   };
+
+//   /* FILE SELECT */
+//   const handleFile = (doc, e) => {
+//     const selected = Array.from(e.target.files);
+
+//     const valid = selected.filter(f => {
+//       if (f.size > 10 * 1024 * 1024) {
+//         toast.error(`${f.name} > 10MB`);
+//         return false;
+//       }
+//       return true;
+//     });
+
+//     setFiles(p => ({
+//       ...p,
+//       [doc]: [...(p[doc] || []), ...valid],
+//     }));
+//   };
+
+//   /* REMOVE FILE */
+//   const removeFile = (doc, index) => {
+//     setFiles(p => {
+//       const copy = { ...p };
+//       copy[doc].splice(index, 1);
+//       if (!copy[doc].length) delete copy[doc];
+//       return copy;
+//     });
+//   };
+
+//   /* SUBMIT */
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     if (!validate()) return;
+
+//     try {
+//       const fd = new FormData();
+
+//       fd.append("userDetails", JSON.stringify(form));
+//       fd.append("serviceId", service._id);
+
+//       Object.keys(files).forEach(key =>
+//         files[key].forEach(file => fd.append("documents", file))
+//       );
+
+//       await createApplication(fd).unwrap();
+
+//       toast.success("Application Submitted Successfully 🎉");
+//       navigate("/contact");
+//     } catch (err) {
+//       toast.error(err?.data?.message || "Submission Failed");
 //     }
-//     if (!form.phone.trim()) {
-//       e.phone = "Phone is required";
-//     } else if (!/^[0-9]{10}$/.test(form.phone.replace(/\D/g, ""))) {
-//       e.phone = "Invalid phone number (10 digits)";
-//     }
+//   };
+
+//   /* LOADING */
+//   if (isLoading)
+//     return (
+//       <div className="min-h-screen flex justify-center items-center">
+//         <Loader2 className="animate-spin text-blue-700" size={42} />
+//       </div>
+//     );
+
+//   /* PAGE */
+//   return (
+//     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-10 px-4">
+
+//       <div className="max-w-4xl mx-auto">
+
+//         {/* BACK */}
+//         <button
+//           onClick={()=>navigate(-1)}
+//           className="flex items-center gap-2 text-sm mb-5 text-gray-600 hover:text-blue-700"
+//         >
+//           <ArrowLeft size={18}/> Back
+//         </button>
+
+//         {/* HEADER */}
+//         <div className="bg-gradient-to-r from-blue-700 to-indigo-700 text-white p-6 rounded-2xl shadow-lg mb-6 animate-fade-in-up">
+//           <h1 className="text-2xl font-bold">Apply for {service.title}</h1>
+//           <p className="text-sm opacity-90 mt-1">
+//             Fill details and upload required documents
+//           </p>
+//         </div>
+
+//         <form onSubmit={handleSubmit} className="space-y-6">
+
+//           {/* PERSONAL */}
+//           <Card title="Personal Information" icon={<User size={18}/>}>
+//             <Input label="Full Name" name="name" value={form.name} onChange={handleChange} error={errors.name}/>
+//             <Input label="Email Address" name="email" value={form.email} onChange={handleChange} error={errors.email}/>
+//             <Input label="Phone Number" name="phone" value={form.phone} onChange={handleChange} error={errors.phone}/>
+
+//             <textarea
+//               name="address"
+//               placeholder="Address"
+//               value={form.address}
+//               onChange={handleChange}
+//               className="input mt-3"
+//             />
+//           </Card>
+
+//           {/* DOCUMENTS */}
+//           {service.requiredDocuments?.length > 0 && (
+//             <Card title="Upload Documents" icon={<FileText size={18}/>}>
+//               {service.requiredDocuments.map((doc,i)=>(
+//                 <div key={i} className="mb-5">
+
+//                   <p className="font-semibold mb-2">{doc}</p>
+
+//                   <label className="uploadBox">
+//                     <Upload size={18}/> Select Files
+//                     <input hidden type="file" multiple onChange={(e)=>handleFile(doc,e)}/>
+//                   </label>
+
+//                   {files[doc]?.map((f,index)=>(
+//                     <div key={index} className="fileItem">
+//                       {f.name}
+//                       <Trash2 size={15} onClick={()=>removeFile(doc,index)} className="cursor-pointer hover:text-red-600"/>
+//                     </div>
+//                   ))}
+//                 </div>
+//               ))}
+//             </Card>
+//           )}
+
+//           {/* SUBMIT */}
+//           <button disabled={submitting} className="submitBtn">
+//             {submitting
+//               ? <Loader2 className="animate-spin"/>
+//               : <CheckCircle size={18}/>}
+//             Submit Application
+//           </button>
+
+//         </form>
+//       </div>
+//     </div>
+//   );
+// }
+
+// /* COMPONENTS */
+
+// const Card = ({title,icon,children})=>(
+//   <div className="card-glass animate-scale-in">
+//     <h2 className="card-title flex items-center gap-2">{icon}{title}</h2>
+//     {children}
+//   </div>
+// );
+
+// const Input = ({label,name,value,onChange,error})=>(
+//   <div className="mb-4">
+//     <label className="label">{label}</label>
+//     <input
+//       name={name}
+//       value={value}
+//       onChange={onChange}
+//       className={`input ${error?"border-red-400":""}`}
+//     />
+//     {error && <p className="text-xs text-red-500">{error}</p>}
+//   </div>
+// );
+
+
+
+
+
+
+// import { useState } from "react";
+// import { useParams, useNavigate } from "react-router-dom";
+// import { useGetPublicServiceBySlugQuery } from "../redux/apis/serviceApi";
+// import { useCreateApplicationMutation } from "../redux/apis/applicationApi";
+// import { toast } from "react-toastify";
+// import {
+//   Upload,
+//   Trash2,
+//   Loader2,
+//   CheckCircle,
+//   ArrowLeft,
+//   FileText,
+//   User,
+// } from "lucide-react";
+// import { motion } from "framer-motion";
+
+// export default function ApplyService() {
+//   const { slug } = useParams();
+//   const navigate = useNavigate();
+
+//   const { data, isLoading } = useGetPublicServiceBySlugQuery(slug);
+//   const service = data?.data || data;
+
+//   const [createApplication, { isLoading: submitting }] =
+//     useCreateApplicationMutation();
+
+//   const [form, setForm] = useState({
+//     name: "",
+//     email: "",
+//     phone: "",
+//     address: "",
+//   });
+
+//   const [files, setFiles] = useState({});
+//   const [errors, setErrors] = useState({});
+
+//   const handleChange = (e) => {
+//     setForm(p => ({ ...p, [e.target.name]: e.target.value }));
+//     setErrors(p => ({ ...p, [e.target.name]: "" }));
+//   };
+
+//   const validate = () => {
+//     const e = {};
+//     if (!form.name.trim()) e.name = "Required";
+//     if (!form.email.match(/^\S+@\S+\.\S+$/)) e.email = "Invalid email";
+//     if (form.phone.replace(/\D/g, "").length !== 10) e.phone = "Invalid phone";
 //     setErrors(e);
 //     return Object.keys(e).length === 0;
 //   };
@@ -68,400 +267,224 @@
 //   const handleFile = (doc, e) => {
 //     const selected = Array.from(e.target.files);
 
-//     const valid = selected.filter((file) => {
-//       if (file.size > 10 * 1024 * 1024) {
-//         toast.error(`${file.name} is too large (max 10MB)`);
+//     const valid = selected.filter(f => {
+//       if (f.size > 10 * 1024 * 1024) {
+//         toast.error(`${f.name} > 10MB`);
 //         return false;
 //       }
 //       return true;
 //     });
 
-//     setFiles((prev) => ({
-//       ...prev,
-//       [doc]: [...(prev[doc] || []), ...valid],
+//     setFiles(p => ({
+//       ...p,
+//       [doc]: [...(p[doc] || []), ...valid],
 //     }));
 //   };
 
-//   const handleDrop = (doc, e) => {
-//     e.preventDefault();
-//     handleFile(doc, { target: { files: e.dataTransfer.files } });
-//   };
-
-//   const removeFile = (doc, i) => {
-//     const copy = { ...files };
-//     copy[doc].splice(i, 1);
-//     if (!copy[doc].length) delete copy[doc];
-//     setFiles(copy);
-//   };
-
-//   const getFileIcon = (name) => {
-//     const ext = name.split(".").pop().toLowerCase();
-//     if (["jpg", "png", "jpeg", "webp", "gif"].includes(ext))
-//       return <ImageIcon size={16} className="text-blue-600" />;
-//     if (ext === "pdf") return <FileText size={16} className="text-red-600" />;
-//     return <FileCheck size={16} className="text-gray-600" />;
-//   };
-
-//   const formatFileSize = (bytes) => {
-//     if (bytes === 0) return "0 Bytes";
-//     const k = 1024;
-//     const sizes = ["Bytes", "KB", "MB"];
-//     const i = Math.floor(Math.log(bytes) / Math.log(k));
-//     return Math.round(bytes / Math.pow(k, i) * 100) / 100 + " " + sizes[i];
+//   const removeFile = (doc, index) => {
+//     setFiles(p => {
+//       const copy = { ...p };
+//       copy[doc].splice(index, 1);
+//       if (!copy[doc].length) delete copy[doc];
+//       return copy;
+//     });
 //   };
 
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
-//     if (!validateForm()) {
-//       toast.error("Please fix the errors in the form");
-//       return;
-//     }
-
-//     if (!service?._id) {
-//       toast.error("Service information is missing");
-//       return;
-//     }
+//     if (!validate()) return;
 
 //     try {
 //       const fd = new FormData();
+
 //       fd.append("userDetails", JSON.stringify(form));
 //       fd.append("serviceId", service._id);
 
-//       Object.keys(files).forEach((doc) =>
-//         files[doc].forEach((f) => fd.append("documents", f))
+//       Object.keys(files).forEach(key =>
+//         files[key].forEach(file => fd.append("documents", file))
 //       );
 
 //       await createApplication(fd).unwrap();
-//       toast.success("Application Submitted Successfully! 🎉");
-//       setTimeout(() => {
-//         navigate("/");
-//       }, 2000);
+
+//       toast.success("Application Submitted Successfully 🎉");
+//       navigate("/contact");
 //     } catch (err) {
-//       toast.error(err?.data?.message || "Submission failed. Please try again.");
+//       toast.error(err?.data?.message || "Submission Failed");
 //     }
 //   };
 
 //   if (isLoading)
 //     return (
-//       <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-blue-50 to-gray-50">
-//         <div className="text-center">
-//           <Loader2 className="animate-spin text-blue-700 mx-auto mb-4" size={40} />
-//           <p className="text-gray-600">Loading service details...</p>
-//         </div>
-//       </div>
-//     );
-
-//   if (!service)
-//     return (
-//       <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-blue-50 to-gray-50">
-//         <div className="text-center">
-//           <AlertCircle className="mx-auto mb-4 text-red-500" size={48} />
-//           <h2 className="text-xl font-bold text-gray-900 mb-2">Service Not Found</h2>
-//           <button
-//             onClick={() => navigate("/")}
-//             className="bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-lg font-semibold text-sm"
-//           >
-//             Go Back Home
-//           </button>
-//         </div>
+//       <div className="min-h-screen flex justify-center items-center">
+//         <Loader2 className="animate-spin text-blue-700" size={42} />
 //       </div>
 //     );
 
 //   return (
-//     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-gray-50 py-6 px-4">
-//       <div className="max-w-4xl mx-auto space-y-4">
-//         {/* BACK BUTTON */}
+//     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 py-12 px-4">
+
+//       <div className="max-w-4xl mx-auto">
+
+//         {/* BACK */}
 //         <button
-//           onClick={() => navigate(-1)}
-//           className="flex items-center gap-2 text-gray-600 hover:text-blue-700 transition-colors text-sm"
+//           onClick={()=>navigate(-1)}
+//           className="flex items-center gap-2 text-sm mb-6 font-medium text-slate-600 hover:text-blue-700 transition"
 //         >
-//           <ArrowLeft size={18} />
-//           <span>Back</span>
+//           <ArrowLeft size={18}/> Back
 //         </button>
 
-//         {/* HEADER CARD - Compact */}
-//         <div className="bg-gradient-to-r from-blue-700 to-blue-800 rounded-xl shadow-lg p-5 text-white">
-//           <div className="flex items-center gap-3">
-//             <div className="p-2 bg-white/20 rounded-lg">
-//               <FileCheck size={24} />
-//             </div>
-//             <div>
-//               <h1 className="text-2xl font-bold">Apply for {service.title}</h1>
-//               <p className="text-blue-100 text-xs mt-0.5">
-//                 Complete the form below to submit your application
-//               </p>
-//             </div>
-//           </div>
-//         </div>
 
-//         <form onSubmit={handleSubmit} className="space-y-4">
-//           {/* PERSONAL INFORMATION CARD - Compact */}
-//           <div className="bg-white rounded-xl shadow-md p-5 border border-gray-100">
-//             <div className="flex items-center gap-2 mb-4 pb-3 border-b border-gray-200">
-//               <div className="p-2 bg-blue-100 rounded-lg">
-//                 <User size={18} className="text-blue-700" />
-//               </div>
-//               <h2 className="text-lg font-bold text-gray-900">Personal Information</h2>
-//             </div>
+//         {/* HEADER */}
+//         <motion.div
+//           initial={{opacity:0,y:-20}}
+//           animate={{opacity:1,y:0}}
+//           className="bg-gradient-to-r from-blue-700 to-indigo-700 text-white p-7 rounded-3xl shadow-xl mb-8"
+//         >
+//           <h1 className="text-3xl font-bold tracking-tight">
+//             Apply for {service.title}
+//           </h1>
+//           <p className="text-blue-100 mt-2 text-sm">
+//             Fill details and upload required documents
+//           </p>
+//         </motion.div>
 
-//             <div className="grid md:grid-cols-2 gap-4">
-//               <Input
-//                 icon={<User size={18} />}
-//                 name="name"
-//                 value={form.name}
-//                 onChange={handleChange}
-//                 placeholder="Enter your full name"
-//                 label="Full Name"
-//                 required
-//                 error={errors.name}
-//               />
 
-//               <Input
-//                 icon={<Mail size={18} />}
-//                 name="email"
-//                 type="email"
-//                 value={form.email}
-//                 onChange={handleChange}
-//                 placeholder="your.email@example.com"
-//                 label="Email Address"
-//                 required
-//                 error={errors.email}
-//               />
+//         <form onSubmit={handleSubmit} className="space-y-7">
 
-//               <Input
-//                 icon={<Phone size={18} />}
-//                 name="phone"
-//                 type="tel"
-//                 value={form.phone}
-//                 onChange={handleChange}
-//                 placeholder="10-digit phone number"
-//                 label="Phone Number"
-//                 required
-//                 maxLength="10"
-//                 error={errors.phone}
-//               />
+//           {/* PERSONAL */}
+//           <Card title="Personal Information" icon={<User size={18}/>}>
+//             <Input label="Full Name" name="name" value={form.name} onChange={handleChange} error={errors.name}/>
+//             <Input label="Email Address" name="email" value={form.email} onChange={handleChange} error={errors.email}/>
+//             <Input label="Phone Number" name="phone" value={form.phone} onChange={handleChange} error={errors.phone}/>
 
-//               <div>
-//                 <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-//                   Address <span className="text-gray-400 text-xs font-normal">(Optional)</span>
-//                 </label>
-//                 <div className="relative">
-//                   <MapPin className="absolute left-3 top-3 text-gray-400" size={18} />
-//                   <textarea
-//                     rows="2"
-//                     name="address"
-//                     value={form.address}
-//                     onChange={handleChange}
-//                     placeholder="Enter your complete address"
-//                     className="w-full pl-10 pr-3 py-2.5 text-sm border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-//                   />
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
+//             <textarea
+//               name="address"
+//               placeholder="Address"
+//               value={form.address}
+//               onChange={handleChange}
+//               className="input mt-4"
+//             />
+//           </Card>
 
-//           {/* DOCUMENTS SECTION - Compact */}
-//           {service.requiredDocuments?.length > 0 && (
-//             <div className="bg-white rounded-xl shadow-md p-5 border border-gray-100">
-//               <div className="flex items-center gap-2 mb-4 pb-3 border-b border-gray-200">
-//                 <div className="p-2 bg-indigo-100 rounded-lg">
-//                   <Upload size={18} className="text-indigo-700" />
-//                 </div>
-//                 <h2 className="text-lg font-bold text-gray-900">Required Documents</h2>
-//               </div>
 
-//               <div className="grid md:grid-cols-2 gap-4">
-//                 {service.requiredDocuments.map((doc, idx) => (
-//                   <div
-//                     key={idx}
-//                     className="border-2 border-gray-200 rounded-lg p-4 hover:border-blue-400 transition-all bg-white"
-//                   >
-//                     <div className="flex items-center justify-between mb-3">
-//                       <div className="flex items-center gap-2">
-//                         <div className="p-1.5 bg-blue-100 rounded">
-//                           <FileText size={14} className="text-blue-700" />
-//                         </div>
-//                         <p className="font-semibold text-sm text-gray-900">{doc}</p>
-//                       </div>
-//                       {files[doc]?.length > 0 && (
-//                         <span className="px-2 py-0.5 bg-green-100 text-green-700 rounded-full text-xs font-semibold">
-//                           {files[doc].length}
-//                         </span>
-//                       )}
-//                     </div>
+//           {/* DOCUMENTS */}
+//         {/* DOCUMENTS */}
+// {service.requiredDocuments?.length > 0 && (
+//   <Card title="Upload Documents" icon={<FileText size={18}/>}>
+    
+//     <div className="grid md:grid-cols-2 gap-6">
 
-//                     {/* DROP ZONE - Compact */}
-//                     <div
-//                       onDrop={(e) => handleDrop(doc, e)}
-//                       onDragOver={(e) => e.preventDefault()}
-//                       className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition-all"
-//                     >
-//                       <input
-//                         hidden
-//                         id={doc}
-//                         type="file"
-//                         multiple
-//                         onChange={(e) => handleFile(doc, e)}
-//                         accept=".pdf,.jpg,.jpeg,.png,.webp"
-//                       />
-//                       <label htmlFor={doc} className="cursor-pointer flex flex-col items-center gap-2">
-//                         <div className="p-2 bg-blue-100 rounded-lg">
-//                           <Upload size={20} className="text-blue-700" />
-//                         </div>
-//                         <p className="text-xs font-medium text-gray-700">Click to Upload</p>
-//                         <p className="text-[10px] text-gray-400">Max 10MB</p>
-//                       </label>
-//                     </div>
+//       {service.requiredDocuments.map((doc,i)=>(
+//         <div key={i} className="space-y-2">
 
-//                     {/* FILE LIST - Compact */}
-//                     {files[doc]?.length > 0 && (
-//                       <div className="mt-3 space-y-1.5">
-//                         {files[doc].map((f, i) => (
-//                           <div
-//                             key={i}
-//                             className="flex items-center justify-between bg-gray-50 hover:bg-gray-100 p-2 rounded border border-gray-200 text-xs group"
-//                           >
-//                             <div className="flex items-center gap-2 flex-1 min-w-0">
-//                               {getFileIcon(f.name)}
-//                               <div className="flex-1 min-w-0">
-//                                 <p
-//                                   className="font-medium text-gray-900 truncate cursor-pointer hover:text-blue-700"
-//                                   onClick={() =>
-//                                     f.type.startsWith("image/")
-//                                       ? setPreview(URL.createObjectURL(f))
-//                                       : null
-//                                   }
-//                                 >
-//                                   {f.name}
-//                                 </p>
-//                                 <p className="text-[10px] text-gray-500">
-//                                   {formatFileSize(f.size)}
-//                                 </p>
-//                               </div>
-//                             </div>
-//                             <button
-//                               type="button"
-//                               onClick={() => removeFile(doc, i)}
-//                               className="p-1 hover:bg-red-100 text-red-600 rounded transition-colors opacity-0 group-hover:opacity-100"
-//                             >
-//                               <Trash2 size={14} />
-//                             </button>
-//                           </div>
-//                         ))}
-//                       </div>
-//                     )}
-//                   </div>
-//                 ))}
-//               </div>
-//             </div>
-//           )}
+//           {/* Label */}
+//           <label className="font-semibold text-sm text-gray-700">
+//             {doc}
+//           </label>
 
-//           {/* SUBMIT BUTTON - Compact */}
-//           <div className="bg-white rounded-xl shadow-md p-4 border border-gray-100">
-//             <button
-//               type="submit"
-//               disabled={submitting}
-//               className="w-full bg-gradient-to-r from-blue-700 to-blue-800 hover:from-blue-800 hover:to-blue-900 text-white py-3 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+//           {/* Input Box */}
+//           <label className="flex items-center justify-between bg-white border border-slate-300 rounded-xl px-4 py-3 shadow-sm hover:border-blue-500 transition cursor-pointer">
+            
+//             <span className="flex items-center gap-2 text-gray-600 text-sm">
+//               <Upload size={16}/> Select Files
+//             </span>
+
+//             <input
+//               hidden
+//               type="file"
+//               multiple
+//               onChange={(e)=>handleFile(doc,e)}
+//             />
+//           </label>
+
+//           {/* Selected Files */}
+//           {files[doc]?.map((f,index)=>(
+//             <div
+//               key={index}
+//               className="flex justify-between items-center text-xs bg-slate-50 border border-slate-200 px-3 py-2 rounded-lg"
 //             >
-//               {submitting ? (
-//                 <>
-//                   <Loader2 className="animate-spin" size={18} />
-//                   <span>Submitting...</span>
-//                 </>
-//               ) : (
-//                 <>
-//                   <CheckCircle size={18} />
-//                   <span>Submit Application</span>
-//                 </>
-//               )}
-//             </button>
+//               <span className="truncate">{f.name}</span>
 
-//             <p className="text-center text-xs text-gray-500 mt-3 flex items-center justify-center gap-1">
-//               <AlertCircle size={12} />
-//               By submitting, you agree to our terms and conditions
-//             </p>
-//           </div>
+//               <Trash2
+//                 size={14}
+//                 onClick={()=>removeFile(doc,index)}
+//                 className="cursor-pointer text-gray-500 hover:text-red-600"
+//               />
+//             </div>
+//           ))}
+
+//         </div>
+//       ))}
+
+//     </div>
+
+//   </Card>
+// )}
+
+
+//           {/* SUBMIT */}
+//           <button disabled={submitting} className="submitBtn">
+//             {submitting
+//               ? <Loader2 className="animate-spin"/>
+//               : <CheckCircle size={18}/>}
+//             Submit Application
+//           </button>
+
+//           <p className="text-xs text-center text-slate-500">
+//             Your documents are secure and encrypted 🔒
+//           </p>
+
 //         </form>
 //       </div>
-
-//       {/* PREVIEW MODAL */}
-//       {preview && (
-//         <div
-//           className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4"
-//           onClick={() => setPreview(null)}
-//         >
-//           <div className="relative max-w-3xl max-h-[90vh] bg-white rounded-xl overflow-hidden">
-//             <button
-//               onClick={() => setPreview(null)}
-//               className="absolute top-3 right-3 p-2 bg-white/90 hover:bg-white text-gray-700 rounded-lg z-10"
-//             >
-//               <X size={20} />
-//             </button>
-//             <img
-//               src={preview}
-//               alt="Preview"
-//               className="max-w-full max-h-[90vh] object-contain"
-//               onClick={(e) => e.stopPropagation()}
-//             />
-//           </div>
-//         </div>
-//       )}
 //     </div>
 //   );
 // }
 
-// // Compact Input Component
-// function Input({
-//   icon,
-//   name,
-//   type = "text",
-//   value,
-//   onChange,
-//   placeholder,
-//   label,
-//   required = false,
-//   maxLength,
-//   error,
-// }) {
-//   return (
-//     <div>
-//       <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-//         {label}
-//         {required && <span className="text-red-500 ml-1">*</span>}
-//       </label>
-//       <div className="relative">
-//         <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-//           {icon}
-//         </div>
-//         <input
-//           type={type}
-//           name={name}
-//           value={value}
-//           onChange={onChange}
-//           placeholder={placeholder}
-//           maxLength={maxLength}
-//           className={`w-full pl-10 pr-3 py-2.5 text-sm border-2 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
-//             error
-//               ? "border-red-300 bg-red-50"
-//               : "border-gray-300 hover:border-gray-400"
-//           }`}
-//         />
-//       </div>
-//       {error && (
-//         <p className="text-red-500 text-xs mt-1 flex items-center gap-1">
-//           <AlertCircle size={12} />
-//           {error}
-//         </p>
-//       )}
-//     </div>
-//   );
-// }
+// /* CARD */
+// const Card = ({title,icon,children})=>(
+//   <motion.div
+//     initial={{opacity:0,y:20}}
+//     animate={{opacity:1,y:0}}
+//     className="bg-white border border-slate-200 rounded-3xl p-7 shadow-lg hover:shadow-xl transition"
+//   >
+//     <h2 className="flex items-center gap-2 text-xl font-bold text-slate-900 mb-5">
+//       <span className="p-2 rounded-lg bg-blue-100 text-blue-700">
+//         {icon}
+//       </span>
+//       {title}
+//     </h2>
+//     {children}
+//   </motion.div>
+// );
+
+
+// /* INPUT */
+// const Input = ({label,name,value,onChange,error})=>(
+//   <div className="mb-5">
+//     <label className="block text-sm font-semibold text-slate-700 mb-2">
+//       {label}
+//     </label>
+
+//     <input
+//       name={name}
+//       value={value}
+//       onChange={onChange}
+//       className={`input ${error?"border-red-400 bg-red-50":""}`}
+//     />
+
+//     {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
+//   </div>
+// );
+
+
+
 
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useGetPublicServiceBySlugQuery } from "../redux/apis/serviceApi";
 import { useCreateApplicationMutation } from "../redux/apis/applicationApi";
 import { toast } from "react-toastify";
+
 import {
   Upload,
   Trash2,
@@ -494,8 +517,8 @@ export default function ApplyService() {
 
   /* INPUT */
   const handleChange = (e) => {
-    setForm(p => ({ ...p, [e.target.name]: e.target.value }));
-    setErrors(p => ({ ...p, [e.target.name]: "" }));
+    setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+    setErrors((p) => ({ ...p, [e.target.name]: "" }));
   };
 
   /* VALIDATE */
@@ -512,7 +535,7 @@ export default function ApplyService() {
   const handleFile = (doc, e) => {
     const selected = Array.from(e.target.files);
 
-    const valid = selected.filter(f => {
+    const valid = selected.filter((f) => {
       if (f.size > 10 * 1024 * 1024) {
         toast.error(`${f.name} > 10MB`);
         return false;
@@ -520,7 +543,7 @@ export default function ApplyService() {
       return true;
     });
 
-    setFiles(p => ({
+    setFiles((p) => ({
       ...p,
       [doc]: [...(p[doc] || []), ...valid],
     }));
@@ -528,7 +551,7 @@ export default function ApplyService() {
 
   /* REMOVE FILE */
   const removeFile = (doc, index) => {
-    setFiles(p => {
+    setFiles((p) => {
       const copy = { ...p };
       copy[doc].splice(index, 1);
       if (!copy[doc].length) delete copy[doc];
@@ -547,8 +570,8 @@ export default function ApplyService() {
       fd.append("userDetails", JSON.stringify(form));
       fd.append("serviceId", service._id);
 
-      Object.keys(files).forEach(key =>
-        files[key].forEach(file => fd.append("documents", file))
+      Object.keys(files).forEach((key) =>
+        files[key].forEach((file) => fd.append("documents", file))
       );
 
       await createApplication(fd).unwrap();
@@ -570,69 +593,92 @@ export default function ApplyService() {
 
   /* PAGE */
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-10 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-100 py-12 px-4">
 
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-5xl mx-auto">
 
         {/* BACK */}
         <button
-          onClick={()=>navigate(-1)}
-          className="flex items-center gap-2 text-sm mb-5 text-gray-600 hover:text-blue-700"
+          onClick={() => navigate(-1)}
+          className="flex items-center gap-2 text-sm mb-6 text-gray-600 hover:text-blue-700"
         >
-          <ArrowLeft size={18}/> Back
+          <ArrowLeft size={18} /> Back
         </button>
 
         {/* HEADER */}
-        <div className="bg-gradient-to-r from-blue-700 to-indigo-700 text-white p-6 rounded-2xl shadow-lg mb-6 animate-fade-in-up">
+        <div className="bg-gradient-to-r from-blue-700 to-blue-700 text-white p-7 rounded-3xl shadow-xl mb-8 animate-fade-in-up">
           <h1 className="text-2xl font-bold">Apply for {service.title}</h1>
           <p className="text-sm opacity-90 mt-1">
             Fill details and upload required documents
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-8">
 
-          {/* PERSONAL */}
-          <Card title="Personal Information" icon={<User size={18}/>}>
-            <Input label="Full Name" name="name" value={form.name} onChange={handleChange} error={errors.name}/>
-            <Input label="Email Address" name="email" value={form.email} onChange={handleChange} error={errors.email}/>
-            <Input label="Phone Number" name="phone" value={form.phone} onChange={handleChange} error={errors.phone}/>
+          {/* PERSONAL INFO */}
+          <Card title="Personal Information" icon={<User size={18} />}>
 
-            <textarea
-              name="address"
-              placeholder="Address"
-              value={form.address}
-              onChange={handleChange}
-              className="input mt-3"
-            />
+            <div className="grid md:grid-cols-2 gap-5">
+
+              <Input label="Full Name" name="name" value={form.name} onChange={handleChange} error={errors.name}/>
+              <Input label="Email Address" name="email" value={form.email} onChange={handleChange} error={errors.email}/>
+              <Input label="Phone Number" name="phone" value={form.phone} onChange={handleChange} error={errors.phone}/>
+
+              <div>
+                <label className="label">Address</label>
+                <textarea
+                  name="address"
+                  value={form.address}
+                  onChange={handleChange}
+                  rows="2"
+                  className="input-modern"
+                />
+              </div>
+
+            </div>
           </Card>
 
           {/* DOCUMENTS */}
           {service.requiredDocuments?.length > 0 && (
             <Card title="Upload Documents" icon={<FileText size={18}/>}>
-              {service.requiredDocuments.map((doc,i)=>(
-                <div key={i} className="mb-5">
+              
+              <div className="grid md:grid-cols-2 gap-6">
 
-                  <p className="font-semibold mb-2">{doc}</p>
+                {service.requiredDocuments.map((doc,i)=>(
+                  <div key={i} className="space-y-2">
 
-                  <label className="uploadBox">
-                    <Upload size={18}/> Select Files
-                    <input hidden type="file" multiple onChange={(e)=>handleFile(doc,e)}/>
-                  </label>
+                    <label className="label">{doc}</label>
 
-                  {files[doc]?.map((f,index)=>(
-                    <div key={index} className="fileItem">
-                      {f.name}
-                      <Trash2 size={15} onClick={()=>removeFile(doc,index)} className="cursor-pointer hover:text-red-600"/>
-                    </div>
-                  ))}
-                </div>
-              ))}
+                    <label className="upload-modern">
+                      <span className="flex items-center gap-2 text-gray-600 text-sm">
+                        <Upload size={16}/> Select Files
+                      </span>
+
+                      <input hidden type="file" multiple onChange={(e)=>handleFile(doc,e)}/>
+                    </label>
+
+                    {files[doc]?.map((f,index)=>(
+                      <div key={index} className="file-modern">
+                        <span className="truncate">{f.name}</span>
+
+                        <Trash2
+                          size={14}
+                          onClick={()=>removeFile(doc,index)}
+                          className="cursor-pointer text-gray-500 hover:text-red-600"
+                        />
+                      </div>
+                    ))}
+
+                  </div>
+                ))}
+
+              </div>
+
             </Card>
           )}
 
           {/* SUBMIT */}
-          <button disabled={submitting} className="submitBtn">
+          <button disabled={submitting} className="submit-modern">
             {submitting
               ? <Loader2 className="animate-spin"/>
               : <CheckCircle size={18}/>}
@@ -645,24 +691,30 @@ export default function ApplyService() {
   );
 }
 
-/* COMPONENTS */
 
+/* CARD */
 const Card = ({title,icon,children})=>(
-  <div className="card-glass animate-scale-in">
-    <h2 className="card-title flex items-center gap-2">{icon}{title}</h2>
+  <div className="bg-white rounded-3xl shadow-xl border border-slate-200 p-7 animate-fade-in-up">
+    <h2 className="text-lg font-bold text-gray-800 mb-5 flex items-center gap-2 border-b pb-2">
+      {icon}{title}
+    </h2>
     {children}
   </div>
 );
 
+
+/* INPUT */
 const Input = ({label,name,value,onChange,error})=>(
-  <div className="mb-4">
+  <div>
     <label className="label">{label}</label>
+
     <input
       name={name}
       value={value}
       onChange={onChange}
-      className={`input ${error?"border-red-400":""}`}
+      className={`input-modern ${error?"border-red-400":""}`}
     />
-    {error && <p className="text-xs text-red-500">{error}</p>}
+
+    {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
   </div>
 );

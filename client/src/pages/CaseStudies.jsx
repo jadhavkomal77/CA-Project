@@ -129,7 +129,7 @@ export default function CaseStudies() {
             Our Case Studies
           </h2>
 
-          <p className="text-gray-600 mt-3 sm:mt-4 max-w-xl sm:max-w-2xl mx-auto text-sm sm:text-base">
+          <p className="text-gray-700 mt-3 sm:mt-4 max-w-xl sm:max-w-2xl mx-auto text-sm sm:text-base">
             Delivering Measurable Financial Results Through Expert
             Chartered Accountant Services.
           </p>
@@ -164,7 +164,7 @@ export default function CaseStudies() {
                   {project.title}
                 </h3>
 
-                <p className="text-gray-600 text-sm mb-5 line-clamp-3">
+                <p className="text-gray-700 text-sm mb-5 line-clamp-3">
                   {project.shortDesc}
                 </p>
 

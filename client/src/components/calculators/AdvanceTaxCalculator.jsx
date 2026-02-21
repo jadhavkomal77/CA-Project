@@ -175,31 +175,30 @@
 // }
 
 
-
 import { useState } from "react";
-import { Calculator, AlertCircle } from "lucide-react";
+import { Landmark, AlertCircle, Info } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useCalculateIncomeTaxMutation } from "../../redux/apis/calculatorApi";
-import FormattedNumberInput from "./FormattedNumberInput";
+import { useCalculateAdvanceTaxMutation } from "../../redux/apis/calculatorApi";
 
-export default function IncomeTaxCalculator() {
+export default function AdvanceTaxCalculator() {
+
   const navigate = useNavigate();
-  const [calculateIncomeTax, { isLoading }] = useCalculateIncomeTaxMutation();
+  const [calculate, { isLoading }] = useCalculateAdvanceTaxMutation();
 
   const [formData, setFormData] = useState({
-    annualIncome: "",
-    age: "",
-    regime: "old",
-    deduction80C: "",
-    deduction80D: "",
-    otherDeductions: "",
+    estimatedIncome: "",
+    tdsDeducted: "",
+    previousAdvanceTax: "",
   });
 
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
     setError("");
     setResult(null);
   };
@@ -208,13 +207,10 @@ export default function IncomeTaxCalculator() {
     e.preventDefault();
 
     try {
-      const response = await calculateIncomeTax({
-        annualIncome: Number(formData.annualIncome),
-        age: Number(formData.age),
-        regime: formData.regime,
-        deduction80C: Number(formData.deduction80C) || 0,
-        deduction80D: Number(formData.deduction80D) || 0,
-        otherDeductions: Number(formData.otherDeductions) || 0,
+      const response = await calculate({
+        estimatedIncome: Number(formData.estimatedIncome),
+        tdsDeducted: Number(formData.tdsDeducted) || 0,
+        previousAdvanceTax: Number(formData.previousAdvanceTax) || 0,
       }).unwrap();
 
       setResult(response.data);
@@ -224,123 +220,98 @@ export default function IncomeTaxCalculator() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto">
+    <div className="max-w-5xl mx-auto py-10 px-4">
 
       {/* HEADER */}
-      <div className="flex items-center gap-3 mb-8">
-        <div className="p-3 bg-blue-100 rounded-xl">
-          <Calculator className="text-blue-700" size={26} />
-        </div>
-        <h2 className="text-3xl font-bold text-slate-900">
-          Income Tax Calculator
-        </h2>
-      </div>
+      <h1 className="text-3xl font-bold mb-8 text-gray-800 flex items-center gap-3">
+        <Landmark className="text-blue-600"/>
+        Advance Tax Calculator
+      </h1>
 
       <div className="grid md:grid-cols-2 gap-8">
 
-        {/* FORM */}
+        {/* LEFT PANEL */}
         <form
           onSubmit={handleSubmit}
-          className="bg-white p-6 rounded-2xl shadow-md border border-slate-200 space-y-5"
+          className="space-y-6 bg-white rounded-2xl shadow-lg p-6"
         >
-          <FormattedNumberInput
-            label="Annual Income (₹)"
-            name="annualIncome"
-            value={formData.annualIncome}
+
+          <SliderInput
+            label="Estimated Income"
+            name="estimatedIncome"
+            value={formData.estimatedIncome}
             onChange={handleChange}
-            placeholder="Enter annual income"
+            max={5000000}
           />
 
-          <div>
-            <label className="text-sm font-semibold text-slate-700 mb-2 block">
-              Age
-            </label>
-            <input
-              type="number"
-              name="age"
-              value={formData.age}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600"
-            />
-          </div>
-
-          <div>
-            <label className="text-sm font-semibold text-slate-700 mb-2 block">
-              Tax Regime
-            </label>
-            <select
-              name="regime"
-              value={formData.regime}
-              onChange={handleChange}
-              className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600"
-            >
-              <option value="old">Old Regime</option>
-              <option value="new">New Regime</option>
-            </select>
-          </div>
-
-          <FormattedNumberInput
-            label="80C Deduction (₹)"
-            name="deduction80C"
-            value={formData.deduction80C}
+          <SliderInput
+            label="TDS Deducted"
+            name="tdsDeducted"
+            value={formData.tdsDeducted}
             onChange={handleChange}
+            max={1000000}
           />
 
-          <FormattedNumberInput
-            label="80D Deduction (₹)"
-            name="deduction80D"
-            value={formData.deduction80D}
+          <SliderInput
+            label="Advance Tax Paid"
+            name="previousAdvanceTax"
+            value={formData.previousAdvanceTax}
             onChange={handleChange}
-          />
-
-          <FormattedNumberInput
-            label="Other Deductions (₹)"
-            name="otherDeductions"
-            value={formData.otherDeductions}
-            onChange={handleChange}
+            max={1000000}
           />
 
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-600 p-3 rounded-lg flex gap-2">
-              <AlertCircle size={18} />
-              {error}
+              <AlertCircle size={18}/> {error}
             </div>
           )}
 
           <button
             disabled={isLoading}
-            className="w-full bg-blue-700 hover:bg-blue-800 text-white py-3 rounded-xl font-semibold transition"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold transition"
           >
             {isLoading ? "Calculating..." : "Calculate Tax"}
           </button>
+
         </form>
 
-        {/* RESULT */}
-        <div className="bg-white p-6 rounded-2xl shadow-md border border-slate-200">
+
+        {/* RESULT PANEL */}
+        <div className="bg-white rounded-2xl shadow-lg p-6">
 
           {result ? (
             <>
-              <h3 className="text-xl font-bold text-slate-800 mb-5">
-                Calculation Result
+              <h3 className="text-xl font-bold text-gray-800 mb-6">
+                Calculation Summary
               </h3>
 
-              <Result title="Annual Income" value={result.annualIncome} />
-              <Result title="Total Deductions" value={result.totalDeductions} />
-              <Result title="Taxable Income" value={result.taxableIncome} blue />
-              <Result title="Total Tax Payable" value={result.totalTax} red />
+              <div className="space-y-4">
+                <ResultItem label="Tax on Income" value={result.taxOnEstimated}/>
+                <ResultItem label="Cess (4%)" value={result.cess}/>
+                <ResultItem label="Total Tax Liability" value={result.totalTaxLiability}/>
+                <ResultItem label="Advance Tax Payable" value={result.advanceTaxPayable}/>
+              </div>
+
+              {/* Installments */}
+              <div className="mt-6 bg-yellow-100 border border-yellow-300 p-4 rounded-lg text-sm text-yellow-700 flex gap-2">
+                <Info size={16}/>
+                Installments → Q1: ₹{result.installments.q1.toLocaleString()} | 
+                Q2: ₹{result.installments.q2.toLocaleString()} | 
+                Q3: ₹{result.installments.q3.toLocaleString()} | 
+                Q4: ₹{result.installments.q4.toLocaleString()}
+              </div>
 
               <button
                 onClick={() => navigate("/contact")}
-                className="mt-6 w-full bg-blue-700 hover:bg-blue-800 text-white py-3 rounded-xl font-semibold"
+                className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold"
               >
                 Book Consultation
               </button>
             </>
           ) : (
-            <div className="text-center text-slate-400 py-20">
-              <Calculator size={48} className="mx-auto mb-3 opacity-40" />
-              Enter details to calculate tax
+            <div className="text-center text-gray-400 py-20">
+              <Landmark size={48} className="mx-auto mb-3 opacity-50"/>
+              Enter details to calculate
             </div>
           )}
         </div>
@@ -350,17 +321,39 @@ export default function IncomeTaxCalculator() {
   );
 }
 
-/* RESULT CARD */
-function Result({ title, value, blue, red }) {
+
+
+/* SLIDER INPUT */
+function SliderInput({label,name,value,onChange,min=0,max=1000000}) {
   return (
-    <div className="p-4 rounded-xl border bg-slate-50 mb-4">
-      <p className="text-sm text-slate-500">{title}</p>
-      <p
-        className={`text-2xl font-bold mt-1
-        ${blue ? "text-blue-700" : ""}
-        ${red ? "text-red-600" : ""}
-      `}
-      >
+    <div>
+      <div className="flex justify-between mb-1">
+        <label className="text-sm font-medium">{label}</label>
+        <span className="text-blue-600 font-semibold">
+          ₹ {Number(value || 0).toLocaleString("en-IN")}
+        </span>
+      </div>
+
+      <input
+        type="range"
+        name={name}
+        min={min}
+        max={max}
+        value={value || 0}
+        onChange={onChange}
+        className="w-full accent-blue-600"
+      />
+    </div>
+  );
+}
+
+
+/* RESULT ITEM */
+function ResultItem({label,value}) {
+  return (
+    <div className="flex justify-between border-b pb-2">
+      <p className="text-gray-600">{label}</p>
+      <p className="font-semibold text-gray-900">
         ₹ {Number(value).toLocaleString("en-IN")}
       </p>
     </div>

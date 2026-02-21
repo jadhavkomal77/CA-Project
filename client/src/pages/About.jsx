@@ -25,7 +25,7 @@ export default function About() {
             <h3 className="text-3xl font-bold text-blue-600">
               {about.experience}+
             </h3>
-            <p className="text-sm text-gray-500 font-medium">
+            <p className="text-sm text-gray-800 font-medium">
               Years of Experience
             </p>
           </div>
@@ -41,12 +41,12 @@ export default function About() {
             {about.title}
           </h2>
 
-          <p className="text-gray-600 leading-relaxed mb-4">
+          <p className="text-gray-700 leading-relaxed mb-4">
             {about.description1}
           </p>
 
           {about.description2 && (
-            <p className="text-gray-600 leading-relaxed mb-8">
+            <p className="text-gray-700 leading-relaxed mb-8">
               {about.description2}
             </p>
           )}
