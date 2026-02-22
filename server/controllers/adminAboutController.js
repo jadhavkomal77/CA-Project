@@ -79,7 +79,7 @@
 
 
 
-// controllers/adminAboutController.js
+
 import fs from "fs";
 import About from "../models/About.js";
 import cloudinary from "../utils/cloudinary.js";
@@ -114,27 +114,51 @@ export const saveAbout = async (req, res) => {
       description2,
       experience,
       isActive,
-      teamMembers, // ⭐ NEW FIELD
+      teamMembers,
     } = req.body;
 
     let imageUrl;
 
     /* MAIN IMAGE UPLOAD */
-    if (req.file) {
-      const uploadRes = await cloudinary.uploader.upload(req.file.path, {
-        folder: "about",
-      });
+    if (req.files?.image) {
+      const uploadRes = await cloudinary.uploader.upload(
+        req.files.image[0].path,
+        { folder: "about" }
+      );
+
       imageUrl = uploadRes.secure_url;
-      fs.unlinkSync(req.file.path);
+      fs.unlinkSync(req.files.image[0].path);
     }
 
-    /* TEAM MEMBERS PARSE (if sent as string) */
+    /* PARSE TEAM MEMBERS */
     let parsedMembers = [];
     if (teamMembers) {
       parsedMembers =
         typeof teamMembers === "string"
           ? JSON.parse(teamMembers)
           : teamMembers;
+    }
+
+    /* TEAM IMAGE UPLOAD */
+    const uploadedPhotos = [];
+
+    if (req.files?.teamPhotos) {
+      for (const file of req.files.teamPhotos) {
+        const uploadRes = await cloudinary.uploader.upload(file.path, {
+          folder: "team",
+        });
+
+        uploadedPhotos.push(uploadRes.secure_url);
+        fs.unlinkSync(file.path);
+      }
+    }
+
+    /* MAP CLOUDINARY URL INTO MEMBERS */
+    if (uploadedPhotos.length > 0) {
+      parsedMembers = parsedMembers.map((m, i) => ({
+        ...m,
+        photo: uploadedPhotos[i] || m.photo || "",
+      }));
     }
 
     let about = await About.findOne();
@@ -163,11 +187,12 @@ export const saveAbout = async (req, res) => {
         experience,
         image: imageUrl,
         isActive,
-        teamMembers: parsedMembers, // ⭐ added
+        teamMembers: parsedMembers,
       });
     }
 
     res.json({ message: "About section updated", about });
+
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Failed to update about section" });

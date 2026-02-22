@@ -410,13 +410,17 @@ export default function AdminAbout() {
 
               </div>
 
-              <button
-                type="button"
-                onClick={()=>removeMember(i)}
-                className="mt-3 text-red-500 text-sm"
-              >
-                Delete Member
-              </button>
+             <button
+  type="button"
+  onClick={()=>{
+    if(confirm("Are you sure you want to delete this member?")){
+      removeMember(i);
+    }
+  }}
+  className="mt-4 inline-flex items-center gap-2 bg-red-50 text-red-600 border border-red-200 px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-100 hover:border-red-300 transition"
+>
+  🗑 Delete Member
+</button>
 
             </div>
           ))}
