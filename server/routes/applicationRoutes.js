@@ -13,6 +13,7 @@ router.get("/admin", adminAuth, ctrl.getAllApplications);
 router.get("/admin/:id", adminAuth, ctrl.getApplicationById);
 router.put("/admin/:id/status", adminAuth, ctrl.updateApplicationStatus);
 router.delete("/admin/:id", adminAuth, ctrl.deleteApplication);
+
 router.get("/admin/:id/pdf", adminAuth, downloadApplicationPDF);
 
 export default router;

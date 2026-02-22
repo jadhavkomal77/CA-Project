@@ -248,15 +248,7 @@ export const submitApplication = asyncHandler(async (req, res) => {
         fileURL: result.secure_url,
         publicId: result.public_id,
       });
-    // const isPDF = file.mimetype === "application/pdf";
-
-    //     uploadedDocuments.push({
-    //       documentName: file.originalname,
-    //       fileURL: isPDF
-    //         ? result.secure_url.replace("/image/upload/", "/raw/upload/")
-    //         : result.secure_url,
-    //       publicId: result.public_id,
-    //     });
+    
     }
   }
 
@@ -309,18 +301,59 @@ export const updateApplicationStatus = asyncHandler(async (req, res) => {
   res.json({ success: true, data: app });
 });
 
-/* ---------- DELETE ---------- */
+
 export const deleteApplication = asyncHandler(async (req, res) => {
-  const app = await Application.findById(req.params.id);
-  if (!app) return res.status(404).json({ message: "Not found" });
+  try {
+     const { id } = req.params;
 
-  for (const doc of app.uploadedDocuments) {
-    if (doc.publicId)
-      await cloudinary.uploader.destroy(doc.publicId, {
-        resource_type: "auto",
-      });
-  }
+     /* ---------- VALIDATE ID ---------- */
+     if (!id)
+       return res.status(400).json({
+         success: false,
+         message: "Application ID required",
+       });
 
-  await app.deleteOne();
-  res.json({ success: true, message: "Deleted" });
-});
+     /* ---------- FIND APPLICATION ---------- */
+     const app = await Application.findById(id);
+
+     if (!app)
+       return res.status(404).json({
+         success: false,
+         message: "Application not found",
+       });
+
+     /* ---------- DELETE CLOUDINARY FILES ---------- */
+     if (Array.isArray(app.uploadedDocuments) && app.uploadedDocuments.length) {
+       for (const file of app.uploadedDocuments) {
+         if (!file?.publicId) continue;
+
+         try {
+           await cloudinary.uploader.destroy(file.publicId, {
+             resource_type: "auto",
+           });
+
+           console.log("Deleted file:", file.publicId);
+         } catch (err) {
+           console.log("Cloud delete failed:", err.message);
+         }
+       }
+     }
+
+     /* ---------- DELETE FROM DB ---------- */
+     await Application.findByIdAndDelete(id);
+
+     console.log("Application deleted:", id);
+
+     res.json({
+       success: true,
+       message: "Application deleted successfully",
+     });
+   } catch (error) {
+     console.error("DELETE ERROR:", error);
+
+     res.status(500).json({
+       success: false,
+       message: "Server error while deleting application",
+     });
+   }
+ });
