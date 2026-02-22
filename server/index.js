@@ -86,7 +86,7 @@ app.use("/api/testimonials", testimonialRoutes);
 
 
 app.get("/", (req, res) => {
-  res.json("Server is Running! 🚀");
+  res.json("Server is Running! 🏃‍♀️ 🚀");
 });
 
 // console.log(process.env.MONGO_URL);
