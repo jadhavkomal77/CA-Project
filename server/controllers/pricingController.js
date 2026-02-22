@@ -1,8 +1,6 @@
 import Pricing from "../models/Pricing.js";
 
-/* ==============================
-   🌍 PUBLIC GET (Only Active)
-================================= */
+
 export const getPublicPricing = async (req, res) => {
   try {
     const plans = await Pricing.find({ isActive: true })

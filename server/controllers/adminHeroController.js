@@ -2,9 +2,7 @@ import fs from "fs";
 import Hero from "../models/Hero.js";
 import cloudinary from "../utils/cloudinary.js";
 
-/* =======================
-   🌍 Public Hero
-======================= */
+
 export const getPublicHero = async (req, res) => {
   try {
     const hero = await Hero.findOne({ isActive: true }).sort({ updatedAt: -1 });
@@ -26,9 +24,7 @@ export const getAdminHero = async (req, res) => {
   }
 };
 
-/* =======================
-   🔐 Create / Update Hero
-======================= */
+
 export const createOrUpdateHero = async (req, res) => {
   try {
     const { title, subtitle, buttonText, isActive } = req.body;
