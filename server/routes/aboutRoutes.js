@@ -15,6 +15,13 @@ router.get("/public", getPublicAbout);
 
 /* 🔐 Admin */
 router.get("/", adminAuth, getAdminAbout);
-router.put("/", adminAuth, upload.single("image"), saveAbout);
+// router.put("/", adminAuth, upload.single("image"), saveAbout);
+router.put(
+  "/",adminAuth, upload.fields([
+    { name: "image", maxCount: 1 },
+    { name: "teamPhotos", maxCount: 10 }, // ⭐ team member photos
+  ]),
+  saveAbout
+);
 
 export default router;

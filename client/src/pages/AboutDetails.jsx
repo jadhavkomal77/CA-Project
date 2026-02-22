@@ -1,3 +1,249 @@
+// import { useGetPublicAboutQuery } from "../redux/apis/aboutApi";
+// import { motion } from "framer-motion";
+
+// export default function AboutDetails() {
+//   const { data: about, isLoading } = useGetPublicAboutQuery();
+
+//   if (isLoading || !about)
+//     return <p className="text-center py-20">Loading...</p>;
+
+//   return (
+//     <div className="bg-gradient-to-br from-slate-50 via-white to-blue-50">
+
+//       {/* HERO */}
+//       <section className="py-20 text-center">
+//         <motion.div initial={{ opacity:0, y:30 }} animate={{ opacity:1, y:0 }}>
+//           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+//             About Our Firm
+//           </h1>
+//           <p className="text-gray-600 max-w-2xl mx-auto text-lg">
+//             Professional consulting and financial advisory firm delivering
+//             trusted services with excellence and integrity.
+//           </p>
+//         </motion.div>
+//       </section>
+
+
+//       {/* CONTENT */}
+//       <section className="pb-24">
+//         <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+
+//           {/* IMAGE */}
+//           <motion.img
+//             initial={{ opacity:0, scale:.95 }}
+//             animate={{ opacity:1, scale:1 }}
+//             src={about.image}
+//             className="rounded-3xl shadow-2xl w-full object-cover h-[420px]"
+//           />
+
+//           {/* TEXT */}
+//           <motion.div initial={{ opacity:0, x:40 }} animate={{ opacity:1, x:0 }}>
+            
+//             <h2 className="text-3xl font-bold text-gray-900 mb-6">
+//               {about.title}
+//             </h2>
+
+//             <p className="text-gray-600 leading-relaxed mb-4">
+//               {about.description1}
+//             </p>
+
+//             {about.description2 && (
+//               <p className="text-gray-600 leading-relaxed mb-4">
+//                 {about.description2}
+//               </p>
+//             )}
+
+//             {/* Extra Section */}
+//             <div className="mt-8 grid grid-cols-2 gap-6">
+
+//               <div className="bg-white rounded-xl shadow-md p-6 text-center">
+//                 <h3 className="text-3xl font-bold text-blue-600">
+//                   {about.experience}+
+//                 </h3>
+//                 <p className="text-gray-500 text-sm">Years Experience</p>
+//               </div>
+
+//               <div className="bg-white rounded-xl shadow-md p-6 text-center">
+//                 <h3 className="text-3xl font-bold text-blue-600">5000+</h3>
+//                 <p className="text-gray-500 text-sm">Clients Served</p>
+//               </div>
+
+//             </div>
+
+//           </motion.div>
+
+//         </div>
+//       </section>
+
+
+//       {/* CTA */}
+//       <section className="bg-gray-200-700 py-20 text-center text-black">
+//         <h2 className="text-3xl font-bold mb-4">
+//           Need Professional Financial Guidance?
+//         </h2>
+
+//         <p className="opacity-90 mb-8">
+//           Contact our expert team for consultation and tailored financial solutions.
+//         </p>
+
+//       <button
+//   onClick={() => window.location.href="/contact"}
+//   className="bg-gradient-to-r from-blue-600 to-blue-800 text-white px-10 py-4 rounded-full font-semibold shadow-md hover:shadow-lg hover:scale-105 transition"
+// >
+//   Contact Now
+// </button>
+
+//       </section>
+
+//     </div>
+//   );
+// }
+
+
+
+
+
+// import { useGetPublicAboutQuery } from "../redux/apis/aboutApi";
+// import { motion } from "framer-motion";
+
+// export default function AboutDetails() {
+//   const { data: about, isLoading } = useGetPublicAboutQuery();
+
+//   if (isLoading || !about)
+//     return <p className="text-center py-20">Loading...</p>;
+
+//   return (
+//     <div className="bg-gradient-to-br from-slate-50 via-white to-blue-50">
+
+//       {/* HERO */}
+//       <section className="py-12 text-center">
+//         <motion.div initial={{ opacity:0, y:30 }} animate={{ opacity:1, y:0 }}>
+//           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+//             About Our Firm
+//           </h1>
+//           <p className="text-gray-600 max-w-2xl mx-auto text-lg">
+//             Professional consulting and financial advisory firm delivering
+//             trusted services with excellence and integrity.
+//           </p>
+//         </motion.div>
+//       </section>
+
+
+//       {/* CONTENT */}
+//       <section className="pb-16">
+//         <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+
+//           {/* IMAGE */}
+//           <motion.img
+//             initial={{ opacity:0, scale:.95 }}
+//             animate={{ opacity:1, scale:1 }}
+//             src={about.image}
+//             className="rounded-3xl shadow-2xl w-full object-cover h-[420px]"
+//           />
+
+//           {/* TEXT */}
+//           <motion.div initial={{ opacity:0, x:40 }} animate={{ opacity:1, x:0 }}>
+            
+//             <h2 className="text-3xl font-bold text-gray-900 mb-6">
+//               {about.title}
+//             </h2>
+
+//             <p className="text-gray-600 leading-relaxed mb-4">
+//               {about.description1}
+//             </p>
+
+//             {about.description2 && (
+//               <p className="text-gray-600 leading-relaxed mb-4">
+//                 {about.description2}
+//               </p>
+//             )}
+
+//             {/* Stats */}
+//             <div className="mt-8 grid grid-cols-2 gap-6">
+
+//               <div className="bg-white rounded-xl shadow-md p-6 text-center">
+//                 <h3 className="text-3xl font-bold text-blue-600">
+//                   {about.experience}+
+//                 </h3>
+//                 <p className="text-gray-500 text-sm">Years Experience</p>
+//               </div>
+
+//               <div className="bg-white rounded-xl shadow-md p-6 text-center">
+//                 <h3 className="text-3xl font-bold text-blue-600">5000+</h3>
+//                 <p className="text-gray-500 text-sm">Clients Served</p>
+//               </div>
+
+//             </div>
+
+//           </motion.div>
+
+//         </div>
+//       </section>
+
+
+//       {/* TEAM MEMBERS */}
+//       {about.teamMembers?.length > 0 && (
+//         <section className="pb-16">
+//           <div className="max-w-6xl mx-auto px-6">
+
+//             <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">
+//               Meet Our Experts
+//             </h2>
+
+//             <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-10">
+//               {about.teamMembers.map((m, i) => (
+//                 <motion.div
+//                   key={i}
+//                   initial={{ opacity:0, y:30 }}
+//                   whileInView={{ opacity:1, y:0 }}
+//                   transition={{ delay: i * .1 }}
+//                   className="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-2xl transition"
+//                 >
+//                   <img
+//                     src={m.photo}
+//                     className="w-32 h-32 object-cover rounded-full mx-auto mb-4 border-4 border-blue-100"
+//                   />
+
+//                   <h3 className="text-xl font-semibold text-gray-900">
+//                     {m.name}
+//                   </h3>
+
+//                   <p className="text-gray-500 text-sm mt-2">
+//                     {m.shortDetails}
+//                   </p>
+//                 </motion.div>
+//               ))}
+//             </div>
+
+//           </div>
+//         </section>
+//       )}
+
+
+//       {/* CTA */}
+//       <section className="py-8 text-center">
+//         <h2 className="text-3xl font-bold mb-4">
+//           Need Professional Financial Guidance?
+//         </h2>
+
+//         <p className="opacity-80 mb-8">
+//           Contact our expert team for consultation and tailored financial solutions.
+//         </p>
+
+//         <button
+//           onClick={() => window.location.href="/contact"}
+//           className="bg-gradient-to-r from-blue-600 to-blue-800 text-white px-10 py-4 rounded-full font-semibold shadow-md hover:shadow-lg hover:scale-105 transition"
+//         >
+//           Contact Now
+//         </button>
+//       </section>
+
+//     </div>
+//   );
+// }
+
+
+
 import { useGetPublicAboutQuery } from "../redux/apis/aboutApi";
 import { motion } from "framer-motion";
 
@@ -8,15 +254,16 @@ export default function AboutDetails() {
     return <p className="text-center py-20">Loading...</p>;
 
   return (
-    <div className="bg-gradient-to-br from-slate-50 via-white to-blue-50">
+    <div className="bg-gradient-to-br from-slate-50 via-white to-blue-50 overflow-hidden">
 
       {/* HERO */}
-      <section className="py-20 text-center">
+      <section className="py-10 md:py-12 text-center px-4">
         <motion.div initial={{ opacity:0, y:30 }} animate={{ opacity:1, y:0 }}>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 md:mb-6">
             About Our Firm
           </h1>
-          <p className="text-gray-600 max-w-2xl mx-auto text-lg">
+
+          <p className="text-gray-600 max-w-2xl mx-auto text-base sm:text-lg">
             Professional consulting and financial advisory firm delivering
             trusted services with excellence and integrity.
           </p>
@@ -25,47 +272,53 @@ export default function AboutDetails() {
 
 
       {/* CONTENT */}
-      <section className="pb-24">
-        <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+      <section className="pb-12 md:pb-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-10 md:gap-12 items-center">
 
           {/* IMAGE */}
           <motion.img
             initial={{ opacity:0, scale:.95 }}
             animate={{ opacity:1, scale:1 }}
             src={about.image}
-            className="rounded-3xl shadow-2xl w-full object-cover h-[420px]"
+            className="rounded-3xl shadow-2xl w-full object-cover h-[260px] sm:h-[320px] md:h-[420px]"
           />
 
           {/* TEXT */}
           <motion.div initial={{ opacity:0, x:40 }} animate={{ opacity:1, x:0 }}>
-            
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">
+
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 md:mb-6">
               {about.title}
             </h2>
 
-            <p className="text-gray-600 leading-relaxed mb-4">
+            <p className="text-gray-600 leading-relaxed mb-4 text-sm sm:text-base">
               {about.description1}
             </p>
 
             {about.description2 && (
-              <p className="text-gray-600 leading-relaxed mb-4">
+              <p className="text-gray-600 leading-relaxed mb-4 text-sm sm:text-base">
                 {about.description2}
               </p>
             )}
 
-            {/* Extra Section */}
-            <div className="mt-8 grid grid-cols-2 gap-6">
+            {/* Stats */}
+            <div className="mt-6 md:mt-8 grid grid-cols-2 gap-4 md:gap-6">
 
-              <div className="bg-white rounded-xl shadow-md p-6 text-center">
-                <h3 className="text-3xl font-bold text-blue-600">
+              <div className="bg-white rounded-xl shadow-md p-4 md:p-6 text-center">
+                <h3 className="text-2xl md:text-3xl font-bold text-blue-600">
                   {about.experience}+
                 </h3>
-                <p className="text-gray-500 text-sm">Years Experience</p>
+                <p className="text-gray-500 text-xs md:text-sm">
+                  Years Experience
+                </p>
               </div>
 
-              <div className="bg-white rounded-xl shadow-md p-6 text-center">
-                <h3 className="text-3xl font-bold text-blue-600">5000+</h3>
-                <p className="text-gray-500 text-sm">Clients Served</p>
+              <div className="bg-white rounded-xl shadow-md p-4 md:p-6 text-center">
+                <h3 className="text-2xl md:text-3xl font-bold text-blue-600">
+                  5000+
+                </h3>
+                <p className="text-gray-500 text-xs md:text-sm">
+                  Clients Served
+                </p>
               </div>
 
             </div>
@@ -76,23 +329,61 @@ export default function AboutDetails() {
       </section>
 
 
+      {/* TEAM MEMBERS */}
+      {about.teamMembers?.length > 0 && (
+        <section className="pb-12 md:pb-16">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6">
+
+            <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 md:mb-12 text-gray-900">
+              Meet Our Experts
+            </h2>
+
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-10">
+              {about.teamMembers.map((m, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity:0, y:30 }}
+                  whileInView={{ opacity:1, y:0 }}
+                  transition={{ delay: i * .1 }}
+                  className="bg-white rounded-2xl shadow-lg p-5 md:p-6 text-center hover:shadow-2xl transition"
+                >
+                  <img
+                    src={m.photo}
+                    className="w-24 h-24 md:w-32 md:h-32 object-cover rounded-full mx-auto mb-3 md:mb-4 border-4 border-blue-100"
+                  />
+
+                  <h3 className="text-lg md:text-xl font-semibold text-gray-900">
+                    {m.name}
+                  </h3>
+
+                  <p className="text-gray-500 text-xs md:text-sm mt-1 md:mt-2">
+                    {m.shortDetails}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+
+          </div>
+        </section>
+      )}
+
+
       {/* CTA */}
-      <section className="bg-gray-200-700 py-20 text-center text-black">
-        <h2 className="text-3xl font-bold mb-4">
+      <section className="py-8 text-center px-4">
+        <h2 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4">
           Need Professional Financial Guidance?
         </h2>
 
-        <p className="opacity-90 mb-8">
+        <p className="opacity-80 mb-6 md:mb-8 text-sm md:text-base">
           Contact our expert team for consultation and tailored financial solutions.
         </p>
 
-      <button
-  onClick={() => window.location.href="/contact"}
-  className="bg-gradient-to-r from-blue-600 to-blue-800 text-white px-10 py-4 rounded-full font-semibold shadow-md hover:shadow-lg hover:scale-105 transition"
->
-  Contact Now
-</button>
-
+        <button
+          onClick={() => window.location.href="/contact"}
+          className="bg-gradient-to-r from-blue-600 to-blue-800 text-white px-8 md:px-10 py-3 md:py-4 rounded-full font-semibold shadow-md hover:shadow-lg hover:scale-105 transition text-sm md:text-base"
+        >
+          Contact Now
+        </button>
       </section>
 
     </div>

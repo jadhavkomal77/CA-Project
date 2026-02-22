@@ -1,6 +1,22 @@
 // models/About.js
 import mongoose from "mongoose";
 
+const teamMemberSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  photo: {
+    type: String, // Cloudinary URL
+    required: true,
+  },
+  shortDetails: {
+    type: String,
+    required: true,
+  },
+});
+
+
 const aboutSchema = new mongoose.Schema(
   {
     headingSmall: {
@@ -25,6 +41,10 @@ const aboutSchema = new mongoose.Schema(
     image: {
       type: String, // Cloudinary URL
       required: true,
+    },
+      teamMembers: {
+      type: [teamMemberSchema],
+      default: [],
     },
     isActive: {
       type: Boolean,
