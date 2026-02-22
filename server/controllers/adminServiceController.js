@@ -299,9 +299,7 @@ import cloudinary from "../utils/cloudinary.js";
 import Service from "../models/Service.js";
 import fs from "fs";
 
-/* ===============================
-   HELPER — SAFE JSON PARSE
-================================ */
+
 const parseJSON = (data, fallback = []) => {
   try {
     return JSON.parse(data || JSON.stringify(fallback));
@@ -310,9 +308,7 @@ const parseJSON = (data, fallback = []) => {
   }
 };
 
-/* ===============================
-   ➕ CREATE SERVICE
-================================ */
+
 export const createService = async (req, res) => {
   try {
     const { title, shortDesc, longDesc, icon } = req.body;
@@ -369,18 +365,13 @@ export const createService = async (req, res) => {
 };
 
 
-/* ===============================
-   📥 PUBLIC LIST
-================================ */
+
 export const getPublicServices = async (req, res) => {
   const services = await Service.find({ isActive: true }).sort({ createdAt: -1 });
   res.json(services);
 };
 
 
-/* ===============================
-   🔐 ADMIN LIST
-================================ */
 export const getAdminServices = async (req, res) => {
   const services = await Service.find().sort({ createdAt: -1 });
   res.json(services);
