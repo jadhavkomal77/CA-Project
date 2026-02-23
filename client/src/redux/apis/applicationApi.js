@@ -102,7 +102,6 @@
 
 
 
-
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const applicationApi = createApi({
@@ -119,6 +118,7 @@ export const applicationApi = createApi({
 
   endpoints: (builder) => ({
 
+    /* ================= CREATE ================= */
     createApplication: builder.mutation({
       query: (formData) => ({
         url: "/",
@@ -128,6 +128,7 @@ export const applicationApi = createApi({
       invalidatesTags: ["Applications"],
     }),
 
+    /* ================= GET ALL ================= */
     getAllApplications: builder.query({
       query: (params) => ({
         url: "/admin",
@@ -136,52 +137,52 @@ export const applicationApi = createApi({
       providesTags: ["Applications"],
     }),
 
+    /* ================= GET ONE ================= */
     getApplicationById: builder.query({
       query: (id) => `/admin/${id}`,
-      providesTags: (r,e,id)=>[{type:"Applications",id}],
+      providesTags: (r, e, id) => [{ type: "Applications", id }],
     }),
 
+    /* ================= UPDATE STATUS ================= */
     updateApplicationStatus: builder.mutation({
       query: ({ id, status, adminNotes }) => ({
         url: `/admin/${id}/status`,
         method: "PUT",
         body: { status, adminNotes },
       }),
-      invalidatesTags:(r,e,{id})=>[
+      invalidatesTags: (r, e, { id }) => [
         "Applications",
-        {type:"Applications",id}
+        { type: "Applications", id },
       ],
     }),
 
+    /* ================= DELETE ================= */
     deleteApplication: builder.mutation({
       query: (id) => ({
         url: `/admin/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags:(r,e,id)=>[
+      invalidatesTags: (r, e, id) => [
         "Applications",
-        {type:"Applications",id}
+        { type: "Applications", id },
       ],
     }),
 
-    downloadApplicationPDF: builder.mutation({
+    /* ================= GENERATE PDF ================= */
+    generatePDF: builder.mutation({
       query: (id) => ({
-        url: `/admin/${id}/pdf`,
-        method: "GET",
-        responseHandler: async (response) => {
-          const blob = await response.blob();
-          const url = window.URL.createObjectURL(blob);
-
-          const a = document.createElement("a");
-          a.href = url;
-          a.download = "application.pdf";
-          a.click();
-        },
+        url: `/admin/${id}/generate-pdf`,
+        method: "POST",
       }),
+      invalidatesTags: (r, e, id) => [
+        "Applications",
+        { type: "Applications", id },
+      ],
     }),
 
   }),
 });
+
 
 export const {
   useCreateApplicationMutation,
@@ -189,5 +190,5 @@ export const {
   useGetApplicationByIdQuery,
   useUpdateApplicationStatusMutation,
   useDeleteApplicationMutation,
-  useDownloadApplicationPDFMutation
+  useGeneratePDFMutation
 } = applicationApi;

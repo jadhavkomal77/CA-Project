@@ -1,4 +1,6 @@
+
 // import PDFDocument from "pdfkit";
+
 // import axios from "axios";
 // import QRCode from "qrcode";
 // import Application from "../models/Application.js";
@@ -7,81 +9,27 @@
 //   const app = await Application.findById(req.params.id);
 //   if (!app) return res.status(404).json({ message: "Not found" });
 
-//   res.setHeader("Content-Type", "application/pdf");
-//   res.setHeader("Content-Disposition", "attachment; filename=application.pdf");
-
-//   const doc = new PDFDocument({ margin:50 });
-//   doc.pipe(res);
-
-//   doc.fontSize(20).text("APPLICATION REPORT",{align:"center"});
-//   doc.moveDown();
-
-//   doc.fontSize(12);
-//   doc.text("Name: " + app.userDetails.name);
-//   doc.text("Email: " + app.userDetails.email);
-//   doc.text("Phone: " + app.userDetails.phone);
-//   doc.text("Service: " + app.serviceName);
-//   doc.text("Status: " + app.status);
-
-//   doc.moveDown().text("Documents:");
-
-//   for(const file of app.uploadedDocuments){
-
-//     doc.moveDown().text(file.documentName);
-
-//     if(file.fileURL.match(/jpg|png|jpeg|webp/)){
-//       try{
-//         const img = await axios.get(file.fileURL,{responseType:"arraybuffer"});
-//         doc.image(Buffer.from(img.data),{fit:[400,300],align:"center"});
-//       }catch{}
-//     }
-//   }
-
-//   const qr = await QRCode.toDataURL(`https://yourdomain.com/verify/${app._id}`);
-//   doc.addPage();
-//   doc.image(qr,{fit:[200,200],align:"center"});
-
-//   doc.end();
-// };
-
-
-
-
-
-// import PDFDocument from "pdfkit";
-// import axios from "axios";
-// import QRCode from "qrcode";
-// import Application from "../models/Application.js";
-
-// export const downloadApplicationPDF = async (req, res) => {
-//   const app = await Application.findById(req.params.id);
-//   if (!app) return res.status(404).json({ message: "Not found" });
+//   /* preview OR download */
+//   const mode = req.query.download === "true" ? "attachment" : "inline";
 
 //   res.setHeader("Content-Type", "application/pdf");
 //   res.setHeader(
 //     "Content-Disposition",
-//     `inline; filename=application-${app._id}.pdf`
+//     `${mode}; filename=application-${app._id}.pdf`
 //   );
 
 //   const doc = new PDFDocument({ margin: 40 });
 //   doc.pipe(res);
 
-//   /* HEADER BAR */
+//   /* HEADER */
 //   doc.rect(0, 0, doc.page.width, 70).fill("#1e3a8a");
-
-//   doc
-//     .fillColor("white")
-//     .fontSize(22)
-//     .text("APPLICATION REPORT", 40, 25);
-
-//   doc
-//     .fontSize(11)
-//     .text("CADMA Associates Pvt Ltd", 40, 50);
+//   doc.fillColor("white").fontSize(22).text("APPLICATION REPORT", 40, 25);
+//   doc.fontSize(11).text("CADMA Associates Pvt Ltd", 40, 50);
 
 //   doc.moveDown(3);
 //   doc.fillColor("black");
 
-//   /* APPLICANT DETAILS */
+//   /* DETAILS */
 //   doc.fontSize(16).text("Applicant Details", { underline: true });
 //   doc.moveDown(0.7);
 
@@ -104,32 +52,75 @@
 //   doc.fontSize(16).text("Uploaded Documents", { underline: true });
 //   doc.moveDown();
 
+//   // for (const file of app.uploadedDocuments) {
+//   //   const url = file.fileURL;
+
+//   //   doc
+//   //     .fontSize(12)
+//   //     .fillColor("#2563eb")
+//   //     .text(file.documentName, { link: url, underline: true });
+
+//   //   doc.fillColor("black");
+
+//   //   /* IMAGE PREVIEW */
+//   //   if (url.includes("/image/upload/")) {
+//   //     try {
+//   //       const img = await axios.get(url, { responseType: "arraybuffer" });
+//   //       doc.moveDown(0.5);
+//   //       doc.image(Buffer.from(img.data), {
+//   //         fit: [420, 260],
+//   //         align: "center",
+//   //       });
+//   //     } catch {}
+//   //   }
+
+//   //   doc.moveDown(1.5);
+//   // }
+
 //   for (const file of app.uploadedDocuments) {
-//     const url = file.fileURL;
-//     const name = file.documentName;
+//   const url = file.fileURL;
+//   const type = file.fileType;
 
-//     /* clickable link */
-//     doc
-//       .fontSize(12)
-//       .fillColor("#2563eb")
-//       .text(name, { link: url, underline: true });
+//   /* clickable name */
+//   doc
+//     .fontSize(12)
+//     .fillColor("#2563eb")
+//     .text(file.documentName, { link: url, underline: true });
 
-//     doc.fillColor("black");
+//   doc.fillColor("black");
 
-//     /* IMAGE PREVIEW */
-//     if (url.match(/\.(jpg|jpeg|png|webp)$/i)) {
-//       try {
-//         const img = await axios.get(url, { responseType: "arraybuffer" });
-//         doc.moveDown(0.5);
-//         doc.image(Buffer.from(img.data), {
-//           fit: [420, 260],
-//           align: "center",
-//         });
-//       } catch {}
+//   /* ---------- IMAGE PREVIEW ---------- */
+// if (url.includes("/image/upload/")) {
+//     try {
+//       const img = await axios.get(url, { responseType: "arraybuffer" });
+
+//       doc.moveDown(0.5);
+//       doc.image(Buffer.from(img.data), {
+//         fit: [420, 260],
+//         align: "center",
+//       });
+//     } catch (err) {
+//       doc.text("Image preview failed");
 //     }
-
-//     doc.moveDown(1.5);
 //   }
+
+//   /* ---------- PDF ICON ---------- */
+//   else if (type === "application/pdf") {
+//     doc.moveDown(0.5);
+//     doc
+//       .fillColor("red")
+//       .text("[PDF] Document — Click to open", { link: url });
+//     doc.fillColor("black");
+//   }
+
+//   /* ---------- OTHER FILE ---------- */
+//   else {
+//     doc.moveDown(0.5);
+//     doc.text("📎 File — Click to open", { link: url });
+//   }
+
+//   doc.moveDown(1.5);
+// }
 
 //   /* QR PAGE */
 //   doc.addPage();
@@ -138,31 +129,28 @@
 //   doc.moveDown();
 
 //   const verifyUrl = `https://www.cadmaassociatespvtltd.com/verify/${app._id}`;
-
 //   const qr = await QRCode.toDataURL(verifyUrl);
 
-//   doc.image(qr, {
-//     fit: [200, 200],
-//     align: "center",
-//   });
+//   doc.image(qr, { fit: [200, 200], align: "center" });
 
 //   doc.moveDown();
 
-//   doc
-//     .fillColor("#2563eb")
-//     .text(verifyUrl, { align: "center", link: verifyUrl });
+//   doc.fillColor("#2563eb").text(verifyUrl, {
+//     align: "center",
+//     link: verifyUrl,
+//   });
 
 //   doc.moveDown(2);
 
-//   doc
-//     .fontSize(10)
-//     .fillColor("gray")
-//     .text("Generated by CADMA Associates Pvt Ltd System", {
-//       align: "center",
-//     });
+//   doc.fontSize(10).fillColor("gray").text(
+//     "Generated by CADMA Associates Pvt Ltd System",
+//     { align: "center" }
+//   );
 
 //   doc.end();
 // };
+
+
 
 
 
@@ -176,7 +164,6 @@ export const downloadApplicationPDF = async (req, res) => {
   const app = await Application.findById(req.params.id);
   if (!app) return res.status(404).json({ message: "Not found" });
 
-  /* preview OR download */
   const mode = req.query.download === "true" ? "attachment" : "inline";
 
   res.setHeader("Content-Type", "application/pdf");
@@ -193,12 +180,11 @@ export const downloadApplicationPDF = async (req, res) => {
   doc.fillColor("white").fontSize(22).text("APPLICATION REPORT", 40, 25);
   doc.fontSize(11).text("CADMA Associates Pvt Ltd", 40, 50);
 
-  doc.moveDown(3);
-  doc.fillColor("black");
+  doc.moveDown(3).fillColor("black");
 
   /* DETAILS */
   doc.fontSize(16).text("Applicant Details", { underline: true });
-  doc.moveDown(0.7);
+  doc.moveDown();
 
   const info = [
     ["Name", app.userDetails.name],
@@ -210,7 +196,7 @@ export const downloadApplicationPDF = async (req, res) => {
 
   info.forEach(([k, v]) => {
     doc.font("Helvetica-Bold").text(`${k}: `, { continued: true });
-    doc.font("Helvetica").text(v);
+    doc.font("Helvetica").text(v || "-");
   });
 
   doc.moveDown(1.5);
@@ -219,87 +205,57 @@ export const downloadApplicationPDF = async (req, res) => {
   doc.fontSize(16).text("Uploaded Documents", { underline: true });
   doc.moveDown();
 
-  // for (const file of app.uploadedDocuments) {
-  //   const url = file.fileURL;
-
-  //   doc
-  //     .fontSize(12)
-  //     .fillColor("#2563eb")
-  //     .text(file.documentName, { link: url, underline: true });
-
-  //   doc.fillColor("black");
-
-  //   /* IMAGE PREVIEW */
-  //   if (url.includes("/image/upload/")) {
-  //     try {
-  //       const img = await axios.get(url, { responseType: "arraybuffer" });
-  //       doc.moveDown(0.5);
-  //       doc.image(Buffer.from(img.data), {
-  //         fit: [420, 260],
-  //         align: "center",
-  //       });
-  //     } catch {}
-  //   }
-
-  //   doc.moveDown(1.5);
-  // }
-
   for (const file of app.uploadedDocuments) {
-  const url = file.fileURL;
-  const type = file.fileType;
+    const url = file.fileURL;
+    const type = file.fileType;
 
-  /* clickable name */
-  doc
-    .fontSize(12)
-    .fillColor("#2563eb")
-    .text(file.documentName, { link: url, underline: true });
-
-  doc.fillColor("black");
-
-  /* ---------- IMAGE PREVIEW ---------- */
-if (url.includes("/image/upload/")) {
-    try {
-      const img = await axios.get(url, { responseType: "arraybuffer" });
-
-      doc.moveDown(0.5);
-      doc.image(Buffer.from(img.data), {
-        fit: [420, 260],
-        align: "center",
-      });
-    } catch (err) {
-      doc.text("Image preview failed");
-    }
-  }
-
-  /* ---------- PDF ICON ---------- */
-  else if (type === "application/pdf") {
-    doc.moveDown(0.5);
     doc
-      .fillColor("red")
-      .text("[PDF] Document — Click to open", { link: url });
+      .fontSize(12)
+      .fillColor("#2563eb")
+      .text(file.documentName, { link: url, underline: true });
+
     doc.fillColor("black");
-  }
 
-  /* ---------- OTHER FILE ---------- */
-  else {
-    doc.moveDown(0.5);
-    doc.text("📎 File — Click to open", { link: url });
-  }
+    /* IMAGE PREVIEW */
+    if (url.includes("/image/upload/")) {
+      try {
+        const img = await axios.get(url, { responseType: "arraybuffer" });
+        doc.moveDown(0.5);
+        doc.image(Buffer.from(img.data), {
+          fit: [420, 260],
+          align: "center",
+        });
+      } catch {
+        doc.text("Image preview failed");
+      }
+    }
 
-  doc.moveDown(1.5);
-}
+    /* PDF FILE */
+    else if (type === "application/pdf") {
+      doc.moveDown(0.5).fillColor("red").text("[PDF] Click to open", {
+        link: url,
+      });
+      doc.fillColor("black");
+    }
+
+    /* OTHER FILE */
+    else {
+      doc.moveDown(0.5).text("📎 File — Click to open", { link: url });
+    }
+
+    doc.moveDown(1.5);
+  }
 
   /* QR PAGE */
   doc.addPage();
 
-  doc.fontSize(18).text("Verify Application", { align: "center" });
-  doc.moveDown();
-
   const verifyUrl = `https://www.cadmaassociatespvtltd.com/verify/${app._id}`;
   const qr = await QRCode.toDataURL(verifyUrl);
 
-  doc.image(qr, { fit: [200, 200], align: "center" });
+  doc.fontSize(18).text("Verify Application", { align: "center" });
+  doc.moveDown();
 
+  doc.image(qr, { fit: [200, 200], align: "center" });
   doc.moveDown();
 
   doc.fillColor("#2563eb").text(verifyUrl, {
