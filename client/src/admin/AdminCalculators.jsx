@@ -212,31 +212,444 @@
 
 
 
+//  *******************************
+
+// import { useState } from "react";
+// import { Trash2, Pencil, Save, X, Calculator } from "lucide-react";
+
+// export default function AdminCalculators() {
+
+//   const [calculators, setCalculators] = useState([
+//     { id: 1, name: "Income Tax", category: "Tax", status: true },
+//     { id: 2, name: "GST Calculator", category: "Tax", status: true },
+//     { id: 3, name: "EMI Calculator", category: "Loan", status: true },
+//     { id: 4, name: "SIP Calculator", category: "Investment", status: false },
+//   ]);
+
+//   const [editId, setEditId] = useState(null);
+//   const [editData, setEditData] = useState({ name: "", category: "" });
+
+//   /* ---------- ACTIONS ---------- */
+
+//   const toggleStatus = id =>
+//     setCalculators(prev =>
+//       prev.map(c =>
+//         c.id === id ? { ...c, status: !c.status } : c
+//       )
+//     );
+
+//   const deleteCalc = id => {
+//     if (!confirm("Delete calculator?")) return;
+//     setCalculators(prev => prev.filter(c => c.id !== id));
+//   };
+
+//   const startEdit = calc => {
+//     setEditId(calc.id);
+//     setEditData({ name: calc.name, category: calc.category });
+//   };
+
+//   const cancelEdit = () => setEditId(null);
+
+//   const saveEdit = id => {
+//     setCalculators(prev =>
+//       prev.map(c =>
+//         c.id === id ? { ...c, ...editData } : c
+//       )
+//     );
+//     setEditId(null);
+//   };
+
+//   /* ---------- UI ---------- */
+
+//   return (
+//     <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-200 p-8">
+
+//       {/* HEADER */}
+//       <div className="flex items-center gap-4 mb-8">
+//         <div className="p-3 bg-blue-600 text-white rounded-xl shadow-lg">
+//           <Calculator />
+//         </div>
+
+//         <div>
+//           <h1 className="text-3xl font-bold text-slate-800">
+//             Calculators Management
+//           </h1>
+//           <p className="text-gray-500 text-sm">
+//             Manage all financial calculators
+//           </p>
+//         </div>
+//       </div>
+
+//       {/* TABLE CARD */}
+//       <div className="bg-white rounded-2xl shadow-xl border overflow-hidden">
+
+//         <table className="w-full">
+
+//           {/* HEADER */}
+//           <thead className="bg-slate-100 text-slate-700 text-sm">
+//             <tr>
+//               <th className="p-5 text-left font-semibold">Calculator Name</th>
+//               <th className="font-semibold">Category</th>
+//               <th className="font-semibold">Status</th>
+//               <th className="text-center font-semibold">Actions</th>
+//             </tr>
+//           </thead>
+
+//           {/* BODY */}
+//           <tbody>
+
+//             {calculators.map(calc => (
+//               <tr
+//                 key={calc.id}
+//                 className="border-t hover:bg-slate-50 transition duration-200"
+//               >
+
+//                 {/* NAME */}
+//                 <td className="p-5 font-medium text-slate-800">
+
+//                   {editId === calc.id ? (
+//                     <input
+//                       value={editData.name}
+//                       onChange={e =>
+//                         setEditData({ ...editData, name: e.target.value })
+//                       }
+//                       className="border px-3 py-2 rounded-lg w-full focus:ring-2 focus:ring-blue-400"
+//                     />
+//                   ) : calc.name}
+
+//                 </td>
+
+//                 {/* CATEGORY */}
+//                 <td className="text-center">
+
+//                   {editId === calc.id ? (
+//                     <select
+//                       value={editData.category}
+//                       onChange={e =>
+//                         setEditData({ ...editData, category: e.target.value })
+//                       }
+//                       className="border px-3 py-2 rounded-lg"
+//                     >
+//                       <option>Tax</option>
+//                       <option>Loan</option>
+//                       <option>Investment</option>
+//                     </select>
+//                   ) : (
+//                     <span className="px-4 py-1 text-xs rounded-full font-semibold bg-blue-100 text-blue-700">
+//                       {calc.category}
+//                     </span>
+//                   )}
+
+//                 </td>
+
+//                 {/* STATUS */}
+//                 <td className="text-center">
+//                   <button
+//                     onClick={() => toggleStatus(calc.id)}
+//                     className={`px-4 py-1.5 rounded-full text-xs font-semibold shadow-sm transition
+//                       ${calc.status
+//                         ? "bg-green-100 text-green-700 hover:bg-green-200"
+//                         : "bg-red-100 text-red-700 hover:bg-red-200"
+//                       }`}
+//                   >
+//                     {calc.status ? "Active" : "Disabled"}
+//                   </button>
+//                 </td>
+
+//                 {/* ACTIONS */}
+//                 <td className="text-center space-x-2">
+
+//                   {editId === calc.id ? (
+//                     <>
+//                       <button
+//                         onClick={() => saveEdit(calc.id)}
+//                         className="p-2 bg-green-100 rounded-lg hover:bg-green-200 transition"
+//                       >
+//                         <Save size={18} className="text-green-700"/>
+//                       </button>
+
+//                       <button
+//                         onClick={cancelEdit}
+//                         className="p-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition"
+//                       >
+//                         <X size={18}/>
+//                       </button>
+//                     </>
+//                   ) : (
+//                     <>
+//                       <button
+//                         onClick={() => startEdit(calc)}
+//                         className="p-2 bg-blue-100 rounded-lg hover:bg-blue-200 transition"
+//                       >
+//                         <Pencil size={18} className="text-blue-700"/>
+//                       </button>
+
+//                       <button
+//                         onClick={() => deleteCalc(calc.id)}
+//                         className="p-2 bg-red-100 rounded-lg hover:bg-red-200 transition"
+//                       >
+//                         <Trash2 size={18} className="text-red-700"/>
+//                       </button>
+//                     </>
+//                   )}
+
+//                 </td>
+
+//               </tr>
+//             ))}
+
+//           </tbody>
+//         </table>
+//       </div>
+
+//     </div>
+//   );
+// }
 
 
-import { useState } from "react";
+
+// ***************************
+
+
+// import { useState, useEffect } from "react";
+// import { Trash2, Pencil, Save, X, Calculator } from "lucide-react";
+
+// export default function AdminCalculators() {
+
+//   /* ---------- LOAD FROM LOCAL STORAGE ---------- */
+//   const [calculators, setCalculators] = useState(() => {
+//     const saved = localStorage.getItem("calculators");
+//     return saved
+//       ? JSON.parse(saved)
+//       : [
+//           { id: 1, name: "Income Tax", category: "Tax", status: true },
+//           { id: 2, name: "GST Calculator", category: "Tax", status: true },
+//           { id: 3, name: "EMI Calculator", category: "Loan", status: true },
+//           { id: 4, name: "SIP Calculator", category: "Investment", status: false },
+//         ];
+//   });
+
+//   /* ---------- SAVE TO LOCAL STORAGE ---------- */
+//   useEffect(() => {
+//     localStorage.setItem("calculators", JSON.stringify(calculators));
+//   }, [calculators]);
+
+//   const [editId, setEditId] = useState(null);
+//   const [editData, setEditData] = useState({ name: "", category: "" });
+
+//   /* ---------- ACTIONS ---------- */
+
+//   const toggleStatus = id => {
+//     setCalculators(prev =>
+//       prev.map(c =>
+//         c.id === id ? { ...c, status: !c.status } : c
+//       )
+//     );
+//   };
+
+//   const deleteCalc = id => {
+//     if (!confirm("Delete calculator?")) return;
+//     setCalculators(prev => prev.filter(c => c.id !== id));
+//   };
+
+//   const startEdit = calc => {
+//     setEditId(calc.id);
+//     setEditData({ name: calc.name, category: calc.category });
+//   };
+
+//   const cancelEdit = () => {
+//     setEditId(null);
+//     setEditData({ name: "", category: "" });
+//   };
+
+//   const saveEdit = id => {
+//     setCalculators(prev =>
+//       prev.map(c =>
+//         c.id === id ? { ...c, ...editData } : c
+//       )
+//     );
+//     setEditId(null);
+//   };
+
+//   /* ---------- UI ---------- */
+
+//   return (
+//     <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-200 p-8">
+
+//       {/* HEADER */}
+//       <div className="flex items-center gap-4 mb-8">
+//         <div className="p-3 bg-blue-600 text-white rounded-xl shadow-lg">
+//           <Calculator />
+//         </div>
+
+//         <div>
+//           <h1 className="text-3xl font-bold text-slate-800">
+//             Calculators Management
+//           </h1>
+//           <p className="text-gray-500 text-sm">
+//             Manage all financial calculators
+//           </p>
+//         </div>
+//       </div>
+
+//       {/* TABLE CARD */}
+//       <div className="bg-white rounded-2xl shadow-xl border overflow-hidden">
+
+//         <table className="w-full">
+
+//           {/* HEADER */}
+//           <thead className="bg-slate-100 text-slate-700 text-sm">
+//             <tr>
+//               <th className="p-5 text-left font-semibold">Calculator Name</th>
+//               <th className="font-semibold">Category</th>
+//               <th className="font-semibold">Status</th>
+//               <th className="text-center font-semibold">Actions</th>
+//             </tr>
+//           </thead>
+
+//           {/* BODY */}
+//           <tbody>
+//             {calculators.map(calc => (
+//               <tr
+//                 key={calc.id}
+//                 className="border-t hover:bg-slate-50 transition duration-200"
+//               >
+
+//                 {/* NAME */}
+//                 <td className="p-5 font-medium text-slate-800">
+//                   {editId === calc.id ? (
+//                     <input
+//                       value={editData.name}
+//                       onChange={e =>
+//                         setEditData({ ...editData, name: e.target.value })
+//                       }
+//                       className="border px-3 py-2 rounded-lg w-full focus:ring-2 focus:ring-blue-400"
+//                     />
+//                   ) : calc.name}
+//                 </td>
+
+//                 {/* CATEGORY */}
+//                 <td className="text-center">
+//                   {editId === calc.id ? (
+//                     <select
+//                       value={editData.category}
+//                       onChange={e =>
+//                         setEditData({ ...editData, category: e.target.value })
+//                       }
+//                       className="border px-3 py-2 rounded-lg"
+//                     >
+//                       <option>Tax</option>
+//                       <option>Loan</option>
+//                       <option>Investment</option>
+//                     </select>
+//                   ) : (
+//                     <span className="px-4 py-1 text-xs rounded-full font-semibold bg-blue-100 text-blue-700">
+//                       {calc.category}
+//                     </span>
+//                   )}
+//                 </td>
+
+//                 {/* STATUS */}
+//                 <td className="text-center">
+//                   <button
+//                     onClick={() => toggleStatus(calc.id)}
+//                     className={`px-4 py-1.5 rounded-full text-xs font-semibold shadow-sm transition
+//                       ${calc.status
+//                         ? "bg-green-100 text-green-700 hover:bg-green-200"
+//                         : "bg-red-100 text-red-700 hover:bg-red-200"
+//                       }`}
+//                   >
+//                     {calc.status ? "Active" : "Disabled"}
+//                   </button>
+//                 </td>
+
+//                 {/* ACTIONS */}
+//                 <td className="text-center space-x-2">
+
+//                   {editId === calc.id ? (
+//                     <>
+//                       <button
+//                         onClick={() => saveEdit(calc.id)}
+//                         className="p-2 bg-green-100 rounded-lg hover:bg-green-200 transition"
+//                       >
+//                         <Save size={18} className="text-green-700"/>
+//                       </button>
+
+//                       <button
+//                         onClick={cancelEdit}
+//                         className="p-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition"
+//                       >
+//                         <X size={18}/>
+//                       </button>
+//                     </>
+//                   ) : (
+//                     <>
+//                       <button
+//                         onClick={() => startEdit(calc)}
+//                         className="p-2 bg-blue-100 rounded-lg hover:bg-blue-200 transition"
+//                       >
+//                         <Pencil size={18} className="text-blue-700"/>
+//                       </button>
+
+//                       <button
+//                         onClick={() => deleteCalc(calc.id)}
+//                         className="p-2 bg-red-100 rounded-lg hover:bg-red-200 transition"
+//                       >
+//                         <Trash2 size={18} className="text-red-700"/>
+//                       </button>
+//                     </>
+//                   )}
+
+//                 </td>
+
+//               </tr>
+//             ))}
+//           </tbody>
+
+//         </table>
+//       </div>
+//     </div>
+//   );
+// }
+
+
+
+import { useState, useEffect } from "react";
 import { Trash2, Pencil, Save, X, Calculator } from "lucide-react";
+import { calculatorsMaster } from "../components/calculators/calculatorsList";
 
 export default function AdminCalculators() {
 
-  const [calculators, setCalculators] = useState([
-    { id: 1, name: "Income Tax", category: "Tax", status: true },
-    { id: 2, name: "GST Calculator", category: "Tax", status: true },
-    { id: 3, name: "EMI Calculator", category: "Loan", status: true },
-    { id: 4, name: "SIP Calculator", category: "Investment", status: false },
-  ]);
+  /* ---------- MERGE MASTER + STORAGE ---------- */
+  const [calculators, setCalculators] = useState(() => {
 
+    const saved = JSON.parse(localStorage.getItem("calculators")) || [];
+
+    return calculatorsMaster.map(master => {
+      const found = saved.find(s => s.id === master.id);
+      return found ? found : { ...master, status: true };
+    });
+
+  });
+
+  /* ---------- SAVE STORAGE ---------- */
+  useEffect(() => {
+    localStorage.setItem("calculators", JSON.stringify(calculators));
+  }, [calculators]);
+
+  /* ---------- EDIT ---------- */
   const [editId, setEditId] = useState(null);
   const [editData, setEditData] = useState({ name: "", category: "" });
 
   /* ---------- ACTIONS ---------- */
 
-  const toggleStatus = id =>
+  const toggleStatus = id => {
     setCalculators(prev =>
       prev.map(c =>
         c.id === id ? { ...c, status: !c.status } : c
       )
     );
+  };
 
   const deleteCalc = id => {
     if (!confirm("Delete calculator?")) return;
@@ -248,7 +661,10 @@ export default function AdminCalculators() {
     setEditData({ name: calc.name, category: calc.category });
   };
 
-  const cancelEdit = () => setEditId(null);
+  const cancelEdit = () => {
+    setEditId(null);
+    setEditData({ name: "", category: "" });
+  };
 
   const saveEdit = id => {
     setCalculators(prev =>
@@ -280,128 +696,92 @@ export default function AdminCalculators() {
         </div>
       </div>
 
-      {/* TABLE CARD */}
+      {/* TABLE */}
       <div className="bg-white rounded-2xl shadow-xl border overflow-hidden">
 
         <table className="w-full">
 
-          {/* HEADER */}
           <thead className="bg-slate-100 text-slate-700 text-sm">
             <tr>
-              <th className="p-5 text-left font-semibold">Calculator Name</th>
-              <th className="font-semibold">Category</th>
-              <th className="font-semibold">Status</th>
-              <th className="text-center font-semibold">Actions</th>
+              <th className="p-5 text-left">Calculator</th>
+              <th>Category</th>
+              <th>Status</th>
+              <th className="text-center">Actions</th>
             </tr>
           </thead>
 
-          {/* BODY */}
           <tbody>
-
             {calculators.map(calc => (
-              <tr
-                key={calc.id}
-                className="border-t hover:bg-slate-50 transition duration-200"
-              >
+              <tr key={calc.id} className="border-t hover:bg-slate-50">
 
-                {/* NAME */}
-                <td className="p-5 font-medium text-slate-800">
-
+                <td className="p-5">
                   {editId === calc.id ? (
                     <input
                       value={editData.name}
                       onChange={e =>
                         setEditData({ ...editData, name: e.target.value })
                       }
-                      className="border px-3 py-2 rounded-lg w-full focus:ring-2 focus:ring-blue-400"
+                      className="border px-3 py-2 rounded-lg w-full"
                     />
                   ) : calc.name}
-
                 </td>
 
-                {/* CATEGORY */}
                 <td className="text-center">
-
                   {editId === calc.id ? (
-                    <select
+                    <input
                       value={editData.category}
                       onChange={e =>
                         setEditData({ ...editData, category: e.target.value })
                       }
                       className="border px-3 py-2 rounded-lg"
-                    >
-                      <option>Tax</option>
-                      <option>Loan</option>
-                      <option>Investment</option>
-                    </select>
-                  ) : (
-                    <span className="px-4 py-1 text-xs rounded-full font-semibold bg-blue-100 text-blue-700">
-                      {calc.category}
-                    </span>
-                  )}
-
+                    />
+                  ) : calc.category}
                 </td>
 
-                {/* STATUS */}
                 <td className="text-center">
                   <button
                     onClick={() => toggleStatus(calc.id)}
-                    className={`px-4 py-1.5 rounded-full text-xs font-semibold shadow-sm transition
+                    className={`px-4 py-1 rounded-full text-xs font-semibold
                       ${calc.status
-                        ? "bg-green-100 text-green-700 hover:bg-green-200"
-                        : "bg-red-100 text-red-700 hover:bg-red-200"
+                        ? "bg-green-100 text-green-700"
+                        : "bg-red-100 text-red-700"
                       }`}
                   >
                     {calc.status ? "Active" : "Disabled"}
                   </button>
                 </td>
 
-                {/* ACTIONS */}
                 <td className="text-center space-x-2">
 
                   {editId === calc.id ? (
                     <>
-                      <button
-                        onClick={() => saveEdit(calc.id)}
-                        className="p-2 bg-green-100 rounded-lg hover:bg-green-200 transition"
-                      >
-                        <Save size={18} className="text-green-700"/>
+                      <button onClick={() => saveEdit(calc.id)} className="p-2 bg-green-100 rounded-lg">
+                        <Save size={18}/>
                       </button>
 
-                      <button
-                        onClick={cancelEdit}
-                        className="p-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition"
-                      >
+                      <button onClick={cancelEdit} className="p-2 bg-gray-200 rounded-lg">
                         <X size={18}/>
                       </button>
                     </>
                   ) : (
                     <>
-                      <button
-                        onClick={() => startEdit(calc)}
-                        className="p-2 bg-blue-100 rounded-lg hover:bg-blue-200 transition"
-                      >
-                        <Pencil size={18} className="text-blue-700"/>
+                      <button onClick={() => startEdit(calc)} className="p-2 bg-blue-100 rounded-lg">
+                        <Pencil size={18}/>
                       </button>
 
-                      <button
-                        onClick={() => deleteCalc(calc.id)}
-                        className="p-2 bg-red-100 rounded-lg hover:bg-red-200 transition"
-                      >
-                        <Trash2 size={18} className="text-red-700"/>
+                      <button onClick={() => deleteCalc(calc.id)} className="p-2 bg-red-100 rounded-lg">
+                        <Trash2 size={18}/>
                       </button>
                     </>
                   )}
 
                 </td>
-
               </tr>
             ))}
-
           </tbody>
+
         </table>
       </div>
-
     </div>
   );
 }

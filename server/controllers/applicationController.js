@@ -204,13 +204,172 @@
 
 
 
+// import asyncHandler from "express-async-handler";
+// import Application from "../models/Application.js";
+// import Service from "../models/Service.js";
+// import cloudinary from "../utils/cloudinary.js";
+// import { uploadBuffer } from "../utils/uploadToCloudinary.js";
+
+
+// export const submitApplication = asyncHandler(async (req, res) => {
+//   if (!req.body)
+//     return res.status(400).json({ message: "Body missing" });
+
+//   let userDetails = req.body.userDetails;
+//   const serviceId = req.body.serviceId;
+
+//   if (!userDetails || !serviceId)
+//     return res.status(400).json({ message: "Missing fields" });
+
+//   if (typeof userDetails === "string")
+//     userDetails = JSON.parse(userDetails);
+
+//   const { name, email, phone } = userDetails;
+
+//   const service = await Service.findById(serviceId);
+//   if (!service)
+//     return res.status(404).json({ message: "Service not found" });
+
+//   const uploadedDocuments = [];
+
+//   if (req.files?.documents) {
+//     const files = Array.isArray(req.files.documents)
+//       ? req.files.documents
+//       : [req.files.documents];
+
+//     for (const file of files) {
+//       const result = await uploadBuffer(
+//         file.buffer,
+//         `applications/${service.slug}`
+//       );
+
+//       uploadedDocuments.push({
+//         documentName: file.originalname,
+//         fileURL: result.secure_url,
+//         publicId: result.public_id,
+//       });
+    
+//     }
+//   }
+
+//   const app = await Application.create({
+//     userDetails,
+//     serviceId,
+//     serviceName: service.title,
+//     serviceSlug: service.slug,
+//     uploadedDocuments,
+//   });
+
+//   res.status(201).json({ success: true, data: app });
+// });
+// /* ---------- GET ALL ---------- */
+// export const getAllApplications = asyncHandler(async (req, res) => {
+//   const { serviceId, status } = req.query;
+//   const filter = {};
+//   if (serviceId) filter.serviceId = serviceId;
+//   if (status) filter.status = status;
+
+//   const apps = await Application.find(filter)
+//     .populate("serviceId", "title slug")
+//     .sort({ createdAt: -1 });
+
+//   res.json({ success: true, data: apps });
+// });
+
+// /* ---------- GET ONE ---------- */
+// export const getApplicationById = asyncHandler(async (req, res) => {
+//   const app = await Application.findById(req.params.id).populate(
+//     "serviceId",
+//     "title slug requiredDocuments"
+//   );
+
+//   if (!app) return res.status(404).json({ message: "Not found" });
+
+//   res.json({ success: true, data: app });
+// });
+
+// /* ---------- STATUS ---------- */
+// export const updateApplicationStatus = asyncHandler(async (req, res) => {
+//   const app = await Application.findByIdAndUpdate(
+//     req.params.id,
+//     req.body,
+//     { new: true }
+//   );
+
+//   if (!app) return res.status(404).json({ message: "Not found" });
+
+//   res.json({ success: true, data: app });
+// });
+
+
+// export const deleteApplication = asyncHandler(async (req, res) => {
+//   try {
+//      const { id } = req.params;
+
+//      /* ---------- VALIDATE ID ---------- */
+//      if (!id)
+//        return res.status(400).json({
+//          success: false,
+//          message: "Application ID required",
+//        });
+
+//      /* ---------- FIND APPLICATION ---------- */
+//      const app = await Application.findById(id);
+
+//      if (!app)
+//        return res.status(404).json({
+//          success: false,
+//          message: "Application not found",
+//        });
+
+//      /* ---------- DELETE CLOUDINARY FILES ---------- */
+//      if (Array.isArray(app.uploadedDocuments) && app.uploadedDocuments.length) {
+//        for (const file of app.uploadedDocuments) {
+//          if (!file?.publicId) continue;
+
+//          try {
+//            await cloudinary.uploader.destroy(file.publicId, {
+//              resource_type: "auto",
+//            });
+
+//            console.log("Deleted file:", file.publicId);
+//          } catch (err) {
+//            console.log("Cloud delete failed:", err.message);
+//          }
+//        }
+//      }
+
+//      /* ---------- DELETE FROM DB ---------- */
+//      await Application.findByIdAndDelete(id);
+
+//      console.log("Application deleted:", id);
+
+//      res.json({
+//        success: true,
+//        message: "Application deleted successfully",
+//      });
+//    } catch (error) {
+//      console.error("DELETE ERROR:", error);
+
+//      res.status(500).json({
+//        success: false,
+//        message: "Server error while deleting application",
+//      });
+//    }
+//  });
+
+
+
+
+
+
 import asyncHandler from "express-async-handler";
 import Application from "../models/Application.js";
 import Service from "../models/Service.js";
 import cloudinary from "../utils/cloudinary.js";
 import { uploadBuffer } from "../utils/uploadToCloudinary.js";
 
-
+/* SUBMIT */
 export const submitApplication = asyncHandler(async (req, res) => {
   if (!req.body)
     return res.status(400).json({ message: "Body missing" });
@@ -223,8 +382,6 @@ export const submitApplication = asyncHandler(async (req, res) => {
 
   if (typeof userDetails === "string")
     userDetails = JSON.parse(userDetails);
-
-  const { name, email, phone } = userDetails;
 
   const service = await Service.findById(serviceId);
   if (!service)
@@ -247,8 +404,9 @@ export const submitApplication = asyncHandler(async (req, res) => {
         documentName: file.originalname,
         fileURL: result.secure_url,
         publicId: result.public_id,
+        // *********
+         fileType: file.mimetype,
       });
-    
     }
   }
 
@@ -262,7 +420,8 @@ export const submitApplication = asyncHandler(async (req, res) => {
 
   res.status(201).json({ success: true, data: app });
 });
-/* ---------- GET ALL ---------- */
+
+/* GET ALL */
 export const getAllApplications = asyncHandler(async (req, res) => {
   const { serviceId, status } = req.query;
   const filter = {};
@@ -276,7 +435,7 @@ export const getAllApplications = asyncHandler(async (req, res) => {
   res.json({ success: true, data: apps });
 });
 
-/* ---------- GET ONE ---------- */
+/* GET ONE */
 export const getApplicationById = asyncHandler(async (req, res) => {
   const app = await Application.findById(req.params.id).populate(
     "serviceId",
@@ -288,7 +447,7 @@ export const getApplicationById = asyncHandler(async (req, res) => {
   res.json({ success: true, data: app });
 });
 
-/* ---------- STATUS ---------- */
+/* STATUS UPDATE */
 export const updateApplicationStatus = asyncHandler(async (req, res) => {
   const app = await Application.findByIdAndUpdate(
     req.params.id,
@@ -301,59 +460,39 @@ export const updateApplicationStatus = asyncHandler(async (req, res) => {
   res.json({ success: true, data: app });
 });
 
-
+/* DELETE */
 export const deleteApplication = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  const app = await Application.findById(id);
+  if (!app)
+    return res.status(404).json({ message: "Application not found" });
+
+  if (app.uploadedDocuments?.length) {
+    // for (const file of app.uploadedDocuments) {
+    //   if (!file.publicId) continue;
+
+    //   await cloudinary.uploader.destroy(file.publicId, {
+    //     resource_type: "auto",
+    //   });
+    // }
+    for (const file of app.uploadedDocuments) {
+  if (!file.publicId) continue;
+
   try {
-     const { id } = req.params;
+    await cloudinary.uploader.destroy(file.publicId, {
+      resource_type: "auto",
+    });
+  } catch (err) {
+    console.log("Cloud delete error:", err.message);
+  }
+}
+  }
 
-     /* ---------- VALIDATE ID ---------- */
-     if (!id)
-       return res.status(400).json({
-         success: false,
-         message: "Application ID required",
-       });
+  await Application.findByIdAndDelete(id);
 
-     /* ---------- FIND APPLICATION ---------- */
-     const app = await Application.findById(id);
-
-     if (!app)
-       return res.status(404).json({
-         success: false,
-         message: "Application not found",
-       });
-
-     /* ---------- DELETE CLOUDINARY FILES ---------- */
-     if (Array.isArray(app.uploadedDocuments) && app.uploadedDocuments.length) {
-       for (const file of app.uploadedDocuments) {
-         if (!file?.publicId) continue;
-
-         try {
-           await cloudinary.uploader.destroy(file.publicId, {
-             resource_type: "auto",
-           });
-
-           console.log("Deleted file:", file.publicId);
-         } catch (err) {
-           console.log("Cloud delete failed:", err.message);
-         }
-       }
-     }
-
-     /* ---------- DELETE FROM DB ---------- */
-     await Application.findByIdAndDelete(id);
-
-     console.log("Application deleted:", id);
-
-     res.json({
-       success: true,
-       message: "Application deleted successfully",
-     });
-   } catch (error) {
-     console.error("DELETE ERROR:", error);
-
-     res.status(500).json({
-       success: false,
-       message: "Server error while deleting application",
-     });
-   }
- });
+  res.json({
+    success: true,
+    message: "Application deleted successfully",
+  });
+});

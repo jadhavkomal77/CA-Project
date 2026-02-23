@@ -1,188 +1,6 @@
-// import { useState } from "react";
-// import IncomeTaxCalculator from "../components/calculators/IncomeTaxCalculator";
-// import GstCalculator from "../components/calculators/GstCalculator";
-// import EmiCalculator from "../components/calculators/EmiCalculator";
-// import SipCalculator from "../components/calculators/SipCalculator";
-// import { Calculator, DollarSign, Home, TrendingUp } from "lucide-react";
-
-// export default function PublicCalculator() {
-//   const [activeCalculator, setActiveCalculator] = useState("income-tax");
-
-//   const calculators = [
-//     {
-//       id: "income-tax",
-//       name: "Income Tax Calculator",
-//       icon: Calculator,
-//       component: IncomeTaxCalculator,
-//       description: "Calculate your income tax for Old & New regime",
-//     },
-//     {
-//       id: "gst",
-//       name: "GST Calculator",
-//       icon: DollarSign,
-//       component: GstCalculator,
-//       description: "Calculate GST amount and breakdown",
-//     },
-//     {
-//       id: "emi",
-//       name: "Home Loan EMI Calculator",
-//       icon: Home,
-//       component: EmiCalculator,
-//       description: "Calculate your home loan EMI",
-//     },
-//     {
-//       id: "sip",
-//       name: "SIP Calculator",
-//       icon: TrendingUp,
-//       component: SipCalculator,
-//       description: "Calculate SIP returns and maturity value",
-//     },
-//   ];
-
-//   const ActiveComponent = calculators.find(
-//     (calc) => calc.id === activeCalculator
-//   )?.component;
-
-//   return (
-//     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
-//       <div className="max-w-7xl mx-auto">
-//         {/* Header */}
-//         <div className="text-center mb-12">
-//           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-//             Financial Calculators
-//           </h1>
-//           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-//             Professional financial calculators to help you plan your finances
-//             better
-//           </p>
-//         </div>
-
-//         {/* Calculator Cards Grid */}
-//         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-//           {calculators.map((calc) => {
-//             const Icon = calc.icon;
-//             return (
-//               <button
-//                 key={calc.id}
-//                 onClick={() => setActiveCalculator(calc.id)}
-//                 className={`p-6 rounded-2xl border-2 transition-all duration-300 text-left ${
-//                   activeCalculator === calc.id
-//                     ? "border-blue-700 bg-blue-50 shadow-lg transform scale-105"
-//                     : "border-gray-200 bg-white hover:border-blue-300 hover:shadow-md"
-//                 }`}
-//               >
-//                 <div className="flex items-center gap-4 mb-3">
-//                   <div
-//                     className={`p-3 rounded-xl ${
-//                       activeCalculator === calc.id
-//                         ? "bg-blue-700 text-white"
-//                         : "bg-blue-100 text-blue-700"
-//                     }`}
-//                   >
-//                     <Icon size={24} />
-//                   </div>
-//                   <h3
-//                     className={`text-lg font-bold ${
-//                       activeCalculator === calc.id
-//                         ? "text-blue-700"
-//                         : "text-gray-900"
-//                     }`}
-//                   >
-//                     {calc.name}
-//                   </h3>
-//                 </div>
-//                 <p className="text-sm text-gray-600">{calc.description}</p>
-//               </button>
-//             );
-//           })}
-//         </div>
-
-//         {/* Active Calculator Component */}
-//         <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
-//           {ActiveComponent && <ActiveComponent />}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-
-
-
 
 // import { useState } from "react";
-// import IncomeTaxCalculator from "../components/calculators/IncomeTaxCalculator";
-// import GstCalculator from "../components/calculators/GstCalculator";
-// import EmiCalculator from "../components/calculators/EmiCalculator";
-// import SipCalculator from "../components/calculators/SipCalculator";
-// import { Calculator, DollarSign, Home, TrendingUp } from "lucide-react";
 
-// export default function PublicCalculator() {
-//   const [active, setActive] = useState("tax");
-
-//   const calculators = [
-//     { id: "tax", name: "Income Tax", icon: Calculator, comp: IncomeTaxCalculator },
-//     { id: "gst", name: "GST", icon: DollarSign, comp: GstCalculator },
-//     { id: "emi", name: "EMI", icon: Home, comp: EmiCalculator },
-//     { id: "sip", name: "SIP", icon: TrendingUp, comp: SipCalculator },
-//   ];
-
-//   const ActiveComp = calculators.find(c => c.id === active)?.comp;
-
-//   return (
-//     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-16 px-4">
-
-//       <div className="max-w-7xl mx-auto">
-
-//         {/* Heading */}
-//         <div className="text-center mb-12">
-//           <h1 className="text-5xl font-bold mb-3">Financial Calculators</h1>
-//           <p className="text-gray-600 text-lg">
-//             Calculate tax, GST, EMI & investment instantly
-//           </p>
-//         </div>
-
-//         {/* Selector */}
-//         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-//           {calculators.map(c=>{
-//             const Icon=c.icon;
-//             return(
-//               <button
-//                 key={c.id}
-//                 onClick={()=>setActive(c.id)}
-//                 className={`p-6 rounded-2xl border text-left transition
-//                 ${active===c.id
-//                   ? "border-blue-700 bg-blue-50 shadow-xl scale-105"
-//                   : "bg-white border-gray-200 hover:shadow-md"}
-//                 `}
-//               >
-//                 <div className="flex gap-3 items-center mb-2">
-//                   <div className={`p-2 rounded-lg ${active===c.id?"bg-blue-700 text-white":"bg-blue-100 text-blue-700"}`}>
-//                     <Icon size={22}/>
-//                   </div>
-//                   <h3 className="font-bold">{c.name}</h3>
-//                 </div>
-//                 <p className="text-sm text-gray-500">Professional calculator</p>
-//               </button>
-//             )
-//           })}
-//         </div>
-
-//         {/* Calculator Box */}
-//         <div className="bg-white rounded-3xl shadow-2xl border p-8">
-//           {ActiveComp && <ActiveComp/>}
-//         </div>
-
-//       </div>
-//     </div>
-//   );
-// }
-
-
-
-
-
-// import { useState } from "react";
 // import IncomeTaxCalculator from "../components/calculators/IncomeTaxCalculator";
 // import GstCalculator from "../components/calculators/GstCalculator";
 // import EmiCalculator from "../components/calculators/EmiCalculator";
@@ -194,8 +12,10 @@
 //   IndianRupee,
 //   Home,
 //   TrendingUp,
-//   Landmark
+//   Landmark,
+//   Search
 // } from "lucide-react";
+// import GstSearch from "../components/calculators/GstSearch";
 
 // export default function PublicCalculator() {
 
@@ -203,10 +23,11 @@
 
 //   const calculators = [
 //     { id: "tax", name: "Income Tax", icon: Calculator, comp: IncomeTaxCalculator },
-//    { id: "gst", name: "GST Calc", icon: IndianRupee, comp: GstCalculator },
+//     { id: "gst", name: "GST", icon: IndianRupee, comp: GstCalculator },
 //     { id: "advance", name: "Advance Tax", icon: Landmark, comp: AdvanceTaxCalculator },
 //     { id: "emi", name: "EMI", icon: Home, comp: EmiCalculator },
 //     { id: "sip", name: "SIP", icon: TrendingUp, comp: SipCalculator },
+//     { id: "gst-search", name: "GST Search", icon: Search, comp: GstSearch },
 //   ];
 
 //   const ActiveComp = calculators.find(c => c.id === active)?.comp;
@@ -234,7 +55,7 @@
 //           grid-cols-2
 //           sm:grid-cols-3
 //           md:grid-cols-4
-//           lg:grid-cols-5
+//           lg:grid-cols-6
 //           gap-4 sm:gap-6
 //           mb-12
 //         ">
@@ -248,15 +69,12 @@
 //                 key={c.id}
 //                 onClick={() => setActive(c.id)}
 //                 className={`
-//                 group relative
-//                 rounded-2xl
-//                 border
-//                 p-4 sm:p-6
+//                 group relative rounded-2xl border p-4 sm:p-6
 //                 transition-all duration-300 text-left
 
 //                 ${isActive
-//                   ? "bg-gradient-to-br from-blue-700 to-blue-800 text-white shadow-xl scale-[1.03]"
-//                   : "bg-white border-slate-300 hover:shadow-xl hover:-translate-y-1"
+//                   ? "bg-gradient-to-br from-blue-700 to-blue-800 text-white shadow-xl scale-[1.04]"
+//                   : "bg-white border-slate-300 hover:shadow-lg hover:-translate-y-1"
 //                 }`}
 //               >
 
@@ -286,7 +104,7 @@
 
 //                 {/* ACTIVE RING */}
 //                 {isActive && (
-//                   <div className="absolute inset-0 rounded-2xl ring-2 ring-blue-300/40"/>
+//                   <div className="absolute inset-0 rounded-2xl ring-2 ring-blue-300/40 animate-pulse"/>
 //                 )}
 
 //               </button>
@@ -302,7 +120,7 @@
 //           shadow-2xl
 //           border border-slate-200
 //           p-5 sm:p-8 md:p-10 lg:p-14
-//           transition-all
+//           transition-all duration-300
 //         ">
 //           {ActiveComp && <ActiveComp />}
 //         </div>
@@ -315,13 +133,15 @@
 
 
 
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 
 import IncomeTaxCalculator from "../components/calculators/IncomeTaxCalculator";
 import GstCalculator from "../components/calculators/GstCalculator";
 import EmiCalculator from "../components/calculators/EmiCalculator";
 import SipCalculator from "../components/calculators/SipCalculator";
 import AdvanceTaxCalculator from "../components/calculators/AdvanceTaxCalculator";
+import GstSearch from "../components/calculators/GstSearch";
 
 import {
   Calculator,
@@ -331,22 +151,62 @@ import {
   Landmark,
   Search
 } from "lucide-react";
-import GstSearch from "../components/calculators/GstSearch";
+import { calculatorsMaster } from "../components/calculators/calculatorsList";
+
 
 export default function PublicCalculator() {
 
-  const [active, setActive] = useState("tax");
+  /* ---------------- ACTIVE TAB ---------------- */
+  const [active, setActive] = useState(null);
 
-  const calculators = [
-    { id: "tax", name: "Income Tax", icon: Calculator, comp: IncomeTaxCalculator },
-    { id: "gst", name: "GST", icon: IndianRupee, comp: GstCalculator },
-    { id: "advance", name: "Advance Tax", icon: Landmark, comp: AdvanceTaxCalculator },
-    { id: "emi", name: "EMI", icon: Home, comp: EmiCalculator },
-    { id: "sip", name: "SIP", icon: TrendingUp, comp: SipCalculator },
-    { id: "gst-search", name: "GST Search", icon: Search, comp: GstSearch },
-  ];
+  /* ---------------- STORAGE DATA ---------------- */
+  const stored = JSON.parse(localStorage.getItem("calculators")) || [];
 
+  /* ---------------- ICON MAP ---------------- */
+  const iconsMap = {
+    tax: Calculator,
+    gst: IndianRupee,
+    advance: Landmark,
+    emi: Home,
+    sip: TrendingUp,
+    "gst-search": Search,
+  };
+
+  /* ---------------- COMPONENT MAP ---------------- */
+  const componentMap = {
+    tax: IncomeTaxCalculator,
+    gst: GstCalculator,
+    advance: AdvanceTaxCalculator,
+    emi: EmiCalculator,
+    sip: SipCalculator,
+    "gst-search": GstSearch,
+  };
+
+  /* ---------------- FILTER ACTIVE CALCULATORS ---------------- */
+  const calculators = calculatorsMaster
+    .filter(c => {
+      const match = stored.find(s => s.id === c.id);
+      return match ? match.status : true;
+    })
+    .map(c => ({
+      ...c,
+      icon: iconsMap[c.id],
+      comp: componentMap[c.id]
+    }));
+
+  /* ---------------- AUTO SELECT FIRST ---------------- */
+  useEffect(() => {
+    if (!active && calculators.length)
+      setActive(calculators[0].id);
+
+    if (active && !calculators.find(c => c.id === active))
+      setActive(calculators[0]?.id || null);
+  }, [calculators]);
+
+  /* ---------------- ACTIVE COMPONENT ---------------- */
   const ActiveComp = calculators.find(c => c.id === active)?.comp;
+
+  /* ---------------- UI ---------------- */
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-slate-100 py-12 sm:py-16 px-3 sm:px-6">
@@ -365,81 +225,73 @@ export default function PublicCalculator() {
         </div>
 
 
-        {/* SELECTOR GRID */}
-        <div className="
-          grid
-          grid-cols-2
-          sm:grid-cols-3
-          md:grid-cols-4
-          lg:grid-cols-6
-          gap-4 sm:gap-6
-          mb-12
-        ">
-          {calculators.map(c => {
+        {/* GRID */}
+        {calculators.length > 0 ? (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6 mb-12">
 
-            const Icon = c.icon;
-            const isActive = active === c.id;
+            {calculators.map(c => {
 
-            return (
-              <button
-                key={c.id}
-                onClick={() => setActive(c.id)}
-                className={`
-                group relative rounded-2xl border p-4 sm:p-6
-                transition-all duration-300 text-left
+              const Icon = c.icon;
+              const isActive = active === c.id;
 
-                ${isActive
-                  ? "bg-gradient-to-br from-blue-700 to-blue-800 text-white shadow-xl scale-[1.04]"
-                  : "bg-white border-slate-300 hover:shadow-lg hover:-translate-y-1"
-                }`}
-              >
+              return (
+                <button
+                  key={c.id}
+                  onClick={() => setActive(c.id)}
+                  className={`
+                  group relative rounded-2xl border p-4 sm:p-6
+                  transition-all duration-300 text-left
 
-                {/* ICON + TITLE */}
-                <div className="flex items-center gap-3 sm:gap-4 mb-2 sm:mb-3">
+                  ${isActive
+                    ? "bg-gradient-to-br from-blue-700 to-blue-800 text-white shadow-xl scale-[1.04]"
+                    : "bg-white border-slate-300 hover:shadow-lg hover:-translate-y-1"
+                  }`}
+                >
 
-                  <div className={`
-                    p-2 sm:p-3 rounded-xl transition
-                    ${isActive
-                      ? "bg-white/20"
-                      : "bg-blue-100 text-blue-700 group-hover:bg-blue-200"
-                    }`}>
-                    <Icon size={20}/>
+                  <div className="flex items-center gap-3 sm:gap-4 mb-2 sm:mb-3">
+
+                    <div className={`
+                      p-2 sm:p-3 rounded-xl transition
+                      ${isActive
+                        ? "bg-white/20"
+                        : "bg-blue-100 text-blue-700 group-hover:bg-blue-200"
+                      }`}>
+                      <Icon size={20}/>
+                    </div>
+
+                    <h3 className="font-semibold text-sm sm:text-base">
+                      {c.name}
+                    </h3>
+
                   </div>
 
-                  <h3 className="font-semibold text-sm sm:text-base">
-                    {c.name}
-                  </h3>
+                  <p className={`text-xs sm:text-sm
+                    ${isActive ? "text-blue-100" : "text-slate-700"}`}>
+                    Professional calculator
+                  </p>
 
-                </div>
+                  {isActive && (
+                    <div className="absolute inset-0 rounded-2xl ring-2 ring-blue-300/40 animate-pulse"/>
+                  )}
 
-                {/* TEXT */}
-                <p className={`text-xs sm:text-sm
-                  ${isActive ? "text-blue-100" : "text-slate-700"}`}>
-                  Professional calculator
-                </p>
+                </button>
+              );
+            })}
 
-                {/* ACTIVE RING */}
-                {isActive && (
-                  <div className="absolute inset-0 rounded-2xl ring-2 ring-blue-300/40 animate-pulse"/>
-                )}
-
-              </button>
-            );
-          })}
-        </div>
+          </div>
+        ) : (
+          <div className="text-center py-24 text-gray-400 text-lg">
+            No calculators available
+          </div>
+        )}
 
 
         {/* CALCULATOR BOX */}
-        <div className="
-          bg-white
-          rounded-3xl
-          shadow-2xl
-          border border-slate-200
-          p-5 sm:p-8 md:p-10 lg:p-14
-          transition-all duration-300
-        ">
-          {ActiveComp && <ActiveComp />}
-        </div>
+        {ActiveComp && (
+          <div className="bg-white rounded-3xl shadow-2xl border border-slate-200 p-5 sm:p-8 md:p-10 lg:p-14 transition-all duration-300">
+            <ActiveComp />
+          </div>
+        )}
 
       </div>
     </div>

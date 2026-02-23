@@ -2,6 +2,7 @@
 // import { useState } from "react";
 // import { TrendingUp, AlertCircle, CheckCircle } from "lucide-react";
 // import { useNavigate } from "react-router-dom";
+// import { motion } from "framer-motion";
 // import FormattedNumberInput from "./FormattedNumberInput";
 // import { useCalculateSIPMutation } from "../../redux/apis/calculatorApi";
 
@@ -44,30 +45,42 @@
 //   };
 
 //   return (
-//     <div className="max-w-6xl mx-auto">
+//     <motion.div
+//       initial={{ opacity: 0 }}
+//       animate={{ opacity: 1 }}
+//       className="max-w-6xl mx-auto"
+//     >
 
 //       {/* HEADER */}
-//       <div className="flex items-center gap-3 mb-8">
+//       <motion.div
+//         initial={{ y: -25, opacity: 0 }}
+//         animate={{ y: 0, opacity: 1 }}
+//         className="flex items-center gap-3 mb-8"
+//       >
 //         <div className="p-3 bg-blue-100 rounded-xl">
 //           <TrendingUp className="text-blue-700" size={26}/>
 //         </div>
-//         <h2 className="text-3xl font-bold text-slate-800">
+
+//         <h2 className="text-3xl font-bold text-black">
 //           SIP Calculator
 //         </h2>
-//       </div>
+//       </motion.div>
 
 //       <div className="grid md:grid-cols-2 gap-8">
 
 //         {/* FORM */}
-//         <form
+//         <motion.form
 //           onSubmit={handleSubmit}
-//           className="bg-white p-6 rounded-2xl shadow-md border border-slate-200 space-y-5"
+//           initial={{ x: -40, opacity: 0 }}
+//           animate={{ x: 0, opacity: 1 }}
+//           className="bg-white p-6 rounded-2xl shadow-md space-y-5"
 //         >
 //           <FormattedNumberInput
 //             label="Monthly Investment (₹)"
 //             name="monthlyInvestment"
 //             value={form.monthlyInvestment}
 //             onChange={handleChange}
+//                 placeholder="monthly Investment"
 //           />
 
 //           <div>
@@ -79,7 +92,7 @@
 //               name="expectedReturn"
 //               value={form.expectedReturn}
 //               onChange={handleChange}
-//               className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600"
+//               className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-600"
 //               placeholder="Expected return rate"
 //             />
 //           </div>
@@ -93,7 +106,7 @@
 //               name="years"
 //               value={form.years}
 //               onChange={handleChange}
-//               className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600"
+//               className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-600"
 //               placeholder="Enter years"
 //             />
 //           </div>
@@ -104,20 +117,26 @@
 //             </div>
 //           )}
 
-//           <button
+//           <motion.button
+//             whileHover={{ scale: 1.04 }}
+//             whileTap={{ scale: 0.96 }}
 //             disabled={isLoading}
-//             className="w-full bg-blue-700 hover:bg-blue-800 text-white py-3 rounded-xl font-semibold transition"
+//             className="w-full bg-blue-700 hover:bg-blue-800 text-white py-3 rounded-xl font-semibold"
 //           >
 //             {isLoading ? "Calculating..." : "Calculate SIP"}
-//           </button>
-//         </form>
+//           </motion.button>
+//         </motion.form>
 
 //         {/* RESULT */}
-//         <div className="bg-white p-6 rounded-2xl shadow-md border border-slate-200">
+//         <motion.div
+//           initial={{ x: 40, opacity: 0 }}
+//           animate={{ x: 0, opacity: 1 }}
+//           className="bg-white p-6 rounded-2xl shadow-md"
+//         >
 
 //           {result ? (
 //             <>
-//               <div className="flex items-center gap-2 text-black mb-5">
+//               <div className="flex items-center gap-2 text-blue-700 mb-5">
 //                 <CheckCircle />
 //                 <h3 className="text-xl font-bold">Investment Result</h3>
 //               </div>
@@ -126,23 +145,29 @@
 //               <Card title="Total Invested" value={result.totalInvested}/>
 //               <Card title="Estimated Returns" value={result.estimatedReturns}/>
 
-//               <button
+//               <motion.button
+//                 whileHover={{ scale: 1.03 }}
+//                 whileTap={{ scale: 0.95 }}
 //                 onClick={() => navigate("/contact")}
-//                 className="mt-6 w-full bg-blue-700 hover:bg-blue-800 text-white py-3 rounded-xl font-semibold"
+//                 className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold"
 //               >
 //                 Get Investment Advice
-//               </button>
+//               </motion.button>
 //             </>
 //           ) : (
-//             <div className="text-center text-slate-400 py-20">
-//               <TrendingUp size={48} className="mx-auto mb-3 opacity-50"/>
+//             <motion.div
+//               initial={{ opacity: 0 }}
+//               animate={{ opacity: 1 }}
+//               className="text-center text-gray-400 py-20"
+//             >
+//               <TrendingUp size={48} className="mx-auto mb-3 opacity-40"/>
 //               Enter SIP details to calculate returns
-//             </div>
+//             </motion.div>
 //           )}
-//         </div>
+//         </motion.div>
 
 //       </div>
-//     </div>
+//     </motion.div>
 //   );
 // }
 
@@ -150,30 +175,40 @@
 // /* RESULT CARD */
 // function Card({ title, value, big, highlight }) {
 //   return (
-//     <div className="p-4 rounded-xl border bg-slate-50 mb-4">
+//     <motion.div
+//       whileHover={{ scale: 1.02 }}
+//       className={`p-4 rounded-xl mb-4 transition
+//       ${highlight ? "shadow-lg bg-blue-50" : "shadow-sm bg-white"}`}
+//     >
 //       <p className="text-sm text-slate-500">{title}</p>
+
 //       <p className={`mt-1 font-bold
-//         ${big ? "text-3xl text-blue-700" : "text-2xl text-slate-800"}
-//         ${highlight ? "text-blue-700" : ""}
-//       `}>
+//         ${big ? "text-3xl text-blue-700" : "text-2xl text-slate-800"}`}
+//       >
 //         ₹ {Number(value).toLocaleString("en-IN")}
 //       </p>
-//     </div>
+//     </motion.div>
 //   );
 // }
+
+
 
 
 
 import { useState } from "react";
 import { TrendingUp, AlertCircle, CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "react-toastify";
 import FormattedNumberInput from "./FormattedNumberInput";
 import { useCalculateSIPMutation } from "../../redux/apis/calculatorApi";
 
 export default function SipCalculator() {
+
   const navigate = useNavigate();
   const [calculateSIP, { isLoading }] = useCalculateSIPMutation();
+
+  const [redirecting,setRedirecting] = useState(false);
 
   const [form, setForm] = useState({
     monthlyInvestment: "",
@@ -184,6 +219,7 @@ export default function SipCalculator() {
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
 
+  /* INPUT */
   const handleChange = (e) => {
     setForm(prev => ({
       ...prev,
@@ -193,6 +229,7 @@ export default function SipCalculator() {
     setResult(null);
   };
 
+  /* SUBMIT */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -204,24 +241,31 @@ export default function SipCalculator() {
       }).unwrap();
 
       setResult(res.data);
+      toast.success("SIP Calculated Successfully ✅");
+
     } catch (err) {
-      setError(err?.data?.message || "Calculation failed");
+      const msg = err?.data?.message || "Calculation failed";
+      setError(msg);
+      toast.error(msg);
     }
   };
 
+  /* CONSULT BUTTON */
+  const handleConsult = () => {
+    setRedirecting(true);
+
+    toast("Opening consultation page...✨✨",{
+      style:{background:"#000",color:"#fff"}
+    });
+
+    setTimeout(()=> navigate("/contact"),1200);
+  };
+
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="max-w-6xl mx-auto"
-    >
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="max-w-6xl mx-auto">
 
       {/* HEADER */}
-      <motion.div
-        initial={{ y: -25, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        className="flex items-center gap-3 mb-8"
-      >
+      <motion.div initial={{ y: -25, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="flex items-center gap-3 mb-8">
         <div className="p-3 bg-blue-100 rounded-xl">
           <TrendingUp className="text-blue-700" size={26}/>
         </div>
@@ -245,7 +289,7 @@ export default function SipCalculator() {
             name="monthlyInvestment"
             value={form.monthlyInvestment}
             onChange={handleChange}
-                placeholder="monthly Investment"
+            placeholder="Monthly Investment"
           />
 
           <div>
@@ -283,26 +327,35 @@ export default function SipCalculator() {
           )}
 
           <motion.button
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.96 }}
+            whileTap={{scale:0.95}}
             disabled={isLoading}
-            className="w-full bg-blue-700 hover:bg-blue-800 text-white py-3 rounded-xl font-semibold"
+            className="w-full bg-blue-700 hover:bg-blue-800 text-white py-3 rounded-xl font-semibold flex justify-center items-center gap-2"
           >
-            {isLoading ? "Calculating..." : "Calculate SIP"}
+            {isLoading ? (
+              <>
+                <span className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"/>
+                Calculating...
+              </>
+            ) : "Calculate SIP"}
           </motion.button>
         </motion.form>
 
+
         {/* RESULT */}
-        <motion.div
-          initial={{ x: 40, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          className="bg-white p-6 rounded-2xl shadow-md"
-        >
+        <motion.div initial={{ x: 40, opacity: 0 }} animate={{ x: 0, opacity: 1 }} className="bg-white p-6 rounded-2xl shadow-md">
+
+          <AnimatePresence>
 
           {result ? (
-            <>
+            <motion.div
+              key="result"
+              initial={{opacity:0,scale:0.95}}
+              animate={{opacity:1,scale:1}}
+              exit={{opacity:0}}
+            >
+
               <div className="flex items-center gap-2 text-blue-700 mb-5">
-                <CheckCircle />
+                <CheckCircle/>
                 <h3 className="text-xl font-bold">Investment Result</h3>
               </div>
 
@@ -311,26 +364,26 @@ export default function SipCalculator() {
               <Card title="Estimated Returns" value={result.estimatedReturns}/>
 
               <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => navigate("/contact")}
+                whileHover={{scale:1.03}}
+                whileTap={{scale:0.95}}
+                onClick={handleConsult}
+                disabled={redirecting}
                 className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold"
               >
-                Get Investment Advice
+                {redirecting ? "Opening..." : "Get Investment Advice"}
               </motion.button>
-            </>
+
+            </motion.div>
           ) : (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-center text-gray-400 py-20"
-            >
+            <motion.div key="empty" initial={{opacity:0}} animate={{opacity:1}} className="text-center text-gray-400 py-20">
               <TrendingUp size={48} className="mx-auto mb-3 opacity-40"/>
               Enter SIP details to calculate returns
             </motion.div>
           )}
-        </motion.div>
 
+          </AnimatePresence>
+
+        </motion.div>
       </div>
     </motion.div>
   );
@@ -342,14 +395,11 @@ function Card({ title, value, big, highlight }) {
   return (
     <motion.div
       whileHover={{ scale: 1.02 }}
-      className={`p-4 rounded-xl mb-4 transition
-      ${highlight ? "shadow-lg bg-blue-50" : "shadow-sm bg-white"}`}
+      className={`p-4 rounded-xl mb-4 transition ${highlight ? "shadow-lg bg-blue-50" : "shadow-sm bg-white"}`}
     >
       <p className="text-sm text-slate-500">{title}</p>
 
-      <p className={`mt-1 font-bold
-        ${big ? "text-3xl text-blue-700" : "text-2xl text-slate-800"}`}
-      >
+      <p className={`mt-1 font-bold ${big ? "text-3xl text-blue-700" : "text-2xl text-slate-800"}`}>
         ₹ {Number(value).toLocaleString("en-IN")}
       </p>
     </motion.div>

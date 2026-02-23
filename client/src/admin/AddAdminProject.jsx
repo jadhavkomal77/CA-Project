@@ -71,14 +71,14 @@ export default function AddAdminProject() {
     try {
       if (id) {
         await updateProject({ id, data: formData }).unwrap();
-        toast.success("Project updated");
+        toast.success("Project updated ✨");
       } else {
         await createProject(formData).unwrap();
-        toast.success("Project created");
+        toast.success("Project created✨");
       }
       navigate("/admin/projects");
     } catch {
-      toast.error("Something went wrong");
+      toast.error("Something went wrong❌");
     }
   };
 

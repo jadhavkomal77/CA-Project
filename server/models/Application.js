@@ -5,6 +5,7 @@ const documentSchema = new mongoose.Schema({
   fileURL: { type: String, required: true },
   publicId: { type: String },
   uploadDate: { type: Date, default: Date.now },
+   fileType: String, 
 });
 
 const applicationSchema = new mongoose.Schema(

@@ -21,7 +21,7 @@ export default function Contact() {
     e.preventDefault();
     try {
       await createContact(form).unwrap();
-      alert("Thank you! We will contact you shortly.");
+      alert("Thank you! We will contact you shortly.✨");
 
       setForm({
         name: "",

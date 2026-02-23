@@ -359,10 +359,10 @@ const AdminProfile = () => {
 
     try {
       await updateProfile(payload).unwrap();
-      toast.success("Profile updated successfully");
+      toast.success("Profile updated successfully✅");
       refetch();
     } catch (err) {
-      toast.error(err?.data?.message || "Profile update failed");
+      toast.error(err?.data?.message || "Profile update failed❌");
     }
   };
 

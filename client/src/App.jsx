@@ -47,15 +47,15 @@ import AdminApplications from "./admin/AdminApplications";
 import VerifyPage from "./pages/VerifyPage";
 import AdminTestimonials from "./admin/AdminTestimonials";
 import ScrollToTop from "./layout/ScrollToTop";
-
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 
 function App() {
   return (
     <BrowserRouter>
-
+<ToastContainer />
      <ScrollToTop />  
 
       <Routes>

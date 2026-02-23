@@ -43,23 +43,23 @@ export default function AdminRegister() {
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Registration Successful 🎉");
+      toast.success("Registration Successful 🎉🎉");
       navigate("/adminlogin");
     }
 
     if (isError) {
-      toast.error(error?.data?.message || "Register failed");
+      toast.error(error?.data?.message || "Register failed❌");
     }
   }, [isSuccess, isError]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center from-indigo-50 to-indigo-200 px-4">
+    <div className="min-h-screen flex items-center justify-center from-blue-50 to-blue-200 px-4">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8"
       >
-        <h2 className="text-3xl font-bold text-center text-indigo-600 mb-6">
+        <h2 className="text-3xl font-bold text-center text-blue-600 mb-6">
           Admin Register
         </h2>
 
@@ -76,7 +76,7 @@ export default function AdminRegister() {
                   formik.touched[field] && formik.errors[field]
                     ? "border-red-500"
                     : "border-gray-300"
-                } focus:ring-2 focus:ring-indigo-400 outline-none`}
+                } focus:ring-2 focus:ring-blue-400 outline-none`}
               />
               {formik.touched[field] && formik.errors[field] && (
                 <p className="text-xs text-red-500 mt-1">
@@ -89,7 +89,7 @@ export default function AdminRegister() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-indigo-600 hover:bg-indigo-800 text-white py-2.5 rounded-lg font-semibold transition disabled:opacity-50"
+            className="w-full bg-blue-600 hover:bg-blue-800 text-white py-2.5 rounded-lg font-semibold transition disabled:opacity-50"
           >
             {isLoading ? "Registering..." : "Register"}
           </button>
@@ -98,7 +98,7 @@ export default function AdminRegister() {
             Already have an account?{" "}
             <Link
               to="/adminlogin"
-              className="text-indigo-600 font-semibold hover:underline"
+              className="text-blue-600 font-semibold hover:underline"
             >
               Login
             </Link>

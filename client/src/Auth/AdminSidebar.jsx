@@ -22,7 +22,7 @@ const AdminSidebar = () => {
 
   const handleLogout = async () => {
     await logout();
-    toast.success("Logged out successfully");
+    toast.success("Logged out successfully 🎉");
     navigate("/adminlogin");
   };
 

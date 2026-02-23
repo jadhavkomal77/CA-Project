@@ -715,7 +715,7 @@ export default function AdminApplications() {
 
     try {
       await deleteApp(id).unwrap();
-      toast.success("Deleted successfully");
+      toast.success("Deleted successfully✅");
       refetch();
     } catch (err) {
       toast.error(err?.data?.message || "Delete failed");
