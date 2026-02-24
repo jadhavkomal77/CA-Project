@@ -1,322 +1,4 @@
 
-// import { useState, useMemo } from "react";
-// import {
-//   useGetAllApplicationsQuery,
-//   useUpdateApplicationStatusMutation,
-//   useDeleteApplicationMutation,
-//   useGeneratePDFMutation
-// } from "../redux/apis/applicationApi";
-
-// import { toast } from "react-toastify";
-// import {
-//   Search,
-//   Eye,
-//   CheckCircle,
-//   XCircle,
-//   FileText,
-//   Trash2,
-//   X,
-//   Download
-// } from "lucide-react";
-
-// /* ================= CONFIG ================= */
-
-// const STATUS_OPTIONS = ["All","Pending","Approved","Rejected"];
-
-// const STATUS_STYLE = {
-//   Pending:"bg-yellow-100 text-yellow-700",
-//   Approved:"bg-green-100 text-green-700",
-//   Rejected:"bg-red-100 text-red-700"
-// };
-
-
-// /* ================= MAIN COMPONENT ================= */
-
-// export default function AdminApplications(){
-
-//   const { data, isLoading, refetch } = useGetAllApplicationsQuery();
-//   const apps = data?.data ?? [];
-
-//   const [updateStatus] = useUpdateApplicationStatusMutation();
-//   const [deleteApp] = useDeleteApplicationMutation();
-//   const [generatePDF] = useGeneratePDFMutation();
-
-//   const [search,setSearch] = useState("");
-//   const [status,setStatus] = useState("All");
-//   const [selected,setSelected] = useState(null);
-//   const [previewPDF,setPreviewPDF] = useState(null);
-
-
-//   /* ================= FILTER ================= */
-
-//   const filtered = useMemo(()=>{
-//     const q = search.toLowerCase();
-
-//     return apps.filter(a=>{
-//       const name = a?.userDetails?.name?.toLowerCase() || "";
-//       const email = a?.userDetails?.email?.toLowerCase() || "";
-
-//       const matchSearch = name.includes(q) || email.includes(q);
-//       const matchStatus = status==="All" || a.status===status;
-
-//       return matchSearch && matchStatus;
-//     });
-
-//   },[apps,search,status]);
-
-
-//   /* ================= ACTIONS ================= */
-
-//   const changeStatus = async(id,newStatus)=>{
-//     try{
-//       await updateStatus({id,status:newStatus}).unwrap();
-
-//       /* AUTO PDF WHEN APPROVED */
-//       if(newStatus==="Approved"){
-//         const res = await generatePDF(id).unwrap();
-//         toast.success("Approved + PDF Generated");
-//         window.open(res.pdfUrl);
-//       }else{
-//         toast.success(`Status → ${newStatus}`);
-//       }
-
-//       refetch();
-//     }catch(err){
-//       toast.error(err?.data?.message || "Action failed");
-//     }
-//   };
-
-
-//   const handleDelete = async(id)=>{
-//     if(!window.confirm("Delete application?")) return;
-
-//     try{
-//       await deleteApp(id).unwrap();
-//       toast.success("Application deleted");
-//       refetch();
-//     }catch{
-//       toast.error("Delete failed");
-//     }
-//   };
-
-
-//   const downloadPDF = (url)=>{
-//     const link=document.createElement("a");
-//     link.href=url.replace("/upload/","/upload/fl_attachment/");
-//     link.target="_blank";
-//     link.click();
-//   };
-
-
-//   /* ================= UI ================= */
-
-//   if(isLoading)
-//     return <div className="p-10 text-center text-lg">Loading applications...</div>;
-
-
-//   return(
-//     <div className="p-6 space-y-6">
-
-//       {/* HEADER */}
-//       <div className="bg-white p-6 rounded-xl shadow">
-
-//         <h1 className="text-2xl font-bold mb-4">Applications</h1>
-
-//         <div className="flex gap-4">
-
-//           <div className="relative w-full">
-//             <Search size={16} className="absolute left-3 top-3 text-gray-400"/>
-//             <input
-//               value={search}
-//               onChange={e=>setSearch(e.target.value)}
-//               placeholder="Search name or email"
-//               className="border pl-10 p-2 rounded w-full"
-//             />
-//           </div>
-
-//           <select
-//             value={status}
-//             onChange={e=>setStatus(e.target.value)}
-//             className="border p-2 rounded"
-//           >
-//             {STATUS_OPTIONS.map(s=><option key={s}>{s}</option>)}
-//           </select>
-
-//         </div>
-//       </div>
-
-
-
-//       {/* TABLE */}
-//       <div className="bg-white rounded-xl shadow overflow-hidden">
-
-//         <table className="w-full">
-
-//           <thead className="bg-blue-800 text-white">
-//             <tr>
-//               <th className="p-4 text-left">Applicant</th>
-//               <th className="p-4 text-left">Service</th>
-//               <th className="p-4 text-center">Status</th>
-//               <th className="p-4 text-center">Actions</th>
-//             </tr>
-//           </thead>
-
-//           <tbody>
-
-//             {filtered.map(app=>{
-
-//               const statusStyle = STATUS_STYLE[app.status] || "bg-gray-100";
-
-//               return(
-//                 <tr key={app._id} className="border-t hover:bg-gray-50">
-
-//                   <td className="p-4">
-//                     <p className="font-semibold">{app.userDetails?.name}</p>
-//                     <p className="text-sm text-gray-500">{app.userDetails?.email}</p>
-//                   </td>
-
-//                   <td className="p-4">{app.serviceName}</td>
-
-//                   <td className="p-4 text-center">
-//                     <span className={`px-3 py-1 text-xs rounded-full ${statusStyle}`}>
-//                       {app.status}
-//                     </span>
-//                   </td>
-
-
-//                   {/* ACTION BUTTONS */}
-//                   <td className="p-4 text-center flex justify-center gap-2">
-
-//                     {/* VIEW */}
-//                     <IconBtn onClick={()=>setSelected(app)} color="bg-blue-100">
-//                       <Eye size={16}/>
-//                     </IconBtn>
-
-
-//                     {/* APPROVE */}
-//                     {app.status!=="Approved" && (
-//                       <IconBtn onClick={()=>changeStatus(app._id,"Approved")} color="bg-green-100">
-//                         <CheckCircle size={16}/>
-//                       </IconBtn>
-//                     )}
-
-//                     {/* REJECT */}
-//                     {app.status!=="Rejected" && (
-//                       <IconBtn onClick={()=>changeStatus(app._id,"Rejected")} color="bg-red-100">
-//                         <XCircle size={16}/>
-//                       </IconBtn>
-//                     )}
-
-
-//                     {/* PDF */}
-//                     {!app.pdfUrl ? (
-
-//                       <IconBtn onClick={()=>changeStatus(app._id,"Approved")} color="bg-indigo-100">
-//                         <FileText size={16}/>
-//                       </IconBtn>
-
-//                     ):(
-
-//                       <>
-//                         <IconBtn onClick={()=>setPreviewPDF(app.pdfUrl)} color="bg-indigo-200">
-//                           <Eye size={16}/>
-//                         </IconBtn>
-
-//                         <IconBtn onClick={()=>downloadPDF(app.pdfUrl)} color="bg-indigo-300">
-//                           <Download size={16}/>
-//                         </IconBtn>
-//                       </>
-//                     )}
-
-
-//                     {/* DELETE */}
-//                     <IconBtn onClick={()=>handleDelete(app._id)} color="bg-gray-100">
-//                       <Trash2 size={16}/>
-//                     </IconBtn>
-
-//                   </td>
-//                 </tr>
-//               );
-//             })}
-
-//           </tbody>
-//         </table>
-
-//       </div>
-
-
-
-//       {/* DETAILS MODAL */}
-//       {selected && (
-//         <Modal onClose={()=>setSelected(null)}>
-//           <h2 className="text-lg font-bold mb-3">Application Details</h2>
-
-//           <p><b>Name:</b> {selected.userDetails?.name}</p>
-//           <p><b>Email:</b> {selected.userDetails?.email}</p>
-//           <p><b>Phone:</b> {selected.userDetails?.phone}</p>
-//           <p><b>Service:</b> {selected.serviceName}</p>
-//           <p><b>Status:</b> {selected.status}</p>
-//         </Modal>
-//       )}
-
-//       {/* PDF PREVIEW MODAL */}
-//       {previewPDF && (
-//         <div className="fixed inset-0 bg-black/70 flex justify-center items-center z-50">
-
-//           <div className="bg-white w-[90%] h-[90%] rounded-xl relative">
-
-//             <button
-//               onClick={()=>setPreviewPDF(null)}
-//               className="absolute right-4 top-4 text-gray-600"
-//             >
-//               <X size={22}/>
-//             </button>
-
-//             <iframe src={previewPDF} className="w-full h-full rounded-xl"/>
-//           </div>
-
-//         </div>
-//       )}
-
-//     </div>
-//   );
-// }
-
-// const IconBtn = ({children,onClick,color})=>(
-//   <button
-//     onClick={onClick}
-//     className={`p-2 rounded ${color} hover:scale-105 transition`}
-//   >
-//     {children}
-//   </button>
-// );
-
-
-// const Modal = ({children,onClose})=>(
-//   <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
-
-//     <div className="bg-white p-6 rounded-xl w-[500px] relative">
-
-//       <button onClick={onClose} className="absolute right-4 top-4 text-gray-500">
-//         <X/>
-//       </button>
-
-//       {children}
-
-//     </div>
-//   </div>
-// );
-
-
-
-
-
-
-
-
-
-
-
 import { useState } from "react";
 import {
   useGetAllApplicationsQuery,
@@ -601,3 +283,342 @@ const Clock = ({ size }) => (
     <polyline points="12 6 12 12 16 14"/>
   </svg>
 );
+
+
+
+
+
+
+// import { useState, useMemo } from "react";
+// import {
+//   useGetAllApplicationsQuery,
+//   useUpdateApplicationStatusMutation,
+//   useDeleteApplicationMutation,
+//   useGeneratePDFMutation,
+// } from "../redux/apis/applicationApi";
+
+// import { toast } from "react-toastify";
+// import { Search, Eye,CheckCircle, XCircle, FileText, Trash2, X, Download, Loader2,
+// } from "lucide-react";
+
+// const STATUS_OPTIONS = ["All", "Pending", "Approved", "Rejected"];
+
+// const STATUS_STYLE = {
+//   Pending: "bg-yellow-100 text-yellow-700",
+//   Approved: "bg-green-100 text-green-700",
+//   Rejected: "bg-red-100 text-red-700",
+// };
+
+// export default function AdminApplications() {
+//   const { data, isLoading } = useGetAllApplicationsQuery();
+//   const apps = data?.data ?? [];
+
+//   const [updateStatus] = useUpdateApplicationStatusMutation();
+//   const [deleteApp] = useDeleteApplicationMutation();
+//   const [generatePDF] = useGeneratePDFMutation();
+
+//   const [search, setSearch] = useState("");
+//   const [status, setStatus] = useState("All");
+//   const [selected, setSelected] = useState(null);
+//   const [previewPDF, setPreviewPDF] = useState(null);
+//   const [loadingId, setLoadingId] = useState(null);
+
+//   /* ================= FILTER ================= */
+
+//   const filtered = useMemo(() => {
+//     const q = search.toLowerCase();
+
+//     return apps.filter((a) => {
+//       const name = a?.userDetails?.name?.toLowerCase() || "";
+//       const email = a?.userDetails?.email?.toLowerCase() || "";
+
+//       const matchSearch = name.includes(q) || email.includes(q);
+//       const matchStatus = status === "All" || a.status === status;
+
+//       return matchSearch && matchStatus;
+//     });
+//   }, [apps, search, status]);
+
+//   /* ================= ACTIONS ================= */
+
+//   const changeStatus = async (id, newStatus) => {
+//     try {
+//       setLoadingId(id);
+//       await updateStatus({ id, status: newStatus }).unwrap();
+//       toast.success(`Status updated to ${newStatus}`);
+//     } catch (err) {
+//       toast.error(err?.data?.message || "Status update failed");
+//     } finally {
+//       setLoadingId(null);
+//     }
+//   };
+
+//   const handleDelete = async (id) => {
+//     if (!window.confirm("Delete application?")) return;
+
+//     try {
+//       setLoadingId(id);
+//       await deleteApp(id).unwrap();
+//       toast.success("Application deleted");
+//     } catch {
+//       toast.error("Delete failed");
+//     } finally {
+//       setLoadingId(null);
+//     }
+//   };
+
+//   const handleGeneratePDF = async (id) => {
+//     try {
+//       setLoadingId(id);
+//       const res = await generatePDF(id).unwrap();
+//       toast.success("PDF generated successfully");
+//     } catch {
+//       toast.error("PDF generation failed");
+//     } finally {
+//       setLoadingId(null);
+//     }
+//   };
+
+//   /* ✅ SAME CLOUDINARY PDF DOWNLOAD */
+//   const downloadPDF = (url) => {
+//     if (!url) return;
+
+//     const downloadUrl = url.replace(
+//       "/upload/",
+//       "/upload/fl_attachment/"
+//     );
+
+//     window.open(downloadUrl, "_blank");
+//   };
+
+//   if (isLoading)
+//     return (
+//       <div className="p-10 text-center text-lg font-medium">
+//         Loading applications...
+//       </div>
+//     );
+
+//   return (
+//     <div className="p-6 space-y-6">
+
+//       {/* HEADER */}
+//       <div className="bg-white p-6 rounded-2xl shadow-sm">
+//         <h1 className="text-2xl font-bold mb-4">Applications</h1>
+
+//         <div className="flex gap-4 flex-col md:flex-row">
+//           <div className="relative w-full">
+//             <Search size={16} className="absolute left-3 top-3 text-gray-400" />
+//             <input
+//               value={search}
+//               onChange={(e) => setSearch(e.target.value)}
+//               placeholder="Search name or email"
+//               className="border pl-10 p-2 rounded-lg w-full"
+//             />
+//           </div>
+
+//           <select
+//             value={status}
+//             onChange={(e) => setStatus(e.target.value)}
+//             className="border p-2 rounded-lg"
+//           >
+//             {STATUS_OPTIONS.map((s) => (
+//               <option key={s}>{s}</option>
+//             ))}
+//           </select>
+//         </div>
+//       </div>
+
+//       {/* TABLE */}
+//       <div className="bg-white rounded-2xl shadow-sm overflow-x-auto">
+//         <table className="w-full min-w-[800px]">
+//           <thead className="bg-blue-800 text-white">
+//             <tr>
+//               <th className="p-4 text-left">Applicant</th>
+//               <th className="p-4 text-left">Service</th>
+//               <th className="p-4 text-center">Status</th>
+//               <th className="p-4 text-center">Actions</th>
+//             </tr>
+//           </thead>
+
+//           <tbody>
+//             {filtered.map((app) => {
+//               const statusStyle =
+//                 STATUS_STYLE[app.status] ||
+//                 "bg-gray-100 text-gray-700";
+
+//               const isLoadingRow = loadingId === app._id;
+
+//               return (
+//                 <tr key={app._id} className="border-t hover:bg-gray-50">
+
+//                   <td className="p-4">
+//                     <p className="font-semibold">
+//                       {app.userDetails?.name}
+//                     </p>
+//                     <p className="text-sm text-gray-500">
+//                       {app.userDetails?.email}
+//                     </p>
+//                   </td>
+
+//                   <td className="p-4">{app.serviceName}</td>
+
+//                   <td className="p-4 text-center">
+//                     <span
+//                       className={`px-3 py-1 text-xs rounded-full ${statusStyle}`}
+//                     >
+//                       {app.status}
+//                     </span>
+//                   </td>
+
+//                   <td className="p-4 text-center flex justify-center gap-2 flex-wrap">
+
+//                     <IconBtn onClick={() => setSelected(app)}>
+//                       <Eye size={16} />
+//                     </IconBtn>
+
+//                     {app.status !== "Approved" && (
+//                       <IconBtn
+//                         onClick={() =>
+//                           changeStatus(app._id, "Approved")
+//                         }
+//                         disabled={isLoadingRow}
+//                       >
+//                         {isLoadingRow ? (
+//                           <Loader2 size={16} className="animate-spin" />
+//                         ) : (
+//                           <CheckCircle size={16} />
+//                         )}
+//                       </IconBtn>
+//                     )}
+
+//                     {app.status !== "Rejected" && (
+//                       <IconBtn
+//                         onClick={() =>
+//                           changeStatus(app._id, "Rejected")
+//                         }
+//                         disabled={isLoadingRow}
+//                       >
+//                         {isLoadingRow ? (
+//                           <Loader2 size={16} className="animate-spin" />
+//                         ) : (
+//                           <XCircle size={16} />
+//                         )}
+//                       </IconBtn>
+//                     )}
+
+//                     {/* GENERATE PDF */}
+//                     {app.status === "Approved" && !app.pdfUrl && (
+//                       <IconBtn
+//                         onClick={() =>
+//                           handleGeneratePDF(app._id)
+//                         }
+//                         disabled={isLoadingRow}
+//                       >
+//                         {isLoadingRow ? (
+//                           <Loader2 size={16} className="animate-spin" />
+//                         ) : (
+//                           <FileText size={16} />
+//                         )}
+//                       </IconBtn>
+//                     )}
+
+//                     {/* PREVIEW + DOWNLOAD SAME PDF */}
+//                     {app.pdfUrl && (
+//                       <>
+//                         <IconBtn onClick={() => setPreviewPDF(app.pdfUrl)}>
+//                           <Eye size={16} />
+//                         </IconBtn>
+
+//                         <IconBtn
+//                           onClick={() =>
+//                             downloadPDF(app.pdfUrl)
+//                           }
+//                         >
+//                           <Download size={16} />
+//                         </IconBtn>
+//                       </>
+//                     )}
+
+//                     <IconBtn
+//                       onClick={() => handleDelete(app._id)}
+//                       disabled={isLoadingRow}
+//                     >
+//                       {isLoadingRow ? (
+//                         <Loader2 size={16} className="animate-spin" />
+//                       ) : (
+//                         <Trash2 size={16} />
+//                       )}
+//                     </IconBtn>
+
+//                   </td>
+//                 </tr>
+//               );
+//             })}
+//           </tbody>
+//         </table>
+//       </div>
+
+//       {/* DETAILS MODAL */}
+//       {selected && (
+//         <Modal onClose={() => setSelected(null)}>
+//           <h2 className="text-lg font-bold mb-4">
+//             Application Details
+//           </h2>
+
+//           <div className="space-y-2 text-sm">
+//             <p><b>Name:</b> {selected.userDetails?.name}</p>
+//             <p><b>Email:</b> {selected.userDetails?.email}</p>
+//             <p><b>Phone:</b> {selected.userDetails?.phone}</p>
+//             <p><b>Service:</b> {selected.serviceName}</p>
+//             <p><b>Status:</b> {selected.status}</p>
+//           </div>
+//         </Modal>
+//       )}
+
+//       {/* PDF PREVIEW */}
+//       {previewPDF && (
+//         <div className="fixed inset-0 bg-black/70 flex justify-center items-center z-50">
+//           <div className="bg-white w-[95%] h-[95%] rounded-2xl relative">
+//             <button
+//               onClick={() => setPreviewPDF(null)}
+//               className="absolute right-4 top-4 text-gray-600"
+//             >
+//               <X size={22} />
+//             </button>
+
+//             <iframe
+//               src={previewPDF}
+//               className="w-full h-full rounded-2xl"
+//             />
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
+
+// /* ================= UI COMPONENTS ================= */
+
+// const IconBtn = ({ children, onClick, disabled }) => (
+//   <button
+//     onClick={onClick}
+//     disabled={disabled}
+//     className="p-2 rounded-lg bg-gray-100 hover:scale-105 transition disabled:opacity-50"
+//   >
+//     {children}
+//   </button>
+// );
+
+// const Modal = ({ children, onClose }) => (
+//   <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+//     <div className="bg-white p-6 rounded-2xl w-[500px] relative shadow-lg">
+//       <button
+//         onClick={onClose}
+//         className="absolute right-4 top-4 text-gray-500"
+//       >
+//         <X />
+//       </button>
+//       {children}
+//     </div>
+//   </div>
+// );

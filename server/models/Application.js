@@ -30,8 +30,8 @@ const applicationSchema = new mongoose.Schema(
       default: "Pending",
     },
     adminNotes: String,
-    // pdfUrl: String,
-    // pdfPublicId: String,
+    pdfUrl: String,
+    pdfPublicId: String,
   },
   { timestamps: true }
 );

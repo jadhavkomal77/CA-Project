@@ -4,5 +4,5 @@ export const calculatorsMaster = [
   { id: "advance", name: "Advance Tax", category: "Tax" },
   { id: "emi", name: "EMI", category: "Loan" },
   { id: "sip", name: "SIP", category: "Investment" },
-  { id: "gst-search", name: "GST Search", category: "Tool" },
+  // { id: "gst-search", name: "GST Search", category: "Tool" },
 ];
