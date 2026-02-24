@@ -6,6 +6,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+
 // console.log("☁️ Cloudinary loaded:", {
 //   cloud: process.env.CLOUD_NAME,
 //   key: process.env.CLOUDINARY_API_KEY,
