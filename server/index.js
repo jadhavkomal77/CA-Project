@@ -74,8 +74,6 @@ app.get("/", (req, res) => {
   res.json("Server is Running! 🚀");
 });
 
-// console.log(process.env.MONGO_URL);
-
 
 if (process.env.NODE_ENV === "production") {
   const distPath = path.join(__dirname, "dist");
@@ -96,7 +94,7 @@ if (!process.env.MONGO_URL) {
 
 mongoose
   .connect(process.env.MONGO_URL)
-  .then(() => console.log("✅ MongoDB Connected"))
+  .then(() => console.log("MongoDB Connected ✅ "))
   .catch((err) => console.error("❌ MongoDB Connection Error:", err));
 
 

@@ -620,7 +620,6 @@ import { calculatorsMaster } from "../components/calculators/calculatorsList";
 
 export default function AdminCalculators() {
 
-  /* ---------- MERGE MASTER + STORAGE ---------- */
   const [calculators, setCalculators] = useState(() => {
 
     const saved = JSON.parse(localStorage.getItem("calculators")) || [];
@@ -632,16 +631,13 @@ export default function AdminCalculators() {
 
   });
 
-  /* ---------- SAVE STORAGE ---------- */
   useEffect(() => {
     localStorage.setItem("calculators", JSON.stringify(calculators));
   }, [calculators]);
 
-  /* ---------- EDIT ---------- */
   const [editId, setEditId] = useState(null);
   const [editData, setEditData] = useState({ name: "", category: "" });
 
-  /* ---------- ACTIONS ---------- */
 
   const toggleStatus = id => {
     setCalculators(prev =>
@@ -675,7 +671,6 @@ export default function AdminCalculators() {
     setEditId(null);
   };
 
-  /* ---------- UI ---------- */
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-200 p-8">
