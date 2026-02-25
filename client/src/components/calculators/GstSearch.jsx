@@ -214,7 +214,7 @@ export default function GstSearch() {
   const handleContact = ()=>{
     setRedirecting(true);
 
-    toast("Opening consultation ...",{
+    toast(" Opening consultation ...",{
       style:{background:"#000",color:"#fff"}
     });
 
