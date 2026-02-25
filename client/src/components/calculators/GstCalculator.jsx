@@ -229,7 +229,7 @@ export default function GstCalculator() {
   const handleConsult = ()=>{
     setRedirecting(true);
 
-    toast("Opening consultation page...✨✨",{
+    toast("Opening consultation ...✨✨",{
       style:{background:"#000",color:"#fff"}
     });
 

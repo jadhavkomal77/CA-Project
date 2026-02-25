@@ -241,7 +241,7 @@ export default function AdvanceTaxCalculator() {
 
     setRedirecting(true);
 
-    toast("Opening consultation page...✨✨",{
+    toast("Opening consultation ...✨✨",{
       style:{background:"#000",color:"#fff"}
     });
 
