@@ -215,3 +215,9 @@
   shadow-lg hover:shadow-xl hover:scale-[1.01]
   transition duration-200 flex justify-center items-center gap-2;
 }
+
+.btn-green { @apply bg-green-100 text-green-600 p-2 rounded-lg hover:bg-green-200; }
+.btn-red { @apply bg-red-100 text-red-600 p-2 rounded-lg hover:bg-red-200; }
+.btn-blue { @apply bg-blue-100 text-blue-600 p-2 rounded-lg hover:bg-blue-200; }
+.btn-dark { @apply bg-gray-800 text-white p-2 rounded-lg hover:bg-black; }
+.btn-gray { @apply bg-gray-200 text-gray-700 p-2 rounded-lg hover:bg-gray-300; }

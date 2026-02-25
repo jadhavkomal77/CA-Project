@@ -4,621 +4,426 @@ import {
   useGetAllApplicationsQuery,
   useUpdateApplicationStatusMutation,
   useDeleteApplicationMutation,
+  useGeneratePDFMutation,
+  useDownloadPDFMutation,
+  useGetAnalyticsQuery,
 } from "../redux/apis/applicationApi";
-import { toast } from "react-toastify";
+
 import {
-  Search,
-  Filter,
-  Eye,
+  Loader2,
   CheckCircle,
   XCircle,
   FileText,
-  Download,
   Trash2,
-  X,
-  User,
-  Mail,
-  Phone,
-  Briefcase,
-  FileCheck,
+  Download,
+  Users,
+  CheckCircle2,
+  Clock,
+  TrendingUp,
+  Filter,
+  Search,
 } from "lucide-react";
 
+import { toast } from "react-toastify";
+
 export default function AdminApplications() {
-  const { data, isLoading, refetch } = useGetAllApplicationsQuery();
-  const apps = data?.data || [];
+  const [statusFilter, setStatusFilter] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [generatingPDF, setGeneratingPDF] = useState(null);
 
-  const [updateStatus, { isLoading: statusLoading }] =
-    useUpdateApplicationStatusMutation();
+  const { data, isLoading } = useGetAllApplicationsQuery({
+    status: statusFilter || undefined,
+  });
 
-  const [deleteApp, { isLoading: deleteLoading }] =
-    useDeleteApplicationMutation();
+  const { data: analytics } = useGetAnalyticsQuery();
 
-  const [search, setSearch] = useState("");
-  const [status, setStatus] = useState("All");
-  const [selected, setSelected] = useState(null);
+  const applications = data?.data || [];
+  const stats = analytics?.data || {};
 
-  /* LOADING */
-  if (isLoading)
+  const [updateStatus] = useUpdateApplicationStatusMutation();
+  const [deleteApplication] = useDeleteApplicationMutation();
+  const [generatePDF] = useGeneratePDFMutation();
+  const [downloadPDF] = useDownloadPDFMutation();
+
+  // Filter applications by search query
+  const filteredApplications = applications.filter((app) => {
+    if (!searchQuery) return true;
+    const query = searchQuery.toLowerCase();
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin h-12 w-12 border-2 border-blue-700 border-t-transparent rounded-full mx-auto mb-4" />
-          <p className="text-lg text-gray-600">Loading applications...</p>
-        </div>
-      </div>
-    );
-
-  /* FILTER */
-  const filtered = apps.filter((a) => {
-    const q = search.toLowerCase();
-    const name = a?.userDetails?.name?.toLowerCase() || "";
-    const email = a?.userDetails?.email?.toLowerCase() || "";
-
-    return (
-      (name.includes(q) || email.includes(q)) &&
-      (status === "All" || a.status === status)
+      app.userDetails?.name?.toLowerCase().includes(query) ||
+      app.userDetails?.email?.toLowerCase().includes(query) ||
+      app.serviceName?.toLowerCase().includes(query)
     );
   });
 
-  /* STATUS BADGE */
-  const getStatusBadge = (s) => {
-    if (s === "Approved") return "bg-green-50 text-green-700 border-green-200";
-    if (s === "Rejected") return "bg-red-50 text-red-700 border-red-200";
-    return "bg-yellow-50 text-yellow-700 border-yellow-200";
-  };
-
-  const getStatusIcon = (s) => {
-    if (s === "Approved") return <CheckCircle size={16} className="text-green-600" />;
-    if (s === "Rejected") return <XCircle size={16} className="text-red-600" />;
-    return <Clock size={16} className="text-yellow-600" />;
-  };
-
-  /* UPDATE STATUS */
-  const changeStatus = async (id, status) => {
-    if (statusLoading) return;
-
+  /* STATUS UPDATE */
+  const handleStatus = async (id, status) => {
     try {
-      const res = await updateStatus({ id, status }).unwrap();
-      toast.success(res?.message || `Application ${status}`);
-      refetch();
+      await updateStatus({ id, status }).unwrap();
+      toast.success("Status updated successfully");
     } catch (err) {
-      toast.error(err?.data?.message || "Status update failed");
+      toast.error(err?.data?.message || "Failed to update status");
     }
   };
 
   /* DELETE */
   const handleDelete = async (id) => {
-    if (deleteLoading) return;
-
-    if (!window.confirm("Delete this application?")) return;
+    if (!confirm("Are you sure you want to delete this application?")) return;
 
     try {
-      await deleteApp(id).unwrap();
-      toast.success("Deleted successfully✅");
-      refetch();
-    } catch (err) {
-      toast.error(err?.data?.message || "Delete failed");
+      await deleteApplication(id).unwrap();
+      toast.success("Application deleted successfully");
+    } catch {
+      toast.error("Failed to delete application");
     }
   };
 
-  /* DOC LABEL */
-  const getDocLabel = (name = "") => {
-    const n = name.toLowerCase();
-    if (n.includes("pan")) return "PAN Card";
-    if (n.includes("aadhaar") || n.includes("aadhar")) return "Aadhaar Card";
-    if (n.includes("photo")) return "Photo";
-    if (n.includes("bank")) return "Bank Proof";
-    if (n.endsWith(".pdf")) return "PDF Document";
-    return "Document";
+  /* GENERATE PDF */
+  const handleGeneratePDF = async (app) => {
+    if (app.status !== "Approved") {
+      toast.error("Only approved applications can generate PDF");
+      return;
+    }
+
+    // Set loading state
+    setGeneratingPDF(app._id);
+
+    try {
+      await generatePDF(app._id).unwrap();
+      toast.success("PDF generated successfully");
+    } catch (err) {
+      toast.error(err?.data?.message || "PDF generation failed");
+    } finally {
+      // Clear loading state
+      setGeneratingPDF(null);
+    }
   };
 
-  /* STATS */
-  const stats = [
-    { label: "Total", value: apps.length, color: "bg-blue-500", icon: FileText },
-    { label: "Pending", value: apps.filter(a=>a.status==="Pending").length, color:"bg-yellow-500", icon:Clock },
-    { label: "Approved", value: apps.filter(a=>a.status==="Approved").length, color:"bg-green-500", icon:CheckCircle },
-    { label: "Rejected", value: apps.filter(a=>a.status==="Rejected").length, color:"bg-red-500", icon:XCircle },
-  ];
+  /* DOWNLOAD PDF */
+  const handleDownload = async (app) => {
+    if (app.status !== "Approved" || !app.pdfUrl) {
+      toast.error("PDF not available for download");
+      return;
+    }
+
+    try {
+      const blob = await downloadPDF(app._id).unwrap();
+      const url = window.URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `application-${app._id}.pdf`;
+      a.click();
+      
+      window.URL.revokeObjectURL(url);
+      toast.success("PDF downloaded successfully");
+    } catch {
+      toast.error("Failed to download PDF");
+    }
+  };
+
+  if (isLoading)
+    return (
+      <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-gray-50 to-gray-100">
+        <div className="text-center">
+          <Loader2 className="animate-spin text-blue-600 mx-auto mb-4" size={48} />
+          <p className="text-gray-600 font-medium">Loading applications...</p>
+        </div>
+      </div>
+    );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-gray-50 p-4 md:p-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-gray-100 p-4 sm:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto space-y-6">
-
-        {/* HEADER */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
-          <h1 className="text-3xl font-bold text-gray-900">Applications Management</h1>
-
-          {/* STATS */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-            {stats.map((stat,i)=>{
-              const Icon=stat.icon;
-              return(
-                <div key={i} className={`${stat.color} text-white rounded-xl p-4 shadow`}>
-                  <div className="flex justify-between">
-                    <Icon size={22}/>
-                    <span className="text-2xl font-bold">{stat.value}</span>
-                  </div>
-                  <p className="text-sm mt-2">{stat.label}</p>
-                </div>
-              )
-            })}
+        {/* Header Section */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
+              Applications Management
+            </h1>
+            <p className="text-gray-600">Manage and review all submitted applications</p>
           </div>
+        </div>
 
-          {/* SEARCH */}
-          <div className="flex gap-4 mt-6 flex-col sm:flex-row">
-            <div className="relative flex-1">
-              <Search size={18} className="absolute left-3 top-3 text-gray-400"/>
+        {/* Analytics Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <StatCard
+            title="Total Applications"
+            value={stats.total || 0}
+            icon={<Users className="w-6 h-6" />}
+            gradient="from-blue-500 to-blue-600"
+            bgColor="bg-blue-50"
+          />
+          <StatCard
+            title="Approved"
+            value={stats.approved || 0}
+            icon={<CheckCircle2 className="w-6 h-6" />}
+            gradient="from-green-500 to-green-600"
+            bgColor="bg-green-50"
+          />
+          <StatCard
+            title="Pending"
+            value={stats.pending || 0}
+            icon={<Clock className="w-6 h-6" />}
+            gradient="from-yellow-500 to-yellow-600"
+            bgColor="bg-yellow-50"
+          />
+          <StatCard
+            title="Approval Rate"
+            value={stats.approvalRate ? `${stats.approvalRate}%` : "0%"}
+            icon={<TrendingUp className="w-6 h-6" />}
+            gradient="from-purple-500 to-purple-600"
+            bgColor="bg-purple-50"
+          />
+        </div>
+
+        {/* Filters and Search */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6">
+          <div className="flex flex-col sm:flex-row gap-4">
+            {/* Search */}
+            <div className="flex-1 relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <input
-                value={search}
-                onChange={(e)=>setSearch(e.target.value)}
-                placeholder="Search name or email"
-                className="w-full pl-10 py-3 border rounded-xl"
+                type="text"
+                placeholder="Search by name, email, or service..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
               />
             </div>
 
-            <select
-              value={status}
-              onChange={(e)=>setStatus(e.target.value)}
-              className="border rounded-xl px-4"
-            >
-              <option>All</option>
-              <option>Pending</option>
-              <option>Approved</option>
-              <option>Rejected</option>
-            </select>
+            {/* Status Filter */}
+            <div className="relative">
+              <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" />
+              <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="pl-10 pr-8 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white cursor-pointer transition-all outline-none min-w-[160px]"
+              >
+                <option value="">All Status</option>
+                <option value="Pending">Pending</option>
+                <option value="Approved">Approved</option>
+                <option value="Rejected">Rejected</option>
+              </select>
+            </div>
           </div>
         </div>
 
-        {/* TABLE */}
-        <div className="bg-white rounded-2xl shadow overflow-hidden">
-          {filtered.length===0 ? (
-            <div className="text-center py-20 text-gray-500">No Applications Found</div>
-          ):(
+        {/* Applications Table */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+          <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-blue-800 text-white">
+              <thead className="bg-gradient-to-r from-blue-600 to-blue-700">
                 <tr>
-                  <th className="p-4 text-left">Applicant</th>
-                  <th className="p-4 text-left">Service</th>
-                  <th className="p-4 text-center">Status</th>
-                  <th className="p-4 text-center">Actions</th>
+                  <th className="px-4 sm:px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">
+                    Applicant
+                  </th>
+                  <th className="px-4 sm:px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">
+                    Service
+                  </th>
+                  <th className="px-4 sm:px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th className="px-4 sm:px-6 py-4 text-center text-xs font-semibold text-white uppercase tracking-wider">
+                    Actions
+                  </th>
                 </tr>
               </thead>
 
-              <tbody>
-                {filtered.map(app=>(
-                  <tr key={app._id} className="border-t hover:bg-gray-50">
-
-                    <td className="p-4">
-                      <p className="font-semibold">{app.userDetails?.name}</p>
-                      <p className="text-sm text-gray-500">{app.userDetails?.email}</p>
-                    </td>
-
-                    <td className="p-4">{app.serviceName}</td>
-
-                    <td className="p-4 text-center">
-                      <span className={`px-3 py-1 rounded-full text-xs border ${getStatusBadge(app.status)}`}>
-                        {app.status}
-                      </span>
-                    </td>
-
-                    <td className="p-4 text-center space-x-2">
-
-                      <button onClick={()=>setSelected(app)} className="p-2 bg-blue-100 rounded">
-                        <Eye size={16}/>
-                      </button>
-
-                      <button disabled={statusLoading} onClick={()=>changeStatus(app._id,"Approved")} className="p-2 bg-green-100 rounded">
-                        <CheckCircle size={16}/>
-                      </button>
-
-                      <button disabled={statusLoading} onClick={()=>changeStatus(app._id,"Rejected")} className="p-2 bg-red-100 rounded">
-                        <XCircle size={16}/>
-                      </button>
-
-                      <a
-                        href={`${import.meta.env.VITE_BACKEND_URL}/api/applications/admin/${app._id}/pdf`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 bg-indigo-100 rounded inline-block"
-                      >
-                        <FileText size={16}/>
-                      </a>
-
-                      <button disabled={deleteLoading} onClick={()=>handleDelete(app._id)} className="p-2 bg-gray-100 rounded">
-                        <Trash2 size={16}/>
-                      </button>
-
+              <tbody className="bg-white divide-y divide-gray-200">
+                {filteredApplications.length === 0 ? (
+                  <tr>
+                    <td colSpan="4" className="px-6 py-16 text-center">
+                      <div className="flex flex-col items-center justify-center">
+                        <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                          <FileText className="w-8 h-8 text-gray-400" />
+                        </div>
+                        <p className="text-gray-600 font-medium text-lg mb-1">
+                          No applications found
+                        </p>
+                        <p className="text-gray-500 text-sm">
+                          {searchQuery || statusFilter
+                            ? "Try adjusting your filters"
+                            : "No applications have been submitted yet"}
+                        </p>
+                      </div>
                     </td>
                   </tr>
-                ))}
+                ) : (
+                  filteredApplications.map((app) => (
+                    <tr
+                      key={app._id}
+                      className="hover:bg-gray-50 transition-colors duration-150"
+                    >
+                      <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center">
+                          <div className="flex-shrink-0 h-10 w-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-white font-semibold text-sm mr-3">
+                            {app.userDetails?.name?.charAt(0)?.toUpperCase() || "?"}
+                          </div>
+                          <div>
+                            <div className="text-sm font-semibold text-gray-900">
+                              {app.userDetails?.name || "N/A"}
+                            </div>
+                            <div className="text-sm text-gray-500">
+                              {app.userDetails?.email || "N/A"}
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm font-medium text-gray-900">
+                          {app.serviceName || "N/A"}
+                        </div>
+                      </td>
+
+                      <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
+                        <StatusBadge status={app.status} />
+                      </td>
+
+                      <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center justify-center gap-2 flex-wrap">
+                          <ActionButton
+                            onClick={() => handleStatus(app._id, "Approved")}
+                            color="green"
+                            tooltip="Approve"
+                            disabled={app.status === "Approved"}
+                          >
+                            <CheckCircle size={18} />
+                          </ActionButton>
+
+                          <ActionButton
+                            onClick={() => handleStatus(app._id, "Rejected")}
+                            color="red"
+                            tooltip="Reject"
+                            disabled={app.status === "Rejected"}
+                          >
+                            <XCircle size={18} />
+                          </ActionButton>
+
+                          <ActionButton
+                            onClick={() => handleGeneratePDF(app)}
+                            disabled={app.status !== "Approved" || generatingPDF === app._id}
+                            color="blue"
+                            tooltip={generatingPDF === app._id ? "Generating PDF..." : "Generate PDF"}
+                            isLoading={generatingPDF === app._id}
+                          >
+                            {generatingPDF === app._id ? (
+                              <Loader2 size={18} className="animate-spin" />
+                            ) : (
+                              <FileText size={18} />
+                            )}
+                          </ActionButton>
+
+                          <ActionButton
+                            onClick={() => handleDownload(app)}
+                            disabled={app.status !== "Approved" || !app.pdfUrl}
+                            color="dark"
+                            tooltip="Download PDF"
+                          >
+                            <Download size={18} />
+                          </ActionButton>
+
+                          <ActionButton
+                            onClick={() => handleDelete(app._id)}
+                            color="gray"
+                            tooltip="Delete"
+                          >
+                            <Trash2 size={18} />
+                          </ActionButton>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
-          )}
-        </div>
-
-      </div>
-
-      {/* MODAL */}
-      {selected && (
-        <div className="fixed inset-0 bg-black/50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-xl w-[600px]">
-
-            <div className="flex justify-between mb-4">
-              <h2 className="text-xl font-bold">Application Details</h2>
-              <button onClick={()=>setSelected(null)}>
-                <X/>
-              </button>
-            </div>
-
-            <p><b>Name:</b> {selected.userDetails?.name}</p>
-            <p><b>Email:</b> {selected.userDetails?.email}</p>
-            <p><b>Phone:</b> {selected.userDetails?.phone}</p>
-            <p><b>Service:</b> {selected.serviceName}</p>
-
-            <div className="mt-4">
-              <h3 className="font-semibold mb-2">Documents</h3>
-
-              {selected.uploadedDocuments?.map(doc=>(
-                <div key={doc._id} className="flex justify-between border p-2 rounded mb-2">
-                  <span>{getDocLabel(doc.documentName)}</span>
-                  <div className="flex gap-2">
-                    <a href={doc.fileURL} target="_blank" rel="noopener noreferrer"><Eye size={16}/></a>
-                    <a href={doc.fileURL} download><Download size={16}/></a>
-                  </div>
-                </div>
-              ))}
-            </div>
-
           </div>
         </div>
-      )}
+
+        {/* Results Count */}
+        {filteredApplications.length > 0 && (
+          <div className="text-sm text-gray-600 text-center">
+            Showing <span className="font-semibold">{filteredApplications.length}</span> of{" "}
+            <span className="font-semibold">{applications.length}</span> applications
+          </div>
+        )}
+      </div>
     </div>
   );
 }
 
-/* CLOCK ICON */
-const Clock = ({ size }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <circle cx="12" cy="12" r="10"/>
-    <polyline points="12 6 12 12 16 14"/>
-  </svg>
+/* ================= COMPONENTS ================= */
+
+const StatCard = ({ title, value, icon, gradient, bgColor }) => (
+  <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200">
+    <div className="flex items-center justify-between mb-4">
+      <div className={`p-3 rounded-lg ${bgColor}`}>
+        <div className={`text-white ${gradient} bg-gradient-to-br rounded-lg p-2`}>
+          {icon}
+        </div>
+      </div>
+    </div>
+    <h3 className="text-sm font-medium text-gray-600 mb-1">{title}</h3>
+    <p className="text-3xl font-bold text-gray-900">{value}</p>
+  </div>
 );
 
+const StatusBadge = ({ status }) => {
+  const styles = {
+    Approved: {
+      bg: "bg-green-100",
+      text: "text-green-800",
+      dot: "bg-green-500",
+    },
+    Rejected: {
+      bg: "bg-red-100",
+      text: "text-red-800",
+      dot: "bg-red-500",
+    },
+    Pending: {
+      bg: "bg-yellow-100",
+      text: "text-yellow-800",
+      dot: "bg-yellow-500",
+    },
+  };
 
+  const style = styles[status] || styles.Pending;
 
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold ${style.bg} ${style.text}`}
+    >
+      <span className={`w-1.5 h-1.5 rounded-full ${style.dot}`}></span>
+      {status}
+    </span>
+  );
+};
 
+const ActionButton = ({ children, onClick, disabled, color, tooltip, isLoading }) => {
+  const colors = {
+    green: "bg-green-50 text-green-700 hover:bg-green-100 border-green-200",
+    red: "bg-red-50 text-red-700 hover:bg-red-100 border-red-200",
+    blue: "bg-blue-50 text-blue-700 hover:bg-blue-100 border-blue-200",
+    dark: "bg-gray-800 text-white hover:bg-gray-900 border-gray-700",
+    gray: "bg-gray-100 text-gray-700 hover:bg-gray-200 border-gray-300",
+  };
 
-
-// import { useState, useMemo } from "react";
-// import {
-//   useGetAllApplicationsQuery,
-//   useUpdateApplicationStatusMutation,
-//   useDeleteApplicationMutation,
-//   useGeneratePDFMutation,
-// } from "../redux/apis/applicationApi";
-
-// import { toast } from "react-toastify";
-// import { Search, Eye,CheckCircle, XCircle, FileText, Trash2, X, Download, Loader2,
-// } from "lucide-react";
-
-// const STATUS_OPTIONS = ["All", "Pending", "Approved", "Rejected"];
-
-// const STATUS_STYLE = {
-//   Pending: "bg-yellow-100 text-yellow-700",
-//   Approved: "bg-green-100 text-green-700",
-//   Rejected: "bg-red-100 text-red-700",
-// };
-
-// export default function AdminApplications() {
-//   const { data, isLoading } = useGetAllApplicationsQuery();
-//   const apps = data?.data ?? [];
-
-//   const [updateStatus] = useUpdateApplicationStatusMutation();
-//   const [deleteApp] = useDeleteApplicationMutation();
-//   const [generatePDF] = useGeneratePDFMutation();
-
-//   const [search, setSearch] = useState("");
-//   const [status, setStatus] = useState("All");
-//   const [selected, setSelected] = useState(null);
-//   const [previewPDF, setPreviewPDF] = useState(null);
-//   const [loadingId, setLoadingId] = useState(null);
-
-//   /* ================= FILTER ================= */
-
-//   const filtered = useMemo(() => {
-//     const q = search.toLowerCase();
-
-//     return apps.filter((a) => {
-//       const name = a?.userDetails?.name?.toLowerCase() || "";
-//       const email = a?.userDetails?.email?.toLowerCase() || "";
-
-//       const matchSearch = name.includes(q) || email.includes(q);
-//       const matchStatus = status === "All" || a.status === status;
-
-//       return matchSearch && matchStatus;
-//     });
-//   }, [apps, search, status]);
-
-//   /* ================= ACTIONS ================= */
-
-//   const changeStatus = async (id, newStatus) => {
-//     try {
-//       setLoadingId(id);
-//       await updateStatus({ id, status: newStatus }).unwrap();
-//       toast.success(`Status updated to ${newStatus}`);
-//     } catch (err) {
-//       toast.error(err?.data?.message || "Status update failed");
-//     } finally {
-//       setLoadingId(null);
-//     }
-//   };
-
-//   const handleDelete = async (id) => {
-//     if (!window.confirm("Delete application?")) return;
-
-//     try {
-//       setLoadingId(id);
-//       await deleteApp(id).unwrap();
-//       toast.success("Application deleted");
-//     } catch {
-//       toast.error("Delete failed");
-//     } finally {
-//       setLoadingId(null);
-//     }
-//   };
-
-//   const handleGeneratePDF = async (id) => {
-//     try {
-//       setLoadingId(id);
-//       const res = await generatePDF(id).unwrap();
-//       toast.success("PDF generated successfully");
-//     } catch {
-//       toast.error("PDF generation failed");
-//     } finally {
-//       setLoadingId(null);
-//     }
-//   };
-
-//   /* ✅ SAME CLOUDINARY PDF DOWNLOAD */
-//   const downloadPDF = (url) => {
-//     if (!url) return;
-
-//     const downloadUrl = url.replace(
-//       "/upload/",
-//       "/upload/fl_attachment/"
-//     );
-
-//     window.open(downloadUrl, "_blank");
-//   };
-
-//   if (isLoading)
-//     return (
-//       <div className="p-10 text-center text-lg font-medium">
-//         Loading applications...
-//       </div>
-//     );
-
-//   return (
-//     <div className="p-6 space-y-6">
-
-//       {/* HEADER */}
-//       <div className="bg-white p-6 rounded-2xl shadow-sm">
-//         <h1 className="text-2xl font-bold mb-4">Applications</h1>
-
-//         <div className="flex gap-4 flex-col md:flex-row">
-//           <div className="relative w-full">
-//             <Search size={16} className="absolute left-3 top-3 text-gray-400" />
-//             <input
-//               value={search}
-//               onChange={(e) => setSearch(e.target.value)}
-//               placeholder="Search name or email"
-//               className="border pl-10 p-2 rounded-lg w-full"
-//             />
-//           </div>
-
-//           <select
-//             value={status}
-//             onChange={(e) => setStatus(e.target.value)}
-//             className="border p-2 rounded-lg"
-//           >
-//             {STATUS_OPTIONS.map((s) => (
-//               <option key={s}>{s}</option>
-//             ))}
-//           </select>
-//         </div>
-//       </div>
-
-//       {/* TABLE */}
-//       <div className="bg-white rounded-2xl shadow-sm overflow-x-auto">
-//         <table className="w-full min-w-[800px]">
-//           <thead className="bg-blue-800 text-white">
-//             <tr>
-//               <th className="p-4 text-left">Applicant</th>
-//               <th className="p-4 text-left">Service</th>
-//               <th className="p-4 text-center">Status</th>
-//               <th className="p-4 text-center">Actions</th>
-//             </tr>
-//           </thead>
-
-//           <tbody>
-//             {filtered.map((app) => {
-//               const statusStyle =
-//                 STATUS_STYLE[app.status] ||
-//                 "bg-gray-100 text-gray-700";
-
-//               const isLoadingRow = loadingId === app._id;
-
-//               return (
-//                 <tr key={app._id} className="border-t hover:bg-gray-50">
-
-//                   <td className="p-4">
-//                     <p className="font-semibold">
-//                       {app.userDetails?.name}
-//                     </p>
-//                     <p className="text-sm text-gray-500">
-//                       {app.userDetails?.email}
-//                     </p>
-//                   </td>
-
-//                   <td className="p-4">{app.serviceName}</td>
-
-//                   <td className="p-4 text-center">
-//                     <span
-//                       className={`px-3 py-1 text-xs rounded-full ${statusStyle}`}
-//                     >
-//                       {app.status}
-//                     </span>
-//                   </td>
-
-//                   <td className="p-4 text-center flex justify-center gap-2 flex-wrap">
-
-//                     <IconBtn onClick={() => setSelected(app)}>
-//                       <Eye size={16} />
-//                     </IconBtn>
-
-//                     {app.status !== "Approved" && (
-//                       <IconBtn
-//                         onClick={() =>
-//                           changeStatus(app._id, "Approved")
-//                         }
-//                         disabled={isLoadingRow}
-//                       >
-//                         {isLoadingRow ? (
-//                           <Loader2 size={16} className="animate-spin" />
-//                         ) : (
-//                           <CheckCircle size={16} />
-//                         )}
-//                       </IconBtn>
-//                     )}
-
-//                     {app.status !== "Rejected" && (
-//                       <IconBtn
-//                         onClick={() =>
-//                           changeStatus(app._id, "Rejected")
-//                         }
-//                         disabled={isLoadingRow}
-//                       >
-//                         {isLoadingRow ? (
-//                           <Loader2 size={16} className="animate-spin" />
-//                         ) : (
-//                           <XCircle size={16} />
-//                         )}
-//                       </IconBtn>
-//                     )}
-
-//                     {/* GENERATE PDF */}
-//                     {app.status === "Approved" && !app.pdfUrl && (
-//                       <IconBtn
-//                         onClick={() =>
-//                           handleGeneratePDF(app._id)
-//                         }
-//                         disabled={isLoadingRow}
-//                       >
-//                         {isLoadingRow ? (
-//                           <Loader2 size={16} className="animate-spin" />
-//                         ) : (
-//                           <FileText size={16} />
-//                         )}
-//                       </IconBtn>
-//                     )}
-
-//                     {/* PREVIEW + DOWNLOAD SAME PDF */}
-//                     {app.pdfUrl && (
-//                       <>
-//                         <IconBtn onClick={() => setPreviewPDF(app.pdfUrl)}>
-//                           <Eye size={16} />
-//                         </IconBtn>
-
-//                         <IconBtn
-//                           onClick={() =>
-//                             downloadPDF(app.pdfUrl)
-//                           }
-//                         >
-//                           <Download size={16} />
-//                         </IconBtn>
-//                       </>
-//                     )}
-
-//                     <IconBtn
-//                       onClick={() => handleDelete(app._id)}
-//                       disabled={isLoadingRow}
-//                     >
-//                       {isLoadingRow ? (
-//                         <Loader2 size={16} className="animate-spin" />
-//                       ) : (
-//                         <Trash2 size={16} />
-//                       )}
-//                     </IconBtn>
-
-//                   </td>
-//                 </tr>
-//               );
-//             })}
-//           </tbody>
-//         </table>
-//       </div>
-
-//       {/* DETAILS MODAL */}
-//       {selected && (
-//         <Modal onClose={() => setSelected(null)}>
-//           <h2 className="text-lg font-bold mb-4">
-//             Application Details
-//           </h2>
-
-//           <div className="space-y-2 text-sm">
-//             <p><b>Name:</b> {selected.userDetails?.name}</p>
-//             <p><b>Email:</b> {selected.userDetails?.email}</p>
-//             <p><b>Phone:</b> {selected.userDetails?.phone}</p>
-//             <p><b>Service:</b> {selected.serviceName}</p>
-//             <p><b>Status:</b> {selected.status}</p>
-//           </div>
-//         </Modal>
-//       )}
-
-//       {/* PDF PREVIEW */}
-//       {previewPDF && (
-//         <div className="fixed inset-0 bg-black/70 flex justify-center items-center z-50">
-//           <div className="bg-white w-[95%] h-[95%] rounded-2xl relative">
-//             <button
-//               onClick={() => setPreviewPDF(null)}
-//               className="absolute right-4 top-4 text-gray-600"
-//             >
-//               <X size={22} />
-//             </button>
-
-//             <iframe
-//               src={previewPDF}
-//               className="w-full h-full rounded-2xl"
-//             />
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
-
-// /* ================= UI COMPONENTS ================= */
-
-// const IconBtn = ({ children, onClick, disabled }) => (
-//   <button
-//     onClick={onClick}
-//     disabled={disabled}
-//     className="p-2 rounded-lg bg-gray-100 hover:scale-105 transition disabled:opacity-50"
-//   >
-//     {children}
-//   </button>
-// );
-
-// const Modal = ({ children, onClose }) => (
-//   <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-//     <div className="bg-white p-6 rounded-2xl w-[500px] relative shadow-lg">
-//       <button
-//         onClick={onClose}
-//         className="absolute right-4 top-4 text-gray-500"
-//       >
-//         <X />
-//       </button>
-//       {children}
-//     </div>
-//   </div>
-// );
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled || isLoading}
+      title={tooltip}
+      className={`
+        relative p-2.5 rounded-lg transition-all duration-200 border
+        ${disabled || isLoading
+          ? "opacity-40 cursor-not-allowed bg-gray-50 border-gray-200"
+          : `${colors[color]} hover:scale-105 active:scale-95 shadow-sm hover:shadow`
+        }
+        focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500
+      `}
+    >
+      {children}
+    </button>
+  );
+};

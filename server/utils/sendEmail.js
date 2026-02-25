@@ -1,24 +1,3 @@
-// import nodemailer from "nodemailer";
-
-// const transporter = nodemailer.createTransport({
-//   service: "gmail",
-//   auth: {
-//      user:process.env.FROM_EMAIL,
-//     pass: process.env.EMAIL_PASS,
-//   },
-// });
-
-// export default async function sendEmail({ to, subject, html }) {
-//   await transporter.sendMail({
-//     from: `"Service Team" <${process.env.EMAIL}>`,
-//     to,
-//     subject,
-//     html,
-//   });
-// }
-
-
-
 
 import nodemailer from "nodemailer";
 
@@ -30,12 +9,27 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export default async function sendEmail({ to, subject, html, attachments=[] }) {
+export const sendStatusEmail = async (app) => {
+  const subject =
+    app.status === "Approved"
+      ? "Your Application Approved"
+      : "Your Application Rejected";
+
+  const html = `
+    <h2>Application Status Update</h2>
+    <p>Name: ${app.userDetails.name}</p>
+    <p>Status: <b>${app.status}</b></p>
+    ${
+      app.status === "Approved"
+        ? `<p>Download PDF from dashboard.</p>`
+        : `<p>Reason: ${app.adminNotes || "Not specified"}</p>`
+    }
+  `;
+
   await transporter.sendMail({
-    from: `"CADMA Support" <${process.env.FROM_EMAIL}>`,
-    to,
+    from: process.env.FROM_EMAIL,
+    to: app.userDetails.email,
     subject,
     html,
-    attachments
   });
-}
+};
