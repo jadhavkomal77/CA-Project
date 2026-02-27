@@ -176,6 +176,11 @@ import {
   FaAddressBook,
   FaWhatsapp,
   FaTools,
+  FaCalculator,
+  FaFileAlt,
+  FaNewspaper,
+  FaStar,
+  FaRegWindowMaximize,
 } from "react-icons/fa";
 
 import {
@@ -197,19 +202,19 @@ export default function AdminDashboardLayout() {
   const menu = [
     { name: "Dashboard", path: "/admin", icon: <FaTachometerAlt /> },
     { name: "Profile", path: "/admin/profile", icon: <FaUser /> },
-    { name: "taxupdateadmin", path: "/admin/taxupdateadmin", icon: <FaUser /> },
     { name: "Navbar", path: "/admin/navbar", icon: <FaList /> },
     { name: "Hero", path: "/admin/hero", icon: <FaImage /> },
     { name: "About", path: "/admin/about", icon: <FaInfoCircle /> },
     { name: "Add Services", path: "/admin/addservices", icon: <FaCogs /> },
     { name: "Services List", path: "/admin/serviceslist", icon: <FaTools /> },
-    { name: "Projects", path: "/admin/projects", icon: <FaProjectDiagram /> },
-    { name: "Calculater", path: "/admin/calculater", icon: <FaProjectDiagram /> },
-    { name: "Applications", path: "/admin/adminApplications", icon: <FaProjectDiagram /> },
-    { name: "Testimonials", path: "/admin/admintestimonials", icon: <FaProjectDiagram /> },
+    // { name: "Projects", path: "/admin/projects", icon: <FaProjectDiagram /> },
+    { name: "Calculater", path: "/admin/calculater", icon: <FaCalculator /> },
+    { name: "Applications", path: "/admin/adminApplications", icon: <FaFileAlt /> },
+    { name: "Tax Updates", path: "/admin/taxupdateadmin", icon: <FaNewspaper /> },
+    { name: "Testimonials", path: "/admin/admintestimonials", icon:   <FaStar /> },
     { name: "Contacts", path: "/admin/contacts", icon: <FaAddressBook /> },
     { name: "WhatsApp", path: "/admin/whatsappsettings", icon: <FaWhatsapp /> },
-    { name: "Footer", path: "/admin/footer", icon: <FaList /> },
+    { name: "Footer", path: "/admin/footer", icon:  <FaRegWindowMaximize /> },
   ];
 
   /* LOGOUT */
