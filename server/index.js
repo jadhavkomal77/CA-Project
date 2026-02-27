@@ -19,6 +19,7 @@ import settingRoutes from "./routes/admin/settingRoutes.js";
 import calculatorRoutes from "./routes/calculatorRoutes.js";
 import applicationRoutes from "./routes/applicationRoutes.js";
 import testimonialRoutes from "./routes/testimonialRoutes.js";
+import taxUpdateRoutes from "./routes/taxUpdateRoutes.js";
 
 const app = express();
 const __dirname = path.resolve();
@@ -68,6 +69,7 @@ app.use("/api/calculators", calculatorRoutes);
 app.use("/api/applications", applicationRoutes);
 app.use("/api/verify", verifyRoutes);
 app.use("/api/testimonials", testimonialRoutes);
+app.use("/api/tax-updates",taxUpdateRoutes );
 
 
 app.get("/", (req, res) => {

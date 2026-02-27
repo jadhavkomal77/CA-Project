@@ -197,6 +197,7 @@ export default function AdminDashboardLayout() {
   const menu = [
     { name: "Dashboard", path: "/admin", icon: <FaTachometerAlt /> },
     { name: "Profile", path: "/admin/profile", icon: <FaUser /> },
+    { name: "taxupdateadmin", path: "/admin/taxupdateadmin", icon: <FaUser /> },
     { name: "Navbar", path: "/admin/navbar", icon: <FaList /> },
     { name: "Hero", path: "/admin/hero", icon: <FaImage /> },
     { name: "About", path: "/admin/about", icon: <FaInfoCircle /> },

@@ -2,10 +2,10 @@
 import About from "../pages/About";
 import Contact from "../pages/Contact";
 import Hero from "../pages/Hero";
-import Industries from "../pages/Industries";
-import Projects from "../pages/CaseStudies";
+import PublicCalculator from "../pages/PublicCalculator";
+// import Industries from "../pages/Industries";
 import Services from "../pages/Services";
-// import PublicCalculator from "../pages/PublicCalculator";
+import TaxUpdates from "../pages/TaxUpdates";
 
 
 const Home = () => {
@@ -14,9 +14,8 @@ const Home = () => {
       <section id="home"><Hero /></section>
       <section id="about"><About /></section>
       <section id="services"><Services /></section>
-      <section id="casestudies"><Projects /></section>
-      {/* <section id="industries"><Industries /></section> */}
-      {/* <section id="publiccalculator"><PublicCalculator /></section> */}
+      <section id="calculators"><PublicCalculator /></section>
+      {/* <section id="TaxUpdates"><TaxUpdates /></section> */}
       <section id="contact"><Contact /></section>
     </>
   );

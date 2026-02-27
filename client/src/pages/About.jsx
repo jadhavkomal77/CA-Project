@@ -21,13 +21,30 @@ export default function About() {
             className="w-full h-[420px] object-cover rounded-3xl shadow-xl"
           />
 
-          <div className="absolute -bottom-6 -right-6 bg-white px-6 py-4 rounded-2xl shadow-lg border border-gray-100">
+          {/* <div className="absolute -bottom-6 -right-6 bg-white px-6 py-4 rounded-2xl shadow-lg border border-gray-100">
             <h3 className="text-3xl font-bold text-blue-600">
               {about.experience}+
             </h3>
             <p className="text-sm text-gray-800 font-medium">
               Years of Experience
             </p>
+          </div> */}
+          <div className="absolute bottom-4 right-4 sm:-bottom-6 sm:-right-6 bg-white px-5 py-3 sm:px-6 sm:py-4 rounded-2xl shadow-lg border border-gray-100">
+  
+  <div className="relative inline-block">
+    <span className="text-3xl sm:text-4xl font-bold text-blue-600">
+      {about.experience}
+    </span>
+
+    <span className="absolute -top-1 -right-2 sm:-right-3 text-lg sm:text-xl font-bold text-blue-600">
+      +
+    </span>
+  </div>
+
+  <p className="text-xs sm:text-sm text-gray-800 font-medium mt-1">
+    Years of Experience
+  </p>
+
           </div>
         </div>
 

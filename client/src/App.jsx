@@ -194,6 +194,9 @@ import ScrollToTop from "./layout/ScrollToTop";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ErrorBoundary from "./layout/ErrorBoundary";
+import TaxUpdates from "./pages/TaxUpdates";
+import TaxUpdateDetail from "./pages/TaxUpdateDetail";
+import TaxUpdateAdmin from "./admin/TaxUpdateAdmin";
 
 function App() {
   return (
@@ -217,8 +220,11 @@ function App() {
               <Route path="calculators" element={<PublicCalculator />} />
 
               <Route path="testimonials" element={<Testimonials />} />
-              {/* <Route path="industries" element={<Industries />} /> */}
               <Route path="faq" element={<FAQ />} />
+
+             
+                 <Route path="tax-updates" element={<TaxUpdates />} />
+              <Route path="tax-updates/:id" element={<TaxUpdateDetail />} />
 
               <Route path="apply/:slug" element={<ApplyService />} />
 
@@ -249,6 +255,7 @@ function App() {
           <Route path="navbar" element={<AdminNavbar />} />
 
           <Route path="calculater" element={<AdminCalculators />} />
+          <Route path="taxupdateadmin" element={<TaxUpdateAdmin />} />
           <Route path="adminApplications" element={<AdminApplications />} />
 
           <Route path="hero" element={<AdminHero />} />
