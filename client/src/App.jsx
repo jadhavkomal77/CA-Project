@@ -243,7 +243,7 @@ function App() {
 
         {/*  ADMIN AUTH  */}
         <Route path="/adminlogin" element={<AdminLogin />} />
-        <Route path="/adminregister" element={<AdminRegister />} />
+        {/* <Route path="/adminregister" element={<AdminRegister />} /> */}
 
         {/*  ADMIN PANEL  */}
         <Route
