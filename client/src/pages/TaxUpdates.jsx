@@ -270,7 +270,7 @@ export default function TaxUpdates() {
             Latest Tax & Compliance Updates
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Stay informed with the latest government notifications, tax updates, and compliance requirements
+           Stay updated with official tax, regulatory, and financial notifications impacting businesses and individuals.
           </p>
         </div>
 
