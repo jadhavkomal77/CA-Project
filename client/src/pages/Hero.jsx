@@ -50,8 +50,8 @@ export default function Hero() {
 
             {/* STATS */}
             <div className="flex flex-wrap justify-center lg:justify-start gap-5 pt-2 text-gray-800 text-sm sm:text-base">
-              <span>✔ 30+ Experience</span>
-              <span>✔ 5000+ Clients</span>
+              <span>✔ 30+ Years of Experience</span>
+              <span>✔ 5,000+ Clients Served</span>
               <span>✔ Expert Advisory</span>
             </div>
           </div>

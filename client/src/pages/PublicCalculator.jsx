@@ -267,7 +267,7 @@ export default function PublicCalculator() {
 
                   <p className={`text-xs sm:text-sm
                     ${isActive ? "text-blue-100" : "text-slate-700"}`}>
-                    Professional calculator
+                    Advanced Calculator
                   </p>
 
                   {isActive && (

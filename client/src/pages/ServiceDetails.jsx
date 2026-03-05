@@ -368,7 +368,7 @@ export default function ServiceDetails() {
           onClick={() => navigate(`/apply/${service.slug}`)}
           className="px-10 py-3 bg-blue-600 text-white font-semibold rounded-xl shadow"
         >
-          Apply Now
+         Book Advisory Session
         </motion.button>
       </motion.section>
 

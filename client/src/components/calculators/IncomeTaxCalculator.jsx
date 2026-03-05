@@ -601,7 +601,9 @@ export default function IncomeTaxCalculator() {
                 className="text-center text-gray-400 py-20"
               >
                 <Calculator size={48} className="mx-auto mb-3 opacity-50"/>
-                Enter details to calculate
+                Enter your details to view results
+
+
               </motion.div>
             )}
 

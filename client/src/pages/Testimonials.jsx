@@ -36,7 +36,7 @@ export default function Testimonials() {
           </div>
 
           <p className="text-lg text-gray-600">
-            Trusted by hundreds of clients for reliable and professional financial services.
+           Real feedback from individuals and businesses who rely on our tax and compliance expertise.
           </p>
         </motion.div>
       </section>
@@ -136,7 +136,7 @@ export default function Testimonials() {
                   {t.highlight && (
                     <div className="mt-6 text-center">
                       <span className="text-xs bg-white/20 px-4 py-1 rounded-full font-semibold">
-                        Featured Review
+                       Verified Client
                       </span>
                     </div>
                   )}
@@ -166,7 +166,7 @@ export default function Testimonials() {
           <div className="bg-white border border-gray-200 rounded-3xl p-12 shadow-xl">
 
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Ready to Work With Professionals?
+              Need expert assistance with tax and compliance?
             </h2>
 
             <p className="text-gray-600 mb-8">
