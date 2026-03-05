@@ -100,11 +100,18 @@ mongoose
   .catch((err) => console.error("❌ MongoDB Connection Error:", err));
 
 
+// if (process.env.NODE_ENV !== "production") {
+//   app.listen(PORT, () => {
+//     console.log(`🚀 Server running locally 🏃‍♀️ on port ${PORT}`);
+//   });
+// }
+
+
+// export default app;
 if (process.env.NODE_ENV !== "production") {
   app.listen(PORT, () => {
-    console.log(`🚀 Server running locally 🏃‍♀️ on port ${PORT}`);
+    console.log(`🚀 Server running locally on port ${PORT}`);
   });
 }
-
 
 export default app;
