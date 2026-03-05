@@ -36,8 +36,8 @@ export default function About() {
       {about.experience}
     </span>
 
-    <span className="absolute -top-1 -right-2 sm:-right-3 text-lg sm:text-xl font-bold text-blue-600">
-      +
+    <span className="absolute -top-2 -right-2 sm:-right-3 text-lg sm:text-xl font-bold text-blue-600">
+        +
     </span>
   </div>
 
