@@ -7,6 +7,9 @@ import {
   updateAdminProfile,
   changeAdminPassword,
   adminStats,
+  forgotAdminPassword,
+  resetAdminPassword,
+  verifyAdminOTP,
 } from "../../controllers/admin/adminController.js";
 
 import adminAuth from "../../middlewares/adminAuth.js";
@@ -24,6 +27,9 @@ router.put("/profile", adminAuth, updateAdminProfile);
 router.put("/change-password", adminAuth, changeAdminPassword);
 
 /* STATS */
-router.get("/stats", adminAuth, adminStats);
+/* PASSWORD RESET */
+router.post("/forgot-password", forgotAdminPassword);
+router.post("/verify-otp", verifyAdminOTP);
+router.put("/reset-password", resetAdminPassword);
 
 export default router;

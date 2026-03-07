@@ -266,6 +266,16 @@ export default function AdminLogin() {
             )}
           </div>
 
+          <div className="flex justify-end">
+            <button
+              type="button"
+              onClick={() => navigate("/admin-forgot-password")}
+              className="text-sm text-blue-600 hover:underline"
+            >
+              Forgot Password?
+            </button>
+          </div>
+
           {/* Button */}
           <button
             type="submit"

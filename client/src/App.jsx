@@ -197,6 +197,9 @@ import ErrorBoundary from "./layout/ErrorBoundary";
 import TaxUpdates from "./pages/TaxUpdates";
 import TaxUpdateDetail from "./pages/TaxUpdateDetail";
 import TaxUpdateAdmin from "./admin/TaxUpdateAdmin";
+import AdminForgotPassword from "./Auth/AdminForgotPassword";
+import AdminResetPassword from "./Auth/AdminResetPassword";
+import AdminVerifyOTP from "./Auth/AdminVerifyOTP";
 
 function App() {
   return (
@@ -244,6 +247,11 @@ function App() {
         {/*  ADMIN AUTH  */}
         <Route path="/adminlogin" element={<AdminLogin />} />
         {/* <Route path="/adminregister" element={<AdminRegister />} /> */}
+<Route path="/admin-forgot-password" element={<AdminForgotPassword />} />
+
+<Route path="/admin-verify-otp" element={<AdminVerifyOTP />} />
+
+<Route path="/admin-reset-password" element={<AdminResetPassword />} />
 
         {/*  ADMIN PANEL  */}
         <Route

@@ -28,6 +28,15 @@ const adminSchema = new mongoose.Schema(
       url: String,
       public_id: String,
     },
+  
+    resetOTP: String,
+resetOTPExpire: Date,
+resetOTPVerified: Boolean,
+otpAttempts: {
+  type: Number,
+  default: 0
+}
+
   },
   { timestamps: true }
 );

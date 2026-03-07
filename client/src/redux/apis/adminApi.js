@@ -80,6 +80,31 @@ export const adminApi = createApi({
   providesTags: ["Admin"],
 }),
 
+
+forgotPassword: builder.mutation({
+  query: (data) => ({
+    url: "/forgot-password",
+    method: "POST",
+    body: data,
+  }),
+}),
+
+verifyOTP: builder.mutation({
+  query: (data) => ({
+    url: "/verify-otp",
+    method: "POST",
+    body: data,
+  }),
+}),
+
+resetPassword: builder.mutation({
+  query: (data) => ({
+    url: "/reset-password",
+    method: "PUT",
+    body: data,
+  }),
+}),
+
   }),
 });
 
@@ -90,4 +115,9 @@ export const {
   useAdminProfileQuery,useAdminStatsQuery,
   useUpdateAdminProfileMutation,
   useChangePasswordMutation,
+
+ useForgotPasswordMutation,
+useVerifyOTPMutation,
+useResetPasswordMutation
+
 } = adminApi;
