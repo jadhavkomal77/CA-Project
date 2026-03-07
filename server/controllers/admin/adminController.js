@@ -346,9 +346,28 @@ export const adminLogout = async (req, res) => {
 
 /* ================= PROFILE ================= */
 
+// export const getAdminProfile = async (req, res) => {
+//   try {
+//     const admin = await Admin.findById(req.user.id).select("-password");
+
+//     if (!admin) {
+//       return res.status(404).json({ message: "Admin not found" });
+//     }
+
+//     res.json({
+//       success: true,
+//       admin,
+//     });
+//   } catch {
+//     res.status(500).json({ message: "Server error" });
+//   }
+// };
+
 export const getAdminProfile = async (req, res) => {
   try {
-    const admin = await Admin.findById(req.user.id).select("-password");
+
+    const admin = await Admin.findById(req.user.id)
+      .select("-password -resetOTP -resetOTPExpire -resetOTPVerified -otpAttempts");
 
     if (!admin) {
       return res.status(404).json({ message: "Admin not found" });
@@ -358,6 +377,7 @@ export const getAdminProfile = async (req, res) => {
       success: true,
       admin,
     });
+
   } catch {
     res.status(500).json({ message: "Server error" });
   }
@@ -365,22 +385,103 @@ export const getAdminProfile = async (req, res) => {
 
 /* ================= UPDATE PROFILE ================= */
 
+// export const updateAdminProfile = (req, res) => {
+//   upload.single("profileImage")(req, res, async (err) => {
+//     if (err) {
+//       return res.status(400).json({ message: "Image upload failed" });
+//     }
+
+//     try {
+//       const admin = await Admin.findById(req.user.id);
+
+//       if (!admin) {
+//         return res.status(404).json({ message: "Admin not found" });
+//       }
+
+//       const { name, phone } = req.body;
+
+//       if (req.file) {
+//         if (admin.profile?.public_id) {
+//           await cloudinary.uploader.destroy(admin.profile.public_id);
+//         }
+
+//         const uploaded = await cloudinary.uploader.upload(req.file.path, {
+//           folder: "admin_profiles",
+//         });
+
+//         admin.profile = {
+//           url: uploaded.secure_url,
+//           public_id: uploaded.public_id,
+//         };
+
+//         fs.unlinkSync(req.file.path);
+//       }
+
+//       admin.name = name || admin.name;
+//       admin.phone = phone || admin.phone;
+
+//       await admin.save();
+
+//       res.json({
+//         success: true,
+//         message: "Profile updated",
+//         admin,
+//       });
+//     } catch {
+//       res.status(500).json({ message: "Update failed" });
+//     }
+//   });
+// };
+
+
 export const updateAdminProfile = (req, res) => {
   upload.single("profileImage")(req, res, async (err) => {
+
     if (err) {
       return res.status(400).json({ message: "Image upload failed" });
     }
 
     try {
+
       const admin = await Admin.findById(req.user.id);
 
       if (!admin) {
         return res.status(404).json({ message: "Admin not found" });
       }
 
-      const { name, phone } = req.body;
+      const { name, phone, email } = req.body;
+
+      /* ===== EMAIL CHECK ===== */
+
+      if (email && email !== admin.email) {
+
+        const emailExists = await Admin.findOne({ email });
+
+        if (emailExists) {
+          return res.status(400).json({
+            message: "Email already in use"
+          });
+        }
+
+        admin.email = email;
+      }
+
+      /* ===== NAME UPDATE ===== */
+
+      if (name) {
+        admin.name = name;
+      }
+
+      /* ===== PHONE UPDATE ===== */
+
+      if (phone) {
+        admin.phone = phone;
+      }
+
+      /* ===== PROFILE IMAGE UPDATE ===== */
 
       if (req.file) {
+
         if (admin.profile?.public_id) {
           await cloudinary.uploader.destroy(admin.profile.public_id);
         }
@@ -397,19 +498,30 @@ export const updateAdminProfile = (req, res) => {
         fs.unlinkSync(req.file.path);
       }
 
-      admin.name = name || admin.name;
-      admin.phone = phone || admin.phone;
-
       await admin.save();
 
       res.json({
         success: true,
-        message: "Profile updated",
-        admin,
+        message: "Profile updated successfully",
+        admin: {
+          id: admin._id,
+          name: admin.name,
+          email: admin.email,
+          phone: admin.phone,
+          profile: admin.profile
+        }
       });
-    } catch {
-      res.status(500).json({ message: "Update failed" });
+
+    } catch (error) {
+
+      console.log(error);
+
+      res.status(500).json({
+        message: "Profile update failed"
+      });
+
     }
+
   });
 };
 
