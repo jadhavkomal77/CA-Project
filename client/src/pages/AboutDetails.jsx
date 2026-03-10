@@ -369,7 +369,7 @@ export default function AboutDetails() {
 
               <div className="bg-white rounded-xl shadow-md p-4 md:p-6 text-center">
                 <h3 className="text-3xl md:text-4xl font-bold text-blue-600">
-                  5000<sup className="text-lg md:text-xl align-top ml-1">+</sup>
+                  5,000<sup className="text-lg md:text-xl align-top ml-1">+</sup>
                 </h3>
                 <p className="text-gray-500 text-xs md:text-sm mt-1">
                   Clients Served
