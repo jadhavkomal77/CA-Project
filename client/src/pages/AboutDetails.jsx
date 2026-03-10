@@ -413,7 +413,7 @@ export default function AboutDetails() {
 
             </div>
 
-            <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mt-6">
+            <h3 className="text-xl md:text-2xl font-bold text-gray-900 mt-6">
               {m.name}
             </h3>
 
