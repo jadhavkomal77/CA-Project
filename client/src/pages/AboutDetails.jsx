@@ -417,7 +417,7 @@ export default function AboutDetails() {
               {m.name}
             </h3>
 
-            <p className="text-gray-500 text-sm md:text-base mt-3">
+            <p className="text-black text-sm md:text-base mt-3">
               {m.shortDetails}
             </p>
 
