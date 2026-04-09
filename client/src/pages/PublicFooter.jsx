@@ -377,6 +377,76 @@ export default function PublicFooter() {
           </div>
         </div>
       </div>
+{/* OUR CITIES */}
+<div className="py-4 sm:py-5 lg:py-6 px-4">
+
+  <h3 className="
+    text-center
+    text-white
+    font-semibold
+    tracking-wide
+    mb-3
+    text-sm
+    sm:text-base
+    lg:text-lg
+  ">
+   OUR CITIES
+  </h3>
+
+
+  <div className="
+    flex
+    flex-wrap
+    justify-center
+    gap-2
+    sm:gap-3
+    max-w-5xl
+    mx-auto
+  ">
+
+    {[
+      "Mumbai",
+      "Pune",
+      "Bangalore",
+      "Chh. Sambhaji Nagar",
+      "Satara",
+      "Hingoli",
+      "Parbhani",
+      "Beed"
+    ].map(city => (
+
+      <span
+        key={city}
+        className="
+        px-3
+        sm:px-4
+        py-1
+
+        text-xs
+        sm:text-sm
+
+        rounded-full
+
+        bg-[#1e293b]
+
+        text-gray-300
+
+        border border-white/5
+
+        hover:bg-yellow-500
+        hover:text-black
+
+        transition
+        "
+      >
+        {city}
+      </span>
+
+    ))}
+
+  </div>
+
+</div>
 
       {/* BOTTOM */}
       <div className="border-t border-white/10 py-6 text-center text-sm text-gray-400 px-4">

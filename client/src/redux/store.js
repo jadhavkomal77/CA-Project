@@ -36,6 +36,7 @@ const reduxStore = configureStore({
        [taxUpdateApi.reducerPath]: taxUpdateApi.reducer,
 
     admin: adminReducer,
+    
   },
 
   middleware: (def) =>
