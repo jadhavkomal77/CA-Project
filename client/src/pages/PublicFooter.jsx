@@ -313,12 +313,11 @@ export default function PublicFooter() {
           </p>
 
           {/* SOCIAL */}
-          <div className="flex justify-center sm:justify-start gap-3 flex-wrap">
+          {/* <div className="flex justify-center sm:justify-start gap-3 flex-wrap">
             {footer.facebook && <SocialIcon Icon={Facebook} link={footer.facebook} />}
             {footer.twitter && <SocialIcon Icon={FaXTwitter} link={footer.twitter} />}
             {footer.instagram && <SocialIcon Icon={Instagram} link={footer.instagram} />}
-            {footer.linkedin && <SocialIcon Icon={Linkedin} link={footer.linkedin} />}
-          </div>
+          </div> */}
         </div>
 
         {/* QUICK LINKS */}
@@ -355,7 +354,7 @@ export default function PublicFooter() {
           </ul>
 
           {/* REVIEW BUTTON */}
-          <div className="mt-6 flex justify-center sm:justify-start">
+          {/* <div className="mt-6 flex justify-center sm:justify-start">
             <a
               href={
                 footer.reviewLink ||
@@ -374,11 +373,11 @@ export default function PublicFooter() {
             >
               ⭐ Review Us
             </a>
-          </div>
+          </div> */}
         </div>
       </div>
 {/* OUR CITIES */}
-<div className="py-4 sm:py-5 lg:py-6 px-4">
+{/* <div className="py-4 sm:py-5 lg:py-6 px-4">
 
   <h3 className="
     text-center
@@ -445,6 +444,126 @@ export default function PublicFooter() {
     ))}
 
   </div>
+
+</div> */}
+
+{/* ICONS | CITIES | REVIEW */}
+<div
+className="
+mt-4 mb-8 mx-8
+grid
+grid-cols-1
+sm:grid-cols-3
+items-center
+gap-6
+text-center
+"
+>
+
+  {/* ICONS */}
+  <div className="flex justify-center sm:justify-start gap-3">
+
+    {footer.facebook && <SocialIcon Icon={Facebook} link={footer.facebook}/>}
+
+    {footer.twitter && <SocialIcon Icon={FaXTwitter} link={footer.twitter}/>}
+
+    {footer.instagram && <SocialIcon Icon={Instagram} link={footer.instagram}/>}
+
+  </div>
+
+
+
+  {/* CITIES */}
+  <div className="text-gray-400 text-sm leading-relaxed">
+
+    {/* DESKTOP */}
+    <div className="hidden sm:block">
+
+      Mumbai
+      <span className="mx-2 text-gray-600">|</span>
+
+      Pune
+      <span className="mx-2 text-gray-600">|</span>
+
+      Bangalore
+      <span className="mx-2 text-gray-600">|</span>
+
+      Chh. Sambhaji Nagar
+      <span className="mx-2 text-gray-600">|</span>
+
+      Satara
+      <span className="mx-2 text-gray-600">|</span>
+
+      Hingoli
+      <span className="mx-2 text-gray-600">|</span>
+
+      Parbhani
+      <span className="mx-2 text-gray-600">|</span>
+
+      Beed
+
+    </div>
+
+
+
+    {/* MOBILE */}
+    <div className="sm:hidden space-y-1">
+
+      <div>
+        Mumbai |
+        Pune |
+        Bangalore
+      </div>
+
+      <div>
+        Chh. Sambhaji Nagar |
+        Satara
+      </div>
+
+      <div>
+        Hingoli |
+        Parbhani |
+        Beed
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  {/* REVIEW BUTTON */}
+  <div className="flex justify-center sm:justify-end">
+
+    <a
+      href={footer.reviewLink}
+      target="_blank"
+
+      className="
+      inline-flex
+      items-center
+      gap-2
+      px-5
+      py-2
+      text-sm
+      sm:text-base
+      bg-white
+      text-blue-700
+      rounded-full
+      font-semibold
+      hover:bg-yellow-400
+      hover:text-black
+      transition
+      whitespace-nowrap
+      "
+    >
+
+      ⭐ Review Us
+
+    </a>
+
+  </div>
+
 
 </div>
 

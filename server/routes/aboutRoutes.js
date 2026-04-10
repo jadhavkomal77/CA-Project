@@ -19,7 +19,7 @@ router.get("/", adminAuth, getAdminAbout);
 router.put(
   "/",adminAuth, upload.fields([
     { name: "image", maxCount: 1 },
-    { name: "teamPhotos", maxCount: 10 }, // ⭐ team member photos
+    { name: "teamPhotos", maxCount: 10 }, 
   ]),
   saveAbout
 );

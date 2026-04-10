@@ -16,7 +16,7 @@ export default function AdminFooter() {
     facebook: "",
     twitter: "",
     instagram: "",
-    linkedin: "",
+    // linkedin: "",
     quickLinks: "",
     importantLinks: "",
   });
@@ -130,13 +130,13 @@ export default function AdminFooter() {
           className="border p-3 rounded"
         />
 
-        <input
+        {/* <input
           name="linkedin"
           placeholder="LinkedIn URL"
           value={form.linkedin}
           onChange={handleChange}
           className="border p-3 rounded"
-        />
+        /> */}
 
         <input
           name="quickLinks"

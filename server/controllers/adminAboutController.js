@@ -1,29 +1,29 @@
 // // controllers/adminAboutController.js
-// import fs from "fs";
-// import About from "../models/About.js";
-// import cloudinary from "../utils/cloudinary.js";
+import fs from "fs";
+import About from "../models/About.js";
+import cloudinary from "../utils/cloudinary.js";
 
-// /* 🌍 Public */
-// export const getPublicAbout = async (req, res) => {
-//   try {
-//     const about = await About.findOne({ isActive: true });
-//     res.json(about);
-//   } catch (err) {
-//     res.status(500).json({ message: "Failed to load about section" });
-//   }
-// };
+/* 🌍 Public */
+export const getPublicAbout = async (req, res) => {
+  try {
+    const about = await About.findOne({ isActive: true });
+    res.json(about);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to load about section" });
+  }
+};
 
-// /* 🔐 Admin */
-// export const getAdminAbout = async (req, res) => {
-//   try {
-//     const about = await About.findOne();
-//     res.json(about);
-//   } catch (err) {
-//     res.status(500).json({ message: "Failed to load about section" });
-//   }
-// };
+/* 🔐 Admin */
+export const getAdminAbout = async (req, res) => {
+  try {
+    const about = await About.findOne();
+    res.json(about);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to load about section" });
+  }
+};
 
-// /* 🔐 Create / Update */
+/* 🔐 Create / Update */
 // export const saveAbout = async (req, res) => {
 //   try {
 //     const {
@@ -80,31 +80,32 @@
 
 
 
-import fs from "fs";
-import About from "../models/About.js";
-import cloudinary from "../utils/cloudinary.js";
+// import fs from "fs";
+// import About from "../models/About.js";
+// import cloudinary from "../utils/cloudinary.js";
 
-/* 🌍 Public */
-export const getPublicAbout = async (req, res) => {
-  try {
-    const about = await About.findOne({ isActive: true });
-    res.json(about);
-  } catch (err) {
-    res.status(500).json({ message: "Failed to load about section" });
-  }
-};
+// /* 🌍 Public */
+// export const getPublicAbout = async (req, res) => {
+//   try {
+//     const about = await About.findOne({ isActive: true });
+//     res.json(about);
+//   } catch (err) {
+//     res.status(500).json({ message: "Failed to load about section" });
+//   }
+// };
 
-/* 🔐 Admin */
-export const getAdminAbout = async (req, res) => {
-  try {
-    const about = await About.findOne();
-    res.json(about);
-  } catch (err) {
-    res.status(500).json({ message: "Failed to load about section" });
-  }
-};
+// /* 🔐 Admin */
+// export const getAdminAbout = async (req, res) => {
+//   try {
+//     const about = await About.findOne();
+//     res.json(about);
+//   } catch (err) {
+//     res.status(500).json({ message: "Failed to load about section" });
+//   }
+// };
 
-/* 🔐 Create / Update */
+// /* 🔐 Create / Update */
+
 // export const saveAbout = async (req, res) => {
 //   try {
 //     const {
@@ -200,6 +201,7 @@ export const getAdminAbout = async (req, res) => {
 // };
 
 
+
 export const saveAbout = async (req, res) => {
   try {
     const {
@@ -209,12 +211,12 @@ export const saveAbout = async (req, res) => {
       description2,
       experience,
       isActive,
-      teamMembers,
+      teamMembers
     } = req.body;
 
     let imageUrl;
 
-    /* MAIN IMAGE */
+    /* ✅ MAIN IMAGE */
     if (req.files?.image) {
       const uploadRes = await cloudinary.uploader.upload(
         req.files.image[0].path,
@@ -225,60 +227,40 @@ export const saveAbout = async (req, res) => {
       fs.unlinkSync(req.files.image[0].path);
     }
 
-    /* PARSE MEMBERS */
-    let parsedMembers = [];
+    /* ✅ TEAM MEMBERS PARSE */
+    let members = JSON.parse(teamMembers || "[]");
 
-    if (teamMembers) {
-      parsedMembers =
-        typeof teamMembers === "string"
-          ? JSON.parse(teamMembers)
-          : teamMembers;
+    /* ✅ TEAM IMAGE UPLOAD (FIXED LOGIC) */
+    if (req.files?.teamPhotos) {
+
+      let fileIndex = 0; // 🔥 MAIN FIX
+
+      for (let i = 0; i < members.length; i++) {
+
+        // 👉 only if new file exists
+        if (req.files.teamPhotos[fileIndex]) {
+
+          const file = req.files.teamPhotos[fileIndex];
+
+          const uploadRes = await cloudinary.uploader.upload(
+            file.path,
+            { folder: "team" }
+          );
+
+          members[i].photo = uploadRes.secure_url;
+
+          fs.unlinkSync(file.path);
+
+          fileIndex++; // 🔥 only increment when used
+        }
+
+        // ❗ else → जुना photo जसाच्या तसा राहील
+      }
     }
-
-    /* UPLOAD TEAM PHOTOS */
- if (req.files?.teamPhotos) {
-
-  let uploadIndex = 0;
-
-  parsedMembers = parsedMembers.map((member) => {
-
-    // new image आहे (photo empty)
-    if (!member.photo || member.photo === "") {
-
-      const file = req.files.teamPhotos[uploadIndex];
-
-      uploadIndex++;
-
-      return {
-        ...member,
-        photo: file ? file.path : member.photo
-      };
-
-    }
-
-    return member;
-  });
-
-  // upload cloudinary
-  for (let i = 0; i < req.files.teamPhotos.length; i++) {
-
-    const file = req.files.teamPhotos[i];
-
-    const uploadRes = await cloudinary.uploader.upload(file.path,{
-      folder:"team"
-    });
-
-    fs.unlinkSync(file.path);
-
-    parsedMembers[i].photo = uploadRes.secure_url;
-  }
-
-}
 
     let about = await About.findOne();
 
     if (about) {
-
       about.headingSmall = headingSmall;
       about.title = title;
       about.description1 = description1;
@@ -286,16 +268,13 @@ export const saveAbout = async (req, res) => {
       about.experience = experience;
       about.isActive = isActive;
 
-      if (imageUrl) {
-        about.image = imageUrl;
-      }
+      if (imageUrl) about.image = imageUrl;
 
-      about.teamMembers = parsedMembers;
+      about.teamMembers = members;
 
       await about.save();
 
     } else {
-
       about = await About.create({
         headingSmall,
         title,
@@ -304,23 +283,19 @@ export const saveAbout = async (req, res) => {
         experience,
         image: imageUrl,
         isActive,
-        teamMembers: parsedMembers,
+        teamMembers: members
       });
-
     }
 
     res.json({
-      message: "About updated successfully",
-      about,
+      message: "About saved successfully",
+      about
     });
 
   } catch (err) {
-
     console.log(err);
-
     res.status(500).json({
-      message: err.message,
+      message: "Error saving about"
     });
   }
 };
-
