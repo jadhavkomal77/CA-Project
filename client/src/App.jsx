@@ -201,6 +201,7 @@ import AdminForgotPassword from "./Auth/AdminForgotPassword";
 import AdminResetPassword from "./Auth/AdminResetPassword";
 import AdminVerifyOTP from "./Auth/AdminVerifyOTP";
 import AdminAboutTeam from "./admin/AdminAboutTeam";
+import AboutTeamPage from "./pages/AboutTeamPage";
 
 function App() {
   return (
@@ -228,6 +229,7 @@ function App() {
 
              
                  <Route path="tax-updates" element={<TaxUpdates />} />
+                 <Route path="/aboutteam" element={<AboutTeamPage />} />
               <Route path="tax-updates/:id" element={<TaxUpdateDetail />} />
 
               <Route path="apply/:slug" element={<ApplyService />} />
