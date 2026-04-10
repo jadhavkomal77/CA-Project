@@ -498,7 +498,7 @@ text-center
 
 
   {/* REVIEW BUTTON */}
-  <div className="flex justify-center sm:justify-end">
+  {/* <div className="flex justify-center sm:justify-end">
 
     <a
       href={footer.reviewLink}
@@ -527,8 +527,40 @@ text-center
 
     </a>
 
-  </div>
+  </div> */}
+<div className="flex justify-center sm:justify-end">
 
+  <a
+    href={
+      footer.reviewLink ||
+      `https://www.google.com/search?q=${encodeURIComponent(
+        footer.companyName
+      )}`
+    }
+    target="_blank"
+    rel="noopener noreferrer"
+    className="
+      inline-flex
+      items-center
+      gap-2
+      px-5
+      py-2
+      text-sm
+      sm:text-base
+      bg-white
+      text-blue-700
+      rounded-full
+      font-semibold
+      hover:bg-yellow-400
+      hover:text-black
+      transition
+      whitespace-nowrap
+    "
+  >
+    ⭐ Review Us
+  </a>
+
+</div>
 
 </div>
 
