@@ -472,64 +472,29 @@ text-center
   </div>
 
 
+ {/* OUR CITIES */}
+<div className="text-gray-400 text-sm leading-relaxed">
+  <h3 className="mb-3 text-center text-white font-semibold text-sm sm:text-base">
+    Our Cities
+  </h3>
 
-  {/* CITIES */}
-  <div className="text-gray-400 text-sm leading-relaxed">
-
-    {/* DESKTOP */}
-    <div className="hidden sm:block">
-
-      Mumbai
-      <span className="mx-2 text-gray-600">|</span>
-
-      Pune
-      <span className="mx-2 text-gray-600">|</span>
-
-      Bangalore
-      <span className="mx-2 text-gray-600">|</span>
-
-      Chh. Sambhaji Nagar
-      <span className="mx-2 text-gray-600">|</span>
-
-      Satara
-      <span className="mx-2 text-gray-600">|</span>
-
-      Hingoli
-      <span className="mx-2 text-gray-600">|</span>
-
-      Parbhani
-      <span className="mx-2 text-gray-600">|</span>
-
-      Beed
-
-    </div>
-
-
-
-    {/* MOBILE */}
-    <div className="sm:hidden space-y-1">
-
-      <div>
-        Mumbai |
-        Pune |
-        Bangalore
-      </div>
-
-      <div>
-        Chh. Sambhaji Nagar |
-        Satara
-      </div>
-
-      <div>
-        Hingoli |
-        Parbhani |
-        Beed
-      </div>
-
-    </div>
-
+  <div className="hidden sm:block text-center">
+    Mumbai<span className="mx-2 text-gray-600">|</span>
+    Pune<span className="mx-2 text-gray-600">|</span>
+    Bangalore<span className="mx-2 text-gray-600">|</span>
+    Chh. Sambhaji Nagar<span className="mx-2 text-gray-600">|</span>
+    Satara<span className="mx-2 text-gray-600">|</span>
+    Hingoli<span className="mx-2 text-gray-600">|</span>
+    Parbhani<span className="mx-2 text-gray-600">|</span>
+    Beed
   </div>
 
+  <div className="sm:hidden space-y-1 text-center">
+    <div>Mumbai | Pune | Bangalore</div>
+    <div>Chh. Sambhaji Nagar | Satara</div>
+    <div>Hingoli | Parbhani | Beed</div>
+  </div>
+</div>
 
 
   {/* REVIEW BUTTON */}

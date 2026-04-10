@@ -10,9 +10,9 @@ const AboutTeamPage = () => {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto mb-12 max-w-3xl text-center">
          
-          <h1 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
+          <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
             Meet Our Team
-          </h1>
+          </h2>
           
         </div>
 

@@ -92,7 +92,7 @@ export default function AboutDetails() {
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
 
             <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">
-              Meet Our Experts
+              Meet Our 
             </h2>
 
             <div className="grid sm:grid-cols-2 md:grid-cols-2 gap-10">
