@@ -188,6 +188,7 @@ import {
   useAdminProfileQuery,
 } from "../redux/apis/adminApi";
 import { toast } from "react-toastify";
+import { FaUserTie } from "react-icons/fa6";
 
 export default function AdminDashboardLayout() {
   const navigate = useNavigate();
@@ -205,9 +206,9 @@ export default function AdminDashboardLayout() {
     { name: "Navbar", path: "/admin/navbar", icon: <FaList /> },
     { name: "Hero", path: "/admin/hero", icon: <FaImage /> },
     { name: "About", path: "/admin/about", icon: <FaInfoCircle /> },
+    { name: "adminAboutTeam", path: "/admin/adminAboutTeam", icon: <FaUserTie /> },
     { name: "Add Services", path: "/admin/addservices", icon: <FaCogs /> },
     { name: "Services List", path: "/admin/serviceslist", icon: <FaTools /> },
-    { name: "adminAboutTeam", path: "/admin/adminAboutTeam", icon: <FaProjectDiagram /> },
     { name: "Calculater", path: "/admin/calculater", icon: <FaCalculator /> },
     { name: "Applications", path: "/admin/adminApplications", icon: <FaFileAlt /> },
     { name: "Tax Updates", path: "/admin/taxupdateadmin", icon: <FaNewspaper /> },

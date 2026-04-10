@@ -9,15 +9,11 @@ const AboutTeamPage = () => {
     <section className="bg-slate-50 py-14 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto mb-12 max-w-3xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-indigo-600">
-            About Team
-          </p>
+         
           <h1 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
-            Meet the people behind our work
+            Meet Our Team
           </h1>
-          <p className="mt-4 text-base leading-7 text-slate-600">
-            A simple, clean team showcase section powered by your admin panel.
-          </p>
+          
         </div>
 
         {isLoading ? (
@@ -33,27 +29,30 @@ const AboutTeamPage = () => {
         ) : (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {members.map((item) => (
-              <article
-                key={item._id}
-                className="group overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-slate-200 transition hover:-translate-y-1 hover:shadow-xl"
-              >
-                <div className="aspect-square overflow-hidden bg-slate-100">
-                  <img
-                    src={item.img?.url}
-                    alt={item.name}
-                    className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                  />
-                </div>
+    <article
+  key={item._id}
+  className="group rounded-3xl bg-white p-8 text-center shadow-sm ring-1 ring-slate-200 transition hover:-translate-y-1 hover:shadow-xl"
+>
+  <div className="flex justify-center">
+    <div className="h-56 w-56 overflow-hidden rounded-full ring-4 ring-white shadow-md bg-slate-100">
+      <img
+        src={item.img?.url}
+        alt={item.name}
+        className="h-full w-full object-cover"
+      />
+    </div>
+  </div>
 
-                <div className="p-5 text-center">
-                  <h3 className="text-lg font-semibold text-slate-900">
-                    {item.name}
-                  </h3>
-                  <p className="mt-1 text-sm text-indigo-600">
-                    {item.role || "Team Member"}
-                  </p>
-                </div>
-              </article>
+  <div className="mt-5">
+    <h1 className="text-xl font-semibold text-slate-900">
+      {item.name}
+    </h1>
+
+    <h2 className="mt-1 text-sm text-indigo-600">
+      {item.role || "Team Member"}
+    </h2>
+  </div>
+</article>
             ))}
           </div>
         )}

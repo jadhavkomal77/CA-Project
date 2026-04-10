@@ -1,6 +1,7 @@
 
 import { useGetPublicAboutQuery } from "../redux/apis/aboutApi";
 import { motion } from "framer-motion";
+import AboutTeamPage from "./AboutTeamPage";
 
 export default function AboutDetails() {
   const { data: about, isLoading } = useGetPublicAboutQuery();
@@ -124,6 +125,8 @@ export default function AboutDetails() {
           </div>
         </section>
       )}
+
+      <AboutTeamPage/>
 
       {/* CTA */}
       <section className="py-8 text-center px-4">
