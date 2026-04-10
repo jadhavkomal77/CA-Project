@@ -15,6 +15,7 @@ import { applicationApi } from "./apis/applicationApi";
 import { verifyApi } from "./apis/verifyApi";
 import { testimonialApi } from "./apis/testimonialApi";
 import { taxUpdateApi } from "./apis/taxUpdateApi";
+import { aboutTeamApi } from "./apis/aboutTeamApi";
 
 const reduxStore = configureStore({
   reducer: {
@@ -34,6 +35,7 @@ const reduxStore = configureStore({
        [verifyApi.reducerPath]: verifyApi.reducer,
        [testimonialApi.reducerPath]: testimonialApi.reducer,
        [taxUpdateApi.reducerPath]: taxUpdateApi.reducer,
+       [aboutTeamApi.reducerPath]: aboutTeamApi.reducer,
 
     admin: adminReducer,
     
@@ -55,6 +57,7 @@ const reduxStore = configureStore({
       verifyApi.middleware,
       testimonialApi.middleware,
       taxUpdateApi.middleware,
+      aboutTeamApi.middleware,
     ),
 
 });

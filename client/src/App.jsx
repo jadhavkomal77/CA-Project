@@ -200,6 +200,7 @@ import TaxUpdateAdmin from "./admin/TaxUpdateAdmin";
 import AdminForgotPassword from "./Auth/AdminForgotPassword";
 import AdminResetPassword from "./Auth/AdminResetPassword";
 import AdminVerifyOTP from "./Auth/AdminVerifyOTP";
+import AdminAboutTeam from "./admin/AdminAboutTeam";
 
 function App() {
   return (
@@ -282,6 +283,7 @@ function App() {
           <Route path="contacts" element={<AdminContacts />} />
           <Route path="whatsappsettings" element={<WhatsappSettings />} />
           <Route path="footer" element={<AdminFooter />} />
+          <Route path="adminAboutTeam" element={<AdminAboutTeam />} />
         
            <Route path="*" element={<NotFound />} />
            </Route>

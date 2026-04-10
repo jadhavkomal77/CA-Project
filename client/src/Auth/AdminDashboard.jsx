@@ -207,7 +207,7 @@ export default function AdminDashboardLayout() {
     { name: "About", path: "/admin/about", icon: <FaInfoCircle /> },
     { name: "Add Services", path: "/admin/addservices", icon: <FaCogs /> },
     { name: "Services List", path: "/admin/serviceslist", icon: <FaTools /> },
-    // { name: "Projects", path: "/admin/projects", icon: <FaProjectDiagram /> },
+    { name: "adminAboutTeam", path: "/admin/adminAboutTeam", icon: <FaProjectDiagram /> },
     { name: "Calculater", path: "/admin/calculater", icon: <FaCalculator /> },
     { name: "Applications", path: "/admin/adminApplications", icon: <FaFileAlt /> },
     { name: "Tax Updates", path: "/admin/taxupdateadmin", icon: <FaNewspaper /> },
