@@ -342,186 +342,186 @@ import {
   useUpdateAboutTeamMutation,
 } from "../redux/apis/aboutTeamApi";
 
-const AdminAboutTeam = () => {
+export default function AdminAboutTeam(){
 
-  const [name,setName] = useState("");
-  const [role,setRole] = useState("");
-  const [image,setImage] = useState(null);
-  const [preview,setPreview] = useState("");
+const [name,setName] = useState("");
+const [role,setRole] = useState("");
+const [image,setImage] = useState(null);
+const [preview,setPreview] = useState("");
 
-  const [isEditOpen,setIsEditOpen] = useState(false);
-  const [selectedMember,setSelectedMember] = useState(null);
+const [isEditOpen,setIsEditOpen] = useState(false);
+const [selectedMember,setSelectedMember] = useState(null);
 
-  const [editName,setEditName] = useState("");
-  const [editRole,setEditRole] = useState("");
-  const [editImage,setEditImage] = useState(null);
-  const [editPreview,setEditPreview] = useState("");
+const [editName,setEditName] = useState("");
+const [editRole,setEditRole] = useState("");
+const [editImage,setEditImage] = useState(null);
+const [editPreview,setEditPreview] = useState("");
 
-  const [addAboutTeam,{isLoading:addLoading}] = useAddAboutTeamMutation();
-  const [updateAboutTeam,{isLoading:updateLoading}] = useUpdateAboutTeamMutation();
-  const [deleteAboutTeam] = useDeleteAboutTeamMutation();
+const [addAboutTeam,{isLoading:addLoading}] = useAddAboutTeamMutation();
+const [updateAboutTeam,{isLoading:updateLoading}] = useUpdateAboutTeamMutation();
+const [deleteAboutTeam] = useDeleteAboutTeamMutation();
 
-  const {data,isLoading:listLoading,refetch} = useGetAboutTeamQuery();
+const {data,refetch} = useGetAboutTeamQuery();
 
-  const members = data?.data || [];
+const members = data?.data || [];
 
 
 
-  useEffect(()=>{
+useEffect(()=>{
 
-    return ()=>{
+return ()=>{
 
-      if(preview) URL.revokeObjectURL(preview);
+if(preview) URL.revokeObjectURL(preview);
 
-      if(editPreview) URL.revokeObjectURL(editPreview);
+if(editPreview) URL.revokeObjectURL(editPreview);
 
-    };
+};
 
-  },[preview,editPreview]);
+},[preview,editPreview]);
 
 
 
-  const handleImageChange = e => {
+const handleImageChange = e=>{
 
-    const file = e.target.files[0];
+const file = e.target.files[0];
 
-    setImage(file);
+setImage(file);
 
-    if(file){
+if(file){
 
-      setPreview(URL.createObjectURL(file));
+setPreview(URL.createObjectURL(file));
 
-    }
+}
 
-  };
+};
 
 
 
-  const handleSubmit = async e => {
+const handleSubmit = async e=>{
 
-    e.preventDefault();
+e.preventDefault();
 
-    if(!name || !image){
+if(!name || !image){
 
-      toast.error("Name & image required");
+toast.error("Name and image required");
 
-      return;
+return;
 
-    }
+}
 
-    const fd = new FormData();
+const fd = new FormData();
 
-    fd.append("name",name);
-    fd.append("role",role);
-    fd.append("img",image);
+fd.append("name",name);
+fd.append("role",role);
+fd.append("img",image);
 
-    await addAboutTeam(fd);
+await addAboutTeam(fd);
 
-    toast.success("Member added");
+toast.success("Member added");
 
-    setName("");
-    setRole("");
-    setImage(null);
-    setPreview("");
+setName("");
+setRole("");
+setImage(null);
+setPreview("");
 
-    refetch();
+refetch();
 
-  };
+};
 
 
 
-  const handleDelete = async id => {
+const handleDelete = async id=>{
 
-    if(!window.confirm("Delete member?")) return;
+if(!window.confirm("Delete member?")) return;
 
-    await deleteAboutTeam(id);
+await deleteAboutTeam(id);
 
-    toast.success("Deleted");
+toast.success("Deleted");
 
-    refetch();
+refetch();
 
-  };
+};
 
 
 
-  const openEditModal = item => {
+const openEditModal = item=>{
 
-    setSelectedMember(item);
+setSelectedMember(item);
 
-    setEditName(item.name);
-    setEditRole(item.role);
+setEditName(item.name);
+setEditRole(item.role);
 
-    setEditPreview(item.img?.url);
+setEditPreview(item.img?.url);
 
-    setIsEditOpen(true);
+setIsEditOpen(true);
 
-  };
+};
 
 
 
-  const handleEditImageChange = e => {
+const handleEditImageChange = e=>{
 
-    const file = e.target.files[0];
+const file = e.target.files[0];
 
-    setEditImage(file);
+setEditImage(file);
 
-    if(file){
+if(file){
 
-      setEditPreview(URL.createObjectURL(file));
+setEditPreview(URL.createObjectURL(file));
 
-    }
+}
 
-  };
+};
 
 
 
-  const handleUpdateSubmit = async e => {
+const handleUpdateSubmit = async e=>{
 
-    e.preventDefault();
+e.preventDefault();
 
-    const fd = new FormData();
+const fd = new FormData();
 
-    fd.append("name",editName);
-    fd.append("role",editRole);
+fd.append("name",editName);
+fd.append("role",editRole);
 
-    if(editImage){
+if(editImage){
 
-      fd.append("img",editImage);
+fd.append("img",editImage);
 
-    }
+}
 
-    await updateAboutTeam({
+await updateAboutTeam({
 
-      id:selectedMember._id,
-      data:fd
+id:selectedMember._id,
+data:fd
 
-    });
+});
 
-    toast.success("Updated");
+toast.success("Updated");
 
-    setIsEditOpen(false);
+setIsEditOpen(false);
 
-    refetch();
+refetch();
 
-  };
+};
 
 
 
-  return(
+return(
 
-<div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-10">
+<div className="min-h-screen bg-gray-50 py-8">
 
-<div className="max-w-6xl mx-auto px-4">
+<div className="max-w-7xl mx-auto px-4 sm:px-6">
 
 {/* HEADER */}
-<div className="mb-8">
+<div className="mb-8 text-center sm:text-left">
 
-<h1 className="text-3xl font-bold text-gray-900">
+<h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
 Team Members
 </h1>
 
-<p className="text-gray-500 mt-1">
-Manage about page team profiles
+<p className="text-gray-500 text-sm sm:text-base">
+Manage about page team members
 </p>
 
 </div>
@@ -529,42 +529,43 @@ Manage about page team profiles
 
 
 {/* ADD FORM */}
-<div className="bg-white p-6 rounded-2xl shadow-md mb-10">
+<div className="bg-white rounded-2xl shadow p-4 sm:p-6 mb-10">
 
 <h2 className="text-lg font-semibold mb-4">
-Add New Member
+Add Member
 </h2>
 
 <form
 onSubmit={handleSubmit}
-className="grid md:grid-cols-4 gap-4"
+className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
 >
 
 <input
-placeholder="Full Name"
+placeholder="Name"
 value={name}
 onChange={e=>setName(e.target.value)}
-className="border rounded-lg px-4 py-3 md:col-span-1"
+className="border rounded-lg px-4 py-3 w-full"
 />
 
 <input
 placeholder="Role"
 value={role}
 onChange={e=>setRole(e.target.value)}
-className="border rounded-lg px-4 py-3 md:col-span-1"
+className="border rounded-lg px-4 py-3 w-full"
 />
 
 <input
 type="file"
 onChange={handleImageChange}
-className="border rounded-lg px-3 py-2 md:col-span-1"
+className="border rounded-lg px-3 py-2 w-full"
 />
 
 <button
-className="bg-blue-600 text-white rounded-lg font-semibold"
+disabled={addLoading}
+className="bg-blue-600 text-white rounded-lg py-3 font-semibold w-full"
 >
 
-Add Member
+{addLoading ? "Saving..." : "Add"}
 
 </button>
 
@@ -576,7 +577,7 @@ Add Member
 
 <img
 src={preview}
-className="mt-4 h-40 rounded-xl object-cover"
+className="mt-4 h-40 w-full sm:w-60 object-cover rounded-xl"
 />
 
 )}
@@ -585,45 +586,45 @@ className="mt-4 h-40 rounded-xl object-cover"
 
 
 
-{/* MEMBERS GRID */}
-<div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+{/* CARDS */}
+<div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 
 {members.map(item=>(
 
 <div
 key={item._id}
-className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition"
+className="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden"
 >
 
 <img
 src={item.img?.url}
-className="h-56 w-full object-cover"
+className="h-48 sm:h-56 w-full object-cover"
 />
 
-<div className="p-5 text-center">
+<div className="p-4 text-center">
 
-<h3 className="font-semibold text-lg">
+<h3 className="font-semibold text-base sm:text-lg">
 {item.name}
 </h3>
 
-<p className="text-gray-500 text-sm mt-1">
+<p className="text-gray-500 text-sm">
 {item.role}
 </p>
 
 
 
-<div className="flex gap-3 mt-4">
+<div className="flex gap-2 mt-4">
 
 <button
 onClick={()=>openEditModal(item)}
-className="flex-1 bg-yellow-500 text-white py-2 rounded-lg"
+className="flex-1 bg-yellow-500 text-white py-2 rounded-lg text-sm"
 >
 Edit
 </button>
 
 <button
 onClick={()=>handleDelete(item._id)}
-className="flex-1 bg-red-500 text-white py-2 rounded-lg"
+className="flex-1 bg-red-500 text-white py-2 rounded-lg text-sm"
 >
 Delete
 </button>
@@ -642,18 +643,16 @@ Delete
 
 
 
-{/* EDIT MODAL */}
+{/* MODAL */}
 {isEditOpen && (
 
-<div className="fixed inset-0 bg-black/40 flex items-center justify-center">
+<div className="fixed inset-0 bg-black/40 flex items-center justify-center px-4">
 
-<div className="bg-white p-6 rounded-2xl w-[95%] max-w-md">
+<div className="bg-white rounded-2xl p-5 w-full max-w-md">
 
-<h2 className="font-semibold mb-4">
+<h2 className="font-semibold mb-4 text-lg">
 Edit Member
 </h2>
-
-
 
 <form
 onSubmit={handleUpdateSubmit}
@@ -663,13 +662,13 @@ className="space-y-4"
 <input
 value={editName}
 onChange={e=>setEditName(e.target.value)}
-className="w-full border rounded-lg px-4 py-3"
+className="border rounded-lg px-4 py-3 w-full"
 />
 
 <input
 value={editRole}
 onChange={e=>setEditRole(e.target.value)}
-className="w-full border rounded-lg px-4 py-3"
+className="border rounded-lg px-4 py-3 w-full"
 />
 
 <input
@@ -720,6 +719,4 @@ Update
 
 );
 
-};
-
-export default AdminAboutTeam;
+}
