@@ -278,9 +278,8 @@
 
 
 
-
 import React, { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 import {
   useGetAdminAboutQuery,
   useSaveAboutMutation,
@@ -306,13 +305,18 @@ export default function AdminAbout() {
   });
 
   const [image, setImage] = useState(null);
-  const [members, setMembers] = useState([]);
 
-  const [newMember, setNewMember] = useState({ name: "", shortDetails: "" });
+  const [newMember, setNewMember] = useState({
+    name: "",
+    shortDetails: "",
+  });
   const [newMemberPhoto, setNewMemberPhoto] = useState(null);
 
   const [editId, setEditId] = useState(null);
-  const [editMember, setEditMember] = useState({ name: "", shortDetails: "" });
+  const [editMember, setEditMember] = useState({
+    name: "",
+    shortDetails: "",
+  });
   const [editPhoto, setEditPhoto] = useState(null);
 
   useEffect(() => {
@@ -325,7 +329,6 @@ export default function AdminAbout() {
         experience: data.experience || "",
         isActive: data.isActive ?? true,
       });
-      setMembers(data.teamMembers || []);
     }
   }, [data]);
 
@@ -339,17 +342,24 @@ export default function AdminAbout() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const fd = new FormData();
-    Object.entries(form).forEach(([k, v]) => fd.append(k, v));
+    fd.append("headingSmall", form.headingSmall);
+    fd.append("title", form.title);
+    fd.append("description1", form.description1);
+    fd.append("description2", form.description2);
+    fd.append("experience", form.experience);
+    fd.append("isActive", form.isActive);
+
     if (image) fd.append("image", image);
 
     try {
       await saveAbout(fd).unwrap();
-      toast.success("About updated successfully");
+      toast.success("About saved successfully");
       setImage(null);
       refetch();
     } catch (err) {
-      toast.error(err?.data?.message || "Failed to update about");
+      toast.error(err?.data?.message || "Failed to save about");
     }
   };
 
@@ -357,7 +367,7 @@ export default function AdminAbout() {
     e.preventDefault();
 
     if (!newMember.name || !newMember.shortDetails || !newMemberPhoto) {
-      toast.error("All member fields are required");
+      toast.error("Please fill all team member fields");
       return;
     }
 
@@ -368,20 +378,23 @@ export default function AdminAbout() {
 
     try {
       await addTeamMember(fd).unwrap();
-      toast.success("Member added successfully");
-      setNewMember({ name: "", shortDetails: "" });
+      toast.success("Team member added successfully");
+      setNewMember({
+        name: "",
+        shortDetails: "",
+      });
       setNewMemberPhoto(null);
       refetch();
     } catch (err) {
-      toast.error(err?.data?.message || "Failed to add member");
+      toast.error(err?.data?.message || "Failed to add team member");
     }
   };
 
-  const startEdit = (m) => {
-    setEditId(m._id);
+  const startEdit = (member) => {
+    setEditId(member._id);
     setEditMember({
-      name: m.name || "",
-      shortDetails: m.shortDetails || "",
+      name: member.name || "",
+      shortDetails: member.shortDetails || "",
     });
     setEditPhoto(null);
   };
@@ -396,79 +409,118 @@ export default function AdminAbout() {
 
     try {
       await updateTeamMember({ id: editId, data: fd }).unwrap();
-      toast.success("Member updated successfully");
+      toast.success("Team member updated successfully");
       setEditId(null);
-      setEditMember({ name: "", shortDetails: "" });
+      setEditMember({
+        name: "",
+        shortDetails: "",
+      });
       setEditPhoto(null);
       refetch();
     } catch (err) {
-      toast.error(err?.data?.message || "Failed to update member");
+      toast.error(err?.data?.message || "Failed to update team member");
     }
   };
 
   const handleDelete = async (id) => {
-    if (!confirm("Are you sure you want to delete this member?")) return;
+    const ok = window.confirm("Are you sure you want to delete this member?");
+    if (!ok) return;
 
     try {
       await deleteTeamMember(id).unwrap();
-      toast.success("Member deleted successfully");
+      toast.success("Team member deleted successfully");
       refetch();
     } catch (err) {
-      toast.error(err?.data?.message || "Failed to delete member");
+      toast.error(err?.data?.message || "Failed to delete team member");
     }
   };
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <p className="p-6">Loading...</p>;
 
   return (
-    <div className="max-w-5xl bg-white shadow rounded-xl p-8 mx-auto">
-      <h2 className="text-2xl font-bold mb-2">About Section</h2>
+    <div className="max-w-6xl mx-auto bg-white shadow rounded-xl p-6 md:p-8">
+      <h2 className="text-2xl font-bold text-gray-800 mb-2">About Page</h2>
+      <p className="text-gray-500 mb-8">Manage about section and team members</p>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <input
-          name="headingSmall"
-          value={form.headingSmall}
-          onChange={handleChange}
-          placeholder="Small Heading"
-          className="w-full border px-4 py-3 rounded"
-        />
+      {/* ABOUT FORM */}
+      <form onSubmit={handleSubmit} className="space-y-5">
+        <div>
+          <label className="block mb-2 font-medium">Small Heading</label>
+          <input
+            name="headingSmall"
+            value={form.headingSmall}
+            onChange={handleChange}
+            placeholder="WHO WE ARE"
+            className="w-full border px-4 py-3 rounded-lg outline-none focus:ring-2 focus:ring-red-300"
+          />
+        </div>
 
-        <input
-          name="title"
-          value={form.title}
-          onChange={handleChange}
-          placeholder="Title"
-          className="w-full border px-4 py-3 rounded"
-        />
+        <div>
+          <label className="block mb-2 font-medium">Title</label>
+          <input
+            name="title"
+            value={form.title}
+            onChange={handleChange}
+            placeholder="Title"
+            required
+            className="w-full border px-4 py-3 rounded-lg outline-none focus:ring-2 focus:ring-red-300"
+          />
+        </div>
 
-        <textarea
-          name="description1"
-          value={form.description1}
-          onChange={handleChange}
-          placeholder="Description 1"
-          className="w-full border px-4 py-3 rounded h-28"
-        />
+        <div>
+          <label className="block mb-2 font-medium">Description 1</label>
+          <textarea
+            name="description1"
+            value={form.description1}
+            onChange={handleChange}
+            placeholder="Description 1"
+            required
+            className="w-full border px-4 py-3 rounded-lg outline-none focus:ring-2 focus:ring-red-300 h-28"
+          />
+        </div>
 
-        <textarea
-          name="description2"
-          value={form.description2}
-          onChange={handleChange}
-          placeholder="Description 2"
-          className="w-full border px-4 py-3 rounded h-28"
-        />
+        <div>
+          <label className="block mb-2 font-medium">Description 2</label>
+          <textarea
+            name="description2"
+            value={form.description2}
+            onChange={handleChange}
+            placeholder="Description 2"
+            className="w-full border px-4 py-3 rounded-lg outline-none focus:ring-2 focus:ring-red-300 h-28"
+          />
+        </div>
 
-        <input
-          type="number"
-          name="experience"
-          value={form.experience}
-          onChange={handleChange}
-          placeholder="Years Experience"
-          className="w-full border px-4 py-3 rounded"
-        />
+        <div>
+          <label className="block mb-2 font-medium">Experience</label>
+          <input
+            type="number"
+            name="experience"
+            value={form.experience}
+            onChange={handleChange}
+            placeholder="Years of experience"
+            className="w-full border px-4 py-3 rounded-lg outline-none focus:ring-2 focus:ring-red-300"
+          />
+        </div>
 
-        <input type="file" onChange={(e) => setImage(e.target.files[0])} />
+        <div>
+          <label className="block mb-2 font-medium">Main Image</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setImage(e.target.files[0])}
+            className="w-full"
+          />
 
-        <label className="flex items-center gap-2">
+          {data?.image && (
+            <img
+              src={data.image}
+              alt="About"
+              className="h-44 w-full md:w-80 mt-4 rounded-lg object-cover border"
+            />
+          )}
+        </div>
+
+        <label className="flex items-center gap-2 select-none">
           <input
             type="checkbox"
             name="isActive"
@@ -481,23 +533,24 @@ export default function AdminAbout() {
         <button
           type="submit"
           disabled={savingAbout}
-          className="bg-red-500 text-white px-8 py-3 rounded"
+          className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-medium disabled:opacity-60"
         >
           {savingAbout ? "Saving..." : "Save About"}
         </button>
       </form>
 
+      {/* ADD TEAM MEMBER */}
       <div className="mt-12">
-        <h3 className="text-xl font-bold mb-4">Add Team Member</h3>
+        <h3 className="text-xl font-bold text-gray-800 mb-4">Add Team Member</h3>
 
-        <form onSubmit={handleAddMember} className="space-y-4">
+        <form onSubmit={handleAddMember} className="grid gap-4 md:grid-cols-3">
           <input
             value={newMember.name}
             onChange={(e) =>
               setNewMember((prev) => ({ ...prev, name: e.target.value }))
             }
             placeholder="Name"
-            className="w-full border px-4 py-3 rounded"
+            className="border px-4 py-3 rounded-lg outline-none focus:ring-2 focus:ring-blue-300"
           />
 
           <input
@@ -509,108 +562,127 @@ export default function AdminAbout() {
               }))
             }
             placeholder="Short Details"
-            className="w-full border px-4 py-3 rounded"
+            className="border px-4 py-3 rounded-lg outline-none focus:ring-2 focus:ring-blue-300"
           />
 
           <input
             type="file"
             accept="image/*"
             onChange={(e) => setNewMemberPhoto(e.target.files[0])}
+            className="border px-3 py-2 rounded-lg bg-white"
           />
 
-          <button
-            type="submit"
-            disabled={addingMember}
-            className="bg-blue-600 text-white px-6 py-2 rounded"
-          >
-            {addingMember ? "Adding..." : "Add Member"}
-          </button>
+          <div className="md:col-span-3">
+            <button
+              type="submit"
+              disabled={addingMember}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium disabled:opacity-60"
+            >
+              {addingMember ? "Adding..." : "Add Member"}
+            </button>
+          </div>
         </form>
       </div>
 
+      {/* TEAM LIST */}
       <div className="mt-12">
-        <h3 className="text-xl font-bold mb-4">Team Members</h3>
+        <h3 className="text-xl font-bold text-gray-800 mb-4">Team Members</h3>
 
-        {members.length > 0 ? (
-          members.map((m) => (
-            <div key={m._id} className="border rounded-lg p-4 mb-4 bg-gray-50">
-              {editId === m._id ? (
-                <form onSubmit={handleUpdateMember} className="space-y-3">
-                  <input
-                    value={editMember.name}
-                    onChange={(e) =>
-                      setEditMember((prev) => ({ ...prev, name: e.target.value }))
-                    }
-                    className="w-full border px-4 py-2 rounded"
-                    placeholder="Name"
-                  />
+        {data?.teamMembers?.length > 0 ? (
+          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {data.teamMembers.map((member) => (
+              <div
+                key={member._id}
+                className="border rounded-xl p-4 bg-gray-50 shadow-sm"
+              >
+                {editId === member._id ? (
+                  <form onSubmit={handleUpdateMember} className="space-y-3">
+                    <input
+                      value={editMember.name}
+                      onChange={(e) =>
+                        setEditMember((prev) => ({
+                          ...prev,
+                          name: e.target.value,
+                        }))
+                      }
+                      placeholder="Name"
+                      className="w-full border px-4 py-2 rounded-lg"
+                    />
 
-                  <input
-                    value={editMember.shortDetails}
-                    onChange={(e) =>
-                      setEditMember((prev) => ({
-                        ...prev,
-                        shortDetails: e.target.value,
-                      }))
-                    }
-                    className="w-full border px-4 py-2 rounded"
-                    placeholder="Short Details"
-                  />
+                    <input
+                      value={editMember.shortDetails}
+                      onChange={(e) =>
+                        setEditMember((prev) => ({
+                          ...prev,
+                          shortDetails: e.target.value,
+                        }))
+                      }
+                      placeholder="Short Details"
+                      className="w-full border px-4 py-2 rounded-lg"
+                    />
 
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => setEditPhoto(e.target.files[0])}
-                  />
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => setEditPhoto(e.target.files[0])}
+                      className="w-full"
+                    />
 
-                  <div className="flex gap-2">
-                    <button
-                      type="submit"
-                      disabled={updatingMember}
-                      className="bg-green-600 text-white px-4 py-2 rounded"
-                    >
-                      {updatingMember ? "Updating..." : "Update"}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setEditId(null)}
-                      className="bg-gray-400 text-white px-4 py-2 rounded"
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </form>
-              ) : (
-                <>
-                  <img
-                    src={m.photo}
-                    alt={m.name}
-                    className="h-24 w-24 rounded object-cover mb-3"
-                  />
-                  <h4 className="font-semibold">{m.name}</h4>
-                  <p className="text-gray-600">{m.shortDetails}</p>
+                    <div className="flex gap-2 pt-2">
+                      <button
+                        type="submit"
+                        disabled={updatingMember}
+                        className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg disabled:opacity-60"
+                      >
+                        {updatingMember ? "Updating..." : "Update"}
+                      </button>
 
-                  <div className="mt-3 flex gap-2">
-                    <button
-                      onClick={() => startEdit(m)}
-                      className="bg-yellow-500 text-white px-4 py-2 rounded"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleDelete(m._id)}
-                      disabled={deletingMember}
-                      className="bg-red-600 text-white px-4 py-2 rounded"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </>
-              )}
-            </div>
-          ))
+                      <button
+                        type="button"
+                        onClick={() => setEditId(null)}
+                        className="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </form>
+                ) : (
+                  <>
+                    <img
+                      src={member.photo}
+                      alt={member.name}
+                      className="h-40 w-full rounded-lg object-cover mb-3 border"
+                    />
+                    <h4 className="text-lg font-semibold text-gray-800">
+                      {member.name}
+                    </h4>
+                    <p className="text-gray-600 text-sm mt-1">
+                      {member.shortDetails}
+                    </p>
+
+                    <div className="flex gap-2 mt-4">
+                      <button
+                        onClick={() => startEdit(member)}
+                        className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg"
+                      >
+                        Edit
+                      </button>
+
+                      <button
+                        onClick={() => handleDelete(member._id)}
+                        disabled={deletingMember}
+                        className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg disabled:opacity-60"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
         ) : (
-          <p>No team members found.</p>
+          <p className="text-gray-500">No team members found.</p>
         )}
       </div>
     </div>
