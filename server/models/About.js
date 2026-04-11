@@ -39,7 +39,7 @@ const aboutSchema = new mongoose.Schema(
       default: 15,
     },
     image: {
-      type: String, // Cloudinary URL
+      type: String, 
       required: true,
     },
       teamMembers: {
