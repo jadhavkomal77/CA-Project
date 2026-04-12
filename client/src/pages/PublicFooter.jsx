@@ -684,11 +684,11 @@ export default function PublicFooter() {
     src="/Calogo.png"
     alt="CADMA Associates"
     className="
-      h-12
-      sm:h-14
-      md:h-16
-      lg:h-18
-      xl:h-20
+      h-10
+      sm:h-11
+      md:h-12
+      lg:h-14
+      xl:h-16
       w-auto
       object-contain
     "

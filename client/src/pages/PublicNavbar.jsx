@@ -332,7 +332,7 @@ export default function PublicNavbar() {
 >
 
 {/* logo */}
-<div
+{/* <div
   onClick={() => navigate("/")}
   className="flex items-center flex-shrink-0 cursor-pointer"
 >
@@ -349,7 +349,27 @@ export default function PublicNavbar() {
       object-contain
     "
   />
+</div> */}
+
+<div
+  onClick={() => navigate("/")}
+  className="flex items-center flex-shrink-0 cursor-pointer"
+>
+  <img
+    src="/Calogo.png"
+    alt="CADMA Associates"
+    className="
+      h-11
+      sm:h-12
+      md:h-14
+      lg:h-16
+      xl:h-18
+      w-auto
+      object-contain
+    "
+  />
 </div>
+
 </div>
 
           {/* ================= DESKTOP MENU ================= */}
