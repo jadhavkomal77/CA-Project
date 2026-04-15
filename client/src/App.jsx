@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import AdminLogin from "./Auth/AdminLogin";
 import AdminRegister from "./Auth/AdminRegister";
-import AdminProtected from "./shered/AdminProtected";
+import AdminProtected from "./shared/AdminProtected";
 import AdminHome from "./Auth/AdminHome";
 import AdminProfile from "./Auth/AdminProfile";
 import AdminDashboard from "./Auth/AdminDashboard";

@@ -129,7 +129,7 @@ export default function Testimonials() {
 
                   {/* REVIEW */}
                   <p className={`text-sm text-center leading-relaxed ${t.highlight ? "text-white/95" : "text-gray-700"}`}>
-                    "{t.review}"
+                    &ldquo;{t.review}&rdquo;
                   </p>
 
                   {/* BADGE */}
