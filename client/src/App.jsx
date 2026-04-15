@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import AdminLogin from "./Auth/AdminLogin";
 import AdminRegister from "./Auth/AdminRegister";
-import AdminProtected from "./shere/AdminProtected";
+import AdminProtected from "./shered/AdminProtected";
 import AdminHome from "./Auth/AdminHome";
 import AdminProfile from "./Auth/AdminProfile";
 import AdminDashboard from "./Auth/AdminDashboard";
@@ -36,7 +36,6 @@ import CaseStudyDetails from "./pages/CaseStudyDetails";
 import AboutDetails from "./pages/AboutDetails";
 import PublicCalculator from "./pages/PublicCalculator";
 import AdminCalculators from "./admin/AdminCalculators";
-// import AdminPolicies from "./admin/AdminPolicies";
 
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions";
