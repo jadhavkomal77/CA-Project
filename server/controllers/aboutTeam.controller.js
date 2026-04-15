@@ -269,7 +269,7 @@ try {
 
 const data = await AboutTeam
 .find()
-.sort({ createdAt: -1 });
+.sort({ createdAt: 1 }); 
 
 res.status(200).json({
 

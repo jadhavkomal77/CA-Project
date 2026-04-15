@@ -72,6 +72,7 @@ import { useGetAboutTeamQuery } from "../redux/apis/aboutTeamApi";
 const AboutTeamPage = () => {
 
   const { data, isLoading, isError } = useGetAboutTeamQuery();
+
   const members = data?.data || [];
 
   return (
@@ -79,7 +80,6 @@ const AboutTeamPage = () => {
 <section className="bg-white py-16">
 
 <div className="max-w-6xl mx-auto px-4">
-
 
 {/* TITLE */}
 <h2 className="text-center text-3xl sm:text-4xl font-bold text-black mb-12">
@@ -89,8 +89,7 @@ OUR TEAM
 </h2>
 
 
-
-{/* DATA */}
+{/* TEAM NAMES */}
 {isLoading ? (
 
 <p className="text-center">Loading...</p>
@@ -123,7 +122,6 @@ className="text-blue-600 font-semibold text-lg tracking-wide"
 </div>
 
 )}
-
 
 </div>
 
