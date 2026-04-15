@@ -126,7 +126,7 @@ export default function PublicNavbar() {
   />
 </div> */}
 
-<div
+{/* <div
   onClick={() => navigate("/")}
   className="flex items-center flex-shrink-0 cursor-pointer"
 >
@@ -143,7 +143,31 @@ export default function PublicNavbar() {
       object-contain
     "
   />
-</div>
+</div> */}
+
+<img
+  src="/Calogo.png"
+  alt="CADMA Associates"
+  className="
+
+  h-12
+  sm:h-14
+  md:h-16
+  lg:h-18
+  xl:h-20
+
+  w-auto
+  object-contain
+
+  transition
+  duration-300
+
+  hover:scale-105
+
+  drop-shadow-md
+
+  "
+/>
 
 </div>
 
@@ -240,4 +264,6 @@ export default function PublicNavbar() {
     </header>
   );
 }
+
+
 

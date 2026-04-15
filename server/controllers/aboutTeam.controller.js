@@ -1,206 +1,386 @@
 
-import fs from "fs";
-import upload from "../utils/upload.js";
-import cloudinary from "../utils/cloudinary.js";
+// import fs from "fs";
+// import upload from "../utils/upload.js";
+// import cloudinary from "../utils/cloudinary.js";
+// import AboutTeam from "../models/AboutTeam.js";
+
+// export const addAboutTeam = (req, res) => {
+//   upload.single("img")(req, res, async (err) => {
+//     if (err) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "Image upload failed",
+//       });
+//     }
+
+//     try {
+//       const { name, role } = req.body;
+
+//       if (!name) {
+//         if (req.file && fs.existsSync(req.file.path)) {
+//           fs.unlinkSync(req.file.path);
+//         }
+
+//         return res.status(400).json({
+//           success: false,
+//           message: "Name is required",
+//         });
+//       }
+
+//       if (!req.file) {
+//         return res.status(400).json({
+//           success: false,
+//           message: "Image is required",
+//         });
+//       }
+
+//       const uploaded = await cloudinary.uploader.upload(req.file.path, {
+//         folder: "about_team",
+//       });
+
+//       if (fs.existsSync(req.file.path)) {
+//         fs.unlinkSync(req.file.path);
+//       }
+
+//       const data = await AboutTeam.create({
+//         name,
+//         role: role || "",
+//         img: {
+//           url: uploaded.secure_url,
+//           public_id: uploaded.public_id,
+//         },
+//       });
+
+//       res.status(201).json({
+//         success: true,
+//         message: "About team member added successfully",
+//         data,
+//       });
+//     } catch (error) {
+//       if (req.file && fs.existsSync(req.file.path)) {
+//         fs.unlinkSync(req.file.path);
+//       }
+
+//       res.status(500).json({
+//         success: false,
+//         message: error.message || "Server error",
+//       });
+//     }
+//   });
+// };
+
+// export const getAboutTeam = async (req, res) => {
+//   try {
+//     const data = await AboutTeam.find().sort({ createdAt: -1 });
+
+//     res.status(200).json({
+//       success: true,
+//       count: data.length,
+//       data,
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       success: false,
+//       message: error.message || "Server error",
+//     });
+//   }
+// };
+
+// export const getAboutTeamById = async (req, res) => {
+//   try {
+//     const data = await AboutTeam.findById(req.params.id);
+
+//     if (!data) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "Data not found",
+//       });
+//     }
+
+//     res.status(200).json({
+//       success: true,
+//       data,
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       success: false,
+//       message: error.message || "Server error",
+//     });
+//   }
+// };
+
+// export const updateAboutTeam = (req, res) => {
+//   upload.single("img")(req, res, async (err) => {
+//     if (err) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "Image upload failed",
+//       });
+//     }
+
+//     try {
+//       const { name, role } = req.body;
+
+//       const data = await AboutTeam.findById(req.params.id);
+
+//       if (!data) {
+//         if (req.file && fs.existsSync(req.file.path)) {
+//           fs.unlinkSync(req.file.path);
+//         }
+
+//         return res.status(404).json({
+//           success: false,
+//           message: "Data not found",
+//         });
+//       }
+
+//       data.name = name || data.name;
+//       data.role = role !== undefined ? role : data.role;
+
+//       if (req.file) {
+//         if (data.img?.public_id) {
+//           await cloudinary.uploader.destroy(data.img.public_id);
+//         }
+
+//         const uploaded = await cloudinary.uploader.upload(req.file.path, {
+//           folder: "about_team",
+//         });
+
+//         if (fs.existsSync(req.file.path)) {
+//           fs.unlinkSync(req.file.path);
+//         }
+
+//         data.img = {
+//           url: uploaded.secure_url,
+//           public_id: uploaded.public_id,
+//         };
+//       }
+
+//       await data.save();
+
+//       res.status(200).json({
+//         success: true,
+//         message: "About team updated successfully",
+//         data,
+//       });
+//     } catch (error) {
+//       if (req.file && fs.existsSync(req.file.path)) {
+//         fs.unlinkSync(req.file.path);
+//       }
+
+//       res.status(500).json({
+//         success: false,
+//         message: error.message || "Server error",
+//       });
+//     }
+//   });
+// };
+
+// export const deleteAboutTeam = async (req, res) => {
+//   try {
+//     const data = await AboutTeam.findById(req.params.id);
+
+//     if (!data) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "Data not found",
+//       });
+//     }
+
+//     if (data.img?.public_id) {
+//       await cloudinary.uploader.destroy(data.img.public_id);
+//     }
+
+//     await AboutTeam.findByIdAndDelete(req.params.id);
+
+//     res.status(200).json({
+//       success: true,
+//       message: "About team deleted successfully",
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       success: false,
+//       message: error.message || "Server error",
+//     });
+//   }
+// };
+
+
+
+
 import AboutTeam from "../models/AboutTeam.js";
 
-export const addAboutTeam = (req, res) => {
-  upload.single("img")(req, res, async (err) => {
-    if (err) {
-      return res.status(400).json({
-        success: false,
-        message: "Image upload failed",
-      });
-    }
 
-    try {
-      const { name, role } = req.body;
+/* ADD */
+export const addAboutTeam = async (req, res) => {
 
-      if (!name) {
-        if (req.file && fs.existsSync(req.file.path)) {
-          fs.unlinkSync(req.file.path);
-        }
+try {
 
-        return res.status(400).json({
-          success: false,
-          message: "Name is required",
-        });
-      }
+const { name } = req.body;
 
-      if (!req.file) {
-        return res.status(400).json({
-          success: false,
-          message: "Image is required",
-        });
-      }
+if (!name) {
 
-      const uploaded = await cloudinary.uploader.upload(req.file.path, {
-        folder: "about_team",
-      });
+return res.status(400).json({
 
-      if (fs.existsSync(req.file.path)) {
-        fs.unlinkSync(req.file.path);
-      }
+success: false,
+message: "Name is required",
 
-      const data = await AboutTeam.create({
-        name,
-        role: role || "",
-        img: {
-          url: uploaded.secure_url,
-          public_id: uploaded.public_id,
-        },
-      });
+});
 
-      res.status(201).json({
-        success: true,
-        message: "About team member added successfully",
-        data,
-      });
-    } catch (error) {
-      if (req.file && fs.existsSync(req.file.path)) {
-        fs.unlinkSync(req.file.path);
-      }
+}
 
-      res.status(500).json({
-        success: false,
-        message: error.message || "Server error",
-      });
-    }
-  });
+const data = await AboutTeam.create({
+
+name,
+
+});
+
+res.status(201).json({
+
+success: true,
+message: "Member added successfully",
+data,
+
+});
+
+}
+
+catch (error) {
+
+res.status(500).json({
+
+success: false,
+message: error.message || "Server error",
+
+});
+
+}
+
 };
 
+
+
+/* GET ALL */
 export const getAboutTeam = async (req, res) => {
-  try {
-    const data = await AboutTeam.find().sort({ createdAt: -1 });
 
-    res.status(200).json({
-      success: true,
-      count: data.length,
-      data,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message || "Server error",
-    });
-  }
+try {
+
+const data = await AboutTeam
+.find()
+.sort({ createdAt: -1 });
+
+res.status(200).json({
+
+success: true,
+count: data.length,
+data,
+
+});
+
+}
+
+catch (error) {
+
+res.status(500).json({
+
+success: false,
+message: error.message || "Server error",
+
+});
+
+}
+
 };
 
-export const getAboutTeamById = async (req, res) => {
-  try {
-    const data = await AboutTeam.findById(req.params.id);
 
-    if (!data) {
-      return res.status(404).json({
-        success: false,
-        message: "Data not found",
-      });
-    }
 
-    res.status(200).json({
-      success: true,
-      data,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message || "Server error",
-    });
-  }
+/* UPDATE */
+export const updateAboutTeam = async (req, res) => {
+
+try {
+
+const { name } = req.body;
+
+const data = await AboutTeam.findById(req.params.id);
+
+if (!data) {
+
+return res.status(404).json({
+
+success: false,
+message: "Data not found",
+
+});
+
+}
+
+data.name = name || data.name;
+
+await data.save();
+
+res.status(200).json({
+
+success: true,
+message: "Updated successfully",
+data,
+
+});
+
+}
+
+catch (error) {
+
+res.status(500).json({
+
+success: false,
+message: error.message || "Server error",
+
+});
+
+}
+
 };
 
-export const updateAboutTeam = (req, res) => {
-  upload.single("img")(req, res, async (err) => {
-    if (err) {
-      return res.status(400).json({
-        success: false,
-        message: "Image upload failed",
-      });
-    }
 
-    try {
-      const { name, role } = req.body;
 
-      const data = await AboutTeam.findById(req.params.id);
-
-      if (!data) {
-        if (req.file && fs.existsSync(req.file.path)) {
-          fs.unlinkSync(req.file.path);
-        }
-
-        return res.status(404).json({
-          success: false,
-          message: "Data not found",
-        });
-      }
-
-      data.name = name || data.name;
-      data.role = role !== undefined ? role : data.role;
-
-      if (req.file) {
-        if (data.img?.public_id) {
-          await cloudinary.uploader.destroy(data.img.public_id);
-        }
-
-        const uploaded = await cloudinary.uploader.upload(req.file.path, {
-          folder: "about_team",
-        });
-
-        if (fs.existsSync(req.file.path)) {
-          fs.unlinkSync(req.file.path);
-        }
-
-        data.img = {
-          url: uploaded.secure_url,
-          public_id: uploaded.public_id,
-        };
-      }
-
-      await data.save();
-
-      res.status(200).json({
-        success: true,
-        message: "About team updated successfully",
-        data,
-      });
-    } catch (error) {
-      if (req.file && fs.existsSync(req.file.path)) {
-        fs.unlinkSync(req.file.path);
-      }
-
-      res.status(500).json({
-        success: false,
-        message: error.message || "Server error",
-      });
-    }
-  });
-};
-
+/* DELETE */
 export const deleteAboutTeam = async (req, res) => {
-  try {
-    const data = await AboutTeam.findById(req.params.id);
 
-    if (!data) {
-      return res.status(404).json({
-        success: false,
-        message: "Data not found",
-      });
-    }
+try {
 
-    if (data.img?.public_id) {
-      await cloudinary.uploader.destroy(data.img.public_id);
-    }
+const data = await AboutTeam.findById(req.params.id);
 
-    await AboutTeam.findByIdAndDelete(req.params.id);
+if (!data) {
 
-    res.status(200).json({
-      success: true,
-      message: "About team deleted successfully",
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message || "Server error",
-    });
-  }
+return res.status(404).json({
+
+success: false,
+message: "Data not found",
+
+});
+
+}
+
+await AboutTeam.findByIdAndDelete(req.params.id);
+
+res.status(200).json({
+
+success: true,
+message: "Deleted successfully",
+
+});
+
+}
+
+catch (error) {
+
+res.status(500).json({
+
+success: false,
+message: error.message || "Server error",
+
+});
+
+}
+
 };

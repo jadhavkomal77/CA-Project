@@ -11,22 +11,38 @@ export default function About() {
   if (isLoading || !about) return null;
 
 
-  /* BOLD ONLY 2 NAMES */
-  const highlightNames = (text) => {
+ const highlightNames = (text) => {
 
-    if (!text) return "";
+  if (!text) return "";
 
-    return text
-      .replace(
-        "Shri Datta Alse",
-        "<strong>Shri Datta Alse</strong>"
-      )
-      .replace(
-        "Shri Rajiv Alse",
-        "<strong>Shri Rajiv Alse</strong>"
-      );
+  return text
 
-  };
+    .replace(
+      "CADMA Associates Pvt. Ltd.",
+      "<strong>CADMA Associates Pvt. Ltd.</strong>"
+    )
+
+    .replace(
+      "30 years",
+      "<strong>30 years</strong>"
+    )
+
+    .replace(
+      "Shri Datta Alse",
+      "<strong>Shri Datta Alse</strong>"
+    )
+
+    .replace(
+      "Alse Rajiv & Company",
+      "<strong>Alse Rajiv & Company</strong>"
+    )
+
+    .replace(
+      "Shri Rajiv Alse",
+      "<strong>Shri Rajiv Alse</strong>"
+    );
+
+};
 
 
   return (
