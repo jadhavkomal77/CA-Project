@@ -67,6 +67,73 @@
 
 
 
+// import { useGetAboutTeamQuery } from "../redux/apis/aboutTeamApi";
+
+// const AboutTeamPage = () => {
+
+//   const { data, isLoading, isError } = useGetAboutTeamQuery();
+
+//   const members = data?.data || [];
+
+//   return (
+
+// <section className="bg-white py-16">
+
+// <div className="max-w-6xl mx-auto px-4">
+
+// {/* TITLE */}
+// <h2 className="text-center text-3xl sm:text-4xl font-bold text-black mb-12">
+
+// OUR TEAM
+
+// </h2>
+
+
+// {/* TEAM NAMES */}
+// {isLoading ? (
+
+// <p className="text-center">Loading...</p>
+
+// ) : isError ? (
+
+// <p className="text-center text-red-500">
+
+// Error loading team
+
+// </p>
+
+// ) : (
+
+// <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-6 gap-x-10 text-center">
+
+// {members.map((item) => (
+
+// <p
+// key={item._id}
+// className="text-blue-600 font-semibold text-lg tracking-wide"
+// >
+
+// {item.name}
+
+// </p>
+
+// ))}
+
+// </div>
+
+// )}
+
+// </div>
+
+// </section>
+
+//   );
+
+// };
+
+// export default AboutTeamPage;
+
+
 import { useGetAboutTeamQuery } from "../redux/apis/aboutTeamApi";
 
 const AboutTeamPage = () => {
@@ -77,26 +144,26 @@ const AboutTeamPage = () => {
 
   return (
 
-<section className="bg-white py-16">
+<section className="bg-gradient-to-b from-white to-slate-50 py-24">
 
 <div className="max-w-6xl mx-auto px-4">
 
 {/* TITLE */}
-<h2 className="text-center text-3xl sm:text-4xl font-bold text-black mb-12">
+<h2 className="text-center text-4xl sm:text-5xl font-bold text-slate-800 mb-16 tracking-wider">
 
 OUR TEAM
 
 </h2>
 
 
-{/* TEAM NAMES */}
+{/* TEAM */}
 {isLoading ? (
 
-<p className="text-center">Loading...</p>
+<p className="text-center text-slate-500 text-lg">Loading...</p>
 
 ) : isError ? (
 
-<p className="text-center text-red-500">
+<p className="text-center text-red-500 text-lg">
 
 Error loading team
 
@@ -104,18 +171,21 @@ Error loading team
 
 ) : (
 
-<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-6 gap-x-10 text-center">
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-10 gap-x-14 text-center">
 
 {members.map((item) => (
 
-<p
-key={item._id}
-className="text-blue-600 font-semibold text-lg tracking-wide"
->
+<div key={item._id} className="group">
+
+<p className="text-[#3b5fa8] font-extrabold text-xl tracking-wide transition duration-200 group-hover:text-[#2f4c8a]">
 
 {item.name}
 
 </p>
+
+<div className="w-14 h-[2px] bg-[#3b5fa8] mx-auto mt-3 rounded-full opacity-60 group-hover:w-20 transition-all"></div>
+
+</div>
 
 ))}
 
