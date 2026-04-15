@@ -9,9 +9,7 @@ on:
       - dev
   push:
     branches:
-      - master
-      - main
-      - staging
+      -dev
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
