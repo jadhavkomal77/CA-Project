@@ -150,7 +150,7 @@ export default function AdminVerifyOTP() {
 
         <p className="text-center text-sm text-gray-500 mt-6">
 
-          Didn't receive OTP?{" "}
+          Didn&apos;t receive OTP?{" "}
 
           <span
             onClick={timer===0 ? handleResend : null}
