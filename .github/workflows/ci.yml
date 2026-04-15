@@ -9,7 +9,7 @@ on:
       - dev
   push:
     branches:
-      -dev
+      -master
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
