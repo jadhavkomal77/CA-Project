@@ -72,8 +72,17 @@ export const createService = async (req, res) => {
 
 
 export const getPublicServices = async (req, res) => {
-  const services = await Service.find({ isActive: true }).sort({ createdAt: -1 });
-  res.json(services);
+  try {
+    // List view needs only card data; avoid sending heavy detail fields.
+    const services = await Service.find({ isActive: true })
+      .select("_id title slug shortDesc icon")
+      .sort({ createdAt: -1 })
+      .lean();
+
+    res.json(services);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
 

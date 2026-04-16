@@ -6,14 +6,7 @@ import { motion } from "framer-motion";
 
 export default function Services() {
   const navigate = useNavigate();
-  const { data: services, isLoading } = useGetPublicServicesQuery();
-
-  if (isLoading)
-    return (
-      <div className="h-[60vh] flex items-center justify-center text-lg font-medium text-gray-600">
-        Loading services...
-      </div>
-    );
+  const { data: services = [], isLoading, isFetching } = useGetPublicServicesQuery();
 
   /* container animation */
   const container = {
@@ -68,8 +61,22 @@ export default function Services() {
           animate="show"
           className="max-w-7xl mx-auto grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
         >
-
-          {services?.map(service=>{
+          {(isLoading && services.length === 0)
+            ? Array.from({ length: 6 }).map((_, index) => (
+              <div
+                key={`service-skeleton-${index}`}
+                className="relative rounded-3xl p-7 sm:p-8 bg-white/90 backdrop-blur shadow-lg overflow-hidden"
+              >
+                <div className="animate-pulse">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-slate-200 mb-5" />
+                  <div className="h-5 bg-slate-200 rounded w-3/4 mb-3" />
+                  <div className="h-4 bg-slate-200 rounded mb-2" />
+                  <div className="h-4 bg-slate-200 rounded w-5/6 mb-2" />
+                  <div className="h-4 bg-slate-200 rounded w-2/3 mt-6" />
+                </div>
+              </div>
+            ))
+            : services.map(service=>{
             const Icon = Icons[service.icon] || Icons.FileText;
 
             return(
@@ -144,6 +151,11 @@ export default function Services() {
           })}
 
         </motion.div>
+        {isFetching && services.length > 0 && (
+          <p className="text-center text-sm text-slate-500 mt-6">
+            Updating services...
+          </p>
+        )}
       </section>
     </div>
   );

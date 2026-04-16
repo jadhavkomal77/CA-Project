@@ -18,6 +18,7 @@ export const serviceApi = createApi({
     getPublicServices: builder.query({
       query: () => "/",               // ✅ list services
       providesTags: ["Service"],
+      keepUnusedDataFor: 300,
     }),
 
     getPublicServiceBySlug: builder.query({
