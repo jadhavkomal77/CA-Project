@@ -342,7 +342,6 @@ className="h-10 sm:h-11 md:h-12 lg:h-14 xl:h-16 w-auto object-contain"
 </div>
 
 
-
 {/* QUICK LINKS */}
 <FooterLinks
 title="Quick Links"
@@ -353,11 +352,13 @@ routeMap={routeMap}
 
 
 {/* IMPORTANT LINKS */}
-<FooterLinks
+<div>
+  <FooterLinks
 title="Important Links"
 links={footer.importantLinks}
 routeMap={routeMap}
 />
+</div>
 
 
 {/* OUR CITIES */}
