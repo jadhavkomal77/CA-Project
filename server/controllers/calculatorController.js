@@ -239,9 +239,9 @@ export const calculateAdvanceTax = asyncHandler(async (req, res) => {
 
   const installments = {
     q1: Math.round(advanceTaxPayable * 0.15 * 100) / 100,
-    q2: Math.round(advanceTaxPayable * 0.45 * 100) / 100,
-    q3: Math.round(advanceTaxPayable * 0.75 * 100) / 100,
-    q4: Math.round(advanceTaxPayable * 1.0 * 100) / 100,
+    q2: Math.round(advanceTaxPayable * 0.3 * 100) / 100,
+    q3: Math.round(advanceTaxPayable * 0.3 * 100) / 100,
+    q4: Math.round(advanceTaxPayable * 0.25 * 100) / 100,
   };
 
   res.json({
