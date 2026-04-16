@@ -164,6 +164,7 @@ export default function Contact() {
               <option>Company Registration</option>
               <option>Audit Services</option>
               <option>Accounting & Bookkeeping</option>
+              <option>Project Financing & Government Subsidies</option>
               <option>Tax Planning</option>
             </select>
 

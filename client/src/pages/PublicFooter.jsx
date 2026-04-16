@@ -304,8 +304,6 @@ export default function PublicFooter() {
 <footer className="bg-[#0f172a] text-gray-300">
 
 
-{/* ================= MAIN ================= */}
-
 <div
 className="
 max-w-7xl mx-auto
@@ -329,7 +327,7 @@ gap-4
 <div className="flex justify-center sm:justify-start">
 
 <img
-src="/Calogo.png"
+src="/Cal.png"
 alt="CADMA Associates"
 className="h-10 sm:h-11 md:h-12 lg:h-14 xl:h-16 w-auto object-contain"
 />
