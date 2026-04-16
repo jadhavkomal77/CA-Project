@@ -172,7 +172,6 @@ import {
   FaImage,
   FaInfoCircle,
   FaCogs,
-  FaProjectDiagram,
   FaAddressBook,
   FaWhatsapp,
   FaTools,

@@ -1,5 +1,3 @@
-
-import React from "react";
 import { useGetPublicAboutQuery } from "../redux/apis/aboutApi";
 import { useNavigate } from "react-router-dom";
 

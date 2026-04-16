@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAdminProfileQuery, useUpdateAdminProfileMutation } from "../redux/apis/adminApi";
 import { toast } from "react-toastify";
 

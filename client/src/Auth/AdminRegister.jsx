@@ -13,6 +13,7 @@ export default function AdminRegister() {
     adminRegister,
     { isSuccess, isError, error, isLoading },
   ] = useAdminRegisterMutation();
+  const errorMessage = error?.data?.message;
 
   const formik = useFormik({
     initialValues: {
@@ -48,9 +49,9 @@ export default function AdminRegister() {
     }
 
     if (isError) {
-      toast.error(error?.data?.message || "Register failed❌");
+      toast.error(errorMessage || "Register failed❌");
     }
-  }, [isSuccess, isError]);
+  }, [isSuccess, isError, errorMessage, navigate]);
 
   return (
     <div className="min-h-screen flex items-center justify-center from-blue-50 to-blue-200 px-4">

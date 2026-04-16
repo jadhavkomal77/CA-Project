@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useGetAllTaxUpdatesQuery, useGetCategoryStatsQuery } from '../redux/apis/taxUpdateApi';
-import { Search, Filter, FileText, Calendar, Tag, AlertCircle, Download, ExternalLink } from 'lucide-react';
+import { Search, Filter, FileText, Calendar, Tag, AlertCircle, Download } from 'lucide-react';
 
 export default function TaxUpdates() {
   const [page, setPage] = useState(1);
@@ -20,7 +20,7 @@ export default function TaxUpdates() {
     sortOrder: 'desc',
   });
 
-  const { data: categoryStats } = useGetCategoryStatsQuery();
+  useGetCategoryStatsQuery();
 
   const taxUpdates = data?.data || [];
   const pagination = data?.pagination || {};

@@ -67,7 +67,7 @@ export default function PublicCalculator() {
 
     if (active && !calculators.find(c => c.id === active))
       setActive(calculators[0]?.id || null);
-  }, [calculators]);
+  }, [active, calculators]);
 
   /* ---------------- ACTIVE COMPONENT ---------------- */
   const ActiveComp = calculators.find(c => c.id === active)?.comp;

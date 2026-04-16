@@ -268,7 +268,6 @@
 import {
   Facebook,
   Instagram,
-  Linkedin,
   Phone,
   Mail,
   MapPin,

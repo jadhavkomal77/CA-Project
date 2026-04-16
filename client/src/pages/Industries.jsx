@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import {
   Building2,
   Factory,
@@ -10,8 +9,6 @@ import {
 import { motion } from "framer-motion";
 
 export default function Industries() {
-  const navigate = useNavigate();
-
   const industries = [
     {
       name: "Retail & Trading",

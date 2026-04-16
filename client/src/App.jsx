@@ -2,7 +2,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import AdminLogin from "./Auth/AdminLogin";
-import AdminRegister from "./Auth/AdminRegister";
 import AdminProtected from "./shared/AdminProtected";
 import AdminHome from "./Auth/AdminHome";
 import AdminProfile from "./Auth/AdminProfile";
@@ -29,7 +28,6 @@ import AdminServiceEdit from "./admin/AdminServiceEdit";
 import NotFound from "./layout/NotFound";
 import WhatsappSettings from "./admin/WhatsappSettings";
 import Testimonials from "./pages/Testimonials";
-import Industries from "./pages/Industries";
 import FAQ from "./pages/FAQ";
 import CaseStudies from "./pages/CaseStudies";
 import CaseStudyDetails from "./pages/CaseStudyDetails";

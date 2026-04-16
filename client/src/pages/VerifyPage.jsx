@@ -6,7 +6,6 @@ import {
   CheckCircle2,
   XCircle,
   ShieldCheck,
-  Copy,
 } from "lucide-react";
 
 export default function VerifyPage() {
