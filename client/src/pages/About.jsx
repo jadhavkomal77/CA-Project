@@ -50,7 +50,6 @@ export default function About() {
       <div className="max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-14 items-center">
 
 
-        {/* IMAGE */}
         <div className="relative">
 
           <img
@@ -59,8 +58,6 @@ export default function About() {
             className="w-full h-[420px] object-cover rounded-3xl shadow-xl"
           />
 
-
-          {/* EXPERIENCE BOX */}
           <div className="absolute bottom-4 right-4 sm:-bottom-6 sm:-right-6 bg-white px-5 py-3 sm:px-6 sm:py-4 rounded-2xl shadow-lg border border-gray-100">
 
             <div className="relative inline-block">
