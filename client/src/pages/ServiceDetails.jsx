@@ -1,5 +1,3 @@
-
-import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useGetPublicServiceBySlugQuery } from "../redux/apis/serviceApi";
 import { motion } from "framer-motion";

@@ -24,7 +24,7 @@ const [editImage,setEditImage] = useState(null);
 const [editPreview,setEditPreview] = useState("");
 
 const [addAboutTeam,{isLoading:addLoading}] = useAddAboutTeamMutation();
-const [updateAboutTeam,{isLoading:updateLoading}] = useUpdateAboutTeamMutation();
+const [updateAboutTeam] = useUpdateAboutTeamMutation();
 const [deleteAboutTeam] = useDeleteAboutTeamMutation();
 
 const {data,refetch} = useGetAboutTeamQuery();

@@ -1,5 +1,3 @@
-
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetPublicProjectsQuery } from "../redux/apis/projectApi";
 import { motion } from "framer-motion";

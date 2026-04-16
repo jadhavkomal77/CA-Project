@@ -1,5 +1,4 @@
-
-import React, { useState } from "react";
+import { useState } from "react";
 import { useCreateContactMutation } from "../redux/apis/contactApi";
 
 export default function Contact() {

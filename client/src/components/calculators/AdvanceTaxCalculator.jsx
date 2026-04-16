@@ -1,15 +1,14 @@
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Landmark, AlertCircle, Info } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "react-toastify";
-import { useCalculateAdvanceTaxMutation } from "../../redux/apis/calculatorApi";
+import { calculateAdvanceTax } from "../../utils/calculator";
 
 export default function AdvanceTaxCalculator() {
 
   const navigate = useNavigate();
-  const [calculate, { isLoading }] = useCalculateAdvanceTaxMutation();
   const [redirecting,setRedirecting] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -18,37 +17,36 @@ export default function AdvanceTaxCalculator() {
     previousAdvanceTax: "",
   });
 
-  const [result, setResult] = useState(null);
-  const [error, setError] = useState("");
-
-  /* INPUT */
   const handleChange = (e) => {
     setFormData(prev => ({
       ...prev,
       [e.target.name]: e.target.value
     }));
-    setError("");
-    setResult(null);
   };
 
-  /* SUBMIT */
-  const handleSubmit = async (e) => {
+  const calculation = useMemo(
+    () => calculateAdvanceTax(formData),
+    [formData],
+  );
+
+  const hasInput = useMemo(
+    () => Object.values(formData).some((value) => value !== ""),
+    [formData],
+  );
+
+  const result = calculation.result;
+  const error = hasInput ? calculation.errors[0] ?? "" : "";
+
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    try {
-      const response = await calculate({
-        estimatedIncome: Number(formData.estimatedIncome),
-        tdsDeducted: Number(formData.tdsDeducted) || 0,
-        previousAdvanceTax: Number(formData.previousAdvanceTax) || 0,
-      }).unwrap();
-
-      setResult(response.data);
+    if (result) {
       toast.success("Tax calculated successfully ✅");
+      return;
+    }
 
-    } catch (err) {
-      const msg = err?.data?.message || "Calculation failed";
-      setError(msg);
-      toast.error(msg);
+    if (error) {
+      toast.error(error);
     }
   };
 
@@ -99,16 +97,15 @@ export default function AdvanceTaxCalculator() {
 
           <motion.button
             whileTap={{scale:0.95}}
-            disabled={isLoading}
+            disabled={!hasInput}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold flex justify-center items-center gap-2"
           >
-            {isLoading ? (
-              <>
-                <span className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"/>
-                Calculating...
-              </>
-            ) : "Calculate Tax"}
+            Calculate Tax
           </motion.button>
+
+          <p className="text-xs text-slate-500">
+            Results refresh instantly as you adjust the inputs.
+          </p>
 
         </motion.form>
 

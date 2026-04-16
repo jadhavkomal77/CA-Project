@@ -14,6 +14,7 @@ export default function AdminLogin() {
 
   const [adminLogin, { isSuccess, isError, error, isLoading }] =
     useAdminLoginMutation();
+  const errorMessage = error?.data?.message;
 
   const formik = useFormik({
     initialValues: {
@@ -39,9 +40,9 @@ export default function AdminLogin() {
     }
 
     if (isError) {
-      toast.error(error?.data?.message || "Invalid email or password");
+      toast.error(errorMessage || "Invalid email or password");
     }
-  }, [isSuccess, isError]);
+  }, [isSuccess, isError, errorMessage, navigate]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
