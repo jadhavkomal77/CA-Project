@@ -326,7 +326,7 @@ gap-4
 <div className="flex justify-center sm:justify-start">
 
 <img
-src="/Cal.png"
+src="/Calogo.png"
 alt="CADMA Associates"
 className="h-10 sm:h-11 md:h-12 lg:h-14 xl:h-16 w-auto object-contain"
 />
