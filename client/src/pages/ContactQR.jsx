@@ -36,7 +36,7 @@ export default function ContactQR() {
             md:p-3
           ">
             <img
-              src="/paymentQR.jpg"
+              src="/QR.jpeg"
               alt="QR"
               className="
                 w-[150px]

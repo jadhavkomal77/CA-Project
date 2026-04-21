@@ -56,6 +56,7 @@ import AdminVerifyOTP from "./Auth/AdminVerifyOTP";
 import AdminAboutTeam from "./admin/AdminAboutTeam";
 import AboutTeamPage from "./pages/AboutTeamPage";
 import ContactQR from "./pages/ContactQR";
+import ClientsSection from "./pages/ClientsSection";
 
 function App() {
   return (
@@ -81,6 +82,7 @@ function App() {
               <Route path="testimonials" element={<Testimonials />} />
               <Route path="faq" element={<FAQ />} />
               <Route path="/contactQR" element={<ContactQR />} />
+              <Route path="/clientsSection" element={<ClientsSection />} />
 
              
                  <Route path="tax-updates" element={<TaxUpdates />} />

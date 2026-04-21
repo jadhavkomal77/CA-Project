@@ -568,51 +568,34 @@ whitespace-nowrap
 
 
 </div>
-<div className="border-t border-white/10 py-6 text-center text-sm text-gray-400 px-4">
+<div className="border-t border-white/10 py-6 text-center text-sm text-gray-300 px-4">
 
+  <p className="flex flex-col sm:flex-row items-center justify-center">
 
-<p className="flex flex-col sm:flex-row items-center justify-center gap-1">
+    <span className="flex items-center gap-2">
+      <span>
+        © {new Date().getFullYear()}
+      </span>
 
+      <span className="text-yellow-400 font-medium ml-1">
+        {footer.companyName}
+      </span>
+    </span>
 
-<span>
+    <span className="hidden sm:inline mx-2">•</span>
 
-© {new Date().getFullYear()}
+    <span>
+      All Rights Reserved
+    </span>
 
-<span className="text-yellow-400 font-medium">
+  </p>
 
-{footer.companyName}
-
-</span>
-
-</span>
-
-
-<span className="hidden sm:inline">•</span>
-
-
-<span>
-
-All Rights Reserved
-
-</span>
-
-
-</p>
-
-
-
-<button
-
-onClick={() => (window.location.href = "/adminlogin")}
-
-className="mt-3 text-xs text-yellow-500 hover:underline"
-
->
-
-Admin Login
-
-</button>
-
+  <button
+    onClick={() => (window.location.href = "/adminlogin")}
+    className="mt-3 text-xs text-yellow-500 hover:underline"
+  >
+    Admin Login
+  </button>
 
 </div>
 
