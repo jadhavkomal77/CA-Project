@@ -17,8 +17,8 @@ export default function Hero() {
           <div className="space-y-6 text-center lg:text-left">
 
             {/* TITLE */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
-              {hero.title}
+            <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold uppercase text-blue-600 tracking-wide leading-tight">
+              DRIVING FINANCIAL GROWTH WITH TRUSTED CHARTERED ACCOUNTANTS
             </h1>
 
             {/* SUBTITLE */}
