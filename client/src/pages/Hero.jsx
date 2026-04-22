@@ -1,9 +1,7 @@
-import { useNavigate } from "react-router-dom";
 import { useGetPublicHeroQuery } from "../redux/apis/heroApi";
 
 export default function Hero() {
   const { data: hero, isLoading } = useGetPublicHeroQuery();
-  const navigate = useNavigate();
 
   if (isLoading || !hero) return null;
 
