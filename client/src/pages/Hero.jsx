@@ -6,7 +6,7 @@ export default function Hero() {
   if (isLoading || !hero) return null;
 
   return (
-    <section className="bg-gray-50 overflow-hidden">
+    <section className="bg-blue-600 overflow-hidden">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-12 lg:py-16">
 
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -15,7 +15,7 @@ export default function Hero() {
           <div className="space-y-6 text-center lg:text-left">
 
             {/* TITLE */}
-            <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold uppercase text-blue-600 tracking-wide leading-tight">
+            <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold uppercase text-white tracking-wide leading-tight">
               DRIVING FINANCIAL GROWTH WITH TRUSTED CHARTERED ACCOUNTANTS
             </h1>
 
@@ -29,7 +29,7 @@ export default function Hero() {
                     .getElementById("services")
                     ?.scrollIntoView({ behavior: "smooth" });
                 }}
-                className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
+                className="px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow-md hover:bg-gray-100 transition-colors"
               >
                 View Services
               </a>
@@ -41,7 +41,7 @@ export default function Hero() {
                     .getElementById("contact")
                     ?.scrollIntoView({ behavior: "smooth" });
                 }}
-                className="px-6 py-3 border-2 border-blue-600 text-blue-600 font-semibold rounded-lg hover:bg-blue-600 hover:text-white transition-colors"
+                className="px-6 py-3 bg-transparent border border-white text-white font-semibold rounded-lg hover:bg-white hover:text-blue-600 transition-colors"
               >
                 Contact Us
               </a>
@@ -49,16 +49,16 @@ export default function Hero() {
 
             {/* SUBTITLE */}
             {hero.subtitle && (
-              <p className="text-gray-800 text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
+              <p className="text-blue-100 text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
                 {hero.subtitle}
               </p>
             )}
 
             {/* STATS */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-5 pt-2 text-gray-800 text-sm sm:text-base">
-              <span><span className="text-green-500">✔</span> 30+ Years of Experience</span>
-              <span><span className="text-green-500">✔</span> 5,000+ Clients Served</span>
-              <span><span className="text-green-500">✔</span> Expert Advisory</span>
+            <div className="flex flex-wrap justify-center lg:justify-start gap-5 pt-2 text-blue-100 text-sm sm:text-base">
+              <span><span className="text-[#22C55E]">✔</span> 30+ Years of Experience</span>
+              <span><span className="text-[#22C55E]">✔</span> 5,000+ Clients Served</span>
+              <span><span className="text-[#22C55E]">✔</span> Expert Advisory</span>
             </div>
           </div>
 
