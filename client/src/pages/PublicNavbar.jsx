@@ -134,11 +134,8 @@ export default function PublicNavbar() {
     src="/Calogo.png"
     alt="CADMA Associates"
     className="
-      h-11
-      sm:h-12
-      md:h-14
-      lg:h-16
-      xl:h-18
+      h-12
+      md:h-16
       w-auto
       object-contain
     "
