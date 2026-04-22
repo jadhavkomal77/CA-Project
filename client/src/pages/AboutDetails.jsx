@@ -231,8 +231,8 @@ export default function AboutDetails() {
       {/* CTA */}
       <section className="py-8 text-center px-4">
 
-        <h2 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4">
-          Need Professional Financial Guidance?
+        <h2 className="text-2xl md:text-3xl font-bold uppercase text-blue-600 mb-3 md:mb-4">
+          NEED PROFESSIONAL FINANCIAL GUIDANCE?
         </h2>
 
         <p className="opacity-80 mb-6 md:mb-8 text-sm md:text-base">
