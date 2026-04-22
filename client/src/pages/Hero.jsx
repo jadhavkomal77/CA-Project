@@ -25,9 +25,8 @@ export default function Hero() {
                 href="#services"
                 onClick={(e) => {
                   e.preventDefault();
-                  document
-                    .getElementById("services")
-                    ?.scrollIntoView({ behavior: "smooth" });
+                  const el = document.getElementById("services");
+                  if (el) el.scrollIntoView({ behavior: "smooth" });
                 }}
                 className="px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow-md hover:bg-gray-100 transition-colors"
               >
@@ -37,9 +36,8 @@ export default function Hero() {
                 href="#contact"
                 onClick={(e) => {
                   e.preventDefault();
-                  document
-                    .getElementById("contact")
-                    ?.scrollIntoView({ behavior: "smooth" });
+                  const el = document.getElementById("contact");
+                  if (el) el.scrollIntoView({ behavior: "smooth" });
                 }}
                 className="px-6 py-3 bg-transparent border border-white text-white font-semibold rounded-lg hover:bg-white hover:text-blue-600 transition-colors"
               >
@@ -48,17 +46,17 @@ export default function Hero() {
             </div>
 
             {/* SUBTITLE */}
-            {hero.subtitle && (
+            {hero.subtitle ? (
               <p className="text-blue-100 text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
                 {hero.subtitle}
               </p>
-            )} */}
+            ) : null}
 
             {/* STATS */}
             <div className="flex flex-wrap justify-center lg:justify-start gap-5 pt-2 text-blue-100 text-sm sm:text-base">
-              <span><span className="text-[#22C55E]">✔</span> 30+ Years of Experience</span>
-              <span><span className="text-[#22C55E]">✔</span> 5,000+ Clients Served</span>
-              <span><span className="text-[#22C55E]">✔</span> Expert Advisory</span>
+              <span><span className="text-green-500">✔</span> 30+ Years of Experience</span>
+              <span><span className="text-green-500">✔</span> 5,000+ Clients Served</span>
+              <span><span className="text-green-500">✔</span> Expert Advisory</span>
             </div>
           </div>
 
