@@ -43,8 +43,16 @@ jobs:
           fi
         working-directory: server
 
+      # Deploy hook URLs return 404 if the hook was deleted or regenerated in Vercel.
+      # Set full hook URLs in GitHub: Settings → Secrets and variables → Actions.
       - name: Trigger Vercel Client Deploy Hook
+        env:
+          DEPLOY_HOOK_URL: ${{ secrets.VERCEL_CLIENT_DEPLOY_HOOK_URL }}
         run: |
+          if [ -z "$DEPLOY_HOOK_URL" ]; then
+            echo "::error::Missing repository secret VERCEL_CLIENT_DEPLOY_HOOK_URL. In Vercel: Project → Settings → Git → Deploy Hooks → copy URL; add secret in GitHub."
+            exit 1
+          fi
           echo "Triggering Vercel Client Deploy Hook..."
           curl --fail --show-error --silent \
             --retry 3 \
@@ -52,11 +60,17 @@ jobs:
             --connect-timeout 10 \
             --max-time 30 \
             -X POST \
-            "https://api.vercel.com/v1/integrations/deploy/prj_xqgjFKppQK7odjv7zbNXJcPVsC9j/1tHbQcwowZ"
+            "$DEPLOY_HOOK_URL"
           echo "Client deploy hook triggered successfully."
 
       - name: Trigger Vercel Server Deploy Hook
+        env:
+          DEPLOY_HOOK_URL: ${{ secrets.VERCEL_SERVER_DEPLOY_HOOK_URL }}
         run: |
+          if [ -z "$DEPLOY_HOOK_URL" ]; then
+            echo "::error::Missing repository secret VERCEL_SERVER_DEPLOY_HOOK_URL. In Vercel: Project → Settings → Git → Deploy Hooks → copy URL; add secret in GitHub."
+            exit 1
+          fi
           echo "Triggering Vercel Server Deploy Hook..."
           curl --fail --show-error --silent \
             --retry 3 \
@@ -64,5 +78,5 @@ jobs:
             --connect-timeout 10 \
             --max-time 30 \
             -X POST \
-            "https://api.vercel.com/v1/integrations/deploy/prj_Fj2aE2M6txBnC2gnsFQMBnGSnykC/dcZ8ZLVzj2"
+            "$DEPLOY_HOOK_URL"
           echo "Server deploy hook triggered successfully."
