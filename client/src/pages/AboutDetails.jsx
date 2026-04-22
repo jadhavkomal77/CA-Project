@@ -2,6 +2,7 @@
 
 import { useGetPublicAboutQuery } from "../redux/apis/aboutApi";
 import { motion } from "framer-motion";
+import AboutStatCard from "../components/AboutStatCard";
 import AboutTeamPage from "./AboutTeamPage";
 
 export default function AboutDetails() {
@@ -9,7 +10,7 @@ export default function AboutDetails() {
   const { data: about, isLoading } = useGetPublicAboutQuery();
 
   if (isLoading || !about)
-    return <p className="text-center py-20">Loading...</p>;
+    return <p className="text-center py-20 uppercase tracking-wide text-gray-600">LOADING...</p>;
 
 
  const highlightNames = (text) => {
@@ -59,13 +60,13 @@ export default function AboutDetails() {
           animate={{ opacity:1, y:0 }}
         >
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 md:mb-6">
-            About Our Firm
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold uppercase text-blue-600 tracking-wide mb-4 md:mb-6">
+            ABOUT OUR FIRM
           </h1>
 
-          <p className="text-gray-600 max-w-2xl mx-auto text-base sm:text-lg">
-            Professional consulting and financial advisory firm delivering
-            trusted services with excellence and integrity.
+          <p className="text-gray-600 max-w-2xl mx-auto text-base sm:text-lg uppercase tracking-wide">
+            PROFESSIONAL CONSULTING AND FINANCIAL ADVISORY FIRM DELIVERING TRUSTED
+            SERVICES WITH EXCELLENCE AND INTEGRITY.
           </p>
 
         </motion.div>
@@ -95,14 +96,14 @@ export default function AboutDetails() {
             animate={{ opacity:1, x:0 }}
           >
 
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 md:mb-6">
-              {about.title}
+            <h2 className="text-2xl sm:text-3xl font-bold uppercase text-blue-600 tracking-wide mb-4 md:mb-6">
+              A LEGACY OF TRUST AND EXPERTISE FOR OVER 30 YEARS
             </h2>
 
 
             {/* DESCRIPTION 1 */}
             <p
-              className="text-gray-900 leading-relaxed mb-4 text-sm sm:text-base"
+              className="text-gray-900 leading-relaxed mb-4 text-sm sm:text-base uppercase tracking-wide"
               dangerouslySetInnerHTML={{
                 __html: highlightNames(about.description1)
               }}
@@ -113,7 +114,7 @@ export default function AboutDetails() {
             {about.description2 && (
 
               <p
-                className="text-gray-900 leading-relaxed mb-4 text-sm sm:text-base"
+                className="text-gray-900 leading-relaxed mb-4 text-sm sm:text-base uppercase tracking-wide"
                 dangerouslySetInnerHTML={{
                   __html: highlightNames(about.description2)
                 }}
@@ -125,37 +126,8 @@ export default function AboutDetails() {
 
             {/* Stats */}
             <div className="mt-6 md:mt-8 grid grid-cols-2 gap-4 md:gap-6">
-
-
-              <div className="bg-white rounded-xl shadow-md p-4 md:p-6 text-center">
-
-                <h3 className="text-3xl md:text-4xl font-bold text-blue-600">
-                  {about.experience}
-                  <sup className="text-lg md:text-xl align-top ml-1">+</sup>
-                </h3>
-
-                <p className="text-gray-700 text-xs md:text-sm mt-1">
-                  Years Experience
-                </p>
-
-              </div>
-
-
-
-              <div className="bg-white rounded-xl shadow-md p-4 md:p-6 text-center">
-
-                <h3 className="text-3xl md:text-4xl font-bold text-blue-600">
-                  5000
-                  <sup className="text-lg md:text-xl align-top ml-1">+</sup>
-                </h3>
-
-                <p className="text-gray-700 text-xs md:text-sm mt-1">
-                  Clients Served
-                </p>
-
-              </div>
-
-
+              <AboutStatCard value={about.experience} label="YEARS EXPERIENCE" />
+              <AboutStatCard value="5000" label="CLIENTS SERVED" />
             </div>
 
 
@@ -199,12 +171,12 @@ export default function AboutDetails() {
                   />
 
 
-                  <h3 className="text-xl md:text-2xl font-semibold text-gray-900">
+                  <h3 className="text-xl md:text-2xl font-semibold text-gray-900 uppercase tracking-wide">
                     {m.name}
                   </h3>
 
 
-                  <p className="text-gray-800 text-sm md:text-base mt-3">
+                  <p className="text-gray-800 text-sm md:text-base mt-3 uppercase tracking-wide">
                     {m.shortDetails}
                   </p>
 
@@ -235,16 +207,16 @@ export default function AboutDetails() {
           NEED PROFESSIONAL FINANCIAL GUIDANCE?
         </h2>
 
-        <p className="opacity-80 mb-6 md:mb-8 text-sm md:text-base">
-          Contact our expert team for consultation and tailored financial solutions.
+        <p className="opacity-80 mb-6 md:mb-8 text-sm md:text-base uppercase tracking-wide">
+          CONTACT OUR EXPERT TEAM FOR CONSULTATION AND TAILORED FINANCIAL SOLUTIONS.
         </p>
 
 
         <button
           onClick={() => window.location.href="/contact"}
-          className="bg-gradient-to-r from-blue-600 to-blue-800 text-white px-8 md:px-10 py-3 md:py-4 rounded-full font-semibold shadow-md hover:shadow-lg hover:scale-105 transition text-sm md:text-base"
+          className="bg-gradient-to-r from-blue-600 to-blue-800 text-white px-8 md:px-10 py-3 md:py-4 rounded-full font-semibold shadow-md hover:shadow-lg hover:scale-105 transition text-sm md:text-base uppercase tracking-wide"
         >
-          Contact Now
+          CONTACT NOW
         </button>
 
       </section>

@@ -71,8 +71,8 @@ export default function About() {
 
             </div>
 
-            <p className="text-xs sm:text-sm text-gray-800 font-medium mt-1">
-              Years of Experience
+            <p className="text-xs sm:text-sm text-gray-800 font-medium mt-1 uppercase tracking-wide">
+              YEARS OF EXPERIENCE
             </p>
 
           </div>
@@ -84,8 +84,8 @@ export default function About() {
         {/* TEXT */}
         <div>
 
-          <span className="inline-block bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-sm font-semibold tracking-wide mb-4">
-            About Our Firm
+          <span className="inline-block bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-sm font-semibold uppercase tracking-wide mb-4">
+            ABOUT OUR FIRM
           </span>
 
 
@@ -96,7 +96,7 @@ export default function About() {
 
           {/* DESCRIPTION 1 */}
           <p
-            className="text-black leading-relaxed mb-4"
+            className="text-black leading-relaxed mb-4 uppercase tracking-wide text-sm sm:text-base"
             dangerouslySetInnerHTML={{
               __html: highlightNames(about.description1)
             }}
@@ -107,7 +107,7 @@ export default function About() {
           {about.description2 && (
 
             <p
-              className="text-black leading-relaxed mb-8"
+              className="text-black leading-relaxed mb-8 uppercase tracking-wide text-sm sm:text-base"
               dangerouslySetInnerHTML={{
                 __html: highlightNames(about.description2)
               }}
@@ -119,9 +119,9 @@ export default function About() {
 
           <button
             onClick={() => navigate("/about-details")}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold shadow-md transition"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold shadow-md transition uppercase tracking-wide"
           >
-            Read More
+            READ MORE
           </button>
 
         </div>
