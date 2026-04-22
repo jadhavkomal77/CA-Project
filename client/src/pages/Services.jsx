@@ -3,26 +3,43 @@ import { useNavigate } from "react-router-dom";
 import { useGetPublicServicesQuery } from "../redux/apis/serviceApi";
 import * as Icons from "lucide-react";
 import { motion } from "framer-motion";
+import { services as servicesConfig } from "../servicesConfig";
+import HandMoneyIcon from "../components/icons/HandMoneyIcon";
+import BuildingIcon from "../components/icons/BuildingIcon";
+import ClipboardCheckIcon from "../components/icons/ClipboardCheckIcon";
+import TaxDocumentIcon from "../components/icons/TaxDocumentIcon";
+import StartupIcon from "../components/icons/StartupIcon";
+import WealthIcon from "../components/icons/WealthIcon";
+
+const customIconComponents = {
+  HandMoneyIcon,
+  BuildingIcon,
+  ClipboardCheckIcon,
+  TaxDocumentIcon,
+  StartupIcon,
+  WealthIcon,
+};
+
+const lucideFallbackByTitle = [
+  { match: /loan/i, icon: "CreditCard" },
+  { match: /government subsidy/i, icon: "Landmark" },
+  { match: /auctioneering/i, icon: "Gavel" },
+];
+
+const getServiceConfig = (service) =>
+  servicesConfig.find((entry) =>
+    entry.keywords.some((keyword) => keyword.test(service.title))
+  );
+
+const getFallbackIconName = (service) => {
+  if (service.icon) return service.icon;
+  const matched = lucideFallbackByTitle.find((entry) => entry.match.test(service.title));
+  return matched?.icon || "FileText";
+};
 
 export default function Services() {
   const navigate = useNavigate();
   const { data: services = [], isLoading, isFetching } = useGetPublicServicesQuery();
-  const serviceIconByTitle = [
-    { match: /project financing/i, icon: "Briefcase" },
-    { match: /income tax/i, icon: "FileText" },
-    { match: /gst/i, icon: "Receipt" },
-    { match: /company law/i, icon: "Building2" },
-    { match: /wealth management/i, icon: "TrendingUp" },
-    { match: /loan/i, icon: "CreditCard" },
-    { match: /government subsidy/i, icon: "Landmark" },
-    { match: /auctioneering/i, icon: "Gavel" },
-  ];
-
-  const getServiceIconName = (service) => {
-    if (service.icon) return service.icon;
-    const matched = serviceIconByTitle.find((entry) => entry.match.test(service.title));
-    return matched?.icon || "FileText";
-  };
 
   /* container animation */
   const container = {
@@ -58,8 +75,8 @@ export default function Services() {
         transition={{ duration: 0.7 }}
         className="pt-16 pb-14 px-6 text-center"
       >
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-          Our Services
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold uppercase text-blue-600 tracking-wide mb-4">
+          OUR SERVICES
         </h1>
 
         <p className="text-gray-700 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
@@ -94,7 +111,11 @@ export default function Services() {
             ))
             // TODO: Reorder via admin CMS - Project Financing must be index 0
             : services.map(service=>{
-            const IconComponent = Icons[getServiceIconName(service)] || Icons.FileText;
+            const matchedConfig = getServiceConfig(service);
+            const CustomIconComponent =
+              matchedConfig && customIconComponents[matchedConfig.icon];
+            const FallbackIconComponent =
+              Icons[getFallbackIconName(service)] || Icons.FileText;
 
             return(
               <motion.div
@@ -143,7 +164,19 @@ export default function Services() {
                     group-hover:scale-110
                     transition
                   ">
-                    <IconComponent className="w-8 h-8 text-blue-600" aria-hidden="true" />
+                    {CustomIconComponent ? (
+                      <CustomIconComponent
+                        size={34}
+                        className="text-[#2563EB]"
+                        ariaLabel={`${service.title} icon`}
+                      />
+                    ) : (
+                      <FallbackIconComponent
+                        className="w-8 h-8 text-[#2563EB]"
+                        role="img"
+                        aria-label={`${service.title} icon`}
+                      />
+                    )}
                   </div>
 
                   {/* TITLE */}

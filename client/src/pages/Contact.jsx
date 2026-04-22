@@ -56,8 +56,8 @@ export default function Contact() {
             CONTACT OUR CA TEAM
           </p>
 
-          <h2 className="text-3xl md:text-4xl font-bold text-black leading-tight mb-6">
-            Speak With a Chartered <br /> Accountant Today
+          <h2 className="text-3xl md:text-4xl font-bold uppercase text-blue-600 tracking-wide leading-tight mb-6">
+            SPEAK WITH A CHARTERED <br /> ACCOUNTANT TODAY
           </h2>
 
           <p className="text-gray-700 max-w-xl mb-10 leading-relaxed">
@@ -115,8 +115,8 @@ export default function Contact() {
 
         {/* FORM */}
         <div className="bg-white shadow-xl rounded-2xl p-10">
-          <h3 className="text-2xl font-bold text-black mb-8">
-            Book Free Consultation
+          <h3 className="text-2xl font-bold uppercase text-blue-600 tracking-wide mb-8">
+            BOOK FREE CONSULTATION
           </h3>
 
           <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-5">
