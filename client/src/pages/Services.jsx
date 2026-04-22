@@ -1,211 +1,61 @@
-
-import { useNavigate } from "react-router-dom";
-import { useGetPublicServicesQuery } from "../redux/apis/serviceApi";
-import * as Icons from "lucide-react";
 import { motion } from "framer-motion";
-import { services as servicesConfig } from "../servicesConfig";
-import HandMoneyIcon from "../components/icons/HandMoneyIcon";
-import BuildingIcon from "../components/icons/BuildingIcon";
-import ClipboardCheckIcon from "../components/icons/ClipboardCheckIcon";
-import TaxDocumentIcon from "../components/icons/TaxDocumentIcon";
-import StartupIcon from "../components/icons/StartupIcon";
-import WealthIcon from "../components/icons/WealthIcon";
+import { services } from "../services";
+import ServiceItem from "../components/ServiceItem";
 
-const customIconComponents = {
-  HandMoneyIcon,
-  BuildingIcon,
-  ClipboardCheckIcon,
-  TaxDocumentIcon,
-  StartupIcon,
-  WealthIcon,
+const container = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.08,
+    },
+  },
 };
 
-const lucideFallbackByTitle = [
-  { match: /loan/i, icon: "CreditCard" },
-  { match: /government subsidy/i, icon: "Landmark" },
-  { match: /auctioneering/i, icon: "Gavel" },
-];
-
-const getServiceConfig = (service) =>
-  servicesConfig.find((entry) =>
-    entry.keywords.some((keyword) => keyword.test(service.title))
-  );
-
-const getFallbackIconName = (service) => {
-  if (service.icon) return service.icon;
-  const matched = lucideFallbackByTitle.find((entry) => entry.match.test(service.title));
-  return matched?.icon || "FileText";
+const item = {
+  hidden: { opacity: 0, y: 16 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, ease: "easeOut" },
+  },
 };
 
 export default function Services() {
-  const navigate = useNavigate();
-  const { data: services = [], isLoading, isFetching } = useGetPublicServicesQuery();
-
-  /* container animation */
-  const container = {
-    hidden: {},
-    show: {
-      transition: {
-        staggerChildren: 0.12,
-      },
-    },
-  };
-
-  /* card animation */
-  const item = {
-    hidden: { opacity: 0, y: 40, scale: 0.96 },
-    show: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut",
-      },
-    },
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
-
-      {/* HEADER */}
+    <div className="bg-white">
       <motion.section
-        initial={{ opacity: 0, y: 40 }}
+        initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
-        className="pt-16 pb-14 px-6 text-center"
+        transition={{ duration: 0.5 }}
+        className="px-4 pb-10 pt-16 text-center sm:px-6"
       >
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold uppercase text-blue-600 tracking-wide mb-4">
+        <h1 className="mb-4 text-3xl font-bold uppercase tracking-wide text-blue-600 sm:text-4xl md:text-5xl">
           OUR SERVICES
         </h1>
-
-        <p className="text-gray-700 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
-          Expert financial and compliance solutions tailored to your business needs.
+        <p className="mx-auto max-w-2xl text-base leading-relaxed text-gray-600 sm:text-lg">
+          Expert financial and compliance solutions tailored to your business
+          needs.
         </p>
       </motion.section>
 
-
-      {/* GRID */}
-      <section className="pb-24 px-4 sm:px-6">
-
+      <section className="px-4 pb-24 sm:px-6">
         <motion.div
           variants={container}
           initial="hidden"
-          animate="show"
-          className="max-w-7xl mx-auto grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
+          whileInView="show"
+          viewport={{ once: true, margin: "-40px" }}
+          className="mx-auto grid max-w-6xl grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3"
         >
-          {(isLoading && services.length === 0)
-            ? Array.from({ length: 6 }).map((_, index) => (
-              <div
-                key={`service-skeleton-${index}`}
-                className="relative rounded-3xl p-7 sm:p-8 bg-white/90 backdrop-blur shadow-lg overflow-hidden"
-              >
-                <div className="animate-pulse">
-                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-slate-200 mb-5" />
-                  <div className="h-5 bg-slate-200 rounded w-3/4 mb-3" />
-                  <div className="h-4 bg-slate-200 rounded mb-2" />
-                  <div className="h-4 bg-slate-200 rounded w-5/6 mb-2" />
-                  <div className="h-4 bg-slate-200 rounded w-2/3 mt-6" />
-                </div>
-              </div>
-            ))
-            // TODO: Reorder via admin CMS - Project Financing must be index 0
-            : services.map(service=>{
-            const matchedConfig = getServiceConfig(service);
-            const CustomIconComponent =
-              matchedConfig && customIconComponents[matchedConfig.icon];
-            const FallbackIconComponent =
-              Icons[getFallbackIconName(service)] || Icons.FileText;
-
-            return(
-              <motion.div
-                variants={item}
-                key={service._id}
-                whileHover={{
-                  y: -10,
-                  scale: 1.02,
-                }}
-                whileTap={{ scale: 0.97 }}
-                onClick={()=>navigate(`/services/${service.slug}`)}
-                className="
-                group relative
-                cursor-pointer
-                rounded-3xl
-                p-7 sm:p-8
-                bg-white/90 backdrop-blur
-                shadow-lg
-                transition
-                overflow-hidden
-                "
-              >
-
-                {/* glow background animation */}
-                <div className="
-                absolute inset-0 opacity-0 group-hover:opacity-100 transition
-                bg-gradient-to-br from-blue-50 via-white to-indigo-50
-                "/>
-
-                {/* floating light */}
-                <div className="
-                absolute -top-10 -right-10 w-40 h-40 bg-blue-200
-                rounded-full blur-3xl opacity-0 group-hover:opacity-30 transition duration-700
-                "/>
-
-                {/* content wrapper */}
-                <div className="relative z-10">
-
-                  {/* ICON */}
-                  <div className="
-                    w-14 h-14 sm:w-16 sm:h-16
-                    rounded-2xl
-                    bg-gradient-to-br from-blue-50 to-indigo-50
-                    flex items-center justify-center
-                    mb-5
-                    group-hover:scale-110
-                    transition
-                  ">
-                    {CustomIconComponent ? (
-                      <CustomIconComponent
-                        size={34}
-                        className="text-[#2563EB]"
-                        ariaLabel={`${service.title} icon`}
-                      />
-                    ) : (
-                      <FallbackIconComponent
-                        className="w-8 h-8 text-[#2563EB]"
-                        role="img"
-                        aria-label={`${service.title} icon`}
-                      />
-                    )}
-                  </div>
-
-                  {/* TITLE */}
-                  <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3">
-                    {service.title}
-                  </h3>
-
-                  {/* DESC */}
-                  <p className="text-gray-700 text-sm sm:text-base mb-6 leading-relaxed">
-                    {service.shortDesc}
-                  </p>
-
-                  {/* CTA */}
-                  <span className="font-semibold text-blue-600 group-hover:text-blue-800 transition">
-                    Read More →
-                  </span>
-
-                </div>
-
-              </motion.div>
-            )
-          })}
-
+          {services.map((service) => (
+            <motion.div key={service.title} variants={item}>
+              <ServiceItem
+                title={service.title}
+                description={service.description}
+                icon={service.icon}
+              />
+            </motion.div>
+          ))}
         </motion.div>
-        {isFetching && services.length > 0 && (
-          <p className="text-center text-sm text-slate-500 mt-6">
-            Updating services...
-          </p>
-        )}
       </section>
     </div>
   );
