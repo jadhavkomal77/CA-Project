@@ -8,7 +8,6 @@ export default function About() {
 
   if (isLoading || !about) return null;
 
-
  const highlightNames = (text) => {
 
   if (!text) return "";
@@ -90,8 +89,8 @@ export default function About() {
           </span>
 
 
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 leading-tight mb-6">
-            {about.title}
+          <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-wide text-blue-600 leading-tight mb-6">
+            A LEGACY OF TRUST AND EXPERTISE FOR OVER 30 YEARS
           </h2>
 
 

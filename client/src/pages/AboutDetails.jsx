@@ -3,7 +3,6 @@
 import { useGetPublicAboutQuery } from "../redux/apis/aboutApi";
 import { motion } from "framer-motion";
 import AboutTeamPage from "./AboutTeamPage";
-import ClientsSection from "./ClientsSection";
 
 export default function AboutDetails() {
 
@@ -49,7 +48,7 @@ export default function AboutDetails() {
 
   return (
 
-    <div className="bg-gradient-to-br from-slate-50 via-white to-blue-50 overflow-hidden">
+    <div className="bg-gradient-to-br from-slate-50 via-white to-blue-50">
 
 
       {/* HERO */}
@@ -175,8 +174,8 @@ export default function AboutDetails() {
 
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
 
-            <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">
-              Meet Our
+            <h2 className="text-3xl font-bold uppercase text-center mb-12 text-blue-600">
+              MEET OUR TEAM
             </h2>
 
 
@@ -223,7 +222,8 @@ export default function AboutDetails() {
       )}
 
 
-     <ClientsSection/>
+
+      {/* OUR CLIENTS section removed per client request (REQ-10) — component preserved in OurClientsSection.jsx */}
       <AboutTeamPage/>
 
 
@@ -231,8 +231,8 @@ export default function AboutDetails() {
       {/* CTA */}
       <section className="py-8 text-center px-4">
 
-        <h2 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4">
-          Need Professional Financial Guidance?
+        <h2 className="text-2xl md:text-3xl font-bold uppercase text-blue-600 mb-3 md:mb-4">
+          NEED PROFESSIONAL FINANCIAL GUIDANCE?
         </h2>
 
         <p className="opacity-80 mb-6 md:mb-8 text-sm md:text-base">

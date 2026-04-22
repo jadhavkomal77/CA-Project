@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function ContactQR() {
   return (
     <div className="min-h-[calc(100vh-90px)] bg-gray-100 flex items-center justify-center px-4 py-6">
@@ -61,7 +59,7 @@ export default function ContactQR() {
             tracking-wide
             leading-tight
           ">
-            LET'S WORK <br />
+            LET&apos;S WORK <br />
             TOGETHER.
           </h2>
 

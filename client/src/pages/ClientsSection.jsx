@@ -9,8 +9,8 @@ export default function ClientsSection() {
           </h2>
 
           <p className="text-white/90 leading-relaxed max-w-md">
-            We've provided reliable service to our clientele since our early days.
-            We've had the honor of being the firm of choice of the following corporations:
+            We&apos;ve provided reliable service to our clientele since our early days.
+            We&apos;ve had the honor of being the firm of choice of the following corporations:
           </p>
         </div>
 

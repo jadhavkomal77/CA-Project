@@ -1,9 +1,7 @@
-import { useNavigate } from "react-router-dom";
 import { useGetPublicHeroQuery } from "../redux/apis/heroApi";
 
 export default function Hero() {
   const { data: hero, isLoading } = useGetPublicHeroQuery();
-  const navigate = useNavigate();
 
   if (isLoading || !hero) return null;
 
@@ -17,9 +15,37 @@ export default function Hero() {
           <div className="space-y-6 text-center lg:text-left">
 
             {/* TITLE */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
-              {hero.title}
+            <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold uppercase text-blue-600 tracking-wide leading-tight">
+              DRIVING FINANCIAL GROWTH WITH TRUSTED CHARTERED ACCOUNTANTS
             </h1>
+
+            {/* BUTTONS */}
+            <div className="flex flex-wrap gap-4 mt-6 justify-center lg:justify-start">
+              <a
+                href="#services"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document
+                    .getElementById("services")
+                    ?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                View Services
+              </a>
+              <a
+                href="#contact"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document
+                    .getElementById("contact")
+                    ?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="px-6 py-3 border-2 border-blue-600 text-blue-600 font-semibold rounded-lg hover:bg-blue-600 hover:text-white transition-colors"
+              >
+                Contact Us
+              </a>
+            </div>
 
             {/* SUBTITLE */}
             {hero.subtitle && (
@@ -28,30 +54,11 @@ export default function Hero() {
               </p>
             )}
 
-            {/* BUTTONS */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-
-              <button
-                onClick={() => navigate("/contact")}
-                className="bg-blue-600 hover:bg-blue-700 px-7 py-3 rounded-lg text-white font-semibold shadow-md transition"
-              >
-                {hero.buttonText || "Get a Free Quote"}
-              </button>
-
-              <button
-                onClick={() => navigate("/services")}
-                className="border border-gray-800 hover:border-blue-600 hover:text-blue-600 px-7 py-3 rounded-lg text-gray-800 font-semibold transition"
-              >
-                View Services
-              </button>
-
-            </div>
-
             {/* STATS */}
             <div className="flex flex-wrap justify-center lg:justify-start gap-5 pt-2 text-gray-800 text-sm sm:text-base">
-              <span>✔ 30+ Years of Experience</span>
-              <span>✔ 5,000+ Clients Served</span>
-              <span>✔ Expert Advisory</span>
+              <span><span className="text-green-500">✔</span> 30+ Years of Experience</span>
+              <span><span className="text-green-500">✔</span> 5,000+ Clients Served</span>
+              <span><span className="text-green-500">✔</span> Expert Advisory</span>
             </div>
           </div>
 
