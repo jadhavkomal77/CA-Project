@@ -81,8 +81,8 @@ export default function PublicCalculator() {
 
         {/* HEADER */}
         <div className="text-center mb-14">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-black mb-4 tracking-tight">
-            Financial Calculators
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold uppercase text-blue-600 mb-4 tracking-tight">
+            FINANCIAL CALCULATOR
           </h1>
 
           <p className="text-slate-700 text-sm sm:text-base lg:text-lg">
