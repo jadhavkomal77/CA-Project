@@ -7,6 +7,22 @@ import { motion } from "framer-motion";
 export default function Services() {
   const navigate = useNavigate();
   const { data: services = [], isLoading, isFetching } = useGetPublicServicesQuery();
+  const serviceIconByTitle = [
+    { match: /project financing/i, icon: "Briefcase" },
+    { match: /income tax/i, icon: "FileText" },
+    { match: /gst/i, icon: "Receipt" },
+    { match: /company law/i, icon: "Building2" },
+    { match: /wealth management/i, icon: "TrendingUp" },
+    { match: /loan/i, icon: "CreditCard" },
+    { match: /government subsidy/i, icon: "Landmark" },
+    { match: /auctioneering/i, icon: "Gavel" },
+  ];
+
+  const getServiceIconName = (service) => {
+    if (service.icon) return service.icon;
+    const matched = serviceIconByTitle.find((entry) => entry.match.test(service.title));
+    return matched?.icon || "FileText";
+  };
 
   /* container animation */
   const container = {
@@ -78,7 +94,7 @@ export default function Services() {
             ))
             // TODO: Reorder via admin CMS - Project Financing must be index 0
             : services.map(service=>{
-            const Icon = Icons[service.icon] || Icons.FileText;
+            const IconComponent = Icons[getServiceIconName(service)] || Icons.FileText;
 
             return(
               <motion.div
@@ -127,7 +143,7 @@ export default function Services() {
                     group-hover:scale-110
                     transition
                   ">
-                    <Icon size={26} className="text-blue-600"/>
+                    <IconComponent className="w-8 h-8 text-blue-600" aria-hidden="true" />
                   </div>
 
                   {/* TITLE */}
