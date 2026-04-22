@@ -1,0 +1,68 @@
+name: Production Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+          cache-dependency-path: |
+            client/package-lock.json
+            server/package-lock.json
+
+      - name: Install Client Dependencies
+        run: npm ci
+        working-directory: client
+
+      - name: Build Client
+        run: npm run build
+        working-directory: client
+
+      - name: Install Server Dependencies
+        run: npm ci
+        working-directory: server
+
+      - name: Build Server
+        run: |
+          if npm run | grep -q " build"; then
+            npm run build
+          else
+            echo "No server build script found. Skipping server build."
+          fi
+        working-directory: server
+
+      - name: Trigger Vercel Client Deploy Hook
+        run: |
+          echo "Triggering Vercel Client Deploy Hook..."
+          curl --fail --show-error --silent \
+            --retry 3 \
+            --retry-delay 2 \
+            --connect-timeout 10 \
+            --max-time 30 \
+            -X POST \
+            "https://api.vercel.com/v1/integrations/deploy/prj_xqgjFKppQK7odjv7zbNXJcPVsC9j/1tHbQcwowZ"
+          echo "Client deploy hook triggered successfully."
+
+      - name: Trigger Vercel Server Deploy Hook
+        run: |
+          echo "Triggering Vercel Server Deploy Hook..."
+          curl --fail --show-error --silent \
+            --retry 3 \
+            --retry-delay 2 \
+            --connect-timeout 10 \
+            --max-time 30 \
+            -X POST \
+            "https://api.vercel.com/v1/integrations/deploy/prj_Fj2aE2M6txBnC2gnsFQMBnGSnykC/dcZ8ZLVzj2"
+          echo "Server deploy hook triggered successfully."

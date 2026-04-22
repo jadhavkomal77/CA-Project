@@ -3,6 +3,7 @@
 import { useGetPublicAboutQuery } from "../redux/apis/aboutApi";
 import { motion } from "framer-motion";
 import AboutTeamPage from "./AboutTeamPage";
+import ClientsSection from "./ClientsSection";
 
 export default function AboutDetails() {
 
