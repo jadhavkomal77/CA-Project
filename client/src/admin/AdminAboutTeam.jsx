@@ -118,9 +118,11 @@ refetch();
 };
 
 
+
 return(
 
 <div className="min-h-screen bg-gray-50 py-10">
+
 
 <div className="max-w-4xl mx-auto px-4">
 
@@ -131,8 +133,6 @@ Our Team Names
 </h1>
 
 
-
-{/* ADD FORM */}
 <form
 onSubmit={handleSubmit}
 className="flex gap-3 mb-8"
@@ -166,8 +166,6 @@ Add
 </form>
 
 
-
-{/* LIST */}
 <div className="bg-white rounded-xl shadow divide-y">
 
 {members.map((item)=>(
@@ -176,7 +174,6 @@ Add
 key={item._id}
 className="flex justify-between items-center px-4 py-3"
 >
-
 
 {/* NAME */}
 {editId === item._id ? (
@@ -281,3 +278,4 @@ Delete
 );
 
 }
+
