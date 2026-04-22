@@ -21,31 +21,40 @@ export default function Hero() {
               DRIVING FINANCIAL GROWTH WITH TRUSTED CHARTERED ACCOUNTANTS
             </h1>
 
+            {/* BUTTONS */}
+            <div className="flex flex-wrap gap-4 mt-6 justify-center lg:justify-start">
+              <a
+                href="#services"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document
+                    .getElementById("services")
+                    ?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                View Services
+              </a>
+              <a
+                href="#contact"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document
+                    .getElementById("contact")
+                    ?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="px-6 py-3 border-2 border-blue-600 text-blue-600 font-semibold rounded-lg hover:bg-blue-600 hover:text-white transition-colors"
+              >
+                Contact Us
+              </a>
+            </div>
+
             {/* SUBTITLE */}
             {hero.subtitle && (
               <p className="text-gray-800 text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
                 {hero.subtitle}
               </p>
             )}
-
-            {/* BUTTONS */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-
-              <button
-                onClick={() => navigate("/contact")}
-                className="bg-blue-600 hover:bg-blue-700 px-7 py-3 rounded-lg text-white font-semibold shadow-md transition"
-              >
-                {hero.buttonText || "Get a Free Quote"}
-              </button>
-
-              <button
-                onClick={() => navigate("/services")}
-                className="border border-gray-800 hover:border-blue-600 hover:text-blue-600 px-7 py-3 rounded-lg text-gray-800 font-semibold transition"
-              >
-                View Services
-              </button>
-
-            </div>
 
             {/* STATS */}
             <div className="flex flex-wrap justify-center lg:justify-start gap-5 pt-2 text-gray-800 text-sm sm:text-base">
