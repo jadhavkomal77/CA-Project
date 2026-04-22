@@ -48,7 +48,7 @@ export default function AboutDetails() {
 
   return (
 
-    <div className="bg-gradient-to-br from-slate-50 via-white to-blue-50 overflow-hidden">
+    <div className="bg-gradient-to-br from-slate-50 via-white to-blue-50">
 
 
       {/* HERO */}
@@ -174,8 +174,8 @@ export default function AboutDetails() {
 
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
 
-            <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">
-              Meet Our
+            <h2 className="text-3xl font-bold uppercase text-center mb-12 text-blue-600">
+              MEET OUR TEAM
             </h2>
 
 
