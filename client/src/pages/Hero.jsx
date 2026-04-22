@@ -52,7 +52,7 @@ export default function Hero() {
               <p className="text-blue-100 text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
                 {hero.subtitle}
               </p>
-            )}
+            )} */}
 
             {/* STATS */}
             <div className="flex flex-wrap justify-center lg:justify-start gap-5 pt-2 text-blue-100 text-sm sm:text-base">
