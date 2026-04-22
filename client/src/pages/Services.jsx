@@ -76,6 +76,7 @@ export default function Services() {
                 </div>
               </div>
             ))
+            // TODO: Reorder via admin CMS - Project Financing must be index 0
             : services.map(service=>{
             const Icon = Icons[service.icon] || Icons.FileText;
 
