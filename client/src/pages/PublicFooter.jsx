@@ -334,8 +334,6 @@ export default function PublicFooter() {
     "Disclaimer",
     "Refund Policy",
   ];
-  const policyLinks = ["Privacy Policy", "Terms & Conditions", "Cookie Policy"];
-
   return (
     <footer className="bg-[#2563EB] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-8">
@@ -390,11 +388,6 @@ export default function PublicFooter() {
           </div>
 
           <div className="flex flex-wrap justify-center md:justify-end items-center gap-5 text-xs text-blue-100">
-            {policyLinks.map((item) => (
-              <Link key={item} to={routeMap[item] || "/"} className="hover:text-white transition-colors">
-                {item}
-              </Link>
-            ))}
             <button
               onClick={() => (window.location.href = "/adminlogin")}
               className="hover:text-white transition-colors"
