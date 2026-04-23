@@ -205,7 +205,7 @@ export default function PublicNavbar() {
             </button>
           </div>
 
-          {/* ================= MOBILE BUTTON ================= */}
+        
           <button
             className="lg:hidden"
             onClick={() => setMobileOpen(!mobileOpen)}

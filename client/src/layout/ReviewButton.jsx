@@ -38,4 +38,3 @@ const reviewUrl = `https://www.google.com/search?q=${encodeURIComponent(
   );
 }
 
-

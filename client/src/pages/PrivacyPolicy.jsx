@@ -6,7 +6,6 @@ export default function PrivacyPolicy() {
     <div className="min-h-screen bg-gradient-to-br from-white via-slate-50 to-blue-50 py-16 px-4">
       <div className="max-w-6xl mx-auto">
 
-        {/* TOP HEADER */}
         <motion.div
           initial={{ opacity: 0, y: -25 }}
           animate={{ opacity: 1, y: 0 }}
