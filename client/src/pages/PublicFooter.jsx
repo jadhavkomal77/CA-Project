@@ -268,6 +268,9 @@
 import {
   Facebook,
   Instagram,
+  Mail,
+  MapPin,
+  Phone,
 } from "lucide-react";
 import { FaXTwitter } from "react-icons/fa6";
 import { useGetPublicNavbarQuery } from "../redux/apis/navbarApi";
@@ -334,10 +337,41 @@ export default function PublicFooter() {
     "Disclaimer",
     "Refund Policy",
   ];
+
+  const contactItems = [
+    {
+      label: "Call",
+      value: footer.phone || "+91 9921055588",
+      href: `tel:${(footer.phone || "+91 9921055588").replace(/\s/g, "")}`,
+      Icon: Phone,
+    },
+    {
+      label: "Email",
+      value: footer.email || "support@cadmaassociatespvtltd.com",
+      href: `mailto:${footer.email || "support@cadmaassociatespvtltd.com"}`,
+      Icon: Mail,
+    },
+  ];
+
+  const locations = [
+    {
+      name: "Chh. Sambhajinagar",
+      address: "2, Anuvihar Complex, Opp. Yadav Tyres, Behind Vivekanand College, Chh. Sambhajinagar - 431001",
+    },
+    {
+      name: "Navi Mumbai",
+      address: "Office no. 40, Second Floor, Crystal Plaza, Hiranandani, Sector - 07, Kharghar, Navi Mumbai - 410210",
+    },
+    {
+      name: "Pune",
+      address: "Fergusson College Rd, Mantri House, Shivajinagar, Pune, Maharashtra 411004",
+    },
+  ];
+
   return (
     <footer className="bg-[#2563EB] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.25fr_1fr_1.15fr_1.45fr] gap-x-12 gap-y-12">
           <div className="space-y-6">
             <img
               src="/LogoCA.png"
@@ -375,72 +409,59 @@ export default function PublicFooter() {
             </div>
           </div>
 
-          <div>
-            <div className="flex flex-col md:flex-row gap-10">
-              <div className="space-y-4">
-                <h4 className="uppercase text-sm tracking-[0.2em] font-semibold">Contact Us</h4>
+          <div className="md:col-span-2 lg:col-span-3 lg:row-start-2">
+            <div className="border-t border-white/20 pt-8">
+              <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_1.6fr] gap-8 lg:gap-10">
+                <div>
+                  <p className="uppercase text-sm tracking-[0.2em] font-semibold">Contact Us</p>
+                  <p className="mt-3 max-w-sm text-sm leading-6 text-blue-100">
+                    Speak directly with our advisory team for audit, tax, GST, incorporation, and finance support.
+                  </p>
 
-                <div className="flex items-start gap-3">
-                  <span className="material-symbols-outlined text-blue-50">call</span>
-                  <div>
-                    <p className="text-xs uppercase text-blue-100">Phone</p>
-                    <p className="font-semibold text-sm">+91 9921055588</p>
+                  <div className="mt-6 grid gap-3">
+                    {contactItems.map(({ label, value, href, Icon }) => (
+                      <a
+                        key={label}
+                        href={href}
+                        className="group flex items-center gap-3 rounded-md border border-white/20 bg-white/[0.07] px-4 py-3 text-left transition-colors hover:bg-white hover:text-[#2563EB]"
+                      >
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-white text-[#2563EB] transition-colors group-hover:bg-[#2563EB] group-hover:text-white">
+                          <Icon size={18} />
+                        </span>
+                        <span className="min-w-0">
+                          <span className="block text-[11px] uppercase tracking-[0.18em] text-blue-100 transition-colors group-hover:text-blue-700">
+                            {label}
+                          </span>
+                          <span className="block break-words text-sm font-semibold">{value}</span>
+                        </span>
+                      </a>
+                    ))}
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3">
-                  <span className="material-symbols-outlined text-blue-50">mail</span>
-                  <div>
-                    <p className="text-xs uppercase text-blue-100">Email</p>
-                    <p className="font-semibold text-sm break-all">support@cadmaassociatespvtltd.com</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-6">
-                <h4 className="uppercase text-sm tracking-[0.2em] font-semibold">Our Locations</h4>
-
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <span className="material-symbols-outlined text-blue-50">location_on</span>
-                    <div>
-                      <p className="text-xs uppercase text-blue-100">Address 1</p>
-                      <p className="text-sm text-blue-50">
-                        2, Anuvihar Complex, Opp. Yadav Tyres,<br />
-                        Behind Vivekanand College,<br />
-                        Chh. Sambhajinagar - 431001
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <span className="material-symbols-outlined text-blue-50">location_on</span>
-                    <div>
-                      <p className="text-xs uppercase text-blue-100">Address 2</p>
-                      <p className="text-sm text-blue-50">
-                        NAVI MUMBAI<br />
-                        Office no. 40, Second Floor,<br />
-                        Crystal Plaza, Hiranandani, Sector - 07,<br />
-                        Kharghar, Navi Mumbai - 410210
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <span className="material-symbols-outlined text-blue-50">location_on</span>
-                    <div>
-                      <p className="text-xs uppercase text-blue-100">Address 3</p>
-                      <p className="text-sm text-blue-50">
-                        PUNE<br />
-                        Fergusson College Rd, Mantri House,<br />
-                        Shivajinagar, Pune, Maharashtra 411004
-                      </p>
-                    </div>
+                <div>
+                  <p className="uppercase text-sm tracking-[0.2em] font-semibold">Our Locations</p>
+                  <div className="mt-6 grid gap-4 sm:grid-cols-3">
+                    {locations.map((location) => (
+                      <div
+                        key={location.name}
+                        className="rounded-md border border-white/18 bg-white/[0.06] p-4 shadow-sm shadow-blue-950/10"
+                      >
+                        <div className="flex items-center gap-2">
+                          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-white text-[#2563EB]">
+                            <MapPin size={16} />
+                          </span>
+                          <p className="text-sm font-semibold">{location.name}</p>
+                        </div>
+                        <p className="mt-3 text-sm leading-6 text-blue-50">{location.address}</p>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
         </div>
 
         <div className="mt-14 border-t border-white/20 pt-8 grid grid-cols-1 md:grid-cols-3 items-center gap-6">
@@ -502,7 +523,6 @@ function SocialIcon({ Icon, link }) {
     </a>
   );
 }
-
 
 
 
