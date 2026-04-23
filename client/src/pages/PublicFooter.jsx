@@ -271,6 +271,7 @@ import {
   Phone,
   Mail,
   MapPin,
+  Building2,
 } from "lucide-react";
 import { FaXTwitter } from "react-icons/fa6";
 import { useGetPublicNavbarQuery } from "../redux/apis/navbarApi";
@@ -308,122 +309,117 @@ export default function PublicFooter() {
     "Beed",
   ];
 
+  const quickLinks = ["Home", "Services", "Contact", "About", "Latest Updates"];
+  const serviceLinks = [
+    "Wealth Management",
+    "GST Services",
+    "Audit & Assurance",
+    "Income Tax Filing",
+  ];
+  const policyLinks = ["Privacy Policy", "Terms & Conditions", "Refund Policy"];
+
+  const addressOne = footer.address || "Address details not provided";
+  const addressTwo = footer.address2 || "[Placeholder for 2nd office location details]";
+  const addressThree = footer.address3 || "[Placeholder for 3rd office location details]";
+
   return (
-    <footer className="bg-slate-950 text-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-10">
-        <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-800 p-6 md:p-8 lg:p-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-12 gap-10">
-            <div className="xl:col-span-4">
-              <img
-                src="/LogoCA.jpeg"
-                alt={footer.companyName || "CADMA Associates"}
-                className="h-14 md:h-16 w-auto rounded-md object-contain bg-white p-1"
-                loading="lazy"
-              />
+    <footer className="bg-[#2e62d6] text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10">
+          <div>
+            <img
+              src="/removebgLogo.png"
+              alt={footer.companyName || "CADMA"}
+              className="h-12 w-auto object-contain"
+              loading="lazy"
+            />
+            <p className="mt-6 max-w-xs text-[30px] leading-7 text-white/95">
+              {footer.description}
+            </p>
+          </div>
 
-              <p className="mt-5 text-sm leading-6 text-slate-300 max-w-sm">
-                {footer.description}
-              </p>
+          <div className="space-y-8">
+            <FooterLinks title="Quick Links" links={quickLinks} routeMap={routeMap} />
+            <FooterTextList title="Our Services" links={serviceLinks} />
+            <p className="uppercase text-sm tracking-[0.2em] font-semibold">Our Cities</p>
+            <p className="max-w-xs text-[26px] leading-8 text-white/95">{cities.join(", ")}.</p>
+          </div>
 
-              <div className="mt-6 flex flex-wrap items-center gap-3">
-                {footer.facebook && (
-                  <SocialIcon Icon={Facebook} link={footer.facebook} />
-                )}
-                {footer.twitter && (
-                  <SocialIcon Icon={FaXTwitter} link={footer.twitter} />
-                )}
-                {footer.instagram && (
-                  <SocialIcon Icon={Instagram} link={footer.instagram} />
-                )}
-              </div>
-
-              <a
-                href={
-                  footer.reviewLink ||
-                  `https://www.google.com/search?q=${encodeURIComponent(
-                    footer.companyName
-                  )}`
-                }
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-6 inline-flex items-center gap-2 rounded-full bg-cyan-400 px-5 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300"
-              >
-                ⭐ Review Us
-              </a>
-            </div>
-
-            <div className="xl:col-span-2">
-              <FooterLinks
-                title="Quick Links"
-                links={footer.quickLinks}
-                routeMap={routeMap}
-              />
-            </div>
-
-            <div className="xl:col-span-2">
-              <FooterLinks
-                title="Important Links"
-                links={footer.importantLinks}
-                routeMap={routeMap}
-              />
-            </div>
-
-            <div className="xl:col-span-4">
-              <h3 className="text-white font-semibold text-lg">Contact Info</h3>
-
-              <ul className="mt-5 space-y-4 text-sm">
-                <li className="flex items-start gap-3">
-                  <Phone size={17} className="text-cyan-400 shrink-0 mt-[2px]" />
-                  <a
-                    href={`tel:${footer.phone}`}
-                    className="text-slate-100 hover:text-cyan-300 transition"
-                  >
+          <div>
+            <p className="uppercase text-sm tracking-[0.2em] font-semibold">Contact Us</p>
+            <ul className="mt-6 space-y-6 text-sm">
+              <li className="flex items-start gap-3">
+                <Phone size={16} className="text-white/90 shrink-0 mt-1" />
+                <div>
+                  <p className="text-white/70 uppercase text-xs tracking-wide">Phone</p>
+                  <a href={`tel:${footer.phone}`} className="font-semibold hover:underline">
                     {footer.phone}
                   </a>
-                </li>
+                </div>
+              </li>
 
-                <li className="flex items-start gap-3">
-                  <Mail size={17} className="text-cyan-400 shrink-0 mt-[2px]" />
+              <li className="flex items-start gap-3">
+                <Mail size={16} className="text-white/90 shrink-0 mt-1" />
+                <div>
+                  <p className="text-white/70 uppercase text-xs tracking-wide">Email</p>
                   <a
                     href={`mailto:${footer.email}`}
-                    className="break-all text-slate-100 hover:text-cyan-300 transition"
+                    className="font-semibold break-all hover:underline"
                   >
                     {footer.email}
                   </a>
-                </li>
+                </div>
+              </li>
+            </ul>
+          </div>
 
-                <li className="flex items-start gap-3">
-                  <MapPin size={18} className="text-cyan-400 shrink-0 mt-[2px]" />
-                  <span className="leading-6 text-slate-200">{footer.address}</span>
-                </li>
-              </ul>
-
-              <h4 className="mt-7 text-white font-medium">Our Cities</h4>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {cities.map((city) => (
-                  <span
-                    key={city}
-                    className="rounded-full border border-white/20 bg-white/5 px-3 py-1 text-xs text-slate-200"
-                  >
-                    {city}
-                  </span>
-                ))}
-              </div>
-            </div>
+          <div>
+            <p className="uppercase text-sm tracking-[0.2em] font-semibold">Our Locations</p>
+            <ul className="mt-6 space-y-6 text-sm">
+              <li className="flex items-start gap-3">
+                <MapPin size={16} className="text-white/90 shrink-0 mt-1" />
+                <div>
+                  <p className="text-white/70 uppercase text-xs tracking-wide">Address 1</p>
+                  <p className="text-white/95 leading-7">{addressOne}</p>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <Building2 size={16} className="text-white/90 shrink-0 mt-1" />
+                <div>
+                  <p className="text-white/70 uppercase text-xs tracking-wide">Address 2</p>
+                  <p className="text-white/95 leading-7">{addressTwo}</p>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <Building2 size={16} className="text-white/90 shrink-0 mt-1" />
+                <div>
+                  <p className="text-white/70 uppercase text-xs tracking-wide">Address 3</p>
+                  <p className="text-white/95 leading-7">{addressThree}</p>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div className="mt-8 border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-slate-300">
-          <p className="text-center sm:text-left">
-            © {new Date().getFullYear()} {footer.companyName} · All Rights Reserved
-          </p>
+        <div className="mt-14 border-t border-white/20 pt-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 text-xs text-white/95">
+          <p>© {new Date().getFullYear()} {footer.companyName} - All Rights Reserved</p>
 
-          <button
-            onClick={() => (window.location.href = "/adminlogin")}
-            className="text-xs text-cyan-300 hover:text-cyan-200 hover:underline"
-          >
-            Admin Login
-          </button>
+          <div className="flex items-center gap-3">
+            {footer.facebook && <SocialIcon Icon={Facebook} link={footer.facebook} />}
+            {footer.twitter && <SocialIcon Icon={FaXTwitter} link={footer.twitter} />}
+            {footer.instagram && <SocialIcon Icon={Instagram} link={footer.instagram} />}
+          </div>
+
+          <div className="flex flex-wrap items-center gap-4 lg:justify-end">
+            {policyLinks.map((item) => (
+              <Link key={item} to={routeMap[item] || "/"} className="hover:underline">
+                {item}
+              </Link>
+            ))}
+            <button onClick={() => (window.location.href = "/adminlogin")} className="hover:underline">
+              Admin Login
+            </button>
+          </div>
         </div>
       </div>
     </footer>
@@ -434,18 +430,31 @@ export default function PublicFooter() {
 function FooterLinks({ title, links = [], routeMap }) {
   return (
     <div>
-      <h3 className="text-white font-semibold mb-5 text-lg">{title}</h3>
+      <p className="uppercase text-sm tracking-[0.2em] font-semibold">{title}</p>
 
-      <ul className="space-y-3 text-sm">
+      <ul className="mt-6 grid grid-cols-2 gap-x-8 gap-y-3 text-sm">
         {links.map((item) => (
           <li key={item}>
             <Link
               to={routeMap[item] || "/"}
-              className="text-slate-300 hover:text-cyan-300 transition"
+              className="text-white/95 hover:underline"
             >
               {item}
             </Link>
           </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function FooterTextList({ title, links = [] }) {
+  return (
+    <div>
+      <p className="uppercase text-sm tracking-[0.2em] font-semibold">{title}</p>
+      <ul className="mt-6 space-y-3 text-sm text-white/95">
+        {links.map((item) => (
+          <li key={item}>{item}</li>
         ))}
       </ul>
     </div>
@@ -458,9 +467,9 @@ function SocialIcon({ Icon, link }) {
       href={link}
       target="_blank"
       rel="noreferrer"
-      className="h-10 w-10 rounded-full border border-white/20 bg-white/5 flex items-center justify-center hover:bg-cyan-400 hover:border-cyan-400 transition-all duration-300 group"
+      className="h-8 w-8 rounded-lg border border-white/60 flex items-center justify-center hover:bg-white/10 transition-all duration-200"
     >
-      <Icon size={18} className="text-white group-hover:text-slate-950" />
+      <Icon size={14} className="text-white" />
     </a>
   );
 }
