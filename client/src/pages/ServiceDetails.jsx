@@ -69,7 +69,7 @@ export default function ServiceDetails() {
         >
           <motion.h2
             variants={fadeUp}
-            className="text-2xl md:text-3xl font-bold text-center mb-6"
+            className="text-2xl md:text-3xl font-bold text-center mb-6 service-heading"
           >
             Why Choose This Service
           </motion.h2>
@@ -103,7 +103,7 @@ export default function ServiceDetails() {
         >
           <motion.h2
             variants={fadeUp}
-            className="text-2xl md:text-3xl font-bold text-center mb-6"
+            className="text-2xl md:text-3xl font-bold text-center mb-6 service-heading"
           >
             Our Process
           </motion.h2>
@@ -137,7 +137,7 @@ export default function ServiceDetails() {
         viewport={{ once: true }}
         className="py-6 text-center"
       >
-        <h3 className="text-2xl md:text-3xl font-bold mb-4">
+        <h3 className="text-2xl md:text-3xl font-bold mb-4 service-heading">
           Ready to Apply for this Service?
         </h3>
 
@@ -165,7 +165,7 @@ export default function ServiceDetails() {
           viewport={{ once: true }}
           className="py-6 bg-white text-center"
         >
-          <h2 className="text-2xl md:text-3xl font-bold mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 service-heading">
             Technologies
           </h2>
 
