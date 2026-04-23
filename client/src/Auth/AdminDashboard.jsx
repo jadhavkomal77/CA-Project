@@ -213,7 +213,7 @@ export default function AdminDashboardLayout() {
     { name: "Testimonials", path: "/admin/admintestimonials", icon:   <FaStar /> },
     { name: "Contacts", path: "/admin/contacts", icon: <FaAddressBook /> },
     { name: "WhatsApp", path: "/admin/whatsappsettings", icon: <FaWhatsapp /> },
-    { name: "Footer", path: "/admin/footer", icon:  <FaRegWindowMaximize /> },
+    // { name: "Footer", path: "/admin/footer", icon:  <FaRegWindowMaximize /> },
   ];
 
   /* LOGOUT */

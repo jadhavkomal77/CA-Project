@@ -1,263 +1,152 @@
 
 
-// import {
-//   Facebook,
-//   Instagram,
-//   Linkedin,
-//   Phone,
-//   Mail,
-//   MapPin,
-// } from "lucide-react";
+
+// import { Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
 // import { FaXTwitter } from "react-icons/fa6";
+// import { Link } from "react-router-dom";
 // import { useGetPublicNavbarQuery } from "../redux/apis/navbarApi";
 // import { useGetPublicFooterQuery } from "../redux/apis/footerApi";
-// import { Link } from "react-router-dom";
 
-// export default function PublicFooter() {
-//   const { data: footer, isLoading: footerLoading } = useGetPublicFooterQuery();
-//   const { data: navbar, isLoading: navbarLoading } = useGetPublicNavbarQuery();
+// const socialIcons = [
+//   { Icon: Facebook, link: "https://facebook.com" },
+//   { Icon: FaXTwitter, link: "https://x.com" },
+//   { Icon: Instagram, link: "https://instagram.com" },
+// ];
 
-//   if (footerLoading || navbarLoading) return null;
-//   if (!footer || !navbar) return null;
-
-//   const routeMap = {
-//     Home: "/",
-//     About: "/about",
-//     Services: "/services",
-//     "Latest Updates": "/tax-updates",
-//     Pricing: "/pricing",
-//     Contact: "/contact",
-//     "Privacy Policy": "/privacy",
-//     "Terms & Conditions": "/terms",
-//     "Refund Policy": "/refund-policy",
-//     Disclaimer: "/disclaimer",
-//   };
-
-//   return (
-//     <footer className="bg-[#0f172a] text-gray-300">
-
-//       {/* MAIN */}
-//       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 py-12 
-//       grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-
-//         {/* COMPANY */}
-//         <div className="space-y-5 text-center sm:text-left">
-
-// <div className="flex justify-center sm:justify-start">
-
-//   <img
-//     src="/Calogo.png"
-//     alt="CADMA Associates"
-//     className="
-//       h-10
-//       sm:h-11
-//       md:h-12
-//       lg:h-14
-//       xl:h-16
-//       w-auto
-//       object-contain
-//     "
-//     loading="lazy"
-//   />
-
-// </div>
-//           {/* DESCRIPTION */}
-//           <p className="text-sm text-gray-400 leading-relaxed max-w-sm mx-auto sm:mx-0">
-//             {footer.description}
-//           </p>
-
-//           {/* SOCIAL */}
-//           {/* <div className="flex justify-center sm:justify-start gap-3 flex-wrap">
-//             {footer.facebook && <SocialIcon Icon={Facebook} link={footer.facebook} />}
-//             {footer.twitter && <SocialIcon Icon={FaXTwitter} link={footer.twitter} />}
-//             {footer.instagram && <SocialIcon Icon={Instagram} link={footer.instagram} />}
-//           </div> */}
-//         </div>
-
-//         {/* QUICK LINKS */}
-//         <FooterLinks title="Quick Links" links={footer.quickLinks} routeMap={routeMap} />
-
-//         {/* IMPORTANT LINKS */}
-//         <FooterLinks title="Important Links" links={footer.importantLinks} routeMap={routeMap} />
-
-//         {/* CONTACT */}
-//         <div className="text-center sm:text-left">
-//           <h3 className="text-white font-semibold mb-5 text-lg">
-//             Contact Info
-//           </h3>
-
-//           <ul className="space-y-4 text-sm text-gray-400">
-
-//             <li className="flex items-center justify-center sm:justify-start gap-3">
-//               <Phone size={16} className="text-yellow-500 shrink-0" />
-//               <span>Call us at {footer.phone}</span>
-//             </li>
-
-//             <li className="flex items-center justify-center sm:justify-start gap-3">
-//               <Mail size={16} className="text-yellow-500 shrink-0" />
-//               <span className="break-all">{footer.email}</span>
-//             </li>
-
-//             <li className="flex items-start justify-center sm:justify-start gap-3">
-//               <MapPin size={17} className="text-yellow-500 shrink-0 mt-[3px]" />
-//               <span className="leading-relaxed break-words">
-//                 {footer.address}
-//               </span>
-//             </li>
-
-//           </ul>
-
-      
-//         </div>
-//       </div>
-
-
-// {/* ICONS | CITIES | REVIEW */}
-// <div
-// className="
-// mt-4 mb-8 mx-8
-// grid
-// grid-cols-1
-// sm:grid-cols-3
-// items-center
-// gap-6
-// text-center
-// "
-// >
-
-//   {/* ICONS */}
-//   <div className="flex justify-center sm:justify-start gap-3">
-
-//     {footer.facebook && <SocialIcon Icon={Facebook} link={footer.facebook}/>}
-
-//     {footer.twitter && <SocialIcon Icon={FaXTwitter} link={footer.twitter}/>}
-
-//     {footer.instagram && <SocialIcon Icon={Instagram} link={footer.instagram}/>}
-
-//   </div>
-
-
-//  {/* OUR CITIES */}
-// <div className="text-gray-400 text-sm leading-relaxed">
-//   <h3 className="mb-3 text-center text-white font-semibold text-sm sm:text-base">
-//     Our Cities
-//   </h3>
-
-//   <div className="hidden sm:block text-center">
-//     Mumbai<span className="mx-2 text-gray-600">|</span>
-//     Pune<span className="mx-2 text-gray-600">|</span>
-//     Bangalore<span className="mx-2 text-gray-600">|</span>
-//     Chh. Sambhaji Nagar<span className="mx-2 text-gray-600">|</span>
-//     Satara<span className="mx-2 text-gray-600">|</span>
-//     Hingoli<span className="mx-2 text-gray-600">|</span>
-//     Parbhani<span className="mx-2 text-gray-600">|</span>
-//     Beed
-//   </div>
-
-//   <div className="sm:hidden space-y-1 text-center">
-//     <div>Mumbai | Pune | Bangalore</div>
-//     <div>Chh. Sambhaji Nagar | Satara</div>
-//     <div>Hingoli | Parbhani | Beed</div>
-//   </div>
-// </div>
-
-// <div className="flex justify-center sm:justify-end">
-
-//   <a
-//     href={
-//       footer.reviewLink ||
-//       `https://www.google.com/search?q=${encodeURIComponent(
-//         footer.companyName
-//       )}`
-//     }
-//     target="_blank"
-//     rel="noopener noreferrer"
-//     className="
-//       inline-flex
-//       items-center
-//       gap-2
-//       px-5
-//       py-2
-//       text-sm
-//       sm:text-base
-//       bg-white
-//       text-blue-700
-//       rounded-full
-//       font-semibold
-//       hover:bg-yellow-400
-//       hover:text-black
-//       transition
-//       whitespace-nowrap
-//     "
-//   >
-//     ⭐ Review Us
-//   </a>
-
-// </div>
-
-// </div>
-
-//       {/* BOTTOM */}
-//       <div className="border-t border-white/10 py-6 text-center text-sm text-gray-400 px-4">
-
-//         <p className="flex flex-col sm:flex-row items-center justify-center gap-1">
-//           <span>
-//             © {new Date().getFullYear()}{" "}
-//             <span className="text-black font-medium">
-//               {footer.companyName}
-//             </span>
-//           </span>
-
-//           <span className="hidden sm:inline">•</span>
-
-//           <span>All Rights Reserved</span>
-//         </p>
-
-//         <button
-//           onClick={() => (window.location.href = "/adminlogin")}
-//           className="mt-3 text-xs text-yellow-500 hover:underline"
-//         >
-//           Admin Login
-//         </button>
-//       </div>
-//     </footer>
-//   );
-// }
-
-// /* LINKS */
-// function FooterLinks({ title, links = [], routeMap }) {
-//   return (
-//     <div className="text-center sm:text-left">
-//       <h3 className="text-white font-semibold mb-5 text-lg">{title}</h3>
-
-//       <ul className="space-y-3 text-sm">
-//         {links.map((item) => (
-//           <li key={item}>
-//             <Link
-//               to={routeMap[item] || "/"}
-//               className="hover:text-yellow-500 transition"
-//             >
-//               {item}
-//             </Link>
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// }
-
-// /* SOCIAL ICON */
 // function SocialIcon({ Icon, link }) {
 //   return (
 //     <a
 //       href={link}
 //       target="_blank"
 //       rel="noreferrer"
-//       className="h-10 w-10 rounded-full bg-white/5 flex items-center justify-center
-//       hover:bg-yellow-500 transition-all duration-300 group"
+//       className="h-10 w-10 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-[#2563EB] transition-all duration-200"
 //     >
-//       <Icon size={18} className="text-white group-hover:text-black" />
+//       <Icon size={18} className="text-current" />
 //     </a>
+//   );
+// }
+
+// function InfoCard({ title, text }) {
+//   return (
+//     <div className="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-sm backdrop-blur-sm">
+//       <div className="flex items-center gap-3">
+//         <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-[#2563EB]">
+//           <MapPin size={18} />
+//         </span>
+//         <p className="font-semibold text-white">{title}</p>
+//       </div>
+//       <p className="mt-4 text-sm leading-6 text-blue-50 whitespace-pre-line break-words">
+//         {text}
+//       </p>
+//     </div>
+//   );
+// }
+
+// export default function PublicFooter() {
+//   const { data: navbar } = useGetPublicNavbarQuery();
+//   const { data: footer } = useGetPublicFooterQuery();
+
+//   const logo = navbar?.logo;
+//   const siteName = "Cadma Associates Pvt Ltd";
+
+//   return (
+//     <footer className="bg-gradient-to-br from-[#0B1F4B] via-[#12306F] to-[#2563EB] text-white">
+//       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+//         <div className="grid gap-10 lg:grid-cols-12">
+//           <div className="lg:col-span-4">
+//             <div className="flex items-center gap-4">
+//               {logo ? (
+//                 <img
+//                   src={logo}
+//                   alt={siteName}
+//                   className="h-16 w-16 rounded-xl object-contain bg-white p-2 shadow-lg"
+//                 />
+//               ) : (
+//                 <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-white text-2xl font-bold text-[#2563EB] shadow-lg">
+//                   C
+//                 </div>
+//               )}
+//               <div>
+//                 <h2 className="text-xl font-bold">{siteName}</h2>
+//                 <p className="text-sm text-blue-100">Professional Financial Services</p>
+//               </div>
+//             </div>
+
+//             <p className="mt-5 max-w-md text-sm leading-7 text-blue-50">
+//               {footer?.description ||
+//                 "We provide trusted financial and business support services with a professional and client-focused approach."}
+//             </p>
+
+//             <div className="mt-6 flex gap-3">
+//               {socialIcons.map(({ Icon, link }, index) => (
+//                 <SocialIcon key={index} Icon={Icon} link={link} />
+//               ))}
+//             </div>
+//           </div>
+
+//           <div className="lg:col-span-3">
+//             <h3 className="text-lg font-semibold">Quick Links</h3>
+//             <ul className="mt-5 space-y-3 text-sm text-blue-50">
+//               <li><Link to="/" className="hover:text-white">Home</Link></li>
+//               <li><Link to="/about" className="hover:text-white">About</Link></li>
+//               <li><Link to="/services" className="hover:text-white">Services</Link></li>
+//               <li><Link to="/tax-updates" className="hover:text-white">Latest Updates</Link></li>
+//               <li><Link to="/contact" className="hover:text-white">Contact</Link></li>
+//             </ul>
+//           </div>
+
+//           <div className="lg:col-span-2">
+//             <h3 className="text-lg font-semibold">Important Links</h3>
+//             <ul className="mt-5 space-y-3 text-sm text-blue-50">
+//               <li><Link to="/privacy" className="hover:text-white">Privacy Policy</Link></li>
+//               <li><Link to="/terms" className="hover:text-white">Terms & Conditions</Link></li>
+//               <li><Link to="/disclaimer" className="hover:text-white">Disclaimer</Link></li>
+//               <li><Link to="/refund-policy" className="hover:text-white">Refund Policy</Link></li>
+//             </ul>
+//           </div>
+
+//           <div className="lg:col-span-3">
+//             <h3 className="text-lg font-semibold">Contact Us</h3>
+//             <div className="mt-5 space-y-4">
+//               <div className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 p-4">
+//                 <Phone size={18} className="mt-1 shrink-0 text-white" />
+//                 <p className="text-sm text-blue-50 break-words">
+//                   {footer?.phone || "+91 9921055588"}
+//                 </p>
+//               </div>
+
+//               <div className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 p-4">
+//                 <Mail size={18} className="mt-1 shrink-0 text-white" />
+//                 <p className="text-sm text-blue-50 break-words">
+//                   {footer?.email || "support@cadmaassociatespvtltd.com"}
+//                 </p>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+
+//       <div className="mt-10 grid gap-6 lg:grid-cols-3">
+//   <InfoCard
+//     title="Chh. Sambhajinagar"
+//     text={`First Floor, 245, Anuvihar Complex, Opp Yadav Tyre,\nSamarth Nagar`}
+//   />
+
+//   <InfoCard
+//     title="Navi Mumbai"
+//     text={`Office no. 40, Second Floor,\nCrystal Plaza, Hiranandani, Sector - 07,\nKharghar, Navi Mumbai - 410210`}
+//   />
+
+//   <InfoCard
+//     title="Pune"
+//     text={`Fergusson College Rd, Mantri House,\nShivajinagar, Pune, Maharashtra 411004`}
+//   />
+// </div>
+
+//         <div className="mt-10 border-t border-white/15 pt-6 text-center text-sm text-blue-100">
+//           © {new Date().getFullYear()} {siteName}. All rights reserved.
+//         </div>
+//       </div>
+//     </footer>
 //   );
 // }
 
@@ -265,232 +154,34 @@
 
 
 
-import {
-  Facebook,
-  Instagram,
-} from "lucide-react";
+
+
+import { Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
 import { FaXTwitter } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 import { useGetPublicNavbarQuery } from "../redux/apis/navbarApi";
 import { useGetPublicFooterQuery } from "../redux/apis/footerApi";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export default function PublicFooter() {
-  const { data: footer, isLoading: footerLoading } = useGetPublicFooterQuery();
-  const { data: navbar, isLoading: navbarLoading } = useGetPublicNavbarQuery();
+const socialIcons = [
+  { Icon: Facebook, link: "https://facebook.com" },
+  { Icon: FaXTwitter, link: "https://x.com" },
+  { Icon: Instagram, link: "https://instagram.com" },
+];
 
-  if (footerLoading || navbarLoading) return null;
-  if (!footer || !navbar) return null;
-
-  const routeMap = {
-    Home: "/",
-    About: "/about",
-    Services: "/services",
-    "Latest Updates": "/tax-updates",
-    Pricing: "/pricing",
-    Contact: "/contact",
-    "Privacy Policy": "/privacy",
-    "Terms & Conditions": "/terms",
-    "Cookie Policy": "/cookie-policy",
-    "Refund Policy": "/refund-policy",
-    Disclaimer: "/disclaimer",
-  };
-
-  const serviceRouteMap = {
-    "Wealth Management": "/services/wealth-management",
-    "Income Tax Return Preparation & Filing": "/services/income-tax-return-preparation-filing",
-    "GST Services": "/services/gst-services",
-    "Company Incorporation Services": "/services/company-incorporation-services",
-    "Audit & Assurance Services": "/services/audit-assurance-services",
-    "Startup & MSME Registration": "/services/startup-msme-registration",
-    "Project Financing & Government Subsidies": "/services/project-financing-government-subsidies",
-    "Financial Planning & Business Advisory": "/services/financial-planning-business-advisory",
-  };
-
-  const cities = [
-    "Mumbai",
-    "Pune",
-    "Bengaluru",
-    "Chh. Sambhaji Nagar",
-    "Satara",
-    "Hingoli",
-    "Parbhani",
-    "Beed",
-  ];
-
-  const quickLinks = ["Home", "About", "Services", "Latest Updates", "Contact"];
-  const serviceLinks = [
-    "Wealth Management",
-    "Income Tax Return Preparation & Filing",
-    "GST Services",
-    "Company Incorporation Services",
-    "Audit & Assurance Services",
-    "Startup & MSME Registration",
-    "Project Financing & Government Subsidies",
-    "Financial Planning & Business Advisory",
-  ];
-  const importantLinks = [
-    "Privacy Policy",
-    "Terms & Conditions",
-    "Disclaimer",
-    "Refund Policy",
-  ];
-  return (
-    <footer className="bg-[#2563EB] text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
-          <div className="space-y-6">
-            <img
-              src="/LogoCA.png"
-              alt="CADMA Logo"
-              className="h-24 md:h-32 lg:h-40 w-auto object-contain"
-              loading="lazy"
-            />
-            <div>
-              <p className="mt-3 max-w-xs text-sm leading-6 text-blue-100">
-              Cadma Associates is a premier professional services firm dedicated to providing exceptional audit, tax, and advisory solutions for businesses across the globe. We empower organizations 
-              </p>
-            </div>
-          </div>
-
-          <div>
-            <FooterLinks title="Quick Links" links={quickLinks} routeMap={routeMap} />
-          </div>
-
-          <div>
-            <FooterLinks title="Important Links" links={importantLinks} routeMap={routeMap} />
-          </div>
-
-          <div className="space-y-10">
-            <div>
-              <FooterLinks title="Our Services" links={serviceLinks} routeMap={serviceRouteMap} />
-            </div>
-
-            <div>
-              <p className="uppercase text-sm tracking-[0.2em] font-semibold">Our Cities</p>
-              <ul className="mt-6 space-y-3 text-sm text-blue-50">
-                {cities.map((city) => (
-                  <li key={city}>{city}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <div>
-            <div className="flex flex-col md:flex-row gap-10">
-              <div className="space-y-4">
-                <h4 className="uppercase text-sm tracking-[0.2em] font-semibold">Contact Us</h4>
-
-                <div className="flex items-start gap-3">
-                  <span className="material-symbols-outlined text-blue-50">call</span>
-                  <div>
-                    <p className="text-xs uppercase text-blue-100">Phone</p>
-                    <p className="font-semibold text-sm">+91 9921055588</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <span className="material-symbols-outlined text-blue-50">mail</span>
-                  <div>
-                    <p className="text-xs uppercase text-blue-100">Email</p>
-                    <p className="font-semibold text-sm break-all">support@cadmaassociatespvtltd.com</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-6">
-                <h4 className="uppercase text-sm tracking-[0.2em] font-semibold">Our Locations</h4>
-
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <span className="material-symbols-outlined text-blue-50">location_on</span>
-                    <div>
-                      <p className="text-xs uppercase text-blue-100">Address 1</p>
-                      <p className="text-sm text-blue-50">
-                        2, Anuvihar Complex, Opp. Yadav Tyres,<br />
-                        Behind Vivekanand College,<br />
-                        Chh. Sambhajinagar - 431001
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <span className="material-symbols-outlined text-blue-50">location_on</span>
-                    <div>
-                      <p className="text-xs uppercase text-blue-100">Address 2</p>
-                      <p className="text-sm text-blue-50">
-                        NAVI MUMBAI<br />
-                        Office no. 40, Second Floor,<br />
-                        Crystal Plaza, Hiranandani, Sector - 07,<br />
-                        Kharghar, Navi Mumbai - 410210
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <span className="material-symbols-outlined text-blue-50">location_on</span>
-                    <div>
-                      <p className="text-xs uppercase text-blue-100">Address 3</p>
-                      <p className="text-sm text-blue-50">
-                        PUNE<br />
-                        Fergusson College Rd, Mantri House,<br />
-                        Shivajinagar, Pune, Maharashtra 411004
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-14 border-t border-white/20 pt-8 grid grid-cols-1 md:grid-cols-3 items-center gap-6">
-          <p className="text-xs text-blue-100 text-center md:text-left">
-            © 2026 CADMA ASSOCIATES PVT LTD
-          </p>
-
-          <div className="flex items-center justify-center gap-4">
-            {footer.facebook && <SocialIcon Icon={Facebook} link={footer.facebook} />}
-            {footer.twitter && <SocialIcon Icon={FaXTwitter} link={footer.twitter} />}
-            {footer.instagram && <SocialIcon Icon={Instagram} link={footer.instagram} />}
-          </div>
-
-          <div className="flex flex-wrap justify-center md:justify-end items-center gap-5 text-xs text-blue-100">
-            <button
-              onClick={() => (window.location.href = "/adminlogin")}
-              className="hover:text-white transition-colors"
-            >
-              Admin Login
-            </button>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
-
-function FooterLinks({ title, links = [], routeMap }) {
-  return (
-    <div>
-      <p className="uppercase text-sm tracking-[0.2em] font-semibold">{title}</p>
-
-      <ul className="mt-6 space-y-3 text-sm">
-        {links.map((item) => (
-          <li key={item}>
-            <Link
-              to={routeMap[item] || "/"}
-              className="text-blue-50 hover:text-white transition-colors"
-            >
-              {item}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
+const ourCities = [
+  "Mumbai",
+  "Pune", 
+  "Bengaluru",
+  "Chh. Sambhaji Nagar",
+  "Satara",
+  "Hingoli",
+  "Parbhani",
+  "Beed"
+];
 
 function SocialIcon({ Icon, link }) {
+
   return (
     <a
       href={link}
@@ -503,8 +194,190 @@ function SocialIcon({ Icon, link }) {
   );
 }
 
+function InfoCard({ title, text }) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-sm backdrop-blur-sm">
+      <div className="flex items-center gap-3">
+        <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-[#2563EB]">
+          <MapPin size={18} />
+        </span>
+        <p className="font-semibold text-white">{title}</p>
+      </div>
+      <p className="mt-4 text-sm leading-6 text-blue-50 whitespace-pre-line break-words">
+        {text}
+      </p>
+    </div>
+  );
+}
 
+export default function PublicFooter() {
+  const { data: navbar } = useGetPublicNavbarQuery();
+  const { data: footer } = useGetPublicFooterQuery();
 
+  const navigate = useNavigate();
+  const logo = navbar?.logo;
+  const siteName = "Cadma Associates Pvt Ltd";
 
+  return (
+    <footer className="bg-gradient-to-br from-[#2563EB]  via-[#2563EB]  to-[#2563EB] text-white">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="grid gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            {/* <div className="flex items-center gap-4">
+              {logo ? (
+                <img
+                  src={logo}
+                  alt={siteName}
+                  className="h-16 w-16 rounded-xl object-contain bg-white p-2 shadow-lg"
+                />
+              ) : (
+                <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-white text-2xl font-bold text-[#2563EB] shadow-lg">
+                  C
+                </div>
+              )}
+              <div>
+                <h2 className="text-xl font-bold">{siteName}</h2>
+                <p className="text-sm text-blue-100">Professional Financial Services</p>
+              </div>
+            </div> */}
 
+<div className="flex items-center gap-4">
+  <img
+    src="/removebgLogo.png"
+    alt="CADMA"
+    className="h-28 w-auto object-contain"
+  />
+</div>
 
+            <p className="mt-5 max-w-md text-sm leading-7 text-blue-50">
+              {footer?.description ||
+                "CADMA Associates Pvt Ltd is a professional Company Income Tax, GST, Company Incorporation, Audit, Accounting, and Advisory services across India"}
+            </p>
+
+            <div className="mt-6 flex gap-3">
+              {socialIcons.map(({ Icon, link }, index) => (
+                <SocialIcon key={index} Icon={Icon} link={link} />
+              ))}
+            </div>
+          </div>
+
+          <div className="lg:col-span-2">
+            <h3 className="text-lg font-semibold">Quick Links</h3>
+            <ul className="mt-5 space-y-3 text-sm text-blue-50">
+              <li><Link to="/" className="hover:text-white">Home</Link></li>
+              <li><Link to="/about" className="hover:text-white">About</Link></li>
+              <li><Link to="/services" className="hover:text-white">Services</Link></li>
+              <li><Link to="/tax-updates" className="hover:text-white">Latest Updates</Link></li>
+              <li><Link to="/contact" className="hover:text-white">Contact</Link></li>
+            </ul>
+          </div>
+
+          <div className="lg:col-span-2">
+            <h3 className="text-lg font-semibold">Important Links</h3>
+            <ul className="mt-5 space-y-3 text-sm text-blue-50">
+              <li><Link to="/privacy" className="hover:text-white">Privacy Policy</Link></li>
+              <li><Link to="/terms" className="hover:text-white">Terms & Conditions</Link></li>
+              <li><Link to="/disclaimer" className="hover:text-white">Disclaimer</Link></li>
+              <li><Link to="/refund-policy" className="hover:text-white">Refund Policy</Link></li>
+            </ul>
+          </div>
+
+          {/* <div className="lg:col-span-3">
+            <h3 className="text-lg font-semibold">Contact Us</h3>
+            <div className="mt-5 space-y-4">
+              <div className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 p-4">
+                <Phone size={18} className="mt-1 shrink-0 text-white" />
+                <p className="text-sm text-blue-50 break-words">
+                  {footer?.phone || "+91 9921055588"}
+                </p>
+              </div>
+
+              <div className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 p-4">
+                <Mail size={18} className="mt-1 shrink-0 text-white" />
+                <p className="text-sm text-blue-50 break-words">
+                  {footer?.email || "support@cadmaassociatespvtltd.com"}
+                </p>
+              </div>
+         
+            </div>
+          </div> */}
+          <div className="lg:col-span-3">
+  <h3 className="text-lg font-semibold">Contact Us</h3>
+
+  <div className="mt-5 space-y-4">
+    
+    {/* Phone */}
+    <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 w-full">
+      <Phone size={18} className="shrink-0 text-white" />
+      <p className="text-sm text-blue-50 break-all">
+        {footer?.phone || "+91 9921055588"}
+      </p>
+    </div>
+
+<div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-1 py-5 w-full">
+  <Mail size={20} className="shrink-0 text-white" />
+
+  <p className="text-sm text-blue-50 break-all">
+    {footer?.email || "support@cadmaassociatespvtltd.com"}
+  </p>
+</div>
+  </div>
+</div>
+        </div>
+
+       <div className="mt-12">
+  <h3 className="mb-4 text-center text-2xl font-bold text-white">
+    Our Cities
+  </h3>
+
+  <div className="flex flex-nowrap justify-center gap-4 overflow-x-auto whitespace-nowrap text-sm sm:text-base text-blue-50">
+    <span>Mumbai</span>
+    <span>Pune</span>
+    <span>Bengaluru</span>
+    <span>Chh. Sambhaji Nagar</span>
+    <span>Satara</span>
+    <span>Hingoli</span>
+    <span>Parbhani</span>
+    <span>Beed</span>
+  </div>
+</div>
+
+        <div className="mt-12 grid gap-6 lg:grid-cols-3">
+
+          <InfoCard
+            title="Chh. Sambhajinagar"
+            text={`First Floor, 245, Anuvihar Complex, Opp Yadav Tyre,\nSamarth Nagar`}
+          />
+
+          <InfoCard
+            title="Navi Mumbai"
+            text={`Office no. 40, Second Floor,\nCrystal Plaza, Hiranandani, Sector - 07,\nKharghar, Navi Mumbai - 410210`}
+          />
+
+          <InfoCard
+            title="Pune"
+            text={`Fergusson College Rd, Mantri House,\nShivajinagar, Pune, Maharashtra 411004`}
+          />
+       
+        </div>
+     
+
+        <div className="mt-12 border-t border-white/15 pt-6 text-center">
+  
+  <p className="text-md text-white">
+    © {new Date().getFullYear()} Cadma Associates Pvt Ltd. All rights reserved.
+  </p>
+
+  {/* Small Admin Button */}
+  <button
+    onClick={() => navigate("/admin")}
+    className="mt-3 text-xs px-4 py-1 rounded-full bg-white/20 text-white hover:bg-white/30 transition"
+  >
+    Admin Panel
+  </button>
+
+</div>
+      </div>
+    </footer>
+  );
+}
