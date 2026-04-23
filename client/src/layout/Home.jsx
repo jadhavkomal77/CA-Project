@@ -5,7 +5,6 @@ import ContactQR from "../pages/ContactQR";
 
 import Hero from "../pages/Hero";
 import PublicCalculator from "../pages/PublicCalculator";
-// import Industries from "../pages/Industries";
 import Services from "../pages/Services";
 
 
