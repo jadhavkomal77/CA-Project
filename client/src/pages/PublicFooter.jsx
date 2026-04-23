@@ -278,7 +278,6 @@ import { useGetPublicFooterQuery } from "../redux/apis/footerApi";
 import { Link } from "react-router-dom";
 
 export default function PublicFooter() {
-
   const { data: footer, isLoading: footerLoading } = useGetPublicFooterQuery();
   const { data: navbar, isLoading: navbarLoading } = useGetPublicNavbarQuery();
 
@@ -298,187 +297,134 @@ export default function PublicFooter() {
     Disclaimer: "/disclaimer",
   };
 
+  const cities = [
+    "Chh. Sambhaji Nagar",
+    "Mumbai",
+    "Pune",
+    "Bengaluru",
+    "Satara",
+    "Hingoli",
+    "Parbhani",
+    "Beed",
+  ];
+
   return (
-    <footer className="bg-blue-500 text-gray-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* TOP: CENTERED LOGO */}
-        <div className="flex justify-center mb-10">
-          <img
-            src="/removebgLogo.png"
-            alt="CADMA Associates"
-            className="mx-auto h-14 md:h-16 lg:h-20 w-auto object-contain"
-          />
-        </div>
+    <footer className="bg-slate-950 text-slate-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-10">
+        <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-800 p-6 md:p-8 lg:p-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-12 gap-10">
+            <div className="xl:col-span-4">
+              <img
+                src="/LogoCA.jpeg"
+                alt={footer.companyName || "CADMA Associates"}
+                className="h-14 md:h-16 w-auto rounded-md object-contain bg-white p-1"
+                loading="lazy"
+              />
 
-        {/* MIDDLE: 3 COLUMNS */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
-          <FooterLinks
-            title="Quick Links"
-            links={footer.quickLinks}
-            routeMap={routeMap}
-          />
+              <p className="mt-5 text-sm leading-6 text-slate-300 max-w-sm">
+                {footer.description}
+              </p>
 
-          <FooterLinks
-            title="Important Links"
-            links={footer.importantLinks}
-            routeMap={routeMap}
-          />
+              <div className="mt-6 flex flex-wrap items-center gap-3">
+                {footer.facebook && (
+                  <SocialIcon Icon={Facebook} link={footer.facebook} />
+                )}
+                {footer.twitter && (
+                  <SocialIcon Icon={FaXTwitter} link={footer.twitter} />
+                )}
+                {footer.instagram && (
+                  <SocialIcon Icon={Instagram} link={footer.instagram} />
+                )}
+              </div>
 
-          <div className="text-center md:text-left">
-            <h3 className="text-white font-semibold mb-5 text-lg">
-              Our Cities
-            </h3>
+              <a
+                href={
+                  footer.reviewLink ||
+                  `https://www.google.com/search?q=${encodeURIComponent(
+                    footer.companyName
+                  )}`
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 inline-flex items-center gap-2 rounded-full bg-cyan-400 px-5 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300"
+              >
+                ⭐ Review Us
+              </a>
+            </div>
 
-            <ul className="space-y-2 text-sm">
-              <li className="text-white hover:text-black transition cursor-pointer">
-                Chh. Sambhaji Nagar
-              </li>
-              <li className="text-white hover:text-black transition cursor-pointer">
-                Mumbai
-              </li>
-              <li className="text-white hover:text-black transition cursor-pointer">
-                Pune
-              </li>
-              <li className="text-white hover:text-black transition cursor-pointer">
-                Bengaluru
-              </li>
-              <li className="text-white hover:text-black transition cursor-pointer">
-                Satara
-              </li>
-              <li className="text-white hover:text-black transition cursor-pointer">
-                Hingoli
-              </li>
-              <li className="text-white hover:text-black transition cursor-pointer">
-                Parbhani
-              </li>
-              <li className="text-white hover:text-black transition cursor-pointer">
-                Beed
-              </li>
-            </ul>
+            <div className="xl:col-span-2">
+              <FooterLinks
+                title="Quick Links"
+                links={footer.quickLinks}
+                routeMap={routeMap}
+              />
+            </div>
 
-            <div className="flex justify-center md:justify-start gap-3 mt-4">
-              {footer.facebook && <SocialIcon Icon={Facebook} link={footer.facebook} />}
-              {footer.twitter && <SocialIcon Icon={FaXTwitter} link={footer.twitter} />}
-              {footer.instagram && <SocialIcon Icon={Instagram} link={footer.instagram} />}
+            <div className="xl:col-span-2">
+              <FooterLinks
+                title="Important Links"
+                links={footer.importantLinks}
+                routeMap={routeMap}
+              />
+            </div>
+
+            <div className="xl:col-span-4">
+              <h3 className="text-white font-semibold text-lg">Contact Info</h3>
+
+              <ul className="mt-5 space-y-4 text-sm">
+                <li className="flex items-start gap-3">
+                  <Phone size={17} className="text-cyan-400 shrink-0 mt-[2px]" />
+                  <a
+                    href={`tel:${footer.phone}`}
+                    className="text-slate-100 hover:text-cyan-300 transition"
+                  >
+                    {footer.phone}
+                  </a>
+                </li>
+
+                <li className="flex items-start gap-3">
+                  <Mail size={17} className="text-cyan-400 shrink-0 mt-[2px]" />
+                  <a
+                    href={`mailto:${footer.email}`}
+                    className="break-all text-slate-100 hover:text-cyan-300 transition"
+                  >
+                    {footer.email}
+                  </a>
+                </li>
+
+                <li className="flex items-start gap-3">
+                  <MapPin size={18} className="text-cyan-400 shrink-0 mt-[2px]" />
+                  <span className="leading-6 text-slate-200">{footer.address}</span>
+                </li>
+              </ul>
+
+              <h4 className="mt-7 text-white font-medium">Our Cities</h4>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {cities.map((city) => (
+                  <span
+                    key={city}
+                    className="rounded-full border border-white/20 bg-white/5 px-3 py-1 text-xs text-slate-200"
+                  >
+                    {city}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="mt-8 flex justify-center">
-          <a
-            href={
-              footer.reviewLink ||
-              `https://www.google.com/search?q=${encodeURIComponent(
-                footer.companyName
-              )}`
-            }
-            target="_blank"
-            rel="noopener noreferrer"
-            className="
-inline-flex
-items-center
-gap-2
+        <div className="mt-8 border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-slate-300">
+          <p className="text-center sm:text-left">
+            © {new Date().getFullYear()} {footer.companyName} · All Rights Reserved
+          </p>
 
-px-5
-py-2
-
-text-sm
-sm:text-base
-
-bg-white
-text-blue-700
-
-rounded-full
-
-font-semibold
-
-hover:bg-white
-hover:text-black
-
-transition
-
-whitespace-nowrap
-"
+          <button
+            onClick={() => (window.location.href = "/adminlogin")}
+            className="text-xs text-cyan-300 hover:text-cyan-200 hover:underline"
           >
-            ⭐ Review Us
-          </a>
+            Admin Login
+          </button>
         </div>
-
-        {/* BOTTOM: FULL-WIDTH CONTACT INFO */}
-        <div className="mt-10 pt-6 border-t border-white/10">
-          <div className="text-center md:text-left">
-            <h3 className="text-white font-semibold mb-5 text-lg">
-              Contact Info
-            </h3>
-
-            <ul className="text-sm text-white space-y-4 md:space-y-0 md:grid md:grid-cols-3 md:gap-6">
-              <li className="flex items-center justify-center md:justify-start gap-3">
-                <Phone size={16} className="text-white shrink-0" />
-                <a
-                  href={`tel:${footer.phone}`}
-                  className="
-font-bold
-text-white
-
-px-2
-py-[2px]
-
-rounded
-
-bg-yellow-400/10
-
-hover:bg-yellow-400/20
-
-transition
-"
-                >
-                  {footer.phone}
-                </a>
-              </li>
-
-              <li className="flex items-center justify-center md:justify-start gap-3">
-                <Mail size={16} className="text-white shrink-0" />
-                <span className="break-all">
-                  {footer.email}
-                </span>
-              </li>
-
-              <li className="flex items-start justify-center md:justify-start gap-3">
-                <MapPin size={17} className="text-white shrink-0 mt-[3px]" />
-                <span className="leading-relaxed break-words">
-                  {footer.address}
-                </span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div className="border-t border-white/10 py-6 text-center text-sm text-white px-4">
-        <p className="flex flex-col sm:flex-row items-center justify-center">
-          <span className="flex items-center gap-2">
-            <span>
-              © {new Date().getFullYear()}
-            </span>
-
-            <span className="text-white font-medium ml-1">
-              {footer.companyName}
-            </span>
-          </span>
-
-          <span className="hidden sm:inline mx-2">•</span>
-
-          <span>
-            All Rights Reserved
-          </span>
-        </p>
-
-        <button
-          onClick={() => (window.location.href = "/adminlogin")}
-          className="mt-3 text-xs text-white hover:underline"
-        >
-          Admin Login
-        </button>
       </div>
     </footer>
   );
@@ -486,87 +432,37 @@ transition
 
 
 function FooterLinks({ title, links = [], routeMap }) {
+  return (
+    <div>
+      <h3 className="text-white font-semibold mb-5 text-lg">{title}</h3>
 
-return (
-
-<div className="text-center md:text-left">
-
-<h3 className="text-white font-semibold mb-5 text-lg">
-
-{title}
-
-</h3>
-
-
-<ul className="space-y-3 text-sm">
-
-{links.map((item) => (
-
-<li key={item}>
-
-<Link
-
-to={routeMap[item] || "/"}
-
-className="hover:text-black transition"
-
->
-
-{item}
-
-</Link>
-
-</li>
-
-))}
-
-</ul>
-
-</div>
-
-);
-
+      <ul className="space-y-3 text-sm">
+        {links.map((item) => (
+          <li key={item}>
+            <Link
+              to={routeMap[item] || "/"}
+              className="text-slate-300 hover:text-cyan-300 transition"
+            >
+              {item}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
 function SocialIcon({ Icon, link }) {
-
-return (
-
-<a
-
-href={link}
-
-target="_blank"
-
-rel="noreferrer"
-
-className="
-h-10
-w-10
-
-rounded-full
-
-bg-white/5
-
-flex
-items-center
-justify-center
-
-hover:bg-yellow-500
-
-transition-all
-duration-300
-group
-"
-
->
-
-<Icon size={18} className="text-white group-hover:text-black" />
-
-</a>
-
-);
-
+  return (
+    <a
+      href={link}
+      target="_blank"
+      rel="noreferrer"
+      className="h-10 w-10 rounded-full border border-white/20 bg-white/5 flex items-center justify-center hover:bg-cyan-400 hover:border-cyan-400 transition-all duration-300 group"
+    >
+      <Icon size={18} className="text-white group-hover:text-slate-950" />
+    </a>
+  );
 }
 
 
