@@ -92,8 +92,8 @@ export default function Services() {
         transition={{ duration: 0.7 }}
         className="pt-16 pb-14 px-6 text-center"
       >
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-          Our Services
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 service-heading">
+          OUR SERVICES
         </h1>
 
         <p className="text-gray-700 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
