@@ -631,7 +631,7 @@ return (
 
 to={routeMap[item] || "/"}
 
-className="hover:text-yellow-500 transition"
+className="hover:text-black transition"
 
 >
 
