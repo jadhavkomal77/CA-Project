@@ -115,7 +115,7 @@ export default function FAQ() {
     <div className="bg-gradient-to-br from-slate-50 via-white to-blue-50 min-h-screen">
 
       <section className="py-14 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
+        <h1 className="text-4xl md:text-5xl font-bold text-blue-600">
           Income Tax Filing FAQs
         </h1>
 

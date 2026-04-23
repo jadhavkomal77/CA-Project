@@ -251,11 +251,11 @@ export default function ServiceDetails() {
         viewport={{ once: true }}
         className="py-6 text-center"
       >
-        <h2 className="text-2xl md:text-3xl font-bold mb-4">
-          Interested in this service?
+        <h2 className="text-2xl md:text-3xl font-bold mb-4 text-blue-600">
+          INTERESTED IN THIS SERVICES ?
         </h2>
 
-        <p className="text-gray-600 mb-6">
+        <p className="text-gray-800 mb-6">
           Contact us today for expert assistance and consultation.
         </p>
 
@@ -263,7 +263,7 @@ export default function ServiceDetails() {
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => navigate("/contact")}
-          className="px-10 py-3 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold rounded-xl shadow"
+          className="px-10 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-xl shadow"
         >
           Contact Us
         </motion.button>
