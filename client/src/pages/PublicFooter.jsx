@@ -371,7 +371,7 @@ export default function PublicFooter() {
   return (
     <footer className="bg-[#2563EB] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.25fr_1fr_1.15fr_1.45fr] gap-x-12 gap-y-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.25fr_1fr_1.15fr_1.45fr] gap-x-12 gap-y-7">
           <div className="space-y-6">
             <img
               src="/LogoCA.png"
@@ -410,8 +410,8 @@ export default function PublicFooter() {
           </div>
 
           <div className="md:col-span-2 lg:col-span-3 lg:row-start-2">
-            <div className="border-t border-white/20 pt-8">
-              <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_1.6fr] gap-8 lg:gap-10">
+            <div className="border-t border-white/20 pt-5">
+              <div className="grid grid-cols-1 lg:grid-cols-[0.62fr_1.9fr] gap-7 lg:gap-8">
                 <div>
                   <p className="uppercase text-sm tracking-[0.2em] font-semibold">Contact Us</p>
                   <p className="mt-3 max-w-sm text-sm leading-6 text-blue-100">
@@ -441,11 +441,11 @@ export default function PublicFooter() {
 
                 <div>
                   <p className="uppercase text-sm tracking-[0.2em] font-semibold">Our Locations</p>
-                  <div className="mt-6 grid gap-4 sm:grid-cols-3">
+                  <div className="mt-5 grid gap-4 sm:grid-cols-3">
                     {locations.map((location) => (
                       <div
                         key={location.name}
-                        className="rounded-md border border-white/18 bg-white/[0.06] p-4 shadow-sm shadow-blue-950/10"
+                        className="min-w-0 rounded-md border border-white/18 bg-white/[0.06] p-4 shadow-sm shadow-blue-950/10"
                       >
                         <div className="flex items-center gap-2">
                           <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-white text-[#2563EB]">
@@ -523,7 +523,6 @@ function SocialIcon({ Icon, link }) {
     </a>
   );
 }
-
 
 
 
