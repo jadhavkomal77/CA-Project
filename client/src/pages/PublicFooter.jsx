@@ -271,7 +271,6 @@ import {
   Phone,
   Mail,
   MapPin,
-  Building2,
 } from "lucide-react";
 import { FaXTwitter } from "react-icons/fa6";
 import { useGetPublicNavbarQuery } from "../redux/apis/navbarApi";
@@ -320,9 +319,6 @@ export default function PublicFooter() {
   const policyLinks = ["Privacy Policy", "Terms & Conditions", "Cookie Policy"];
 
   const addressOne = footer.address || "Address details not provided";
-  const addressTwo = footer.address2 || "[Placeholder for 2nd office location details]";
-  const addressThree = footer.address3 || "[Placeholder for 3rd office location details]";
-
   return (
     <footer className="bg-[#2563EB] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-8">
@@ -331,13 +327,12 @@ export default function PublicFooter() {
             <img
               src="/LogoCA.jpeg"
               alt="CADMA Logo"
-              className="h-12 md:h-14 w-auto object-contain"
+              className="h-16 md:h-20 lg:h-24 w-auto object-contain"
               loading="lazy"
             />
             <div>
-              <p className="text-sm uppercase tracking-[0.2em] font-semibold text-white">CADMA</p>
               <p className="mt-3 max-w-xs text-sm leading-6 text-blue-100">
-                Trusted audit, tax, and advisory partner for sustainable business growth.
+              Cadma Associates is a premier professional services firm dedicated to providing exceptional audit, tax, and advisory solutions for businesses across the globe. We empower organizations 
               </p>
             </div>
           </div>
@@ -394,17 +389,29 @@ export default function PublicFooter() {
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Building2 size={16} className="text-white shrink-0 mt-1" />
+                  <MapPin size={16} className="text-white shrink-0 mt-1" />
                   <div>
                     <p className="text-blue-100 uppercase text-xs tracking-wide">Address 2</p>
-                    <p className="text-blue-50 leading-7">{addressTwo}</p>
+                    <p className="text-blue-50 leading-7">
+                      <span className="block font-semibold">NAVI MUMBAI</span>
+                      Office no. 40, Second Floor,
+                      <br />
+                      Crystal Plaza, Hiranandani, Sector - 07,
+                      <br />
+                      Kharghar, Navi Mumbai - 410210
+                    </p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Building2 size={16} className="text-white shrink-0 mt-1" />
+                  <MapPin size={16} className="text-white shrink-0 mt-1" />
                   <div>
                     <p className="text-blue-100 uppercase text-xs tracking-wide">Address 3</p>
-                    <p className="text-blue-50 leading-7">{addressThree}</p>
+                    <p className="text-blue-50 leading-7">
+                      <span className="block font-semibold">PUNE</span>
+                      Fergusson College Rd, Mantri House,
+                      <br />
+                      Shivajinagar, Pune, Maharashtra 411004
+                    </p>
                   </div>
                 </li>
               </ul>

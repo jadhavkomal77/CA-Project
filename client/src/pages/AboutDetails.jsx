@@ -207,8 +207,8 @@ export default function AboutDetails() {
           NEED PROFESSIONAL FINANCIAL GUIDANCE?
         </h2>
 
-        <p className="opacity-80 mb-6 md:mb-8 text-sm md:text-base uppercase tracking-wide">
-          CONTACT OUR EXPERT TEAM FOR CONSULTATION AND TAILORED FINANCIAL SOLUTIONS.
+        <p className="opacity-80 mb-6 md:mb-8 text-sm md:text-base">
+          Contact our expert team for consultation and tailored financial solutions.
         </p>
 
 
@@ -216,7 +216,7 @@ export default function AboutDetails() {
           onClick={() => window.location.href="/contact"}
           className="bg-gradient-to-r from-blue-600 to-blue-800 text-white px-8 md:px-10 py-3 md:py-4 rounded-full font-semibold shadow-md hover:shadow-lg hover:scale-105 transition text-sm md:text-base uppercase tracking-wide"
         >
-          CONTACT NOW
+          Contact Now
         </button>
 
       </section>
