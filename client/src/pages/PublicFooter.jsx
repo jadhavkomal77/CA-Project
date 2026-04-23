@@ -52,7 +52,7 @@
 //   return (
 //     <footer className="bg-gradient-to-br from-[#0B1F4B] via-[#12306F] to-[#2563EB] text-white">
 //       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-//         <div className="grid gap-10 lg:grid-cols-12">
+//         <div className="grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-12">
 //           <div className="lg:col-span-4">
 //             <div className="flex items-center gap-4">
 //               {logo ? (
@@ -221,7 +221,7 @@ export default function PublicFooter() {
   return (
     <footer className="bg-gradient-to-br from-[#2563EB]  via-[#2563EB]  to-[#2563EB] text-white">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-12">
+        <div className="grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-12">
           <div className="lg:col-span-4">
             {/* <div className="flex items-center gap-4">
               {logo ? (
@@ -245,7 +245,7 @@ export default function PublicFooter() {
   <img
     src="/removebgLogo.png"
     alt="CADMA"
-    className="h-28 w-auto object-contain"
+    className="h-20 sm:h-24 md:h-28 w-auto object-contain"
   />
 </div>
 
@@ -282,45 +282,47 @@ export default function PublicFooter() {
             </ul>
           </div>
 
-          {/* <div className="lg:col-span-3">
-            <h3 className="text-lg font-semibold">Contact Us</h3>
-            <div className="mt-5 space-y-4">
-              <div className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 p-4">
-                <Phone size={18} className="mt-1 shrink-0 text-white" />
-                <p className="text-sm text-blue-50 break-words">
-                  {footer?.phone || "+91 9921055588"}
-                </p>
-              </div>
-
-              <div className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 p-4">
-                <Mail size={18} className="mt-1 shrink-0 text-white" />
-                <p className="text-sm text-blue-50 break-words">
-                  {footer?.email || "support@cadmaassociatespvtltd.com"}
-                </p>
-              </div>
-         
-            </div>
-          </div> */}
-          <div className="lg:col-span-3">
+   {/* <div className="lg:col-span-4">
   <h3 className="text-lg font-semibold">Contact Us</h3>
 
   <div className="mt-5 space-y-4">
     
-    {/* Phone */}
-    <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 w-full">
+    <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-6 py-4 w-full">
       <Phone size={18} className="shrink-0 text-white" />
-      <p className="text-sm text-blue-50 break-all">
+      <p className="text-sm text-blue-50 whitespace-nowrap">
         {footer?.phone || "+91 9921055588"}
       </p>
     </div>
 
-<div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-1 py-5 w-full">
-  <Mail size={20} className="shrink-0 text-white" />
+    <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-6 py-4 w-full">
+      <Mail size={20} className="shrink-0 text-white" />
+      <p className="text-sm text-blue-50 whitespace-nowrap">
+        {footer?.email || "support@cadmaassociatespvtltd.com"}
+      </p>
+    </div>
 
-  <p className="text-sm text-blue-50 break-all">
-    {footer?.email || "support@cadmaassociatespvtltd.com"}
-  </p>
-</div>
+  </div>
+</div> */}
+
+<div className="lg:col-span-4">
+  <h3 className="text-lg font-semibold">Contact Us</h3>
+
+  <div className="mt-5 space-y-4">
+
+    <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 w-full">
+      <Phone size={18} className="shrink-0 text-white" />
+      <p className="text-md text-blue-50 break-all">
+        {footer?.phone || "+91 9921055588"}
+      </p>
+    </div>
+
+    <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 w-full">
+      <Mail size={18} className="shrink-0 text-white" />
+      <p className="text-md text-blue-50 break-all">
+        {footer?.email || "support@cadmaassociatespvtltd.com"}
+      </p>
+    </div>
+
   </div>
 </div>
         </div>
