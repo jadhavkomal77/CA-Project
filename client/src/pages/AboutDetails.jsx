@@ -4,6 +4,7 @@ import { useGetPublicAboutQuery } from "../redux/apis/aboutApi";
 import { motion } from "framer-motion";
 import AboutStatCard from "../components/AboutStatCard";
 import AboutTeamPage from "./AboutTeamPage";
+import ClientsSection from "./ClientsSection";
 
 export default function AboutDetails() {
 
@@ -193,7 +194,7 @@ export default function AboutDetails() {
 
       )}
 
-
+<ClientsSection/>
       <AboutTeamPage/>
 
 

@@ -1,7 +1,8 @@
 
 import About from "../pages/About";
-import ClientsSection from "../pages/ClientsSection";
 import Contact from "../pages/Contact";
+import ContactQR from "../pages/ContactQR";
+
 import Hero from "../pages/Hero";
 import PublicCalculator from "../pages/PublicCalculator";
 // import Industries from "../pages/Industries";
@@ -14,7 +15,7 @@ const Home = () => {
       <section id="home"><Hero /></section>
       <section id="about"><About /></section>
       <section id="services"><Services /></section>
-      <section id="clientsSection"><ClientsSection /></section>
+      <section id="contactQR"><ContactQR /></section>
       
       <section id="calculators"><PublicCalculator /></section>
       <section id="contact"><Contact /></section>
