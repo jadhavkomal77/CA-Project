@@ -244,3 +244,9 @@
   shadow-md hover:bg-emerald-700
   active:scale-95 transition duration-200;
 }
+
+.service-heading {
+  color: #2563eb;
+  text-transform: uppercase;
+  font-weight: 600;
+}
