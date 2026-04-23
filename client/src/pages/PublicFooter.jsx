@@ -268,9 +268,6 @@
 import {
   Facebook,
   Instagram,
-  Mail,
-  MapPin,
-  Phone,
 } from "lucide-react";
 import { FaXTwitter } from "react-icons/fa6";
 import { useGetPublicNavbarQuery } from "../redux/apis/navbarApi";
@@ -337,37 +334,6 @@ export default function PublicFooter() {
     "Disclaimer",
     "Refund Policy",
   ];
-
-  const contactItems = [
-    {
-      label: "Call",
-      value: footer.phone || "+91 9921055588",
-      href: `tel:${(footer.phone || "+91 9921055588").replace(/\s/g, "")}`,
-      Icon: Phone,
-    },
-    {
-      label: "Email",
-      value: footer.email || "support@cadmaassociatespvtltd.com",
-      href: `mailto:${footer.email || "support@cadmaassociatespvtltd.com"}`,
-      Icon: Mail,
-    },
-  ];
-
-  const locations = [
-    {
-      name: "Chh. Sambhajinagar",
-      address: "2, Anuvihar Complex, Opp. Yadav Tyres, Behind Vivekanand College, Chh. Sambhajinagar - 431001",
-    },
-    {
-      name: "Navi Mumbai",
-      address: "Office no. 40, Second Floor, Crystal Plaza, Hiranandani, Sector - 07, Kharghar, Navi Mumbai - 410210",
-    },
-    {
-      name: "Pune",
-      address: "Fergusson College Rd, Mantri House, Shivajinagar, Pune, Maharashtra 411004",
-    },
-  ];
-
   return (
     <footer className="bg-[#2563EB] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-8">
@@ -461,7 +427,6 @@ export default function PublicFooter() {
               </div>
             </div>
           </div>
-
         </div>
 
         <div className="mt-14 border-t border-white/20 pt-8 grid grid-cols-1 md:grid-cols-3 items-center gap-6">

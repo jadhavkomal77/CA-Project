@@ -1,3 +1,4 @@
+
 export default function ClientsSection() {
   return (
     <section className="w-full bg-blue-600 text-white py-16 px-6">
@@ -33,3 +34,5 @@ export default function ClientsSection() {
     </section>
   );
 }
+
+
