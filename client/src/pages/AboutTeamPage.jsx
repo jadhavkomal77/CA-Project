@@ -68,8 +68,6 @@
 
 
 
-
-
 const AboutTeamPage = () => {
   return (
     <section className="bg-white py-20">
