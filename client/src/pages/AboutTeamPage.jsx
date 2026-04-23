@@ -85,7 +85,6 @@ const AboutTeamPage = () => {
         {/* Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-10 gap-x-16 text-center">
 
-          {/* Column 1 */}
           <div className="space-y-6">
             <div className="group">
               <p className="team-text">ADV. RAMESH BHUME SIR</p>
