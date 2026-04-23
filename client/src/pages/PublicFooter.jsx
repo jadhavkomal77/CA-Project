@@ -294,6 +294,7 @@ export default function PublicFooter() {
     Contact: "/contact",
     "Privacy Policy": "/privacy",
     "Terms & Conditions": "/terms",
+    "Cookie Policy": "/cookie-policy",
     "Refund Policy": "/refund-policy",
     Disclaimer: "/disclaimer",
   };
@@ -309,114 +310,129 @@ export default function PublicFooter() {
     "Beed",
   ];
 
-  const quickLinks = ["Home", "Services", "Contact", "About", "Latest Updates"];
+  const quickLinks = ["Home", "About", "Services", "Latest Updates", "Contact"];
   const serviceLinks = [
     "Wealth Management",
     "GST Services",
     "Audit & Assurance",
     "Income Tax Filing",
   ];
-  const policyLinks = ["Privacy Policy", "Terms & Conditions", "Refund Policy"];
+  const policyLinks = ["Privacy Policy", "Terms & Conditions", "Cookie Policy"];
 
   const addressOne = footer.address || "Address details not provided";
   const addressTwo = footer.address2 || "[Placeholder for 2nd office location details]";
   const addressThree = footer.address3 || "[Placeholder for 3rd office location details]";
 
   return (
-    <footer className="bg-[#2e62d6] text-white">
+    <footer className="bg-[#2563EB] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10">
-          <div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+          <div className="space-y-6">
             <img
-              src="/removebgLogo.png"
-              alt={footer.companyName || "CADMA"}
-              className="h-12 w-auto object-contain"
+              src="/LogoCA.jpeg"
+              alt="CADMA Logo"
+              className="h-12 md:h-14 w-auto object-contain"
               loading="lazy"
             />
-            <p className="mt-6 max-w-xs text-[30px] leading-7 text-white/95">
-              {footer.description}
-            </p>
+            <div>
+              <p className="text-sm uppercase tracking-[0.2em] font-semibold text-white">CADMA</p>
+              <p className="mt-3 max-w-xs text-sm leading-6 text-blue-100">
+                Trusted audit, tax, and advisory partner for sustainable business growth.
+              </p>
+            </div>
           </div>
 
-          <div className="space-y-8">
+          <div>
             <FooterLinks title="Quick Links" links={quickLinks} routeMap={routeMap} />
+          </div>
+
+          <div className="space-y-10">
             <FooterTextList title="Our Services" links={serviceLinks} />
-            <p className="uppercase text-sm tracking-[0.2em] font-semibold">Our Cities</p>
-            <p className="max-w-xs text-[26px] leading-8 text-white/95">{cities.join(", ")}.</p>
+            <div>
+              <p className="uppercase text-sm tracking-[0.2em] font-semibold">Our Cities</p>
+              <p className="mt-6 text-sm leading-7 text-blue-100">{cities.join(", ")}.</p>
+            </div>
           </div>
 
-          <div>
-            <p className="uppercase text-sm tracking-[0.2em] font-semibold">Contact Us</p>
-            <ul className="mt-6 space-y-6 text-sm">
-              <li className="flex items-start gap-3">
-                <Phone size={16} className="text-white/90 shrink-0 mt-1" />
-                <div>
-                  <p className="text-white/70 uppercase text-xs tracking-wide">Phone</p>
-                  <a href={`tel:${footer.phone}`} className="font-semibold hover:underline">
-                    {footer.phone}
-                  </a>
-                </div>
-              </li>
+          <div className="space-y-10">
+            <div>
+              <p className="uppercase text-sm tracking-[0.2em] font-semibold">Contact Us</p>
+              <ul className="mt-6 space-y-6 text-sm">
+                <li className="flex items-start gap-3">
+                  <Phone size={16} className="text-white shrink-0 mt-1" />
+                  <div>
+                    <p className="text-blue-100 uppercase text-xs tracking-wide">Phone</p>
+                    <a href={`tel:${footer.phone}`} className="font-semibold text-white hover:underline">
+                      {footer.phone}
+                    </a>
+                  </div>
+                </li>
 
-              <li className="flex items-start gap-3">
-                <Mail size={16} className="text-white/90 shrink-0 mt-1" />
-                <div>
-                  <p className="text-white/70 uppercase text-xs tracking-wide">Email</p>
-                  <a
-                    href={`mailto:${footer.email}`}
-                    className="font-semibold break-all hover:underline"
-                  >
-                    {footer.email}
-                  </a>
-                </div>
-              </li>
-            </ul>
-          </div>
+                <li className="flex items-start gap-3">
+                  <Mail size={16} className="text-white shrink-0 mt-1" />
+                  <div>
+                    <p className="text-blue-100 uppercase text-xs tracking-wide">Email</p>
+                    <a
+                      href={`mailto:${footer.email}`}
+                      className="font-semibold break-all text-white hover:underline"
+                    >
+                      {footer.email}
+                    </a>
+                  </div>
+                </li>
+              </ul>
+            </div>
 
-          <div>
-            <p className="uppercase text-sm tracking-[0.2em] font-semibold">Our Locations</p>
-            <ul className="mt-6 space-y-6 text-sm">
-              <li className="flex items-start gap-3">
-                <MapPin size={16} className="text-white/90 shrink-0 mt-1" />
-                <div>
-                  <p className="text-white/70 uppercase text-xs tracking-wide">Address 1</p>
-                  <p className="text-white/95 leading-7">{addressOne}</p>
-                </div>
-              </li>
-              <li className="flex items-start gap-3">
-                <Building2 size={16} className="text-white/90 shrink-0 mt-1" />
-                <div>
-                  <p className="text-white/70 uppercase text-xs tracking-wide">Address 2</p>
-                  <p className="text-white/95 leading-7">{addressTwo}</p>
-                </div>
-              </li>
-              <li className="flex items-start gap-3">
-                <Building2 size={16} className="text-white/90 shrink-0 mt-1" />
-                <div>
-                  <p className="text-white/70 uppercase text-xs tracking-wide">Address 3</p>
-                  <p className="text-white/95 leading-7">{addressThree}</p>
-                </div>
-              </li>
-            </ul>
+            <div>
+              <p className="uppercase text-sm tracking-[0.2em] font-semibold">Our Locations</p>
+              <ul className="mt-6 space-y-6 text-sm">
+                <li className="flex items-start gap-3">
+                  <MapPin size={16} className="text-white shrink-0 mt-1" />
+                  <div>
+                    <p className="text-blue-100 uppercase text-xs tracking-wide">Address 1</p>
+                    <p className="text-blue-50 leading-7">{addressOne}</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Building2 size={16} className="text-white shrink-0 mt-1" />
+                  <div>
+                    <p className="text-blue-100 uppercase text-xs tracking-wide">Address 2</p>
+                    <p className="text-blue-50 leading-7">{addressTwo}</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Building2 size={16} className="text-white shrink-0 mt-1" />
+                  <div>
+                    <p className="text-blue-100 uppercase text-xs tracking-wide">Address 3</p>
+                    <p className="text-blue-50 leading-7">{addressThree}</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
 
-        <div className="mt-14 border-t border-white/20 pt-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 text-xs text-white/95">
-          <p>© {new Date().getFullYear()} {footer.companyName} - All Rights Reserved</p>
+        <div className="mt-14 border-t border-white/20 pt-8 grid grid-cols-1 md:grid-cols-3 items-center gap-6">
+          <p className="text-xs text-blue-100 text-center md:text-left">
+            © 2026 CADMA ASSOCIATES PVT LTD
+          </p>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center gap-4">
             {footer.facebook && <SocialIcon Icon={Facebook} link={footer.facebook} />}
             {footer.twitter && <SocialIcon Icon={FaXTwitter} link={footer.twitter} />}
             {footer.instagram && <SocialIcon Icon={Instagram} link={footer.instagram} />}
           </div>
 
-          <div className="flex flex-wrap items-center gap-4 lg:justify-end">
+          <div className="flex flex-wrap justify-center md:justify-end items-center gap-5 text-xs text-blue-100">
             {policyLinks.map((item) => (
-              <Link key={item} to={routeMap[item] || "/"} className="hover:underline">
+              <Link key={item} to={routeMap[item] || "/"} className="hover:text-white transition-colors">
                 {item}
               </Link>
             ))}
-            <button onClick={() => (window.location.href = "/adminlogin")} className="hover:underline">
+            <button
+              onClick={() => (window.location.href = "/adminlogin")}
+              className="hover:text-white transition-colors"
+            >
               Admin Login
             </button>
           </div>
@@ -432,12 +448,12 @@ function FooterLinks({ title, links = [], routeMap }) {
     <div>
       <p className="uppercase text-sm tracking-[0.2em] font-semibold">{title}</p>
 
-      <ul className="mt-6 grid grid-cols-2 gap-x-8 gap-y-3 text-sm">
+      <ul className="mt-6 space-y-3 text-sm">
         {links.map((item) => (
           <li key={item}>
             <Link
               to={routeMap[item] || "/"}
-              className="text-white/95 hover:underline"
+              className="text-blue-50 hover:text-white transition-colors"
             >
               {item}
             </Link>
@@ -452,7 +468,7 @@ function FooterTextList({ title, links = [] }) {
   return (
     <div>
       <p className="uppercase text-sm tracking-[0.2em] font-semibold">{title}</p>
-      <ul className="mt-6 space-y-3 text-sm text-white/95">
+      <ul className="mt-6 space-y-3 text-sm text-blue-50">
         {links.map((item) => (
           <li key={item}>{item}</li>
         ))}
@@ -467,9 +483,9 @@ function SocialIcon({ Icon, link }) {
       href={link}
       target="_blank"
       rel="noreferrer"
-      className="h-8 w-8 rounded-lg border border-white/60 flex items-center justify-center hover:bg-white/10 transition-all duration-200"
+      className="h-10 w-10 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-[#2563EB] transition-all duration-200"
     >
-      <Icon size={14} className="text-white" />
+      <Icon size={18} className="text-current" />
     </a>
   );
 }
