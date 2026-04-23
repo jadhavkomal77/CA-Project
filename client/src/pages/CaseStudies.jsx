@@ -29,7 +29,7 @@ export default function CaseStudies() {
         {/* HEADER */}
         <div className="text-center mb-10 sm:mb-14">
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-blue-700">
             Our Case Studies
           </h2>
 
