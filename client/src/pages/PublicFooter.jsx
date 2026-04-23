@@ -439,6 +439,7 @@ export default function PublicFooter() {
                   </div>
                 </div>
 
+<<<<<<< Updated upstream
                 <div>
                   <p className="uppercase text-sm tracking-[0.2em] font-semibold">Our Locations</p>
                   <div className="mt-5 grid gap-4 sm:grid-cols-3">
@@ -458,6 +459,48 @@ export default function PublicFooter() {
                     ))}
                   </div>
                 </div>
+=======
+              <div className="mt-10 w-full">
+  <p className="uppercase text-base tracking-[0.25em] font-semibold text-center lg:text-left">
+    Our Locations
+  </p>
+
+  <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+    {locations.map((location) => (
+      <div
+        key={location.name}
+        className="
+        rounded-2xl 
+        border border-white/25 
+        bg-white/[0.10] 
+        p-8 
+        w-full
+        h-full
+        shadow-lg
+        "
+      >
+        {/* TOP */}
+        <div className="flex items-center gap-4">
+          <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-white text-[#2563EB]">
+            <MapPin size={20} />
+          </span>
+
+          <p className="text-lg font-semibold">
+            {location.name}
+          </p>
+        </div>
+
+        {/* ADDRESS */}
+        <p className="mt-5 text-base leading-7 text-blue-50 break-words">
+          {location.address}
+        </p>
+      </div>
+    ))}
+
+  </div>
+</div>
+>>>>>>> Stashed changes
               </div>
             </div>
           </div>
