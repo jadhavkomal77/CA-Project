@@ -371,12 +371,12 @@ export default function PublicFooter() {
   return (
     <footer className="bg-[#2563EB] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.25fr_1fr_1.15fr_1.45fr] gap-x-12 gap-y-7">
-          <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.25fr_1fr_1.15fr_1.45fr] gap-5 lg:gap-6">
+          <div className="rounded-lg border border-white/20 bg-white/[0.11] p-6 shadow-xl shadow-blue-950/20 backdrop-blur-sm">
             <img
               src="/LogoCA.png"
               alt="CADMA Logo"
-              className="h-24 md:h-32 lg:h-40 w-auto object-contain"
+              className="h-24 md:h-28 lg:h-32 w-auto object-contain"
               loading="lazy"
             />
             <div>
@@ -386,20 +386,20 @@ export default function PublicFooter() {
             </div>
           </div>
 
-          <div>
+          <div className="rounded-lg border border-white/20 bg-white/[0.11] p-6 shadow-xl shadow-blue-950/20 backdrop-blur-sm">
             <FooterLinks title="Quick Links" links={quickLinks} routeMap={routeMap} />
           </div>
 
-          <div>
+          <div className="rounded-lg border border-white/20 bg-white/[0.11] p-6 shadow-xl shadow-blue-950/20 backdrop-blur-sm">
             <FooterLinks title="Important Links" links={importantLinks} routeMap={routeMap} />
           </div>
 
-          <div className="space-y-10">
+          <div className="rounded-lg border border-white/20 bg-white/[0.11] p-6 shadow-xl shadow-blue-950/20 backdrop-blur-sm">
             <div>
               <FooterLinks title="Our Services" links={serviceLinks} routeMap={serviceRouteMap} />
             </div>
 
-            <div>
+            <div className="mt-10 border-t border-white/15 pt-8">
               <p className="uppercase text-sm tracking-[0.2em] font-semibold">Our Cities</p>
               <ul className="mt-6 space-y-3 text-sm text-blue-50">
                 {cities.map((city) => (
@@ -410,7 +410,7 @@ export default function PublicFooter() {
           </div>
 
           <div className="md:col-span-2 lg:col-span-3 lg:row-start-2">
-            <div className="border-t border-white/20 pt-5">
+            <div className="rounded-lg border border-white/20 bg-white/[0.11] p-6 shadow-xl shadow-blue-950/20 backdrop-blur-sm">
               <div className="grid grid-cols-1 lg:grid-cols-[0.62fr_1.9fr] gap-7 lg:gap-8">
                 <div>
                   <p className="uppercase text-sm tracking-[0.2em] font-semibold">Contact Us</p>
@@ -423,7 +423,7 @@ export default function PublicFooter() {
                       <a
                         key={label}
                         href={href}
-                        className="group flex items-center gap-3 rounded-md border border-white/20 bg-white/[0.07] px-4 py-3 text-left transition-colors hover:bg-white hover:text-[#2563EB]"
+                        className="group flex items-center gap-3 rounded-md border border-white/20 bg-white/[0.1] px-4 py-3 text-left transition-colors hover:bg-white hover:text-[#2563EB]"
                       >
                         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-white text-[#2563EB] transition-colors group-hover:bg-[#2563EB] group-hover:text-white">
                           <Icon size={18} />
@@ -445,7 +445,7 @@ export default function PublicFooter() {
                     {locations.map((location) => (
                       <div
                         key={location.name}
-                        className="min-w-0 rounded-md border border-white/18 bg-white/[0.06] p-4 shadow-sm shadow-blue-950/10"
+                        className="min-w-0 rounded-md border border-white/20 bg-white/[0.1] p-4 shadow-sm shadow-blue-950/10"
                       >
                         <div className="flex items-center gap-2">
                           <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-white text-[#2563EB]">
@@ -466,7 +466,7 @@ export default function PublicFooter() {
 
         <div className="mt-14 border-t border-white/20 pt-8 grid grid-cols-1 md:grid-cols-3 items-center gap-6">
           <p className="text-xs text-blue-100 text-center md:text-left">
-            © 2026 CADMA ASSOCIATES PVT LTD
+            (c) {new Date().getFullYear()} CADMA ASSOCIATES PVT LTD
           </p>
 
           <div className="flex items-center justify-center gap-4">
@@ -523,7 +523,4 @@ function SocialIcon({ Icon, link }) {
     </a>
   );
 }
-
-
-
 
