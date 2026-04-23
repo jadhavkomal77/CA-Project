@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import PublicNavbar from "../pages/PublicNavbar";
 import PublicFooter from "../pages/PublicFooter";
 import WhatsappButton from "./WhatsappButton";
+import ReviewButton from "./ReviewButton";
 function ScrollToHash() {
   const { hash } = useLocation();
 
@@ -39,6 +40,7 @@ export default function PublicLayout() {
       <Outlet />
 
       <PublicFooter />
+      <ReviewButton/>
       <WhatsappButton />
     </>
   );
