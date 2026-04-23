@@ -194,8 +194,6 @@ export default function AboutDetails() {
       )}
 
 
-
-      {/* OUR CLIENTS section removed per client request (REQ-10) — component preserved in OurClientsSection.jsx */}
       <AboutTeamPage/>
 
 

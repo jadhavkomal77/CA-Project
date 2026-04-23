@@ -99,7 +99,6 @@ export default function PublicNavbar() {
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between h-[72px] md:h-[85px]">
 
-          {/* ================= LOGO ================= */}
          {/* ================= LOGO ================= */}
 <div
   onClick={() => navigate("/")}
