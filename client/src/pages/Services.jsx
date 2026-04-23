@@ -3,12 +3,53 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetPublicServicesQuery } from "../redux/apis/serviceApi";
-import * as Icons from "lucide-react";
+import {
+  Banknote,
+  Building2,
+  ClipboardCheck,
+  FileCheck,
+  FileText,
+  HandCoins,
+  LineChart,
+  UserPlus,
+  Wallet,
+} from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function Services() {
   const navigate = useNavigate();
   const { data: services, isLoading } = useGetPublicServicesQuery();
+
+  const getServiceIcon = (serviceTitle = "") => {
+    const title = serviceTitle.toLowerCase();
+
+    if (title.includes("wealth management")) return Wallet;
+    if (
+      title.includes("income tax return preparation") ||
+      title.includes("income tax return") ||
+      title.includes("income tax")
+    ) {
+      return FileText;
+    }
+    if (title.includes("gst")) return FileCheck;
+    if (title.includes("company incorporation")) return Building2;
+    if (title.includes("audit") || title.includes("assurance")) return ClipboardCheck;
+    if (title.includes("startup") || title.includes("msme")) return UserPlus;
+    if (title.includes("project financing") || title.includes("government subsidies")) {
+      return HandCoins;
+    }
+    if (title.includes("financial planning") || title.includes("business advisory")) {
+      return LineChart;
+    }
+    if (title.includes("incorporation")) return Building2;
+    if (title.includes("financing")) return HandCoins;
+    if (title.includes("advisory")) return LineChart;
+    if (title.includes("tax")) return FileText;
+    if (title.includes("company")) return Building2;
+    if (title.includes("project")) return Banknote;
+
+    return FileText;
+  };
 
   if (isLoading)
     return (
@@ -72,7 +113,7 @@ export default function Services() {
         >
 
           {services?.map(service=>{
-            const Icon = Icons[service.icon] || Icons.FileText;
+            const Icon = getServiceIcon(service.title);
 
             return(
               <motion.div
@@ -121,7 +162,7 @@ export default function Services() {
                     group-hover:scale-110
                     transition
                   ">
-                    <Icon size={26} className="text-blue-600"/>
+                    <Icon className="w-6 h-6 text-blue-600"/>
                   </div>
 
                   {/* TITLE */}
