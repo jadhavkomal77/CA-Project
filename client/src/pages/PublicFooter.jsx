@@ -334,17 +334,15 @@ export default function PublicFooter() {
     "Disclaimer",
     "Refund Policy",
   ];
-  const policyLinks = ["Privacy Policy", "Terms & Conditions", "Cookie Policy"];
-
   return (
     <footer className="bg-[#2563EB] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           <div className="space-y-6">
             <img
               src="/LogoCA.png"
               alt="CADMA Logo"
-              className="h-16 md:h-20 lg:h-24 w-auto object-contain"
+              className="h-24 md:h-32 lg:h-40 w-auto object-contain"
               loading="lazy"
             />
             <div>
@@ -376,6 +374,73 @@ export default function PublicFooter() {
               </ul>
             </div>
           </div>
+
+          <div>
+            <div className="flex flex-col md:flex-row gap-10">
+              <div className="space-y-4">
+                <h4 className="uppercase text-sm tracking-[0.2em] font-semibold">Contact Us</h4>
+
+                <div className="flex items-start gap-3">
+                  <span className="material-symbols-outlined text-blue-50">call</span>
+                  <div>
+                    <p className="text-xs uppercase text-blue-100">Phone</p>
+                    <p className="font-semibold text-sm">+91 9921055588</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <span className="material-symbols-outlined text-blue-50">mail</span>
+                  <div>
+                    <p className="text-xs uppercase text-blue-100">Email</p>
+                    <p className="font-semibold text-sm break-all">support@cadmaassociatespvtltd.com</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <h4 className="uppercase text-sm tracking-[0.2em] font-semibold">Our Locations</h4>
+
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <span className="material-symbols-outlined text-blue-50">location_on</span>
+                    <div>
+                      <p className="text-xs uppercase text-blue-100">Address 1</p>
+                      <p className="text-sm text-blue-50">
+                        2, Anuvihar Complex, Opp. Yadav Tyres,<br />
+                        Behind Vivekanand College,<br />
+                        Chh. Sambhajinagar - 431001
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <span className="material-symbols-outlined text-blue-50">location_on</span>
+                    <div>
+                      <p className="text-xs uppercase text-blue-100">Address 2</p>
+                      <p className="text-sm text-blue-50">
+                        NAVI MUMBAI<br />
+                        Office no. 40, Second Floor,<br />
+                        Crystal Plaza, Hiranandani, Sector - 07,<br />
+                        Kharghar, Navi Mumbai - 410210
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <span className="material-symbols-outlined text-blue-50">location_on</span>
+                    <div>
+                      <p className="text-xs uppercase text-blue-100">Address 3</p>
+                      <p className="text-sm text-blue-50">
+                        PUNE<br />
+                        Fergusson College Rd, Mantri House,<br />
+                        Shivajinagar, Pune, Maharashtra 411004
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="mt-14 border-t border-white/20 pt-8 grid grid-cols-1 md:grid-cols-3 items-center gap-6">
@@ -390,11 +455,6 @@ export default function PublicFooter() {
           </div>
 
           <div className="flex flex-wrap justify-center md:justify-end items-center gap-5 text-xs text-blue-100">
-            {policyLinks.map((item) => (
-              <Link key={item} to={routeMap[item] || "/"} className="hover:text-white transition-colors">
-                {item}
-              </Link>
-            ))}
             <button
               onClick={() => (window.location.href = "/adminlogin")}
               className="hover:text-white transition-colors"
