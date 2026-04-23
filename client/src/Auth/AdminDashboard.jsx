@@ -187,7 +187,6 @@ import {
   useAdminProfileQuery,
 } from "../redux/apis/adminApi";
 import { toast } from "react-toastify";
-import { FaUserTie } from "react-icons/fa6";
 
 export default function AdminDashboardLayout() {
   const navigate = useNavigate();
