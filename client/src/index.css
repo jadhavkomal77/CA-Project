@@ -244,3 +244,29 @@
   shadow-md hover:bg-emerald-700
   active:scale-95 transition duration-200;
 }
+
+
+.team-text {
+  color: #2f6fd6;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+  transition: 0.3s;
+}
+
+.group:hover .team-text {
+  color: #1e4fa3;
+}
+
+.underline-style {
+  height: 2px;
+  width: 40px;
+  background: #2f6fd6;
+  margin: 8px auto 0;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+.group:hover .underline-style {
+  width: 70px;
+}

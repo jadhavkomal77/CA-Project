@@ -326,7 +326,7 @@ gap-4
 <div className="flex justify-center sm:justify-start">
 
 <img
-src="/Cal.png"
+src="/removebgLogo.png"
 alt="CADMA Associates"
 className="h-10 sm:h-11 md:h-12 lg:h-14 xl:h-16 w-auto object-contain"
 />
@@ -372,6 +372,10 @@ Our Cities
 
 <ul className="space-y-2 text-sm">
 
+  <li className="text-white hover:text-black transition cursor-pointer">
+Chh. Sambhaji Nagar
+</li>
+
 <li className="text-white hover:text-black transition cursor-pointer">
 Mumbai
 </li>
@@ -381,12 +385,10 @@ Pune
 </li>
 
 <li className="text-white hover:text-black transition cursor-pointer">
-Bangalore
+Bengaluru
 </li>
 
-<li className="text-white hover:text-black transition cursor-pointer">
-Chh. Sambhaji Nagar
-</li>
+
 
 <li className="text-white hover:text-black transition cursor-pointer">
 Satara
