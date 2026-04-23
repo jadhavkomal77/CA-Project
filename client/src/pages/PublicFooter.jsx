@@ -268,9 +268,6 @@
 import {
   Facebook,
   Instagram,
-  Phone,
-  Mail,
-  MapPin,
 } from "lucide-react";
 import { FaXTwitter } from "react-icons/fa6";
 import { useGetPublicNavbarQuery } from "../redux/apis/navbarApi";
@@ -298,11 +295,22 @@ export default function PublicFooter() {
     Disclaimer: "/disclaimer",
   };
 
+  const serviceRouteMap = {
+    "Wealth Management": "/services/wealth-management",
+    "Income Tax Return Preparation & Filing": "/services/income-tax-return-preparation-filing",
+    "GST Services": "/services/gst-services",
+    "Company Incorporation Services": "/services/company-incorporation-services",
+    "Audit & Assurance Services": "/services/audit-assurance-services",
+    "Startup & MSME Registration": "/services/startup-msme-registration",
+    "Project Financing & Government Subsidies": "/services/project-financing-government-subsidies",
+    "Financial Planning & Business Advisory": "/services/financial-planning-business-advisory",
+  };
+
   const cities = [
-    "Chh. Sambhaji Nagar",
     "Mumbai",
     "Pune",
     "Bengaluru",
+    "Chh. Sambhaji Nagar",
     "Satara",
     "Hingoli",
     "Parbhani",
@@ -312,20 +320,29 @@ export default function PublicFooter() {
   const quickLinks = ["Home", "About", "Services", "Latest Updates", "Contact"];
   const serviceLinks = [
     "Wealth Management",
+    "Income Tax Return Preparation & Filing",
     "GST Services",
-    "Audit & Assurance",
-    "Income Tax Filing",
+    "Company Incorporation Services",
+    "Audit & Assurance Services",
+    "Startup & MSME Registration",
+    "Project Financing & Government Subsidies",
+    "Financial Planning & Business Advisory",
+  ];
+  const importantLinks = [
+    "Privacy Policy",
+    "Terms & Conditions",
+    "Disclaimer",
+    "Refund Policy",
   ];
   const policyLinks = ["Privacy Policy", "Terms & Conditions", "Cookie Policy"];
 
-  const addressOne = footer.address || "Address details not provided";
   return (
     <footer className="bg-[#2563EB] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           <div className="space-y-6">
             <img
-              src="/LogoCA.jpeg"
+              src="/LogoCA.png"
               alt="CADMA Logo"
               className="h-16 md:h-20 lg:h-24 w-auto object-contain"
               loading="lazy"
@@ -341,79 +358,21 @@ export default function PublicFooter() {
             <FooterLinks title="Quick Links" links={quickLinks} routeMap={routeMap} />
           </div>
 
-          <div className="space-y-10">
-            <FooterTextList title="Our Services" links={serviceLinks} />
-            <div>
-              <p className="uppercase text-sm tracking-[0.2em] font-semibold">Our Cities</p>
-              <p className="mt-6 text-sm leading-7 text-blue-100">{cities.join(", ")}.</p>
-            </div>
+          <div>
+            <FooterLinks title="Important Links" links={importantLinks} routeMap={routeMap} />
           </div>
 
           <div className="space-y-10">
             <div>
-              <p className="uppercase text-sm tracking-[0.2em] font-semibold">Contact Us</p>
-              <ul className="mt-6 space-y-6 text-sm">
-                <li className="flex items-start gap-3">
-                  <Phone size={16} className="text-white shrink-0 mt-1" />
-                  <div>
-                    <p className="text-blue-100 uppercase text-xs tracking-wide">Phone</p>
-                    <a href={`tel:${footer.phone}`} className="font-semibold text-white hover:underline">
-                      {footer.phone}
-                    </a>
-                  </div>
-                </li>
-
-                <li className="flex items-start gap-3">
-                  <Mail size={16} className="text-white shrink-0 mt-1" />
-                  <div>
-                    <p className="text-blue-100 uppercase text-xs tracking-wide">Email</p>
-                    <a
-                      href={`mailto:${footer.email}`}
-                      className="font-semibold break-all text-white hover:underline"
-                    >
-                      {footer.email}
-                    </a>
-                  </div>
-                </li>
-              </ul>
+              <FooterLinks title="Our Services" links={serviceLinks} routeMap={serviceRouteMap} />
             </div>
 
             <div>
-              <p className="uppercase text-sm tracking-[0.2em] font-semibold">Our Locations</p>
-              <ul className="mt-6 space-y-6 text-sm">
-                <li className="flex items-start gap-3">
-                  <MapPin size={16} className="text-white shrink-0 mt-1" />
-                  <div>
-                    <p className="text-blue-100 uppercase text-xs tracking-wide">Address 1</p>
-                    <p className="text-blue-50 leading-7">{addressOne}</p>
-                  </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <MapPin size={16} className="text-white shrink-0 mt-1" />
-                  <div>
-                    <p className="text-blue-100 uppercase text-xs tracking-wide">Address 2</p>
-                    <p className="text-blue-50 leading-7">
-                      <span className="block font-semibold">NAVI MUMBAI</span>
-                      Office no. 40, Second Floor,
-                      <br />
-                      Crystal Plaza, Hiranandani, Sector - 07,
-                      <br />
-                      Kharghar, Navi Mumbai - 410210
-                    </p>
-                  </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <MapPin size={16} className="text-white shrink-0 mt-1" />
-                  <div>
-                    <p className="text-blue-100 uppercase text-xs tracking-wide">Address 3</p>
-                    <p className="text-blue-50 leading-7">
-                      <span className="block font-semibold">PUNE</span>
-                      Fergusson College Rd, Mantri House,
-                      <br />
-                      Shivajinagar, Pune, Maharashtra 411004
-                    </p>
-                  </div>
-                </li>
+              <p className="uppercase text-sm tracking-[0.2em] font-semibold">Our Cities</p>
+              <ul className="mt-6 space-y-3 text-sm text-blue-50">
+                {cities.map((city) => (
+                  <li key={city}>{city}</li>
+                ))}
               </ul>
             </div>
           </div>
@@ -465,19 +424,6 @@ function FooterLinks({ title, links = [], routeMap }) {
               {item}
             </Link>
           </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-function FooterTextList({ title, links = [] }) {
-  return (
-    <div>
-      <p className="uppercase text-sm tracking-[0.2em] font-semibold">{title}</p>
-      <ul className="mt-6 space-y-3 text-sm text-blue-50">
-        {links.map((item) => (
-          <li key={item}>{item}</li>
         ))}
       </ul>
     </div>
