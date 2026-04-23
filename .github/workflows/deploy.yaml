@@ -43,14 +43,14 @@ jobs:
           fi
         working-directory: server
 
-      # Optional: set VERCEL_*_DEPLOY_HOOK_URL in repo Settings → Secrets → Actions.
-      # If unset, the step is skipped (build still succeeds). Hooks 404 when URL is stale.
+      # Deploy hook URLs are configured directly below.
+      # If a URL is ever removed, the step is skipped and the build still succeeds.
       - name: Trigger Vercel Client Deploy Hook
         env:
-          DEPLOY_HOOK_URL: ${{ secrets.VERCEL_CLIENT_DEPLOY_HOOK_URL }}
+          DEPLOY_HOOK_URL: https://api.vercel.com/v1/integrations/deploy/prj_xqgjFKppQK7odjv7zbNXJcPVsC9j/1tHbQcwowZ
         run: |
           if [ -z "$DEPLOY_HOOK_URL" ]; then
-            echo "::warning::VERCEL_CLIENT_DEPLOY_HOOK_URL is not set; skipping client deploy hook. Add the secret to trigger Vercel after each push."
+            echo "::warning::Client deploy hook URL is empty; skipping client deploy hook."
             exit 0
           fi
           echo "Triggering Vercel Client Deploy Hook..."
@@ -65,10 +65,10 @@ jobs:
 
       - name: Trigger Vercel Server Deploy Hook
         env:
-          DEPLOY_HOOK_URL: ${{ secrets.VERCEL_SERVER_DEPLOY_HOOK_URL }}
+          DEPLOY_HOOK_URL: https://api.vercel.com/v1/integrations/deploy/prj_Fj2aE2M6txBnC2gnsFQMBnGSnykC/dcZ8ZLVzj2
         run: |
           if [ -z "$DEPLOY_HOOK_URL" ]; then
-            echo "::warning::VERCEL_SERVER_DEPLOY_HOOK_URL is not set; skipping server deploy hook. Add the secret to trigger Vercel after each push."
+            echo "::warning::Server deploy hook URL is empty; skipping server deploy hook."
             exit 0
           fi
           echo "Triggering Vercel Server Deploy Hook..."
