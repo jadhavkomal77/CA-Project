@@ -199,7 +199,7 @@ export default function PublicNavbar() {
 
             <button
               onClick={() => handleNavigate("/contact")}
-              className="bg-gradient-to-r from-blue-600 to-blue-800 text-white px-4 py-1.5 rounded-full text-sm font-semibold shadow hover:shadow-lg transition"
+              className="bg-gradient-to-r from-blue-500 to-blue-500 text-white px-4 py-1.5 rounded-full text-sm font-semibold shadow hover:shadow-lg transition"
             >
               Contact
             </button>

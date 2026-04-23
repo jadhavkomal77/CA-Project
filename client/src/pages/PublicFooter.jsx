@@ -203,7 +203,7 @@
 //         <p className="flex flex-col sm:flex-row items-center justify-center gap-1">
 //           <span>
 //             © {new Date().getFullYear()}{" "}
-//             <span className="text-yellow-400 font-medium">
+//             <span className="text-black font-medium">
 //               {footer.companyName}
 //             </span>
 //           </span>
@@ -300,7 +300,7 @@ export default function PublicFooter() {
 
   return (
 
-<footer className="bg-[#0f172a] text-gray-300">
+<footer className="bg-blue-500 text-gray-300">
 
 
 <div
@@ -326,22 +326,23 @@ gap-4
 <div className="flex justify-center sm:justify-start">
 
 <img
-src="/Calogo.png"
+src="/removebgLogo.png"
 alt="CADMA Associates"
 className="h-10 sm:h-11 md:h-12 lg:h-14 xl:h-16 w-auto object-contain"
 />
 
 </div>
 
-<p className="text-sm text-gray-300 leading-relaxed max-w-sm mx-auto sm:mx-0">
+<p className="text-sm text-white leading-relaxed max-w-sm mx-auto sm:mx-0">
 
 {footer.description}
 
 </p>
 
-</div>
+</div >
 
-
+<div className="text-white ">
+  
 {/* QUICK LINKS */}
 <FooterLinks
 title="Quick Links"
@@ -349,10 +350,11 @@ links={footer.quickLinks}
 routeMap={routeMap}
 />
 
+</div>
 
 
 {/* IMPORTANT LINKS */}
-<div>
+<div className="text-white">
   <FooterLinks
 title="Important Links"
 links={footer.importantLinks}
@@ -370,35 +372,37 @@ Our Cities
 
 <ul className="space-y-2 text-sm">
 
-<li className="text-gray-300 hover:text-yellow-400 transition cursor-pointer">
-Mumbai
-</li>
-
-<li className="text-gray-300 hover:text-yellow-400 transition cursor-pointer">
-Pune
-</li>
-
-<li className="text-gray-300 hover:text-yellow-400 transition cursor-pointer">
-Bangalore
-</li>
-
-<li className="text-gray-300 hover:text-yellow-400 transition cursor-pointer">
+  <li className="text-white hover:text-black transition cursor-pointer">
 Chh. Sambhaji Nagar
 </li>
 
-<li className="text-gray-300 hover:text-yellow-400 transition cursor-pointer">
+<li className="text-white hover:text-black transition cursor-pointer">
+Mumbai
+</li>
+
+<li className="text-white hover:text-black transition cursor-pointer">
+Pune
+</li>
+
+<li className="text-white hover:text-black transition cursor-pointer">
+Bengaluru
+</li>
+
+
+
+<li className="text-white hover:text-black transition cursor-pointer">
 Satara
 </li>
 
-<li className="text-gray-300 hover:text-yellow-400 transition cursor-pointer">
+<li className="text-white hover:text-black transition cursor-pointer">
 Hingoli
 </li>
 
-<li className="text-gray-300 hover:text-yellow-400 transition cursor-pointer">
+<li className="text-white hover:text-black transition cursor-pointer">
 Parbhani
 </li>
 
-<li className="text-gray-300 hover:text-yellow-400 transition cursor-pointer">
+<li className="text-white hover:text-black transition cursor-pointer">
 Beed
 </li>
 
@@ -414,18 +418,18 @@ Contact Info
 </h3>
 
 
-<ul className="space-y-4 text-sm text-gray-300">
+<ul className="space-y-4 text-sm text-white">
 
 
 <li className="flex items-center justify-center sm:justify-start gap-3">
 
-<Phone size={16} className="text-yellow-500 shrink-0" />
+<Phone size={16} className="text-white shrink-0" />
 
 <a
 href={`tel:${footer.phone}`}
 className="
 font-bold
-text-yellow-400
+text-white
 
 px-2
 py-[2px]
@@ -449,7 +453,7 @@ transition
 
 <li className="flex items-center justify-center sm:justify-start gap-3">
 
-<Mail size={16} className="text-yellow-500 shrink-0" />
+<Mail size={16} className="text-white shrink-0" />
 
 <span className="break-all">
 
@@ -463,7 +467,7 @@ transition
 
 <li className="flex items-start justify-center sm:justify-start gap-3">
 
-<MapPin size={17} className="text-yellow-500 shrink-0 mt-[3px]" />
+<MapPin size={17} className="text-white shrink-0 mt-[3px]" />
 
 <span className="leading-relaxed break-words">
 
@@ -552,7 +556,7 @@ rounded-full
 
 font-semibold
 
-hover:bg-yellow-400
+hover:bg-white
 hover:text-black
 
 transition
@@ -568,7 +572,7 @@ whitespace-nowrap
 
 
 </div>
-<div className="border-t border-white/10 py-6 text-center text-sm text-gray-300 px-4">
+<div className="border-t border-white/10 py-6 text-center text-sm text-white px-4">
 
   <p className="flex flex-col sm:flex-row items-center justify-center">
 
@@ -577,7 +581,7 @@ whitespace-nowrap
         © {new Date().getFullYear()}
       </span>
 
-      <span className="text-yellow-400 font-medium ml-1">
+      <span className="text-white font-medium ml-1">
         {footer.companyName}
       </span>
     </span>
@@ -592,7 +596,7 @@ whitespace-nowrap
 
   <button
     onClick={() => (window.location.href = "/adminlogin")}
-    className="mt-3 text-xs text-yellow-500 hover:underline"
+    className="mt-3 text-xs text-white hover:underline"
   >
     Admin Login
   </button>
@@ -629,7 +633,7 @@ return (
 
 to={routeMap[item] || "/"}
 
-className="hover:text-yellow-500 transition"
+className="hover:text-black transition"
 
 >
 
