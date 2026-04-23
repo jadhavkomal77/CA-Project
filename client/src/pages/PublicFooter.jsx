@@ -421,13 +421,13 @@ Contact Info
 
 <li className="flex items-center justify-center sm:justify-start gap-3">
 
-<Phone size={16} className="text-black shrink-0" />
+<Phone size={16} className="text-white shrink-0" />
 
 <a
 href={`tel:${footer.phone}`}
 className="
 font-bold
-text-black
+text-white
 
 px-2
 py-[2px]
@@ -451,7 +451,7 @@ transition
 
 <li className="flex items-center justify-center sm:justify-start gap-3">
 
-<Mail size={16} className="text-black shrink-0" />
+<Mail size={16} className="text-white shrink-0" />
 
 <span className="break-all">
 
@@ -465,7 +465,7 @@ transition
 
 <li className="flex items-start justify-center sm:justify-start gap-3">
 
-<MapPin size={17} className="text-black shrink-0 mt-[3px]" />
+<MapPin size={17} className="text-white shrink-0 mt-[3px]" />
 
 <span className="leading-relaxed break-words">
 
