@@ -299,246 +299,82 @@ export default function PublicFooter() {
   };
 
   return (
-
-<footer className="bg-blue-500 text-gray-300">
-
-
-<div
-className="
-max-w-7xl mx-auto
-
-px-4 sm:px-6 lg:px-8
-py-12
-
-grid
-grid-cols-1
-sm:grid-cols-2
-lg:grid-cols-5
-
-gap-4
-"
->
-
-
-{/* COMPANY */}
-<div className="space-y-5 text-center sm:text-left">
-
-<div className="flex justify-center sm:justify-start">
-
-<img
-src="/removebgLogo.png"
-alt="CADMA Associates"
-className="h-10 sm:h-11 md:h-12 lg:h-14 xl:h-16 w-auto object-contain"
-/>
-
-</div>
-
-<p className="text-sm text-white leading-relaxed max-w-sm mx-auto sm:mx-0">
-
-{footer.description}
-
-</p>
-
-</div >
-
-<div className="text-white ">
-  
-{/* QUICK LINKS */}
-<FooterLinks
-title="Quick Links"
-links={footer.quickLinks}
-routeMap={routeMap}
-/>
-
-</div>
-
-
-{/* IMPORTANT LINKS */}
-<div className="text-white">
-  <FooterLinks
-title="Important Links"
-links={footer.importantLinks}
-routeMap={routeMap}
-/>
-</div>
-
-
-{/* OUR CITIES */}
-<div className="text-center sm:text-left">
-
-<h3 className="text-white font-semibold mb-5 text-lg">
-Our Cities
-</h3>
-
-<ul className="space-y-2 text-sm">
-
-  <li className="text-white hover:text-black transition cursor-pointer">
-Chh. Sambhaji Nagar
-</li>
-
-<li className="text-white hover:text-black transition cursor-pointer">
-Mumbai
-</li>
-
-<li className="text-white hover:text-black transition cursor-pointer">
-Pune
-</li>
-
-<li className="text-white hover:text-black transition cursor-pointer">
-Bengaluru
-</li>
-
-
-
-<li className="text-white hover:text-black transition cursor-pointer">
-Satara
-</li>
-
-<li className="text-white hover:text-black transition cursor-pointer">
-Hingoli
-</li>
-
-<li className="text-white hover:text-black transition cursor-pointer">
-Parbhani
-</li>
-
-<li className="text-white hover:text-black transition cursor-pointer">
-Beed
-</li>
-
-</ul>
-
-</div>
-
-{/* CONTACT INFO */}
-<div className="text-center sm:text-left">
-
-<h3 className="text-white font-semibold mb-5 text-lg">
-Contact Info
-</h3>
-
-
-<ul className="space-y-4 text-sm text-white">
-
-
-<li className="flex items-center justify-center sm:justify-start gap-3">
-
-<Phone size={16} className="text-white shrink-0" />
-
-<a
-href={`tel:${footer.phone}`}
-className="
-font-bold
-text-white
-
-px-2
-py-[2px]
-
-rounded
-
-bg-yellow-400/10
-
-hover:bg-yellow-400/20
-
-transition
-"
->
-
-{footer.phone}
-
-</a>
-
-</li>
-
-
-<li className="flex items-center justify-center sm:justify-start gap-3">
-
-<Mail size={16} className="text-white shrink-0" />
-
-<span className="break-all">
-
-{footer.email}
-
-</span>
-
-</li>
-
-
-
-<li className="flex items-start justify-center sm:justify-start gap-3">
-
-<MapPin size={17} className="text-white shrink-0 mt-[3px]" />
-
-<span className="leading-relaxed break-words">
-
-{footer.address}
-
-</span>
-
-</li>
-
-
-</ul>
-
-</div>
-
-</div>
-
-{/* ================= ICONS + REVIEW ================= */}
-
-<div
-className="
-mt-2
-mb-6
-
-px-4 sm:px-6 lg:px-8
-
-flex
-flex-col
-sm:flex-row
-
-items-center
-justify-between
-
-gap-4
-"
->
-
-
-{/* SOCIAL ICONS */}
-<div className="flex items-center gap-3">
-
-{footer.facebook &&
-<SocialIcon Icon={Facebook} link={footer.facebook}/>
-}
-
-{footer.twitter &&
-<SocialIcon Icon={FaXTwitter} link={footer.twitter}/>
-}
-
-{footer.instagram &&
-<SocialIcon Icon={Instagram} link={footer.instagram}/>
-}
-
-</div>
-
-
-
-{/* REVIEW BUTTON */}
-<a
-
-href={
-footer.reviewLink ||
-`https://www.google.com/search?q=${encodeURIComponent(
-footer.companyName
-)}`
-}
-
-target="_blank"
-
-rel="noopener noreferrer"
-
-className="
+    <footer className="bg-blue-500 text-gray-300">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* TOP: CENTERED LOGO */}
+        <div className="flex justify-center mb-10">
+          <img
+            src="/removebgLogo.png"
+            alt="CADMA Associates"
+            className="mx-auto h-14 md:h-16 lg:h-20 w-auto object-contain"
+          />
+        </div>
+
+        {/* MIDDLE: 3 COLUMNS */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+          <FooterLinks
+            title="Quick Links"
+            links={footer.quickLinks}
+            routeMap={routeMap}
+          />
+
+          <FooterLinks
+            title="Important Links"
+            links={footer.importantLinks}
+            routeMap={routeMap}
+          />
+
+          <div className="text-center md:text-left">
+            <h3 className="text-white font-semibold mb-5 text-lg">
+              Our Cities
+            </h3>
+
+            <ul className="space-y-2 text-sm">
+              <li className="text-white hover:text-black transition cursor-pointer">
+                Chh. Sambhaji Nagar
+              </li>
+              <li className="text-white hover:text-black transition cursor-pointer">
+                Mumbai
+              </li>
+              <li className="text-white hover:text-black transition cursor-pointer">
+                Pune
+              </li>
+              <li className="text-white hover:text-black transition cursor-pointer">
+                Bengaluru
+              </li>
+              <li className="text-white hover:text-black transition cursor-pointer">
+                Satara
+              </li>
+              <li className="text-white hover:text-black transition cursor-pointer">
+                Hingoli
+              </li>
+              <li className="text-white hover:text-black transition cursor-pointer">
+                Parbhani
+              </li>
+              <li className="text-white hover:text-black transition cursor-pointer">
+                Beed
+              </li>
+            </ul>
+
+            <div className="flex justify-center md:justify-start gap-3 mt-4">
+              {footer.facebook && <SocialIcon Icon={Facebook} link={footer.facebook} />}
+              {footer.twitter && <SocialIcon Icon={FaXTwitter} link={footer.twitter} />}
+              {footer.instagram && <SocialIcon Icon={Instagram} link={footer.instagram} />}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-8 flex justify-center">
+          <a
+            href={
+              footer.reviewLink ||
+              `https://www.google.com/search?q=${encodeURIComponent(
+                footer.companyName
+              )}`
+            }
+            target="_blank"
+            rel="noopener noreferrer"
+            className="
 inline-flex
 items-center
 gap-2
@@ -563,50 +399,89 @@ transition
 
 whitespace-nowrap
 "
+          >
+            ⭐ Review Us
+          </a>
+        </div>
 
->
+        {/* BOTTOM: FULL-WIDTH CONTACT INFO */}
+        <div className="mt-10 pt-6 border-t border-white/10">
+          <div className="text-center md:text-left">
+            <h3 className="text-white font-semibold mb-5 text-lg">
+              Contact Info
+            </h3>
 
-⭐ Review Us
+            <ul className="text-sm text-white space-y-4 md:space-y-0 md:grid md:grid-cols-3 md:gap-6">
+              <li className="flex items-center justify-center md:justify-start gap-3">
+                <Phone size={16} className="text-white shrink-0" />
+                <a
+                  href={`tel:${footer.phone}`}
+                  className="
+font-bold
+text-white
 
-</a>
+px-2
+py-[2px]
 
+rounded
 
-</div>
-<div className="border-t border-white/10 py-6 text-center text-sm text-white px-4">
+bg-yellow-400/10
 
-  <p className="flex flex-col sm:flex-row items-center justify-center">
+hover:bg-yellow-400/20
 
-    <span className="flex items-center gap-2">
-      <span>
-        © {new Date().getFullYear()}
-      </span>
+transition
+"
+                >
+                  {footer.phone}
+                </a>
+              </li>
 
-      <span className="text-white font-medium ml-1">
-        {footer.companyName}
-      </span>
-    </span>
+              <li className="flex items-center justify-center md:justify-start gap-3">
+                <Mail size={16} className="text-white shrink-0" />
+                <span className="break-all">
+                  {footer.email}
+                </span>
+              </li>
 
-    <span className="hidden sm:inline mx-2">•</span>
+              <li className="flex items-start justify-center md:justify-start gap-3">
+                <MapPin size={17} className="text-white shrink-0 mt-[3px]" />
+                <span className="leading-relaxed break-words">
+                  {footer.address}
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
-    <span>
-      All Rights Reserved
-    </span>
+      <div className="border-t border-white/10 py-6 text-center text-sm text-white px-4">
+        <p className="flex flex-col sm:flex-row items-center justify-center">
+          <span className="flex items-center gap-2">
+            <span>
+              © {new Date().getFullYear()}
+            </span>
 
-  </p>
+            <span className="text-white font-medium ml-1">
+              {footer.companyName}
+            </span>
+          </span>
 
-  <button
-    onClick={() => (window.location.href = "/adminlogin")}
-    className="mt-3 text-xs text-white hover:underline"
-  >
-    Admin Login
-  </button>
+          <span className="hidden sm:inline mx-2">•</span>
 
-</div>
+          <span>
+            All Rights Reserved
+          </span>
+        </p>
 
-
-</footer>
-
-);
+        <button
+          onClick={() => (window.location.href = "/adminlogin")}
+          className="mt-3 text-xs text-white hover:underline"
+        >
+          Admin Login
+        </button>
+      </div>
+    </footer>
+  );
 }
 
 
@@ -614,7 +489,7 @@ function FooterLinks({ title, links = [], routeMap }) {
 
 return (
 
-<div className="text-center sm:text-left">
+<div className="text-center md:text-left">
 
 <h3 className="text-white font-semibold mb-5 text-lg">
 
