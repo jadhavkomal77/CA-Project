@@ -170,14 +170,14 @@ const socialIcons = [
 ];
 
 const ourCities = [
-  "Mumbai",
-  "Pune", 
-  "Bengaluru",
-  "Chh. Sambhaji Nagar",
-  "Satara",
-  "Hingoli",
-  "Parbhani",
-  "Beed"
+"MUMBAI",
+"PUNE",
+"BENGALURU",
+"CHH . SAMBHAJI NAGAR",
+"SATARA",
+"HINGOLI",
+"PARBHANI",
+"BEED",
 ];
 
 function SocialIcon({ Icon, link }) {
@@ -219,7 +219,7 @@ export default function PublicFooter() {
   const siteName = "Cadma Associates Pvt Ltd";
 
   return (
-    <footer className="bg-gradient-to-br from-[#2563EB]  via-[#2563EB]  to-[#2563EB] text-white">
+    <footer className="bg-gradient-to-br from-blue-700 via-blue-700 to-blue-700 text-white">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-12">
           <div className="lg:col-span-4">
@@ -249,10 +249,10 @@ export default function PublicFooter() {
   />
 </div>
 
-            <p className="mt-5 max-w-md text-sm leading-7 text-blue-50">
-              {footer?.description ||
-                "CADMA Associates Pvt Ltd is a professional Company Income Tax, GST, Company Incorporation, Audit, Accounting, and Advisory services across India"}
-            </p>
+            <p className="mt-5 max-w-md text-sm leading-7 text-blue-50 uppercase">
+  {footer?.description ||
+    "CADMA ASSOCIATES PVT LTD IS A PROFESSIONAL COMPANY PROVIDING INCOME TAX , GST , COMPANY INCORPORATION , AUDIT , ACCOUNTING , AND ADVISORY SERVICES ACROSS INDIA ."}
+</p>
 
             <div className="mt-6 flex gap-3">
               {socialIcons.map(({ Icon, link }, index) => (
@@ -262,23 +262,23 @@ export default function PublicFooter() {
           </div>
 
           <div className="lg:col-span-2">
-            <h3 className="text-lg font-semibold">Quick Links</h3>
+            <h3 className="text-lg font-semibold">QUICK LINKS</h3>
             <ul className="mt-5 space-y-3 text-sm text-blue-50">
-              <li><Link to="/" className="hover:text-white">Home</Link></li>
-              <li><Link to="/about" className="hover:text-white">About</Link></li>
-              <li><Link to="/services" className="hover:text-white">Services</Link></li>
-              <li><Link to="/tax-updates" className="hover:text-white">Latest Updates</Link></li>
-              <li><Link to="/contact" className="hover:text-white">Contact</Link></li>
+              <li><Link to="/" className="hover:text-white">HOME</Link></li>
+              <li><Link to="/about" className="hover:text-white">ABOUT</Link></li>
+              <li><Link to="/services" className="hover:text-white">SERVICES</Link></li>
+              <li><Link to="/tax-updates" className="hover:text-white">LATEST UPDATE</Link></li>
+              <li><Link to="/contact" className="hover:text-white">CONTACT</Link></li>
             </ul>
           </div>
 
           <div className="lg:col-span-2">
-            <h3 className="text-lg font-semibold">Important Links</h3>
+            <h3 className="text-lg font-semibold">IMPORTANT LINKS</h3>
             <ul className="mt-5 space-y-3 text-sm text-blue-50">
-              <li><Link to="/privacy" className="hover:text-white">Privacy Policy</Link></li>
-              <li><Link to="/terms" className="hover:text-white">Terms & Conditions</Link></li>
-              <li><Link to="/disclaimer" className="hover:text-white">Disclaimer</Link></li>
-              <li><Link to="/refund-policy" className="hover:text-white">Refund Policy</Link></li>
+              <li><Link to="/privacy" className="hover:text-white">PRIVACY POLICY</Link></li>
+              <li><Link to="/terms" className="hover:text-white">TERMS & CONDITIONS</Link></li>
+              <li><Link to="/disclaimer" className="hover:text-white">DISCLAIMER</Link></li>
+              <li><Link to="/refund-policy" className="hover:text-white">REFUND POLICY</Link></li>
             </ul>
           </div>
 
@@ -305,7 +305,7 @@ export default function PublicFooter() {
 </div> */}
 
 <div className="lg:col-span-4">
-  <h3 className="text-lg font-semibold">Contact Us</h3>
+  <h3 className="text-lg font-semibold">CONTACT US</h3>
 
   <div className="mt-5 space-y-4">
 
@@ -329,36 +329,38 @@ export default function PublicFooter() {
 
        <div className="mt-12">
   <h3 className="mb-4 text-center text-2xl font-bold text-white">
-    Our Cities
+    OUR CITIES
   </h3>
 
   <div className="flex flex-nowrap justify-center gap-4 overflow-x-auto whitespace-nowrap text-sm sm:text-base text-blue-50">
-    <span>Mumbai</span>
-    <span>Pune</span>
-    <span>Bengaluru</span>
-    <span>Chh. Sambhaji Nagar</span>
-    <span>Satara</span>
-    <span>Hingoli</span>
-    <span>Parbhani</span>
-    <span>Beed</span>
+    <span>MUMBAI</span>
+    <span>PUNE</span>
+    <span>BENGALURU</span>
+    <span>CHH . SAMBHAJI NAGAR</span>
+    <span>SATARA</span>
+    <span>HINGOLI</span>
+    <span>PARBHANI</span>
+    <span>BEED</span>
+ 
   </div>
 </div>
 
         <div className="mt-12 grid gap-6 lg:grid-cols-3">
 
           <InfoCard
-            title="Chh. Sambhajinagar"
-            text={`First Floor, 245, Anuvihar Complex, Opp Yadav Tyre,\nSamarth Nagar`}
+          title="CHH . SAMBHAJINAGAR"
+text={`FIRST FLOOR , 245 , ANUVIHAR COMPLEX , OPP YADAV TYRE , SAMARTH NAGAR`}
           />
 
           <InfoCard
-            title="Navi Mumbai"
-            text={`Office no. 40, Second Floor,\nCrystal Plaza, Hiranandani, Sector - 07,\nKharghar, Navi Mumbai - 410210`}
+           title="NAVI MUMBAI"
+text={`OFFICE NO. 40 , SECOND FLOOR ,
+CRYSTAL PLAZA , HIRANANDANI , SECTOR - 07 , KHARGHAR , NAVI MUMBAI - 410210`}
           />
 
           <InfoCard
-            title="Pune"
-            text={`Fergusson College Rd, Mantri House,\nShivajinagar, Pune, Maharashtra 411004`}
+          title="PUNE"
+text={`FERGUSSON COLLEGE RD , MANTRI HOUSE , SHIVAJINAGAR , PUNE , MAHARASHTRA 411004`}
           />
        
         </div>
@@ -367,7 +369,7 @@ export default function PublicFooter() {
         <div className="mt-12 border-t border-white/15 pt-6 text-center">
   
   <p className="text-md text-white">
-    © {new Date().getFullYear()} Cadma Associates Pvt Ltd. All rights reserved.
+    © {new Date().getFullYear()} CADMA ASSOCIATES PVT LTD . ALL RIGHTS RESERVED.
   </p>
 
   {/* Small Admin Button */}
@@ -375,7 +377,7 @@ export default function PublicFooter() {
     onClick={() => navigate("/admin")}
     className="mt-3 text-xs px-4 py-1 rounded-full bg-white/20 text-white hover:bg-white/30 transition"
   >
-    Admin Panel
+   ADMIN PANEL
   </button>
 
 </div>
