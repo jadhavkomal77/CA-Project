@@ -248,10 +248,20 @@ export default function PublicFooter() {
     className="h-20 sm:h-24 md:h-28 w-auto object-contain"
   />
 </div>
-
+{/* 
             <p className="mt-5 max-w-md text-sm leading-7 text-blue-50 uppercase">
   {footer?.description ||
     "CADMA ASSOCIATES PVT LTD IS A PROFESSIONAL COMPANY PROVIDING PROFESSIONAL SERVICES LIKE INCOME TAX , GST , COMPANY INCORPORATION , AUDIT , ACCOUNTING , AND ADVISORY SERVICES ACROSS INDIA ."}
+</p> */}
+
+<p className="mt-5 max-w-md text-sm leading-7 text-blue-50 uppercase">
+{footer?.description || (
+<>
+CADMA ASSOCIATES PVT LTD IS A PROFESSIONAL COMPANY <br />
+PROVIDING PROFESSIONAL SERVICES LIKE INCOME TAX, GST, COMPANY
+INCORPORATION, AUDIT, ACCOUNTING, AND ADVISORY SERVICES ACROSS INDIA.
+</>
+)}
 </p>
 
             <div className="mt-6 flex gap-3">
