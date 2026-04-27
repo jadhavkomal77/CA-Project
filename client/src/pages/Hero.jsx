@@ -7,7 +7,7 @@ export default function Hero() {
   if (isLoading || !hero) return null;
 
   return (
-    <section className="bg-blue-600 overflow-hidden">
+    <section className="bg-blue-500 overflow-hidden">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-12 lg:py-16">
 
         <div className="grid lg:grid-cols-2 gap-12 items-center">
