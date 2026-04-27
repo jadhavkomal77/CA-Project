@@ -1,159 +1,316 @@
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+// import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import AdminLogin from "./Auth/AdminLogin";
-import AdminProtected from "./shared/AdminProtected";
-import AdminHome from "./Auth/AdminHome";
-import AdminProfile from "./Auth/AdminProfile";
-import AdminDashboard from "./Auth/AdminDashboard";
-import AdminHero from "./admin/AdminHero";
-import AdminAbout from "./admin/AdminAbout";
-import AdminServices from "./admin/AdminServices";
-import AdminNavbar from "./admin/AdminNavbar";
-import AdminProjects from "./admin/AdminProjects";
-/* ===== PUBLIC ===== */
-import PublicLayout from "./layout/PublicLayout";
-import Hero from "./pages/Hero";
-import About from "./pages/About";
-import Home from "./layout/Home";
-import Services from "./pages/Services";
-import ServiceDetails from "./pages/ServiceDetails";
-import Contact from "./pages/Contact";
-import AddAdminProject from "./admin/AddAdminProject";
-import AdminPricing from "./admin/AdminPricing";
-import AdminContacts from "./admin/AdminContacts";
-import AdminFooter from "./admin/AdminFooter";
-import AdminServicesList from "./admin/AdminServicesList";
-import AdminServiceEdit from "./admin/AdminServiceEdit";
-import NotFound from "./layout/NotFound";
-import WhatsappSettings from "./admin/WhatsappSettings";
-import Testimonials from "./pages/Testimonials";
-import FAQ from "./pages/FAQ";
-import CaseStudies from "./pages/CaseStudies";
-import CaseStudyDetails from "./pages/CaseStudyDetails";
-import AboutDetails from "./pages/AboutDetails";
-import PublicCalculator from "./pages/PublicCalculator";
-import AdminCalculators from "./admin/AdminCalculators";
+// import AdminLogin from "./Auth/AdminLogin";
+// import AdminProtected from "./shared/AdminProtected";
+// import AdminHome from "./Auth/AdminHome";
+// import AdminProfile from "./Auth/AdminProfile";
+// import AdminDashboard from "./Auth/AdminDashboard";
+// import AdminHero from "./admin/AdminHero";
+// import AdminAbout from "./admin/AdminAbout";
+// import AdminServices from "./admin/AdminServices";
+// import AdminNavbar from "./admin/AdminNavbar";
+// import AdminProjects from "./admin/AdminProjects";
+// /* ===== PUBLIC ===== */
+// import PublicLayout from "./layout/PublicLayout";
+// import Hero from "./pages/Hero";
+// import About from "./pages/About";
+// import Home from "./layout/Home";
+// import Services from "./pages/Services";
+// import ServiceDetails from "./pages/ServiceDetails";
+// import Contact from "./pages/Contact";
+// import AddAdminProject from "./admin/AddAdminProject";
+// import AdminPricing from "./admin/AdminPricing";
+// import AdminContacts from "./admin/AdminContacts";
+// import AdminFooter from "./admin/AdminFooter";
+// import AdminServicesList from "./admin/AdminServicesList";
+// import AdminServiceEdit from "./admin/AdminServiceEdit";
+// import NotFound from "./layout/NotFound";
+// import WhatsappSettings from "./admin/WhatsappSettings";
+// import Testimonials from "./pages/Testimonials";
+// import FAQ from "./pages/FAQ";
+// import CaseStudies from "./pages/CaseStudies";
+// import CaseStudyDetails from "./pages/CaseStudyDetails";
+// import AboutDetails from "./pages/AboutDetails";
+// import PublicCalculator from "./pages/PublicCalculator";
+// import AdminCalculators from "./admin/AdminCalculators";
 
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import TermsConditions from "./pages/TermsConditions";
-import Disclaimer from "./pages/Disclaimer";
-import RefundPolicy from "./pages/RefundPolicy";
-import ApplyService from "./pages/ApplyService";
-import AdminApplications from "./admin/AdminApplications";
-import VerifyPage from "./pages/VerifyPage";
-import AdminTestimonials from "./admin/AdminTestimonials";
-import ScrollToTop from "./layout/ScrollToTop";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import ErrorBoundary from "./layout/ErrorBoundary";
-import TaxUpdates from "./pages/TaxUpdates";
-import TaxUpdateDetail from "./pages/TaxUpdateDetail";
-import TaxUpdateAdmin from "./admin/TaxUpdateAdmin";
-import AdminForgotPassword from "./Auth/AdminForgotPassword";
-import AdminResetPassword from "./Auth/AdminResetPassword";
-import AdminVerifyOTP from "./Auth/AdminVerifyOTP";
-import AdminAboutTeam from "./admin/AdminAboutTeam";
-import AboutTeamPage from "./pages/AboutTeamPage";
-import ContactQR from "./pages/ContactQR";
-import ClientsSection from "./pages/ClientsSection";
+// import PrivacyPolicy from "./pages/PrivacyPolicy";
+// import TermsConditions from "./pages/TermsConditions";
+// import Disclaimer from "./pages/Disclaimer";
+// import RefundPolicy from "./pages/RefundPolicy";
+// import ApplyService from "./pages/ApplyService";
+// import AdminApplications from "./admin/AdminApplications";
+// import VerifyPage from "./pages/VerifyPage";
+// import AdminTestimonials from "./admin/AdminTestimonials";
+// import ScrollToTop from "./layout/ScrollToTop";
+// import { ToastContainer } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
+// import ErrorBoundary from "./layout/ErrorBoundary";
+// import TaxUpdates from "./pages/TaxUpdates";
+// import TaxUpdateDetail from "./pages/TaxUpdateDetail";
+// import TaxUpdateAdmin from "./admin/TaxUpdateAdmin";
+// import AdminForgotPassword from "./Auth/AdminForgotPassword";
+// import AdminResetPassword from "./Auth/AdminResetPassword";
+// import AdminVerifyOTP from "./Auth/AdminVerifyOTP";
+// import AdminAboutTeam from "./admin/AdminAboutTeam";
+// import AboutTeamPage from "./pages/AboutTeamPage";
+// import ContactQR from "./pages/ContactQR";
+// import ClientsSection from "./pages/ClientsSection";
 
-function App() {
-  return (
-    <BrowserRouter>
-     <ToastContainer />
-     <ScrollToTop />  
-     <ErrorBoundary>  
+// function App() {
+//   return (
+//     <BrowserRouter>
+//      <ToastContainer />
+//      <ScrollToTop />  
+//      <ErrorBoundary>  
 
-      <Routes>
+//       <Routes>
 
-       {/*  PUBLIC  */}
-        <Route element={<PublicLayout />}>
-              <Route index element={<Home />} />
-              <Route path="home" element={<Hero />} />
-              <Route path="about" element={<About />} />
-              <Route path="services" element={<Services />} />
-              <Route path="services/:slug" element={<ServiceDetails />} />
-              <Route path="casestudies" element={<CaseStudies />} />
-              <Route path="casestudies/:slug" element={<CaseStudyDetails />} />
-              <Route path="about-details" element={<AboutDetails />} />
-              <Route path="calculators" element={<PublicCalculator />} />
+//        {/*  PUBLIC  */}
+//         <Route element={<PublicLayout />}>
+//               <Route index element={<Home />} />
+//               <Route path="home" element={<Hero />} />
+//               <Route path="about" element={<About />} />
+//               <Route path="services" element={<Services />} />
+//               <Route path="services/:slug" element={<ServiceDetails />} />
+//               <Route path="casestudies" element={<CaseStudies />} />
+//               <Route path="casestudies/:slug" element={<CaseStudyDetails />} />
+//               <Route path="about-details" element={<AboutDetails />} />
+//               <Route path="calculators" element={<PublicCalculator />} />
 
-              <Route path="testimonials" element={<Testimonials />} />
-              <Route path="faq" element={<FAQ />} />
-              <Route path="/contactQR" element={<ContactQR />} />
-              <Route path="/clientsSection" element={<ClientsSection />} />
+//               <Route path="testimonials" element={<Testimonials />} />
+//               <Route path="faq" element={<FAQ />} />
+//               <Route path="/contactQR" element={<ContactQR />} />
+//               <Route path="/clientsSection" element={<ClientsSection />} />
 
              
-                 <Route path="tax-updates" element={<TaxUpdates />} />
-                 <Route path="/aboutteam" element={<AboutTeamPage />} />
-              <Route path="tax-updates/:id" element={<TaxUpdateDetail />} />
+//                  <Route path="tax-updates" element={<TaxUpdates />} />
+//                  <Route path="/aboutteam" element={<AboutTeamPage />} />
+//               <Route path="tax-updates/:id" element={<TaxUpdateDetail />} />
 
-              <Route path="apply/:slug" element={<ApplyService />} />
+//               <Route path="apply/:slug" element={<ApplyService />} />
 
-               <Route path="privacy" element={<PrivacyPolicy />} />
-               <Route path="terms" element={<TermsConditions />} />
-               <Route path="disclaimer" element={<Disclaimer />} />
-               <Route path="refund-policy" element={<RefundPolicy />} />
-                <Route path="/verify/:id" element={<VerifyPage />} />
+//                <Route path="privacy" element={<PrivacyPolicy />} />
+//                <Route path="terms" element={<TermsConditions />} />
+//                <Route path="disclaimer" element={<Disclaimer />} />
+//                <Route path="refund-policy" element={<RefundPolicy />} />
+//                 <Route path="/verify/:id" element={<VerifyPage />} />
 
               
-              <Route path="contact" element={<Contact />} />
+//               <Route path="contact" element={<Contact />} />
             
-              <Route path="*" element={<NotFound />} />
-      </Route>
+//               <Route path="*" element={<NotFound />} />
+//       </Route>
 
 
-        {/*  ADMIN AUTH  */}
-        <Route path="/adminlogin" element={<AdminLogin />} />
-        {/* <Route path="/adminregister" element={<AdminRegister />} /> */}
-<Route path="/admin-forgot-password" element={<AdminForgotPassword />} />
+//         {/*  ADMIN AUTH  */}
+//         <Route path="/adminlogin" element={<AdminLogin />} />
+//         {/* <Route path="/adminregister" element={<AdminRegister />} /> */}
+// <Route path="/admin-forgot-password" element={<AdminForgotPassword />} />
 
-<Route path="/admin-verify-otp" element={<AdminVerifyOTP />} />
+// <Route path="/admin-verify-otp" element={<AdminVerifyOTP />} />
 
-<Route path="/admin-reset-password" element={<AdminResetPassword />} />
+// <Route path="/admin-reset-password" element={<AdminResetPassword />} />
 
-        {/*  ADMIN PANEL  */}
-        <Route
-            path="/admin"
-               element={<AdminProtected> <AdminDashboard /> </AdminProtected> }>
+//         {/*  ADMIN PANEL  */}
+//         <Route
+//             path="/admin"
+//                element={<AdminProtected> <AdminDashboard /> </AdminProtected> }>
                 
-          <Route index element={<AdminHome />} />
-          <Route path="profile" element={<AdminProfile />} />
-          <Route path="navbar" element={<AdminNavbar />} />
+//           <Route index element={<AdminHome />} />
+//           <Route path="profile" element={<AdminProfile />} />
+//           <Route path="navbar" element={<AdminNavbar />} />
 
-          <Route path="calculater" element={<AdminCalculators />} />
-          <Route path="taxupdateadmin" element={<TaxUpdateAdmin />} />
-          <Route path="adminApplications" element={<AdminApplications />} />
+//           <Route path="calculater" element={<AdminCalculators />} />
+//           <Route path="taxupdateadmin" element={<TaxUpdateAdmin />} />
+//           <Route path="adminApplications" element={<AdminApplications />} />
 
-          <Route path="hero" element={<AdminHero />} />
-          <Route path="about" element={<AdminAbout />} />
-          <Route path="addservices" element={<AdminServices />} />
-          <Route path="serviceslist" element={<AdminServicesList />} />
-          <Route path="services/edit/:id" element={<AdminServiceEdit />} />
-          {/* PROJECTS */}
-          <Route path="projects" element={<AdminProjects />} />
-          <Route path="projects/new" element={<AddAdminProject />} />  
-          <Route path="projects/edit/:id" element={<AddAdminProject />} /> 
+//           <Route path="hero" element={<AdminHero />} />
+//           <Route path="about" element={<AdminAbout />} />
+//           <Route path="addservices" element={<AdminServices />} />
+//           <Route path="serviceslist" element={<AdminServicesList />} />
+//           <Route path="services/edit/:id" element={<AdminServiceEdit />} />
+//           {/* PROJECTS */}
+//           <Route path="projects" element={<AdminProjects />} />
+//           <Route path="projects/new" element={<AddAdminProject />} />  
+//           <Route path="projects/edit/:id" element={<AddAdminProject />} /> 
 
-         <Route path="admintestimonials" element={<AdminTestimonials/>}/>
+//          <Route path="admintestimonials" element={<AdminTestimonials/>}/>
         
-          <Route path="pricing" element={<AdminPricing />} /> 
-          <Route path="contacts" element={<AdminContacts />} />
-          <Route path="whatsappsettings" element={<WhatsappSettings />} />
-          <Route path="footer" element={<AdminFooter />} />
-          <Route path="adminAboutTeam" element={<AdminAboutTeam />} />
+//           <Route path="pricing" element={<AdminPricing />} /> 
+//           <Route path="contacts" element={<AdminContacts />} />
+//           <Route path="whatsappsettings" element={<WhatsappSettings />} />
+//           <Route path="footer" element={<AdminFooter />} />
+//           <Route path="adminAboutTeam" element={<AdminAboutTeam />} />
         
-           <Route path="*" element={<NotFound />} />
-           </Route>
+//            <Route path="*" element={<NotFound />} />
+//            </Route>
         
-               <Route path="*" element={<NotFound />} />
-      </Routes>
+//                <Route path="*" element={<NotFound />} />
+//       </Routes>
 
-      </ErrorBoundary> 
+//       </ErrorBoundary> 
 
-    </BrowserRouter>
-  );
+//     </BrowserRouter>
+//   );
+// }
+
+// export default App;
+
+
+
+
+
+
+
+import React,{lazy,Suspense} from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ScrollToTop from "./layout/ScrollToTop";
+import ErrorBoundary from "./layout/ErrorBoundary";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+/* Keep Home critical imports normal (instant load) */
+import PublicLayout from "./layout/PublicLayout";
+import Home from "./layout/Home";
+import AdminProtected from "./shared/AdminProtected";
+
+/* Lazy load all other pages */
+const Hero = lazy(()=>import("./pages/Hero"));
+const About = lazy(()=>import("./pages/About"));
+const Services = lazy(()=>import("./pages/Services"));
+const ServiceDetails = lazy(()=>import("./pages/ServiceDetails"));
+const Contact = lazy(()=>import("./pages/Contact"));
+const Testimonials = lazy(()=>import("./pages/Testimonials"));
+const FAQ = lazy(()=>import("./pages/FAQ"));
+const CaseStudies = lazy(()=>import("./pages/CaseStudies"));
+const CaseStudyDetails = lazy(()=>import("./pages/CaseStudyDetails"));
+const AboutDetails = lazy(()=>import("./pages/AboutDetails"));
+const PublicCalculator = lazy(()=>import("./pages/PublicCalculator"));
+const PrivacyPolicy = lazy(()=>import("./pages/PrivacyPolicy"));
+const TermsConditions = lazy(()=>import("./pages/TermsConditions"));
+const Disclaimer = lazy(()=>import("./pages/Disclaimer"));
+const RefundPolicy = lazy(()=>import("./pages/RefundPolicy"));
+const ApplyService = lazy(()=>import("./pages/ApplyService"));
+const VerifyPage = lazy(()=>import("./pages/VerifyPage"));
+const TaxUpdates = lazy(()=>import("./pages/TaxUpdates"));
+const TaxUpdateDetail = lazy(()=>import("./pages/TaxUpdateDetail"));
+const AboutTeamPage = lazy(()=>import("./pages/AboutTeamPage"));
+const ContactQR = lazy(()=>import("./pages/ContactQR"));
+const ClientsSection = lazy(()=>import("./pages/ClientsSection"));
+const NotFound = lazy(()=>import("./layout/NotFound"));
+
+/* Admin */
+const AdminLogin = lazy(()=>import("./Auth/AdminLogin"));
+const AdminDashboard = lazy(()=>import("./Auth/AdminDashboard"));
+const AdminHome = lazy(()=>import("./Auth/AdminHome"));
+const AdminProfile = lazy(()=>import("./Auth/AdminProfile"));
+const AdminHero = lazy(()=>import("./admin/AdminHero"));
+const AdminAbout = lazy(()=>import("./admin/AdminAbout"));
+const AdminServices = lazy(()=>import("./admin/AdminServices"));
+const AdminNavbar = lazy(()=>import("./admin/AdminNavbar"));
+const AdminProjects = lazy(()=>import("./admin/AdminProjects"));
+const AddAdminProject = lazy(()=>import("./admin/AddAdminProject"));
+const AdminPricing = lazy(()=>import("./admin/AdminPricing"));
+const AdminContacts = lazy(()=>import("./admin/AdminContacts"));
+const AdminFooter = lazy(()=>import("./admin/AdminFooter"));
+const AdminServicesList = lazy(()=>import("./admin/AdminServicesList"));
+const AdminServiceEdit = lazy(()=>import("./admin/AdminServiceEdit"));
+const WhatsappSettings = lazy(()=>import("./admin/WhatsappSettings"));
+const AdminCalculators = lazy(()=>import("./admin/AdminCalculators"));
+const AdminApplications = lazy(()=>import("./admin/AdminApplications"));
+const AdminTestimonials = lazy(()=>import("./admin/AdminTestimonials"));
+const TaxUpdateAdmin = lazy(()=>import("./admin/TaxUpdateAdmin"));
+const AdminForgotPassword = lazy(()=>import("./Auth/AdminForgotPassword"));
+const AdminResetPassword = lazy(()=>import("./Auth/AdminResetPassword"));
+const AdminVerifyOTP = lazy(()=>import("./Auth/AdminVerifyOTP"));
+const AdminAboutTeam = lazy(()=>import("./admin/AdminAboutTeam"));
+
+function Loader(){
+ return(
+  <div className="min-h-screen flex items-center justify-center">
+    <div className="w-12 h-12 rounded-full border-4 border-gray-300 border-t-black animate-spin"/>
+  </div>
+ )
 }
 
-export default App;
+export default function App(){
+return(
+<BrowserRouter>
+<ToastContainer limit={2} />
+<ScrollToTop/>
+<ErrorBoundary>
+
+<Suspense fallback={<Loader/>}>
+<Routes>
+
+<Route element={<PublicLayout/>}>
+<Route index element={<Home/>}/>
+<Route path="home" element={<Hero/>}/>
+<Route path="about" element={<About/>}/>
+<Route path="services" element={<Services/>}/>
+<Route path="services/:slug" element={<ServiceDetails/>}/>
+<Route path="casestudies" element={<CaseStudies/>}/>
+<Route path="casestudies/:slug" element={<CaseStudyDetails/>}/>
+<Route path="about-details" element={<AboutDetails/>}/>
+<Route path="calculators" element={<PublicCalculator/>}/>
+<Route path="testimonials" element={<Testimonials/>}/>
+<Route path="faq" element={<FAQ/>}/>
+<Route path="contactQR" element={<ContactQR/>}/>
+<Route path="clientsSection" element={<ClientsSection/>}/>
+<Route path="tax-updates" element={<TaxUpdates/>}/>
+<Route path="tax-updates/:id" element={<TaxUpdateDetail/>}/>
+<Route path="aboutteam" element={<AboutTeamPage/>}/>
+<Route path="apply/:slug" element={<ApplyService/>}/>
+<Route path="privacy" element={<PrivacyPolicy/>}/>
+<Route path="terms" element={<TermsConditions/>}/>
+<Route path="disclaimer" element={<Disclaimer/>}/>
+<Route path="refund-policy" element={<RefundPolicy/>}/>
+<Route path="verify/:id" element={<VerifyPage/>}/>
+<Route path="contact" element={<Contact/>}/>
+<Route path="*" element={<NotFound/>}/>
+</Route>
+
+<Route path="/adminlogin" element={<AdminLogin/>}/>
+<Route path="/admin-forgot-password" element={<AdminForgotPassword/>}/>
+<Route path="/admin-verify-otp" element={<AdminVerifyOTP/>}/>
+<Route path="/admin-reset-password" element={<AdminResetPassword/>}/>
+
+<Route
+path="/admin"
+element={
+<AdminProtected>
+<AdminDashboard/>
+</AdminProtected>
+}
+>
+<Route index element={<AdminHome/>}/>
+<Route path="profile" element={<AdminProfile/>}/>
+<Route path="navbar" element={<AdminNavbar/>}/>
+<Route path="calculater" element={<AdminCalculators/>}/>
+<Route path="taxupdateadmin" element={<TaxUpdateAdmin/>}/>
+<Route path="adminApplications" element={<AdminApplications/>}/>
+<Route path="hero" element={<AdminHero/>}/>
+<Route path="about" element={<AdminAbout/>}/>
+<Route path="addservices" element={<AdminServices/>}/>
+<Route path="serviceslist" element={<AdminServicesList/>}/>
+<Route path="services/edit/:id" element={<AdminServiceEdit/>}/>
+<Route path="projects" element={<AdminProjects/>}/>
+<Route path="projects/new" element={<AddAdminProject/>}/>
+<Route path="projects/edit/:id" element={<AddAdminProject/>}/>
+<Route path="admintestimonials" element={<AdminTestimonials/>}/>
+<Route path="pricing" element={<AdminPricing/>}/>
+<Route path="contacts" element={<AdminContacts/>}/>
+<Route path="whatsappsettings" element={<WhatsappSettings/>}/>
+<Route path="footer" element={<AdminFooter/>}/>
+<Route path="adminAboutTeam" element={<AdminAboutTeam/>}/>
+</Route>
+
+</Routes>
+</Suspense>
+
+</ErrorBoundary>
+</BrowserRouter>
+)
+}
