@@ -48,52 +48,7 @@ export default function PublicNavbar() {
     setOpenServices(false);
   };
 
-  // const renderLogoBlocks = (size, fontSize) =>
-  //   ["C", "A", "D", "M", "A"].map((l, i) => {
-  //     const whiteBlock = i < 2;
-  //     return (
-  //       <div
-  //         key={i}
-  //         className="relative"
-  //         style={{
-  //           width: size,
-  //           height: size,
-  //           flexShrink: 0,  
-  //           marginLeft: i > 0 ? "-1px" : "0",
-  //         }}
-  //       >
-  //         <div
-  //           className="absolute inset-0"
-  //           style={{
-  //             background: whiteBlock
-  //               ? "linear-gradient(160deg,#fff,#ececec)"
-  //               : "linear-gradient(160deg,#1e3a8a,#2563eb,#1e3a8a)",
-  //             border: whiteBlock
-  //               ? "1px solid rgba(0,0,0,0.06)"
-  //               : "1px solid rgba(0,0,0,0.25)",
-  //             borderRadius:
-  //               i === 0
-  //                 ? "8px 0 0 8px"
-  //                 : i === 4
-  //                 ? "0 8px 8px 0"
-  //                 : "0",
-  //           }}
-  //         />
-  //         <div
-  //           className="absolute inset-0 flex items-center justify-center"
-  //           style={{
-  //             fontSize: fontSize,
-  //             fontWeight: "900",
-  //             letterSpacing: "-1px",
-  //             color: whiteBlock ? "#1e40af" : "#fff",
-  //           }}
-  //         >
-  //           {l}
-  //         </div>
-  //       </div>
-  //     );
-  //   });
-
+ 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-gray-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
@@ -104,26 +59,6 @@ export default function PublicNavbar() {
   onClick={() => navigate("/")}
   className="cursor-pointer select-none flex flex-col"
 >
-
-{/* logo */}
-{/* <div
-  onClick={() => navigate("/")}
-  className="flex items-center flex-shrink-0 cursor-pointer"
->
-  <img
-    src="/Calogo.png"
-    alt="CADMA Associates"
-    className="
-      h-9
-      sm:h-11
-      md:h-12
-      lg:h-14
-      xl:h-16
-      w-auto
-      object-contain
-    "
-  />
-</div> */}
 
 <div
   onClick={() => navigate("/")}

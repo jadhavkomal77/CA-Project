@@ -15,7 +15,7 @@ export default function CaseStudyDetails() {
 
   const [activeImg, setActiveImg] = useState(0);
 
-  // ✅ SEO
+ 
   useEffect(() => {
     if (project) {
       document.title = `${project.title} | Case Study`;

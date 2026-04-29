@@ -12,25 +12,17 @@ import upload from "../utils/upload.js";
 
 const router = express.Router();
 
-// router.post(
-//   "/",
-//   upload.fields([{ name: "projects", maxCount: 10 }]),
-//   createService
-// );
+
 router.post("/", upload.array("projectImages",10), createService);
 
 
-router.get("/admin", getAdminServices);          // 🔐 admin first
-router.get("/public/:slug", getPublicServiceBySlug); // 🌍 public single
-router.get("/", getPublicServices);              // 🌍 public list
-router.get("/:slug", getServiceBySlug);          // admin single
+router.get("/admin", getAdminServices);          
+router.get("/public/:slug", getPublicServiceBySlug);
+router.get("/", getPublicServices);            
+router.get("/:slug", getServiceBySlug);          
 
 router.put("/:id", upload.array("projectImages",10), updateService);
-// router.put(
-//   "/:id",
-//   upload.fields([{ name: "projects", maxCount: 10 }]),
-//   updateService
-// );
+
 
 router.delete("/:id", deleteService);
 

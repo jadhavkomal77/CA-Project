@@ -4,7 +4,7 @@ import { useGetTaxUpdateQuery } from '../redux/apis/taxUpdateApi';
 import { Calendar, Tag, FileText, Download, ExternalLink, ArrowLeft } from 'lucide-react';
 
 export default function TaxUpdateDetail() {
-  const { id } = useParams(); // :id parameter वापरून
+  const { id } = useParams(); 
   const { data, isLoading, error } = useGetTaxUpdateQuery(id);
 
   const update = data?.data;

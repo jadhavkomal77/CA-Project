@@ -119,25 +119,6 @@ export const adminLogout = async (req, res) => {
   }
 };
 
-/* ================= PROFILE ================= */
-
-// export const getAdminProfile = async (req, res) => {
-//   try {
-//     const admin = await Admin.findById(req.user.id).select("-password");
-
-//     if (!admin) {
-//       return res.status(404).json({ message: "Admin not found" });
-//     }
-
-//     res.json({
-//       success: true,
-//       admin,
-//     });
-//   } catch {
-//     res.status(500).json({ message: "Server error" });
-//   }
-// };
-
 export const getAdminProfile = async (req, res) => {
   try {
 
@@ -157,56 +138,6 @@ export const getAdminProfile = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-
-/* ================= UPDATE PROFILE ================= */
-
-// export const updateAdminProfile = (req, res) => {
-//   upload.single("profileImage")(req, res, async (err) => {
-//     if (err) {
-//       return res.status(400).json({ message: "Image upload failed" });
-//     }
-
-//     try {
-//       const admin = await Admin.findById(req.user.id);
-
-//       if (!admin) {
-//         return res.status(404).json({ message: "Admin not found" });
-//       }
-
-//       const { name, phone } = req.body;
-
-//       if (req.file) {
-//         if (admin.profile?.public_id) {
-//           await cloudinary.uploader.destroy(admin.profile.public_id);
-//         }
-
-//         const uploaded = await cloudinary.uploader.upload(req.file.path, {
-//           folder: "admin_profiles",
-//         });
-
-//         admin.profile = {
-//           url: uploaded.secure_url,
-//           public_id: uploaded.public_id,
-//         };
-
-//         fs.unlinkSync(req.file.path);
-//       }
-
-//       admin.name = name || admin.name;
-//       admin.phone = phone || admin.phone;
-
-//       await admin.save();
-
-//       res.json({
-//         success: true,
-//         message: "Profile updated",
-//         admin,
-//       });
-//     } catch {
-//       res.status(500).json({ message: "Update failed" });
-//     }
-//   });
-// };
 
 
 export const updateAdminProfile = (req, res) => {

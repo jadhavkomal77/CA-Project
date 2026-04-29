@@ -7,7 +7,6 @@ import { useGetTestimonialsQuery } from "../redux/apis/testimonialApi";
 export default function Testimonials() {
   const navigate = useNavigate();
 
-  /* IMPORTANT → public endpoint */
   const { data: testimonials = [], isLoading } =
     useGetTestimonialsQuery();
 

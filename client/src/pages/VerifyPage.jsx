@@ -39,11 +39,7 @@ export default function VerifyPage() {
   const app = data.data;
   const approved = app.status === "Approved";
 
-  /* ---------- COPY REF ---------- */
-  // const copyRef = () => {
-  //   navigator.clipboard.writeText(app.id);
-  // };
-
+ 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-indigo-100 p-4">
 
@@ -118,12 +114,7 @@ export default function VerifyPage() {
             <div className="flex items-center justify-center gap-2 text-sm text-gray-700 font-medium">
               {app.id}
 
-              {/* <button
-                onClick={copyRef}
-                className="p-1 hover:bg-gray-100 rounded transition"
-              >
-                <Copy size={15}/>
-              </button> */}
+            
             </div>
 
           </div>

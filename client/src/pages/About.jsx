@@ -44,93 +44,7 @@ export default function About() {
 
   return (
 
-    // <section className="bg-gray-50 py-16">
-
-    //   <div className="max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-14 items-center">
-
-
-    //     <div className="relative">
-
-    //       <img
-    //         src={about.image}
-    //         alt="About CA Firm"
-    //         className="w-full h-[420px] object-cover rounded-3xl shadow-xl"
-    //       />
-
-    //       <div className="absolute bottom-4 right-4 sm:-bottom-6 sm:-right-6 bg-white px-5 py-3 sm:px-6 sm:py-4 rounded-2xl shadow-lg border border-gray-100">
-
-    //         <div className="relative inline-block">
-
-    //           <span className="text-3xl sm:text-4xl font-bold text-blue-600">
-    //             {about.experience}
-    //           </span>
-
-    //           <span className="absolute -top-2 -right-2 sm:-right-3 text-lg sm:text-xl font-bold text-blue-600">
-    //             +
-    //           </span>
-
-    //         </div>
-
-    //         <p className="text-xs sm:text-sm text-gray-800 font-medium mt-1 uppercase tracking-wide">
-    //           YEARS OF EXPERIENCE
-    //         </p>
-
-    //       </div>
-
-    //     </div>
-
-
-
-    //     {/* TEXT */}
-    //     <div>
-
-    //       <span className="inline-block bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-sm font-semibold uppercase tracking-wide mb-4">
-    //         ABOUT OUR FIRM
-    //       </span>
-
-
-    //       <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-wide text-blue-600 leading-tight mb-6">
-    //         A LEGACY OF TRUST AND EXPERTISE FOR OVER 30 YEARS
-    //       </h2>
-
-
-    //       {/* DESCRIPTION 1 */}
-    //       <p
-    //         className="text-black leading-relaxed mb-4 uppercase tracking-wide text-sm sm:text-base"
-    //         dangerouslySetInnerHTML={{
-    //           __html: highlightNames(about.description1)
-    //         }}
-    //       />
-
-
-    //       {/* DESCRIPTION 2 */}
-    //       {about.description2 && (
-
-    //         <p
-    //           className="text-black leading-relaxed mb-8 uppercase tracking-wide text-sm sm:text-base"
-    //           dangerouslySetInnerHTML={{
-    //             __html: highlightNames(about.description2)
-    //           }}
-    //         />
-
-    //       )}
-
-
-
-    //       <button
-    //         onClick={() => navigate("/about-details")}
-    //         className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold shadow-md transition uppercase tracking-wide"
-    //       >
-    //         READ MORE
-    //       </button>
-
-    //     </div>
-
-
-    //   </div>
-
-    // </section>
-
+   
     <section className="bg-gray-50 py-10 sm:py-12 md:py-16">
   <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
 
@@ -143,29 +57,6 @@ export default function About() {
         className="w-full h-auto max-h-[260px] sm:max-h-[350px] md:max-h-[450px] object-contain rounded-2xl"
       />
 
-      {/* EXPERIENCE BOX */}
-      {/* <div className="
-        absolute 
-        bottom-2 right-2 
-        sm:-bottom-5 sm:-right-5 
-        bg-white px-4 py-2 sm:px-5 sm:py-3 
-        rounded-xl sm:rounded-2xl 
-        shadow-md border border-gray-100
-      ">
-        <div className="relative inline-block">
-          <span className="text-xl sm:text-2xl md:text-3xl font-bold text-blue-600">
-            {about.experience}
-          </span>
-          <span className="absolute -top-1 -right-2 text-sm sm:text-base md:text-lg font-bold text-blue-600">
-            +
-          </span>
-        </div>
-
-        <p className="text-[10px] sm:text-xs md:text-sm text-gray-800 font-medium mt-1 uppercase tracking-wide">
-          YEARS OF EXPERIENCE
-        </p>
-      </div> */}
-{/* EXPERIENCE BOX */}
 <div className="
 absolute 
 bottom-2 right-2 

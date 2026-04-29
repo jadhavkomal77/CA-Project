@@ -160,10 +160,6 @@
 
 
 
-
-
-
-
 import React,{lazy,Suspense} from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./layout/ScrollToTop";
@@ -171,12 +167,10 @@ import ErrorBoundary from "./layout/ErrorBoundary";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-/* Keep Home critical imports normal (instant load) */
 import PublicLayout from "./layout/PublicLayout";
 import Home from "./layout/Home";
 import AdminProtected from "./shared/AdminProtected";
 
-/* Lazy load all other pages */
 const Hero = lazy(()=>import("./pages/Hero"));
 const About = lazy(()=>import("./pages/About"));
 const Services = lazy(()=>import("./pages/Services"));
@@ -278,13 +272,7 @@ return(
 <Route path="/admin-reset-password" element={<AdminResetPassword/>}/>
 
 <Route
-path="/admin"
-element={
-<AdminProtected>
-<AdminDashboard/>
-</AdminProtected>
-}
->
+path="/admin" element={<AdminProtected><AdminDashboard/></AdminProtected>}>
 <Route index element={<AdminHome/>}/>
 <Route path="profile" element={<AdminProfile/>}/>
 <Route path="navbar" element={<AdminNavbar/>}/>
