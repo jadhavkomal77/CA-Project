@@ -6,21 +6,22 @@ const AboutTeamPage = () => {
       ["ADV. PRERANA BHUME"],
       ["CA. PRAGATI KUMBHAR"],
       ["CA. ADINATH KADAM"],
-      ["CA. MANAV KASLIWAL"],
+      // ["CA. MANAV KASLIWAL"],
     ],
     [
       ["CA. GANESH GAIKWAD"],
       ["CMA NILESH PATIL"],
       ["CA. MANOJ JADHAV"],
-      ["YOGIRAJ AHERKAR"],
+      // ["YOGIRAJ AHERKAR"],
       ["MOIN PATHAN"],
     ],
     [
       ["CS. ABHIJEET JAWALEKAR"],
       ["AMRUTA KALE"],
-      ["KRISHNA PAWAR"],
+      // ["KRISHNA PAWAR"],
     ]
   ];
+
 
   return (
     <section className="bg-white pt-8 md:pt-10 pb-20">
