@@ -27,6 +27,7 @@ router.put("/profile", adminAuth, updateAdminProfile);
 router.put("/change-password", adminAuth, changeAdminPassword);
 
 /* STATS */
+router.get("/stats", adminAuth, adminStats);
 /* PASSWORD RESET */
 router.post("/forgot-password", forgotAdminPassword);
 router.post("/verify-otp", verifyAdminOTP);
