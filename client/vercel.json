@@ -2,13 +2,14 @@
     "version": 2,
     "buildCommand": "npm run build",
     "outputDirectory": "dist",
-    "routes": [
+    "rewrites": [
         {
-            "handle": "filesystem"
+            "source": "/api/:path*",
+            "destination": "https://ca-project-server.vercel.app/api/:path*"
         },
         {
-            "src": "/(.*)",
-            "dest": "/index.html"
+            "source": "/(.*)",
+            "destination": "/index.html"
         }
     ]
 }

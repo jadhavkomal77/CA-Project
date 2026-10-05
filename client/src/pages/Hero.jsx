@@ -1,5 +1,4 @@
 import { useGetPublicHeroQuery } from "../redux/apis/heroApi";
-import { CircleCheckBig } from "lucide-react";
 
 export default function Hero() {
   const { data: hero, isLoading } = useGetPublicHeroQuery();
@@ -60,24 +59,6 @@ export default function Hero() {
               <span><span className="text-green-500">✔</span> Expert Advisory</span>
             </div> */}
 
-<div className="flex flex-wrap lg:flex-nowrap justify-center lg:justify-start gap-x-6 gap-y-3 pt-2 text-sm sm:text-base text-blue-100">
-  
-  <span className="flex items-center gap-2 whitespace-nowrap">
-    <CircleCheckBig className="w-5 sm:w-6 h-5 sm:h-6 text-green-400 shrink-0" />
-    30+ Years of Experience
-  </span>
-
-  <span className="flex items-center gap-2 whitespace-nowrap">
-    <CircleCheckBig className="w-5 sm:w-6 h-5 sm:h-6 text-green-400 shrink-0" />
-    5,000+ Clients Served
-  </span>
-
-  <span className="flex items-center gap-2 whitespace-nowrap">
-    <CircleCheckBig className="w-5 sm:w-6 h-5 sm:h-6 text-green-400 shrink-0" />
-    Expert Advisory
-  </span>
-
-</div>
 
           </div>
 

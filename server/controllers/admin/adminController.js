@@ -13,10 +13,19 @@ const JWT_SECRET = process.env.JWT_KEY;
 
 /* ================= COOKIE ================= */
 
-const cookieOptions =
-  process.env.NODE_ENV === "production"
-    ? { httpOnly: true, sameSite: "none", secure: true }
-    : { httpOnly: true, sameSite: "lax", secure: false };
+/* Derived from the actual request, not NODE_ENV — some hosts (Hostinger)
+   don't let you set NODE_ENV, and getting it wrong silently breaks login.
+
+   sameSite "lax": the site and API are served from the same origin, so the
+   cookie is first-party. (The old "none" was only needed when the API lived
+   on a different domain — that's what Safari/iOS was blocking.)
+   secure: true only when the request actually arrived over https, so login
+   works both before and after SSL is enabled. Requires `trust proxy`. */
+const cookieOptions = (req) => ({
+  httpOnly: true,
+  sameSite: "lax",
+  secure: req.secure,
+});
 
 /* ================= REGISTER ================= */
 
@@ -89,7 +98,7 @@ export const adminLogin = async (req, res) => {
       { expiresIn: "1d" }
     );
 
-    res.cookie("adminToken", token, cookieOptions);
+    res.cookie("adminToken", token, cookieOptions(req));
 
     res.json({
       success: true,
@@ -108,7 +117,7 @@ export const adminLogin = async (req, res) => {
 
 export const adminLogout = async (req, res) => {
   try {
-    res.clearCookie("adminToken", cookieOptions);
+    res.clearCookie("adminToken", cookieOptions(req));
 
     res.json({
       success: true,

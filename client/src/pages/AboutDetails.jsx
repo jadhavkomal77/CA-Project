@@ -2,7 +2,6 @@
 
 import { useGetPublicAboutQuery } from "../redux/apis/aboutApi";
 import { motion } from "framer-motion";
-import AboutStatCard from "../components/AboutStatCard";
 import AboutTeamPage from "./AboutTeamPage";
 
 
@@ -123,13 +122,6 @@ export default function AboutDetails() {
 
             )}
 
-
-
-            {/* Stats */}
-            <div className="mt-6 md:mt-8 grid grid-cols-2 gap-4 md:gap-6">
-              <AboutStatCard value={about.experience} label="YEARS EXPERIENCE" />
-              <AboutStatCard value="5000" label="CLIENTS SERVED" />
-            </div>
 
 
           </motion.div>
