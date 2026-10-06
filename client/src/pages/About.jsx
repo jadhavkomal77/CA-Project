@@ -57,41 +57,7 @@ export default function About() {
         className="w-full h-auto max-h-[260px] sm:max-h-[350px] md:max-h-[450px] object-contain rounded-2xl"
       />
 
-<div className="
-absolute 
-bottom-2 right-2 
-sm:-bottom-5 sm:-right-5
-bg-white
-px-6 py-4 sm:px-7 sm:py-5  
-rounded-2xl
-shadow-lg
-border border-gray-100
-min-w-[250px]              
-">
-  
-  <div className="relative inline-block mb-2">
-    <span className="text-3xl sm:text-3xl font-bold text-blue-600 leading-none">
-      {about.experience}
-    </span>
-
-    <span className="absolute -top-2 -right-3 text-xl font-bold text-blue-600">
-      +
-    </span>
-  </div>
-
-  <p className="
-    text-sm sm:text-base
-    text-gray-800
-    font-medium
-    uppercase
-    tracking-wider
-    leading-relaxed
-  ">
-    YEARS OF EXPERIENCE
-  </p>
-
 </div>
-    </div>
 
     {/* TEXT SECTION */}
     <div className="text-center lg:text-left">

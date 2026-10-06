@@ -75,17 +75,10 @@ export default function PublicFooter() {
   />
 </div>
 
-<p className="mt-5 max-w-md text-sm leading-7 text-blue-50 uppercase">
-{footer?.description || (
-<>
-CADMA ASSOCIATES PVT LTD IS A PROFESSIONAL COMPANY <br />
-PROVIDING PROFESSIONAL SERVICES LIKE INCOME TAX, GST, COMPANY
-INCORPORATION, AUDIT, ACCOUNTING, AND ADVISORY SERVICES ACROSS INDIA.
-</>
-)}
-</p>
-
-            <div className="mt-6 flex gap-3">
+            {/* The logo image carries ~6.4% blue padding before the letters start,
+                so the icons are nudged right by that same inset to line up with
+                the "C". Values track the logo's responsive height (h-20/24/28). */}
+            <div className="mt-6 flex gap-3 ml-[15px] sm:ml-[18px] md:ml-[21px]">
               {socialIcons.map(({ Icon, link }, index) => (
                 <SocialIcon key={index} Icon={Icon} link={link} />
               ))}

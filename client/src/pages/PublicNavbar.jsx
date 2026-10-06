@@ -65,7 +65,7 @@ export default function PublicNavbar() {
   className="flex items-center flex-shrink-0 cursor-pointer"
 >
   <img
-    src="/Calogo.png"
+    src="/LogoCA.jpeg"
     alt="CADMA Associates"
     className="
       h-12

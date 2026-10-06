@@ -137,7 +137,7 @@
 //           <Route path="projects/edit/:id" element={<AddAdminProject />} /> 
 
 //          <Route path="admintestimonials" element={<AdminTestimonials/>}/>
-        
+
 //           <Route path="pricing" element={<AdminPricing />} /> 
 //           <Route path="contacts" element={<AdminContacts />} />
 //           <Route path="whatsappsettings" element={<WhatsappSettings />} />
@@ -215,6 +215,7 @@ const WhatsappSettings = lazy(()=>import("./admin/WhatsappSettings"));
 const AdminCalculators = lazy(()=>import("./admin/AdminCalculators"));
 const AdminApplications = lazy(()=>import("./admin/AdminApplications"));
 const AdminTestimonials = lazy(()=>import("./admin/AdminTestimonials"));
+const AdminClients = lazy(()=>import("./admin/AdminClients"));
 const TaxUpdateAdmin = lazy(()=>import("./admin/TaxUpdateAdmin"));
 const AdminForgotPassword = lazy(()=>import("./Auth/AdminForgotPassword"));
 const AdminResetPassword = lazy(()=>import("./Auth/AdminResetPassword"));
@@ -288,6 +289,7 @@ path="/admin" element={<AdminProtected><AdminDashboard/></AdminProtected>}>
 <Route path="projects/new" element={<AddAdminProject/>}/>
 <Route path="projects/edit/:id" element={<AddAdminProject/>}/>
 <Route path="admintestimonials" element={<AdminTestimonials/>}/>
+<Route path="adminclients" element={<AdminClients/>}/>
 <Route path="pricing" element={<AdminPricing/>}/>
 <Route path="contacts" element={<AdminContacts/>}/>
 <Route path="whatsappsettings" element={<WhatsappSettings/>}/>
