@@ -16,7 +16,7 @@ const Home = () => {
       <section id="about"><About /></section>
       <section id="services"><Services /></section>  
       <section id="calculators"><PublicCalculator /></section>
-      <section id="clientsSection"><ClientsSection /></section>
+      {/* <section id="clientsSection"><ClientsSection /></section> */}
       <section id="contactQR"><ContactQR /></section>
       <section id="contact"><Contact /></section>
     </>

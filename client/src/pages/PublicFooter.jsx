@@ -62,7 +62,7 @@ export default function PublicFooter() {
   const siteName = "Cadma Associates Pvt Ltd";
 
   return (
-    <footer className="bg-gradient-to-br bg-blue-500 text-white">
+    <footer className="bg-gradient-to-br bg-[#0181FE] text-white">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-12">
           <div className="lg:col-span-4">

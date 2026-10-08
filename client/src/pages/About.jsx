@@ -57,7 +57,7 @@ export default function About() {
         className="w-full h-auto max-h-[260px] sm:max-h-[350px] md:max-h-[450px] object-contain rounded-2xl"
       />
 
-<div className="
+{/* <div className="
 absolute 
 bottom-2 right-2 
 sm:-bottom-5 sm:-right-5
@@ -90,7 +90,7 @@ min-w-[250px]
     YEARS OF EXPERIENCE
   </p>
 
-</div>
+</div> */}
     </div>
 
     {/* TEXT SECTION */}
