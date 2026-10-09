@@ -236,7 +236,7 @@ return(
 <ScrollToTop/>
 <ErrorBoundary>
 
-<Suspense fallback={<Loader/>}>
+<Suspense fallback={null}>
 <Routes>
 
 <Route element={<PublicLayout/>}>

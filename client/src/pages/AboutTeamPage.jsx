@@ -17,7 +17,7 @@ const AboutTeamPage = () => {
     ],
     [
       ["CS. ABHIJEET JAWALEKAR"],
-      // ["AMRUTA KALE"],
+      ["YASH RAJWADKAR"],
       // ["KRISHNA PAWAR"],
     ]
   ];
