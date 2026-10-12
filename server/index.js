@@ -72,7 +72,7 @@ app.use("/api/applications", applicationRoutes);
 app.use("/api/verify", verifyRoutes);
 app.use("/api/testimonials", testimonialRoutes);
 app.use("/api/tax-updates",taxUpdateRoutes );
-app.use("/api/team", aboutTeamRoute);
+app.use("/api/about-team", aboutTeamRoute);
 
 
 app.get("/", (req, res) => {
