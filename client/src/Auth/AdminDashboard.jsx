@@ -18,6 +18,7 @@ import {
   FaNewspaper,
   FaStar,
   FaRegWindowMaximize,
+  FaUserTie,
 } from "react-icons/fa";
 
 import {
@@ -42,7 +43,7 @@ export default function AdminDashboardLayout() {
     { name: "Navbar", path: "/admin/navbar", icon: <FaList /> },
     { name: "Hero", path: "/admin/hero", icon: <FaImage /> },
     { name: "About", path: "/admin/about", icon: <FaInfoCircle /> },
-    // { name: "adminAboutTeam", path: "/admin/adminAboutTeam", icon: <FaUserTie /> },
+    { name: "adminAboutTeam", path: "/admin/adminAboutTeam", icon: <FaUserTie /> },
     { name: "Add Services", path: "/admin/addservices", icon: <FaCogs /> },
     { name: "Services List", path: "/admin/serviceslist", icon: <FaTools /> },
     { name: "Calculater", path: "/admin/calculater", icon: <FaCalculator /> },

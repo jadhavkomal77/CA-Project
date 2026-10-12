@@ -22,6 +22,7 @@ import testimonialRoutes from "./routes/testimonialRoutes.js";
 import taxUpdateRoutes from "./routes/taxUpdateRoutes.js";
 import aboutTeamRoute from "./routes/aboutTeamRoute.js";
 
+
 const app = express();
 const __dirname = path.resolve();
 
@@ -71,7 +72,7 @@ app.use("/api/applications", applicationRoutes);
 app.use("/api/verify", verifyRoutes);
 app.use("/api/testimonials", testimonialRoutes);
 app.use("/api/tax-updates",taxUpdateRoutes );
-app.use("/api/about-team", aboutTeamRoute);
+app.use("/api/team", aboutTeamRoute);
 
 
 app.get("/", (req, res) => {

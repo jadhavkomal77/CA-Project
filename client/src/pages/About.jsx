@@ -247,14 +247,15 @@ export default function About() {
           {/* DESCRIPTION 1 */}
           <p
             className="
-              text-gray-800
-              text-sm sm:text-base
-              leading-7
-              mb-4
-              uppercase tracking-wide
-              text-justify
-              [overflow-wrap:anywhere]
-            "
+  text-gray-800
+  text-sm sm:text-base
+  leading-7
+  mb-4
+  uppercase
+  tracking-normal sm:tracking-wide
+  text-left sm:text-justify
+  [overflow-wrap:break-word]
+"
             dangerouslySetInnerHTML={{
               __html: highlightNames(about.description1),
             }}
@@ -263,15 +264,16 @@ export default function About() {
           {/* DESCRIPTION 2 */}
           {about.description2 && (
             <p
-              className="
-                text-gray-800
-                text-sm sm:text-base
-                leading-7
-                mb-6
-                uppercase tracking-wide
-                text-justify
-                [overflow-wrap:anywhere]
-              "
+             className="
+  text-gray-800
+  text-sm sm:text-base
+  leading-7
+  mb-6
+  uppercase
+  tracking-normal sm:tracking-wide
+  text-left sm:text-justify
+  [overflow-wrap:break-word]
+"
               dangerouslySetInnerHTML={{
                 __html: highlightNames(about.description2),
               }}

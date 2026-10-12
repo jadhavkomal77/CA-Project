@@ -1,23 +1,21 @@
-
 import express from "express";
-
 import {
-
-addAboutTeam,
-deleteAboutTeam,
-getAboutTeam,
-updateAboutTeam,
-
+  getTeamMembers,
+  addTeamMember,
+  updateTeamMember,
+  deleteTeamMember,
 } from "../controllers/aboutTeam.controller.js";
+import adminAuth from "../middlewares/adminAuth.js";
+
 
 const router = express.Router();
 
-router.post("/add", addAboutTeam);
+// Public Route
+router.get("/", getTeamMembers);
 
-router.get("/all", getAboutTeam);
-
-router.put("/update/:id", updateAboutTeam);
-
-router.delete("/delete/:id", deleteAboutTeam);
+// Protected Admin Routes
+router.post("/", adminAuth, addTeamMember);
+router.put("/:id", adminAuth, updateTeamMember);
+router.delete("/:id", adminAuth, deleteTeamMember);
 
 export default router;

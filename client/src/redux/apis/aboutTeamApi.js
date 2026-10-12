@@ -1,93 +1,58 @@
-
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const aboutTeamApi = createApi({
-
   reducerPath: "aboutTeamApi",
 
   baseQuery: fetchBaseQuery({
-
-    baseUrl: import.meta.env.VITE_BACKEND_URL
+     baseUrl: import.meta.env.VITE_BACKEND_URL
       ? import.meta.env.VITE_BACKEND_URL + "/api/about-team"
       : "/api/about-team",
-
-    credentials: "include",
-
+    credentials: "include", // 🔥 cookie only
   }),
 
   tagTypes: ["AboutTeam"],
 
   endpoints: (builder) => ({
-
-    /* ADD */
-    addAboutTeam: builder.mutation({
-
-      query: (data) => ({
-
-        url: "/add",
-        method: "POST",
-        body: data,
-
-      }),
-
-      invalidatesTags: ["AboutTeam"],
-
-    }),
-
-
-    /* GET */
+    // Get all team members
     getAboutTeam: builder.query({
-
-      query: () => "/all",
-
+      query: () => "",
       providesTags: ["AboutTeam"],
-
     }),
 
+    // Add a new team member
+    addAboutTeam: builder.mutation({
+      query: (newMember) => ({
+        url: "",
+        method: "POST",
+        body: newMember,
+      }),
+      invalidatesTags: ["AboutTeam"],
+    }),
 
-    /* UPDATE */
+    // Update an existing team member
     updateAboutTeam: builder.mutation({
-
-      query: ({ id, data }) => ({
-
-        url: `/update/${id}`,
-
+      query: ({ id, ...updatedData }) => ({
+        url: `/${id}`,
         method: "PUT",
-
-        body: data,
-
+        body: updatedData,
       }),
-
       invalidatesTags: ["AboutTeam"],
-
     }),
 
-
-    /* DELETE */
+    // Delete a team member
     deleteAboutTeam: builder.mutation({
-
       query: (id) => ({
-
-        url: `/delete/${id}`,
-
+        url: `/${id}`,
         method: "DELETE",
-
       }),
-
       invalidatesTags: ["AboutTeam"],
-
     }),
-
   }),
-
 });
 
 export const {
-
   useAddAboutTeamMutation,
   useGetAboutTeamQuery,
   useUpdateAboutTeamMutation,
   useDeleteAboutTeamMutation,
-
 } = aboutTeamApi;
-
