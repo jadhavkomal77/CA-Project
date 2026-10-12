@@ -1,8 +1,5 @@
 import AboutTeam from "../models/AboutTeam.js";
 
-// @desc    Get all team members
-// @route   GET /api/team
-// @access  Public
 export const getTeamMembers = async (req, res) => {
   try {
     const members = await AboutTeam.find().sort({ columnIndex: 1, order: 1 });
@@ -12,9 +9,6 @@ export const getTeamMembers = async (req, res) => {
   }
 };
 
-// @desc    Add a new team member
-// @route   POST /api/team
-// @access  Private (Admin)
 export const addTeamMember = async (req, res) => {
   try {
     const { columnIndex, name, designation, order } = req.body;
@@ -36,9 +30,7 @@ export const addTeamMember = async (req, res) => {
   }
 };
 
-// @desc    Update a team member
-// @route   PUT /api/team/:id
-// @access  Private (Admin)
+
 export const updateTeamMember = async (req, res) => {
   try {
     const { id } = req.params;
@@ -60,9 +52,7 @@ export const updateTeamMember = async (req, res) => {
   }
 };
 
-// @desc    Delete a team member
-// @route   DELETE /api/team/:id
-// @access  Private (Admin)
+
 export const deleteTeamMember = async (req, res) => {
   try {
     const { id } = req.params;
